@@ -1,0 +1,96 @@
+
+body{
+    margin: 0;
+}
+
+html{
+    font-family: 'Bebas Neue', cursive;
+    background-color: #ffffff;
+}
+header{
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100px;
+    border: 1px solid #3f3939;
+    box-shadow: 0px 0px 5px;
+}
+header h1{
+    color: #084B8A;
+}
+#menu{
+    flex-grow: 1;
+    flex-basis: 30%;
+    height: 100%;
+    padding-right: 20px;
+}
+
+#menu > ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:flex-end;
+    height: 66%;
+    list-style: none;
+}
+
+#menu a{
+    color: #000000;
+    text-transform: uppercase;
+    padding: 20px;
+    transition: all 100ms;
+    font-size:22px;
+}
+
+#menu a:hover{
+    background: #8d8a8a;
+    color: #000000;
+}
+.Titulo{
+    text-align: center;
+    background: linear-gradient(#2586af, #010a0e);
+    padding: 0 1rem;
+    justify-content: flex-start;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;  
+}
+
+.sub{
+    text-align:left;
+    padding: 0 0.5rem;
+    background: #000000;
+    -webkit-background-clip: text;
+    font-size: 34px;
+}
+  
+
+
+.texto{
+    text-align: left;
+    padding: 0 0.5rem;
+    justify-content: flex-start;
+    background:#050505;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;  
+}
+
+.proyecto{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    top: 38%;
+    right: 10%;
+}
+
+@media only screen and (max-width: 355px) {
+    .container{
+        width: 100%;
+    }
+}
