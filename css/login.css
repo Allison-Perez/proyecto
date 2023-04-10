@@ -95,10 +95,18 @@ body {
     width: 100%;
     max-width: 300px;
     margin: auto;
+    align-items: center;
     justify-content: space-between;
 }
 
 .link_remember_password{
+    text-decoration: none;
+    color: black;
+}
+
+.link_register_password{
+    display: block;
+    margin-top: 30px;
     text-decoration: none;
     color: black;
 }
