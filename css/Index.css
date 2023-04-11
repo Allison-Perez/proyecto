@@ -61,7 +61,7 @@ nav a:hover{
 /* -------------------------------- INFO INDEX ------------------------- */
 
 .container{
-    margin-top: 8%;
+    margin-top: 60px;
     cursor: pointer;
     height: 60vh;
 }
@@ -87,7 +87,7 @@ nav a:hover{
     overflow: hidden;
     border-radius: 8px;
     right: 2%;
-    top: 35%;
+    top: 30%;
     cursor: pointer;
     z-index: 20;
 }
