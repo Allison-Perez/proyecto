@@ -5,6 +5,10 @@
     font-family: 'Monserrat', sans-serif;
 }
 
+body{
+    overflow: hidden;
+}
+
 @keyframes fanimado{
     0%{
         background-position: 0% 50%;
@@ -63,7 +67,6 @@ nav a:hover{
 }
 
 .background_wrapper{
-    overflow: hidden;
     width: 100vw;
     position: absolute;
     height: 60vh;
