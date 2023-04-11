@@ -63,6 +63,7 @@ nav a:hover{
 }
 
 .background_wrapper{
+    overflow: hidden;
     width: 100vw;
     position: absolute;
     height: 60vh;
