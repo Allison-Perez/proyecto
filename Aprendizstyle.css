@@ -1,0 +1,28 @@
+
+.nombre{
+    font-weight: bold;
+}
+.navbar-nav {
+    width: 100%;
+}
+  
+.contactanos {
+    margin-right: 15px;
+}
+
+.titulo {
+    color: blue;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10%;
+}
+
+.aprendiz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45vh;
+}
