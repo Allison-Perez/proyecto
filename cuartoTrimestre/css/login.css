@@ -16,6 +16,10 @@ body {
     background: linear-gradient(#D1D5D5, #0b4f6c);
 }
 
+.row{
+    border-radius: 10px;
+}
+
 .container {
     width: 65%;
     margin: auto;
@@ -31,6 +35,7 @@ body {
     justify-content: center;
     align-items: center;
     background-image: linear-gradient(to bottom, #088a88, #0b4f6c);
+    border-radius: 10px 10px 0 0;
 }
 
 .image_login {
@@ -38,6 +43,7 @@ body {
 }
 
 .right_section {
+    border-radius: 0 0 10px 10px;
     text-align: center;
     background-color: #f4f3f4;
     padding: 80px 0;
@@ -119,4 +125,14 @@ body {
 
 .boton_enviar_formulario:hover {
     cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .section_login{
+        border-radius: 10px 0 0 10px;
+    }
+
+    .right_section{
+        border-radius: 0 10px 10px 0;
+    }
 }
