@@ -2,73 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <title>ACANNER</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>ACCANER</title>
     <link rel="icon" type="icon" href="IMAGENES/LOGO SIN FONDO.png">
+    <style>
+        .titulo {
+          text-align: center;
+          margin-top: 50px;
+          font-size: 32px;
+          font-weight: bold;
+          background: linear-gradient(120deg, #00aaff, #aa00ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .subtitulo {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 24px;
+        }
+    
+        .descripcion {
+          text-align: center;
+          margin-top: 30px;
+          font-size: 18px;
+        }
+      </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <img src="IMAGENES/LOGO SIN FONDO.png" width="76px">
-        <h1>A C A N N E R</h1>
-        <nav id="menu">
-            <ul>
-                <li><a href="blog.html" class="item_nav">BLOG</a></li>
-                <li><a href="actividades.html" class="item_nav">ACTIVIDADES</a></li>
-                <li><a href="notas.html" class="item_nav">NOTAS</a></li>
-                <li><a href="asistencia.html" class="item_nav">ASISTENCIA</a></li>
-                <li><a href="horario.html" class="item_nav">HORARIO</a></li>
-                <li><a><img src="imagenes/Perfil.png" width="50px"></a></li>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="imagenes/LOGO SIN FONDO.png" alt="Logo de la página" width="50" height="50">
+            A C A N N E R
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="actividades.html">Actividades</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="notas.html">Notas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="asistencia.html">Asistencia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="horario.html">Horario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Perfil.html"><img src="imagenes/Perfil.png" alt="Logo de la página" width="50" height="50"></a>
+              </li>
             </ul>
-        </nav>
-    </header>
-    <div class="container_instructor">
-        <h1 class="title_container">
-            BIENVENIDO INSTRUCTOR
-        </h1>
-        <div class="column_container_instructor">
-            <div class="paragraph_column column_container">
-                <h2 class="title_paragraph_column"> FORMACIÓN ADSO </h2>
-                <p class="text_paragraph_column">Bienvenido a ACANNER una plataforma que te va a facilitar el manejo de tu tiempo, tendras una mejor organizacion en tus actividades y estamos vinculados con el SENA (SERVICIO NAICONAL DE APRENDIZAJE)
-                </p>
-            </div>
-
-            <div class="img_column column_container">
-                <img class="img_container_instructor" src="IMAGENES/software.png" width="270px">
-            </div>
+          </div>
         </div>
-
-    </div>
-    <!-- <div class="container_instrucor">
-        <h1 class="titulo_nav">
-            BIENVENIDO INSTRUCTOR
-        </h1>
-        
-        <div class="info_container">
-            
-            <div class="texto column_info_container" >
-                <h3 class="sub">
-                    FORMACION ADSO
-                </h3>
-                <p>Bienvenido a ACANNER una plataforma que te va a facilitar el manejo de tu tiempo, tendras una mejor organizacion en tus actividades y estamos vinculados con el SENA (SERVICIO NAICONAL DE APRENDIZAJE)
-                </p>
-            </div>
-
-            <article class="proyecto">
-                <div>
-                    <img src="IMAGENES/software.png" width="270px">
-                </div>
-            </article>
-
+      </header>
+      <div class="container">
+        <h1 class="titulo">BIENVENIDO INSTRUCTOR</h1>
+        <h2 class="subtitulo">FORMACION ADSO</h2>
+        <div class="descripcion">
+          <p>Bienvenido a ACANNER una plataforma que te va a facilitar el manejo de tu tiempo, tendrás una mejor organización en tus actividades y estamos vinculados con el SENA (SERVICIO NACIONAL DE APRENDIZAJE).</p>
         </div>
-
-
-    </div> -->
-
-
+        <div class="text-center">
+          <img src="imagenes/software.png" alt="Imagen de referencia" width="400" height="300">
+        </div>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
