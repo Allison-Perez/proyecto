@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    margin: 0;
+}
+
+html{
+    font-family: 'Bebas Neue', cursive;
+    background-color: #ffffff;
+}
+header{
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100px;
+    border-bottom: 1px solid #3f3939;
+    box-shadow: 0px 0px 5px;
+}
+header h1{
+    color: #084B8A;
+}
+
+#menu{
+    flex-grow: 1;
+    flex-basis: 30%;
+    height: 100%;
+    padding-right: 20px;
+}
+
+#menu > ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:flex-end;
+    height: 66%;
+    list-style: none;
+}
+
+#menu a{
+    color: #000000;
+    text-transform: uppercase;
+    padding: 20px;
+    transition: all 100ms;
+    font-size:22px;
+}
+
+#menu .item_nav:hover{
+    background: #64aac9;
+    color: #000000;
+    border-radius: 5px;
+}
+
+/* ------------------------------------- CONTENIDO PAGINA INSTRUCTOR ---------------------------------------------- */
+
+.title_container{
+    font-family: 'Bebas Neue', cursive;
+    font-size: 75px;
+    margin: 30px 0;
+    text-align: center;
+    color: #084B8A;
+}
+
+.column_container_instructor{
+    display: flex;
+    justify-content: space-between;
+}
+
+.column_container{
+    width: 50%;
+}
+
+.img_column{
+    text-align: center;
+}
+
+.title_paragraph_column{
+    font-size: 40px;
+    margin: 20px 0;
+}
+
+.text_paragraph_column{
+    font-size: 20px;
+    text-align: justify;
+}
+
+.paragraph_column{
+    padding: 50px;
+    margin: auto;
+    max-width: 800px;
+}
+
+
+/* 
+
+.titulo_nav{
+    margin: 30px 0;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.container_instrucor{
+    text-align: center;
+    background: linear-gradient(#2586af, #010a0e);
+    padding: 0 1rem;
+    justify-content: flex-start;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;  
+}
+
+.sub{
+    text-align:left;
+    background: #000000;
+    -webkit-background-clip: text;
+    font-size: 40px;
+}
+  
+
+
+.texto{
+    text-align: left;
+    padding: 0 0.5rem;
+    justify-content: flex-start;
+    background:#050505;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;  
+}
+
+.proyecto{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    top: 25%;
+    right: 10%;
+}
+
+.column_info_container{
+    width: 50%;
+}
+
+
+@media only screen and (max-width: 355px) {
+    .container{
+        width: 100%;
+    } 
+}*/

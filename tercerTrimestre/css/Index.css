@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .form-control-dark {
     border-color:#020202;
   }
@@ -155,3 +156,12 @@ nav a:hover{
 >>>>>>> sergio:css/Index.css
     margin: auto;
   }
+=======
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta:wght@200;300;400&display=swap');
+body{
+    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Mukta', sans-serif;
+    height: 100vh;
+    background: linear-gradient(#D1D5D5, #0b4f6c);
+}   
+>>>>>>> marlon

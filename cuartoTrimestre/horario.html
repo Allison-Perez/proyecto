@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ACANNER - Horarios Académicos</title>
+    <link rel="stylesheet" href="css/horario.css">
+    <link rel="icon" type="icon" href="IMAGENES/LOGO SIN FONDO.png">
+</head>
+
+<body>
+    <header>
+        <h1>ACANNER - Horarios Académicos</h1>
+    </header>
+    <main>
+        <section id="schedule-form">
+            <h2>Subir Horario</h2>
+            <form>
+                <label for="day">Día:</label>
+                <select id="day" name="day">
+                    <option value="lunes">Lunes</option>
+                    <option value="martes">Martes</option>
+                    <option value="miercoles">Miércoles</option>
+                    <option value="jueves">Jueves</option>
+                    <option value="viernes">Viernes</option>
+                </select>
+                <label for="time">Hora:</label>
+                <input type="time" id="time" name="time">
+                <label for="subject">Asignatura:</label>
+                <input type="text" id="subject" name="subject">
+                <input type="submit" value="Subir Horario">
+            </form>
+        </section>
+        <section id="schedule-table">
+            <h2>Horarios Actuales</h2>
+            <table>
+                <tr>
+                    <th>Día</th>
+                    <th>Hora</th>
+                    <th>Asignatura</th>
+                    <th>Acciones</th>
+                </tr>
+                <!-- Aquí se generarán dinámicamente las filas de la tabla con los horarios subidos por el instructor -->
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>ACANNER - Todos los derechos reservados</p>
+    </footer>
+</body>
+
+</html>

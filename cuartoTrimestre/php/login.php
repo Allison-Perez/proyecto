@@ -16,8 +16,6 @@ if ($conexion->connect_error) {
 $correo = $_POST["correo"];
 $contraseña = $_POST["password"];
 
-
-
 // Consulta SQL para verificar las credenciales de inicio de sesión
 $sql = "SELECT * FROM usuario WHERE correo = '$correo'";
 
@@ -25,16 +23,15 @@ $sql = "SELECT * FROM usuario WHERE correo = '$correo'";
 $resultado = $conexion->query($sql);
 
 if ($resultado->num_rows == 1) {
-
     $row = $resultado->fetch_assoc();
     $contraseñaGuardada = $row['password'];
 
     if (password_verify($contraseña, $contraseñaGuardada)) {
-        echo('se logueo');
+        header("Location: ../aprendiz.html");
+        exit(); // Detener la ejecución del script después de redirigir
     } else {
-        echo('credenciales invalidas');
+        echo 'Credenciales inválidas';
     }
-
 } else {
     // Credenciales inválidas
     echo "El usuario no existe";
