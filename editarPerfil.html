@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/perflstyle.css">
+    <script src="JS/perfil.js" defer></script>
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Perfil</h1>
+        <form id="profile-form" enctype="multipart/form-data">
+            <label for="imagen-perfil">Imagen de Perfil:</label>
+            <input type="file" id="imagen-perfil" name="imagen-perfil" accept="image/*">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="numero-ficha">Número de Ficha:</label>
+            <input type="text" id="numero-ficha" name="numero-ficha" required>
+            <label for="formacion">Formación:</label>
+            <input type="text" id="formacion" name="formacion" required>
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <div id="perfil-guardado" class="hidden">
+            <h2>Perfil Guardado</h2>
+            <p>Nombre: <span id="nombre-guardado"></span></p>
+            <p>Número de Ficha: <span id="numero-ficha-guardado"></span></p>
+            <p>Formación: <span id="formacion-guardada"></span></p>
+            <p>Correo Electrónico: <span id="correo-guardado"></span></p>
+            <p><img id="imagen-guardada" src="#" alt="Foto de Perfil"></p>
+        </div>
+    </div>
+</body>
+</html>
