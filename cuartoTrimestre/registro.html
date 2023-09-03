@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Acanner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="shortcut icon" href="imagenes/logo grande s-f.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/registro.css">
+</head>
+
+<body>
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="containerFormRegister">
+            <h1 class="title_register">Registrate!</h1>
+            <form action="php/auth.php" method="post" class="register_form">
+                <div class="row d-flex justify-content-center mx-auto">
+                    <div class="col-md-6 form_container ">
+                        <input type="text" class="form-control name" placeholder="Primer nombre" required name="primer_nombre">
+                        <input type="text" class="form-control first_last_name" placeholder="Primer apellido" required name="primer_apellido">
+                        <select class="form-control" name="tipo_documento" required>
+                            <option value="" disabled selected>Tipo de documento</option>
+                            <option value="1">CC</option>
+                            <option value="2">TI</option>
+                            <option value="3">CE</option>
+                        </select>
+                        <div class="form-group birth_date_container">
+                            <label class="birth_date" for="birth_date">Fecha de nacimiento</label>
+                            <input type="date" class="form-control birth_date" id="birth_date" name="fecha_nacimiento" required>
+                        </div>
+                        <input type="email" class="form-control email" placeholder="Correo" required name="correo">
+                    </div>
+                    <div class="col-md-6 form_container">
+                        <input type="text" class="form-control second_name" placeholder="Segundo nombre" name="segundo_nombre">
+                        <input type="text" class="form-control second_last_name" placeholder="Segundo apellido" required name="segundo_apellido">
+                        <input type="text" class="form-control document_number" placeholder="Numero de documento" required name="id_usuario">
+                        <select class="form-control" name="ficha" required>
+                            <option value="" disabled selected>Numero de ficha</option>
+                            <option value="2558104">2558104</option>
+                        </select>
+                        <input type="password" class="form-control password" placeholder="Contraseña" required name="password">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3 buttons_container">
+                        <a class="btn btn-primary form_submit" href="login.html">Login</a>
+                        <input class="btn btn-primary form_submit" type="submit" value="Registrarse">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+
+</html>
