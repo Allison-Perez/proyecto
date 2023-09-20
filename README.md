@@ -1,17 +1,27 @@
-# Acanner
+# Instructor
 
-##  Objetivo general
-Construir un sistema de información web (Planner) que permita gestionar actividades académicas relacionadas con temáticas como, seguimiento de tareas, registro de asistencia para la ficha 2558104 de la formación ADSO.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
-## Objetivos Especificos 
-- Generar un promedio de asistencia dando aviso al instructor después de 3 fallas.
-- Monitorear las asistencias de la ficha para que el instructor posea un fácil control de los datos de aprendices.
-- Originar una alerta al aprendriz de la fecha limite de entrega de las actividades. 
+## Development server
 
-## Objetivos Especificos del Sistema
-- Recolectar la informacion requerida aplicando encuestas a los usuarios (Aprendizes e instructores) en temas relacionados con actividades academicas del proceso de seguimiento de las tareas y evaluacion. 
-- Analizar los resultados de la informacion recolectada del proceso de seguimiento de las tareas y evaluacion.
-- Diseñar la propuesta del sistema de información para la gestión de seguimiento de tareas y evaluación.
-- Desarrollar el sistema de información que permita la gestión de seguimiento de tareas.
-- Realizar pruebas de funcionalidad al sistema de información propuesto.
-- Implementar el sistema de información propuesto.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
