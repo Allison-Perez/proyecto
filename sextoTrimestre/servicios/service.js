@@ -171,9 +171,10 @@ app.post('/api/verificarRespuesta', async (req, res) => {
       if (respuesta === respuestaCorrecta) {
 
         const nuevaContrasenaTemporal = generarContrasenaTemporal();
+        const passwordEncriptado = await bcrypt.hash(nuevaContrasenaTemporal, 10);
 
         const actualizacionSQL = "UPDATE usuario SET password = ? WHERE correo = ?";
-        const [result] = await connection.execute(actualizacionSQL, [nuevaContrasenaTemporal, correo]);
+        const [result] = await connection.execute(actualizacionSQL, [passwordEncriptado, correo]);
 
         if (result.affectedRows === 1) {
           // Actualización exitosa
