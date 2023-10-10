@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <link rel="shortcut icon" href="assets/imagenes/logo_grande_s-f.png" type="image/x-icon">
+</head>
+
+<body>
+
+    <div class="container d-flex align-items-center justify-content-center mt-5">
+        <div class="containerFormRecover p-4 bg-light rounded">
+            <h1 class="title_recover">Recuperar Cuenta</h1>
+            <p class="lead">Ingresa tu correo electrónico para buscar tu cuenta.</p>
+            <form [formGroup]="recuperarForm" (ngSubmit)="onRecuperarSubmit()" class="recuperar_form">
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="correo" formControlName="correo" required>
+                </div>
+
+                <div class="container_link_form">
+                  <a class="link_remember_password" href="/login">Regresar a Login</a>
+                  <button type="submit" class="btn btn-primary">Buscar Cuenta</button>
+                </div>
+            </form>
+
+            <div *ngIf="showError" class="alert alert-danger mt-3">
+              Credenciales inválidas. El correo no existe.
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

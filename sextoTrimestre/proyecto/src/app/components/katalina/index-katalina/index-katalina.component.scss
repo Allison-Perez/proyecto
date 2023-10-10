@@ -1,0 +1,26 @@
+.nombre{
+  font-weight: bold;
+}
+.titulo {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10%;
+}
+.sub-titulo{
+  font-weight: bold;
+  text-align: center;
+}
+.descripción{
+  text-align: center;
+}
+.imagen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Toma toda la altura vertical de la página */
+  width: 100%; /* Toma todo el ancho horizontal de la página */
+}
+.nav-img{
+  width: 40px;
+}
