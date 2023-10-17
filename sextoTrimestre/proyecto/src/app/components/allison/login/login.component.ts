@@ -37,6 +37,7 @@ export class LoginComponent {
       ).subscribe(response => {
         if (response) {
           const email = this.loginForm.value.correo
+          console.log(email);
           localStorage.setItem('user_email', JSON.stringify(email))
           this.router.navigate(['/admin-perfil']);
         }

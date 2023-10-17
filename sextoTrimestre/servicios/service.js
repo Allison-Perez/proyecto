@@ -204,7 +204,7 @@ app.post('/api/verificarRespuesta', async (req, res) => {
 
 app.get('/api/obtener-usuario', async (req, res) => {
   const correo = req.query.correo;
-
+  console.log(correo);
   const sql = `SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, ficha, correo, password FROM usuario WHERE correo = ?`;
 
   try {
