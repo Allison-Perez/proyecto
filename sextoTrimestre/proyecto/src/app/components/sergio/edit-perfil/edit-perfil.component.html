@@ -1,0 +1,39 @@
+<div class="navbar">
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin-perfil">Perfil</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/registro-usuarios">Registro de Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/edicion-usuarios">Edición de Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <!-- <a class="nav-link" (click)="logout()">Cerrar Sesión</a> -->
+    </li>
+  </ul>
+</div>
+
+
+<div>
+  <h2>Editar Perfil de Usuario</h2>
+  <form (submit)="guardarCambios()" [formGroup]="form">
+    <label for="primerNombre">Primer Nombre:</label>
+    <input type="text" id="primerNombre" formControlName="primerNombre">
+
+    <label for="segundoNombre">Segundo Nombre:</label>
+    <input type="text" id="segundoNombre" formControlName="segundoNombre">
+
+    <label for="primerApellido">Primer Apellido:</label>
+    <input type="text" id="primerApellido" formControlName="primerApellido">
+
+    <label for="segundoApellido">Segundo Apellido:</label>
+    <input type="text" id="segundoApellido" formControlName="segundoApellido">
+
+    <label for="correo">Correo:</label>
+    <input type="text" id="correo" formControlName="correo">
+
+    <button type="submit">Guardar Cambios</button>
+  </form>
+</div>
