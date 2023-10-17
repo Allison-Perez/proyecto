@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+
 //Componentes declarados
 import { RegistroComponent } from './registro/registro.component';
 import { LoginComponent } from './login/login.component';

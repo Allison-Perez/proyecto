@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "111019As",
   database: "acanner",
 };
 
@@ -75,8 +75,8 @@ app.post("/registro", async (req, res) => {
 
     const passwordEncriptado = await bcrypt.hash(password, 10);
 
-    const sql = `INSERT INTO usuario (primer_nombre, primer_apellido, tipo_documento, fecha_nacimiento, correo, segundo_nombre, segundo_apellido, id_usuario, ficha, password, pregunta_seguridad, respuesta_seguridad)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO usuario (primer_nombre, primer_apellido, tipo_documento, fecha_nacimiento, correo, segundo_nombre, segundo_apellido, id_usuario, ficha, password, pregunta_seguridad, respuesta_seguridad, rol)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     await connection.execute(sql, [
       primer_nombre,
@@ -91,6 +91,7 @@ app.post("/registro", async (req, res) => {
       passwordEncriptado,
       pregunta_seguridad,
       respuesta_seguridad,
+      2
     ]);
 
     connection.end();
@@ -200,6 +201,61 @@ app.post('/api/verificarRespuesta', async (req, res) => {
   }
 });
 
+
+app.get('/api/obtener-usuario', async (req, res) => {
+  const correo = req.query.correo;
+
+  const sql = `SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, ficha, correo, password FROM usuario WHERE correo = ?`;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(sql, [correo]);
+
+    await connection.end();
+
+    if (rows.length === 1) {
+      const usuario = rows[0];
+      res.json(usuario);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener el usuario: ' + error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
+  }
+});
+
+
+
+app.post('/api/actualizar-usuario', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const { correo } = req.query;
+    const userData = req.body;
+
+    // Realiza la actualización en la base de datos utilizando el correo
+    const updateSql = `
+      UPDATE usuario
+      SET
+        primer_nombre = ?,
+        segundo_nombre = ?,
+        primer_apellido = ?,
+        segundo_apellido = ?
+      WHERE correo = ?`; // Eliminado "ficha" de la consulta SQL
+    const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
+    const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+
+    await connection.execute(updateSql, values);
+
+    // Cerrar la conexión y enviar la respuesta
+    connection.end();
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la información del usuario:', error);
+    res.status(500).json({ error: 'Error al actualizar la información del usuario' });
+  }
+});
 
 
 app.listen(port, () => {

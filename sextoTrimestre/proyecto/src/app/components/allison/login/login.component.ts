@@ -36,8 +36,9 @@ export class LoginComponent {
         })
       ).subscribe(response => {
         if (response) {
-          console.log('Login exitoso', response);
-          this.router.navigate(['/index-katalina']);
+          const email = this.loginForm.value.correo
+          localStorage.setItem('user_email', JSON.stringify(email))
+          this.router.navigate(['/admin-perfil']);
         }
       });
 
