@@ -1,0 +1,17 @@
+.list-group-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+
+.btn-primary {
+    background-color: #008a88;
+    border-color: #008a88;
+}
+
+
+.btn-success, .btn-secondary {
+    background-color: #008a88;
+    border-color: #008a88;
+}
