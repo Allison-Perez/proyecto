@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Acanner</title>
+    <link rel="stylesheet" href="css/registro.css">
+    <link rel="shortcut icon" href="imagenes/logo grande s-f.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1 class="title_register">Registrate!</h1>
+<<<<<<< HEAD
+        <form action="#" class="register_form">
+            <div class="container_columns_form">
+                <div class="section_right form_container">
+                
+                    <input type="text" class="name form_input" placeholder="Primer nombre" required>
+                
+                    <input type="text" class="first_last_name form_input" placeholder="Primer apellido" required>
+        
+                    <select class="form_input" name="document_type" required>
+                        <option value="" disabled selected>Tipo de documento</option>
+=======
+        <form action="registro.php" class="register_form" method="POST">
+            <div class="container_columns_form">
+                <div class="section_right form_container">
+                
+                    <input type="text" class="name form_input" placeholder="Primer nombre" id="primer_nombre" name="primer_nombre" required>
+                
+                    <input type="text" class="first_last_name form_input" placeholder="Primer apellido" id="primer_apellido" name="primer_apellido" required>
+        
+                    <select class="form_input" id="tipo_documento" name="tipo_documento" required>
+                        <option value="" id="tipo_documento" name="tipo_documento" disabled selected>Tipo de documento</option>
+>>>>>>> marlon
+                        <option value="cedula">CC</option>
+                        <option value="tarjeta_identidad">TI</option>
+                        <option value="cedula_extranjera">CE</option>
+                    </select>
+<<<<<<< HEAD
+                    
+                    <div class="birth_date_container">
+                        <label class="birth_date" for="birth_date">Fecha de nacimiento</label>
+                        <input type="date" class="birth_date form_input" id="birth_date" name="birth_date" required >
+                    </div>
+                    
+                    <input type="email" class="email form_input" placeholder="Correo" required>
+=======
+                    <!-- ... -->
+                    <select class="form_input" name="rol" required>
+                        <option value="" disabled selected>Seleccione su rol</option>
+                        <option value="aprendiz">Aprendiz</option>
+                        <option value="instructor">Instructor</option>
+                    </select>
+<!-- ... -->
+
+                    <div class="birth_date_container" >
+                        <label class="birth_date" for="birth_date">Fecha de nacimiento</label>
+                        <input type="date" class="birth_date form_input" id="fecha_nacimiento" name="fecha_nacimiento" required >
+                    </div>
+                    
+                    <input type="email" class="email form_input" id="correo" name="correo" placeholder="Correo" required>
+>>>>>>> marlon
+                    
+                </div>
+    
+                <div class="section_left form_container">
+                
+<<<<<<< HEAD
+                    <input type="text" class="second_name form_input" placeholder="Segundo nombre">
+
+                    <input type="text" class="second_last_name form_input" placeholder="Segundo apellido" required>
+
+                    <input type="text" class="document_number form_input" placeholder="Numero de documento" required>
+    
+                    <select class="form_input" name="ficha" required>
+                        <option value="" disabled selected>Numero de ficha</option>
+                        <option value="2394678">2394648</option>
+                        <option value="2558104">2558104</option>
+                    </select>
+    
+                    <input type="password" class="password form_input" placeholder="Contraseña" required>
+=======
+                    <input type="text" id="segundo_nombre" name="segundo_nombre" class="second_name form_input" placeholder="Segundo nombre">
+
+                    <input type="text" id="segundo_apellido" name="segundo_apellido" class="second_last_name form_input" placeholder="Segundo apellido" required>
+
+                    <input type="text" id="numero_documento" name="numero_documento" class="document_number form_input" placeholder="Numero de documento" required>
+    
+                    <select id="numero_ficha" name="numero_ficha" class="form_input" name="ficha" required>
+                        <option value="" disabled selected id="numero_ficha" name="numero_ficha">Numero de ficha</option>
+                        <option value="2394678" >2394648</option>
+                        <option value="2558104" >2558104</option>
+                    </select>
+                    
+    
+                    <input type="password" id="password" name="password" class="password form_input" placeholder="Contraseña" required>
+>>>>>>> marlon
+    
+                </div>
+            </div>
+            
+            <div>
+                <div class="buttons_container">
+                    <a class="form_submit" href="login.html">Login</a>
+                    <input class="form_submit" type="submit" value="Registrarse">
+                </div>
+            </div>
+            
+            
+            
+            
+            
+        </form>
+    </div>
+    
+
+</body>
+
+</html>
