@@ -234,6 +234,10 @@ app.post('/api/actualizar-usuario', async (req, res) => {
     const { correo } = req.query;
     const userData = req.body;
 
+    if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido) {
+      return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+    }
+
     // Realiza la actualización en la base de datos utilizando el correo
     const updateSql = `
       UPDATE usuario
