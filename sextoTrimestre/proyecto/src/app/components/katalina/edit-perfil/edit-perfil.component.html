@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <img src="assets/imagenes/logo.png" class="nav-img" alt="icono">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse flex-row-reverse"
+        id="navbarNavDropdown"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a routerLink="/indexKatalina" class="nav-link active"  id="item"  aria-current="page">Inicio</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>Editar Perfil de Usuario</h2>
+    <form (submit)="guardarCambios()">
+      <div class="form-group">
+        <label for="primerNombre">Primer Nombre:</label>
+        <input type="text" id="primerNombre" formControlName="primerNombre" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="segundoNombre">Segundo Nombre:</label>
+        <input type="text" id="segundoNombre" formControlName="segundoNombre" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="primerApellido">Primer Apellido:</label>
+        <input type="text" id="primerApellido" formControlName="primerApellido" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="segundoApellido">Segundo Apellido:</label>
+        <input type="text" id="segundoApellido" formControlName="segundoApellido" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="correo">Correo:</label>
+        <input type="text" id="correo" formControlName="correo" class="form-control">
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+  </div>
+  

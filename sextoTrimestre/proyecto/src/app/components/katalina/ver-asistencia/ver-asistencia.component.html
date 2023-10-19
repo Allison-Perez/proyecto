@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <img src="assets/imagenes/logo.png" class="nav-img" alt="icono">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse flex-row-reverse"
+        id="navbarNavDropdown"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a routerLink="/indexKatalina" class="nav-link active"  id="item"  aria-current="page">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h2 class="subtitulo mt-5" >Asistencias</h2>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let asistencia of asistenciaList">
+              <h4>{{ asistencia.nombreArchivo }}</h4>
+              <p>{{ asistencia.comentario }}</p>
+              <a (click)="descargarArchivo(asistencia.archivoUrl)" class="btn btn-primary-ver-archivo" >Ver archivo</a>
+            <ng-template #editTemplate>
+              <button (click)="updateAsistencia()" class="btn btn-success">Guardar</button>
+            </ng-template>
+          </li>
+        </ul>
+        
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
