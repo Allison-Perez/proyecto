@@ -357,6 +357,68 @@ app.get('/api/horario/list', (req, res) => {
   });
 });
 
+//PERFIL
+
+app.get('/api/obtener-usuario', async (req, res) => {
+  const correo = req.query.correo;
+  console.log(correo);
+  const sql = `SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, ficha, correo, password FROM usuario WHERE correo = ?`;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(sql, [correo]);
+
+    await connection.end();
+
+    if (rows.length === 1) {
+      const usuario = rows[0];
+      res.json(usuario);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener el usuario: ' + error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
+  }
+});
+
+
+
+app.post('/api/actualizar-usuario', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const { correo } = req.query;
+    const userData = req.body;
+
+    if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido) {
+      return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+    }
+
+    // Realiza la actualización en la base de datos utilizando el correo
+    const updateSql = `
+      UPDATE usuario
+      SET
+        primer_nombre = ?,
+        segundo_nombre = ?,
+        primer_apellido = ?,
+        segundo_apellido = ?
+      WHERE correo = ?`; // Eliminado "ficha" de la consulta SQL
+    const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
+    const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+
+    await connection.execute(updateSql, values);
+
+    // Cerrar la conexión y enviar la respuesta
+    connection.end();
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la información del usuario:', error);
+    res.status(500).json({ error: 'Error al actualizar la información del usuario' });
+  }
+});
+
+
 
 app.listen(3000, () => {
   console.log('Todo bien, corriendo en el puerto 3000!');
