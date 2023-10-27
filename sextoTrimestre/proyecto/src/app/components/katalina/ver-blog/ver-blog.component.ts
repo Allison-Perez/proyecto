@@ -4,7 +4,7 @@ import { ServiceService } from '../service/servicie.katalina.service';
 @Component({
   selector: 'app-ver-blog',
   templateUrl: './ver-blog.component.html',
-  styleUrls: ['./ver-blog.component.css']
+  styleUrls: ['./ver-blog.component.scss']
 })
 export class VerBlogComponent {
   newsList: any[] = [];
