@@ -44,8 +44,8 @@
             <ng-container *ngIf="!editingNews || news.id !== editingNews.id; else editTemplate">
                 <h4>{{ news.titulo }}</h4>
                 <p>{{ news.contenido }}</p>
-                    <button (click)="editNews(news)" class="btn btn-primary">Editar</button>
-                    <button (click)="deleteNews(news.id)" class="btn btn-danger">Eliminar</button>
+                <button (click)="editNews(news)" class="btn btn-primary">Editar</button>
+                <button (click)="deleteNews(news.id_noticias)" class="btn btn-danger">Eliminar</button>
             </ng-container>
             <ng-template #editTemplate>
                 <div class="form-group">

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/perfil.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -15,7 +15,7 @@ export class PerfilComponent implements OnInit {
   constructor(
     private service: ServiceService,
     private router: Router,
-    private authService: AuthService // Separar las inyecciones con comas
+    private authService: AuthService
   ) {
     this.userData = {
       primer_nombre: '',
@@ -24,7 +24,7 @@ export class PerfilComponent implements OnInit {
       segundo_apellido: '',
       ficha: '',
       correo: '',
-    }
+    };
   }
 
   ngOnInit() {
@@ -32,13 +32,13 @@ export class PerfilComponent implements OnInit {
     const correo: any = localStorage.getItem('user_email');
 
     // Llama al servicio para obtener la información del usuario
-    this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
+    this.service.getUserInfoByEmail(correo).subscribe(data => {
       this.userData = data;
     });
   }
 
   editarInformacion() {
-    this.router.navigate(['/edit-perfil']);
+    this.router.navigate(['/editar-perfil']);
   }
 
   editarPassword() {
@@ -51,5 +51,4 @@ export class PerfilComponent implements OnInit {
     // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
-
 }

@@ -13,7 +13,7 @@ CREATE TABLE `aprendiz` (
 --
 
 CREATE TABLE asistencia (
-  id_asistencia int(11) AUTO_INCREMENT PRIMARY KEY,
+  id_asistencia INT AUTO_INCREMENT PRIMARY KEY,
   nombreArchivo VARCHAR(255) NOT NULL,
   comentario TEXT,
   archivoUrl VARCHAR(255)
@@ -39,7 +39,7 @@ CREATE TABLE `ficha` (
 --
 
 CREATE TABLE `guias` (
-  id_guia int(11) AUTO_INCREMENT PRIMARY KEY,
+  id_guia INT AUTO_INCREMENT PRIMARY KEY,
   nombreArchivo VARCHAR(255) NOT NULL,
   comentario TEXT,
   archivoUrl VARCHAR(255)
@@ -52,7 +52,7 @@ CREATE TABLE `guias` (
 --
 
 CREATE TABLE `horario` (
-  id_horario int(11) AUTO_INCREMENT PRIMARY KEY,
+  id_horario INT AUTO_INCREMENT PRIMARY KEY,
   nombreArchivo VARCHAR(255) NOT NULL,
   comentario TEXT,
   archivoUrl VARCHAR(255)
@@ -88,7 +88,7 @@ CREATE TABLE `instructor_ficha` (
 --
 
 CREATE TABLE `noticias` (
-  id_noticias int(11) AUTO_INCREMENT PRIMARY KEY,
+  id_noticias INT AUTO_INCREMENT PRIMARY KEY,
   titulo varchar (255) NOT NULL,
   contenido TEXT,
   fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP

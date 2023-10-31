@@ -69,7 +69,7 @@ createHorario() {
         formData.append('archivo', this.selectedFile);
       }
       
-      this.horarioService.updateHorario(this.editingHorario.id, formData).subscribe(
+      this.horarioService.updateHorario(this.editingHorario.id_horario, formData).subscribe(
         () => {
           this.loadHorario();
           this.editingHorario = null;

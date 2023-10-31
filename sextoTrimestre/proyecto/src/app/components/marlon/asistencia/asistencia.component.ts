@@ -69,7 +69,7 @@ createAsistencia() {
         formData.append('archivo', this.selectedFile);
       }
       
-      this.asistenciaService.updateAsistencia(this.editingAsistencia.id, formData).subscribe(
+      this.asistenciaService.updateAsistencia(this.editingAsistencia.id_asistencia, formData).subscribe(
         () => {
           this.loadAsistencia();
           this.editingAsistencia = null;

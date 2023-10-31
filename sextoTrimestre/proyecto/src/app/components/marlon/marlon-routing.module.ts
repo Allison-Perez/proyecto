@@ -6,6 +6,8 @@ import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { ActividadComponent } from './actividad/actividad.component';
 import { HorariosComponent } from './horarios/horarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
+import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
 
 const routes: Routes = [
   { path: 'vista-instructor', component: VistaInstructorComponent },
@@ -14,6 +16,8 @@ const routes: Routes = [
   { path: 'asistencia', component: AsistenciaComponent },
   { path: 'horario', component: HorariosComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'editar-perfil', component: EditarPerfilComponent },
+  { path: 'cambiar-contrasena', component: CambiarPasswordComponent },
 ];
 
 @NgModule({

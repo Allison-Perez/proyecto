@@ -8,7 +8,10 @@ import { ActividadComponent } from './actividad/actividad.component';
 import { HorariosComponent } from './horarios/horarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormsModule } from '@angular/forms';
-import { ActivityService } from './services/actividad.service'; 
+import { ActivityService } from './services/actividad.service';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +21,12 @@ import { ActivityService } from './services/actividad.service';
     ActividadComponent,
     HorariosComponent,
     PerfilComponent,
+    EditarPerfilComponent,
+    CambiarPasswordComponent,
   ],
   imports: [CommonModule, 
     MarlonRoutingModule,
+    ReactiveFormsModule,
     FormsModule],
   providers: [ActivityService],
 })

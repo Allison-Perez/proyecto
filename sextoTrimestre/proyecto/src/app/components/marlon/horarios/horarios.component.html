@@ -51,7 +51,7 @@
               <p>{{ horario.comentario }}</p>
               <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
               <button (click)="editHorario(horario)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteHorario(horario.id)" class="btn btn-danger">Eliminar</button>
+              <button (click)="deleteHorario(horario.id_horario)" class="btn btn-danger">Eliminar</button>
             </ng-container>
             <ng-template #editTemplate>
               <div class="form-group">

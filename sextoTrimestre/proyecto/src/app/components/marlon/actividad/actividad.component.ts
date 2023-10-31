@@ -69,7 +69,7 @@ createActivity() {
         formData.append('archivo', this.selectedFile);
       }
       
-      this.actividadService.updateActivity(this.editingActivity.id, formData).subscribe(
+      this.actividadService.updateActivity(this.editingActivity.id_guia, formData).subscribe(
         () => {
           this.loadActivities();
           this.editingActivity = null;
@@ -91,7 +91,6 @@ createActivity() {
   }
 
   descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;

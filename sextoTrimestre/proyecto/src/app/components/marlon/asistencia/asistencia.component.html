@@ -51,7 +51,7 @@
               <p>{{ asistencia.comentario }}</p>
               <a (click)="descargarArchivo(asistencia.archivoUrl)" class="btn btn-primary-ver-archivo" >Ver archivo</a>
               <button (click)="editAsistencia(asistencia)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteAsistencia(asistencia.id)" class="btn btn-danger">Eliminar</button>
+              <button (click)="deleteAsistencia(asistencia.id_asistencia)" class="btn btn-danger">Eliminar</button>
             </ng-container>
             <ng-template #editTemplate>
               <div class="form-group">

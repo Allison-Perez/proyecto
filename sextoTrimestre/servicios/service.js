@@ -25,6 +25,8 @@ connection.connect((err) => {
   console.log('Conexión a MySQL establecida');
 });
 
+//BLOG
+
 // Ruta para crear un blog
 app.post('/api/blog/create', (req, res) => {
   const { titulo, contenido } = req.body;
@@ -40,11 +42,11 @@ app.post('/api/blog/create', (req, res) => {
 });
 
 // Ruta para actualizar una noticia por su ID
-app.put('/api/blog/update/:id', (req, res) => {
+app.put('/api/blog/update/:id_noticias', (req, res) => {
   const { titulo, contenido } = req.body;
-  const { id } = req.params;
+  const { id_noticias } = req.params;
   const updateQuery = 'UPDATE noticias SET titulo = ?, contenido = ? WHERE id_noticias = ?';
-  connection.query(updateQuery, [titulo, contenido, id], (err, result) => {
+  connection.query(updateQuery, [titulo, contenido, id_noticias], (err, result) => {
     if (err) {
       console.error('Error al actualizar la noticia en la base de datos:', err);
       res.status(500).json({ error: 'No se pudo actualizar la noticia' });
@@ -55,15 +57,16 @@ app.put('/api/blog/update/:id', (req, res) => {
 });
 
 // Ruta para eliminar una noticia por su ID
-app.delete('/api/blog/delete/:id', (req, res) => {
-  const { id } = req.params;
+app.delete('/api/blog/delete/:id_noticias', (req, res) => {
+  const { id_noticias } = req.params;
   const deleteQuery = 'DELETE FROM noticias WHERE id_noticias = ?';
-  connection.query(deleteQuery, [id], (err, result) => {
+  connection.query(deleteQuery, [id_noticias], (err, result) => {
     if (err) {
       console.error('Error al eliminar la noticia de la base de datos:', err);
       res.status(500).json({ error: 'No se pudo eliminar la noticia' });
     } else {
-      res.status(200).json({ message: 'Noticia eliminada exitosamente' });
+      // Devuelve el ID de la noticia eliminada
+      res.status(200).json({ message: 'Noticia eliminada exitosamente', id_noticias });
     }
   });
 });
@@ -109,33 +112,31 @@ app.post('/api/actividad/create', upload.single('archivo'), (req, res) => {
 
   const insertQuery = 'INSERT INTO guias (nombreArchivo, comentario, archivoUrl) VALUES (?, ?, ?)';
   connection.query(insertQuery, [nombreArchivo, comentario, archivoUrl], (err, result) => {
-    if (err) {
+    if(err){
       console.error('Error al insertar la actividad en la base de datos:', err);
       res.status(500).json({ error: 'No se pudo crear la actividad' });
-    } else {
+    }else{
       console.log('http://localhost:3000',archivoUrl)
       res.status(200).json({ message: 'Actividad creada exitosamente: ' });
     }
   });
 });
 
-
 // Ruta para actualizar una actividad por su ID
-app.put('/api/actividad/update/:id', upload.single('archivo'), (req, res) => {
+app.put('/api/actividad/update/:id_guia', upload.single('archivo'), (req, res) => {
   const { nombreArchivo, comentario } = req.body;
-  const { id } = req.params;
-  const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null; // Manejar la actualización del archivo
+  const { id_guia } = req.params;
+  const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null; 
 
-  // Verificar si se debe actualizar el archivoUrl
   let updateQuery;
   let queryParams;
 
   if (archivoUrl) {
     updateQuery = 'UPDATE guias SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_guia = ?';
-    queryParams = [nombreArchivo, comentario, archivoUrl, id];
+    queryParams = [nombreArchivo, comentario, archivoUrl, id_guia];
   } else {
     updateQuery = 'UPDATE guias SET nombreArchivo = ?, comentario = ? WHERE id_guia = ?';
-    queryParams = [nombreArchivo, comentario, id];
+    queryParams = [nombreArchivo, comentario, id_guia];
   }
 
   connection.query(updateQuery, queryParams, (err, result) => {
@@ -149,11 +150,11 @@ app.put('/api/actividad/update/:id', upload.single('archivo'), (req, res) => {
 });
 
 // Ruta para eliminar una actividad por su ID
-app.delete('/api/actividad/delete/:id', (req, res) => {
-  const { id } = req.params;
+app.delete('/api/actividad/delete/:id_guia', (req, res) => {
+  const { id_guia } = req.params;
 
-  const deleteQuery = 'DELETE FROM guias WHERE id_guias = ?';
-  connection.query(deleteQuery, [id], (err, result) => {
+  const deleteQuery = 'DELETE FROM guias WHERE id_guia = ?';
+  connection.query(deleteQuery, [id_guia], (err, result) => {
     if (err) {
       console.error('Error al eliminar la actividad de la base de datos:', err);
       res.status(500).json({ error: 'No se pudo eliminar la actividad' });
@@ -176,9 +177,7 @@ app.get('/api/actividad/list', (req, res) => {
   });
 });
 
-
 //ASISTENCIA
-
 
 // Ruta para subir una asistencia con archivo y comentario
 app.post('/api/asistencia/create', upload.single('archivo'), (req, res) => {
@@ -203,11 +202,10 @@ app.post('/api/asistencia/create', upload.single('archivo'), (req, res) => {
   });
 });
 
-
 // Ruta para actualizar una asistencia por su ID
-app.put('/api/asistencia/update/:id', upload.single('archivo'), (req, res) => {
+app.put('/api/asistencia/update/:id_asistencia', upload.single('archivo'), (req, res) => {
   const { nombreArchivo, comentario } = req.body;
-  const { id } = req.params;
+  const { id_asistencia } = req.params;
   const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null; 
 
   let updateQuery;
@@ -215,10 +213,10 @@ app.put('/api/asistencia/update/:id', upload.single('archivo'), (req, res) => {
 
   if (archivoUrl) {
     updateQuery = 'UPDATE asistencia SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_asistencia = ?';
-    queryParams = [nombreArchivo, comentario, archivoUrl, id];
+    queryParams = [nombreArchivo, comentario, archivoUrl, id_asistencia];
   } else {
     updateQuery = 'UPDATE asistencia SET nombreArchivo = ?, comentario = ? WHERE id_asistencia = ?';
-    queryParams = [nombreArchivo, comentario, id];
+    queryParams = [nombreArchivo, comentario, id_asistencia];
   }
 
   connection.query(updateQuery, queryParams, (err, result) => {
@@ -232,11 +230,11 @@ app.put('/api/asistencia/update/:id', upload.single('archivo'), (req, res) => {
 });
 
 // Ruta para eliminar una asistencia por su ID
-app.delete('/api/asistencia/delete/:id', (req, res) => {
-  const { id } = req.params;
+app.delete('/api/asistencia/delete/:id_asistencia', (req, res) => {
+  const { id_asistencia } = req.params;
 
   const deleteQuery = 'DELETE FROM asistencia WHERE id_asistencia = ?';
-  connection.query(deleteQuery, [id], (err, result) => {
+  connection.query(deleteQuery, [id_asistencia], (err, result) => {
     if (err) {
       console.error('Error al eliminar la asistencia de la base de datos:', err);
       res.status(500).json({ error: 'No se pudo eliminar la actividad' });
@@ -274,8 +272,6 @@ app.get('/api/asistencia/download/:archivo', (req, res) => {
   });
 });
 
-
-
 //HORARIOS
 
 // Ruta para subir una horarios con archivo y comentario
@@ -303,9 +299,9 @@ app.post('/api/horario/create', upload.single('archivo'), (req, res) => {
 
 
 // Ruta para actualizar un horario por su ID
-app.put('/api/horario/update/:id', upload.single('archivo'), (req, res) => {
+app.put('/api/horario/update/:id_horario', upload.single('archivo'), (req, res) => {
   const { nombreArchivo, comentario } = req.body;
-  const { id } = req.params;
+  const { id_horario } = req.params;
   const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null; 
 
   let updateQuery;
@@ -313,10 +309,10 @@ app.put('/api/horario/update/:id', upload.single('archivo'), (req, res) => {
 
   if (archivoUrl) {
     updateQuery = 'UPDATE horario SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_horario = ?';
-    queryParams = [nombreArchivo, comentario, archivoUrl, id];
+    queryParams = [nombreArchivo, comentario, archivoUrl, id_horario];
   } else {
     updateQuery = 'UPDATE horario SET nombreArchivo = ?, comentario = ? WHERE id_horario = ?';
-    queryParams = [nombreArchivo, comentario, id];
+    queryParams = [nombreArchivo, comentario, id_horario];
   }
 
   connection.query(updateQuery, queryParams, (err, result) => {
@@ -330,11 +326,11 @@ app.put('/api/horario/update/:id', upload.single('archivo'), (req, res) => {
 });
 
 // Ruta para eliminar una actividad por su ID
-app.delete('/api/horario/delete/:id', (req, res) => {
-  const { id } = req.params;
+app.delete('/api/horario/delete/:id_horario', (req, res) => {
+  const { id_horario } = req.params;
 
   const deleteQuery = 'DELETE FROM horario WHERE id_horario = ?';
-  connection.query(deleteQuery, [id], (err, result) => {
+  connection.query(deleteQuery, [id_horario], (err, result) => {
     if (err) {
       console.error('Error al eliminar la horario de la base de datos:', err);
       res.status(500).json({ error: 'No se pudo eliminar la actividad' });
@@ -365,11 +361,11 @@ app.get('/api/obtener-usuario', async (req, res) => {
   const sql = `SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, ficha, correo, password FROM usuario WHERE correo = ?`;
 
   try {
-    const connection = await mysql.createConnection(dbConfig);
+    const uconnection = await mysql.createConnection(connection);
 
-    const [rows] = await connection.execute(sql, [correo]);
+    const [rows] = await uconnection.execute(sql, [correo]);
 
-    await connection.end();
+    await uconnection.end();
 
     if (rows.length === 1) {
       const usuario = rows[0];
@@ -387,7 +383,7 @@ app.get('/api/obtener-usuario', async (req, res) => {
 
 app.post('/api/actualizar-usuario', async (req, res) => {
   try {
-    const connection = await mysql.createConnection(dbConfig);
+    const uconnection = await mysql.createConnection(connection);
     const { correo } = req.query;
     const userData = req.body;
 
@@ -407,10 +403,10 @@ app.post('/api/actualizar-usuario', async (req, res) => {
     const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
     const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
 
-    await connection.execute(updateSql, values);
+    await uconnection.execute(updateSql, values);
 
     // Cerrar la conexión y enviar la respuesta
-    connection.end();
+    uconnection.end();
     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
   } catch (error) {
     console.error('Error al actualizar la información del usuario:', error);
@@ -418,7 +414,39 @@ app.post('/api/actualizar-usuario', async (req, res) => {
   }
 });
 
+//CAMBIO DE CONTRASEÑA
 
+// Ruta para cambiar la contraseña
+app.post('/api/cambiar-contrasena', (req, res) => {
+  const { correo, contrasenaAntigua, contrasenaNueva } = req.body;
+
+  const selectQuery = 'SELECT password FROM usuario WHERE correo = ?';
+  connection.query(selectQuery, [correo], (err, results) => {
+    if (err) {
+      console.error('Error al buscar la contraseña antigua:', err);
+      res.status(500).json({ error: 'Error en la base de datos' });
+    } else if (results.length === 0) {
+      res.status(400).json({ error: 'Usuario no encontrado' });
+    } else {
+      const usuario = results[0];
+      const contrasenaDB = usuario.password;
+
+      if (contrasenaAntigua !== contrasenaDB) {
+        res.status(400).json({ error: 'La contraseña antigua no coincide' });
+      } else {
+        const updateQuery = 'UPDATE usuario SET password = ? WHERE correo = ?';
+        connection.query(updateQuery, [contrasenaNueva, correo], (err, result) => {
+          if (err) {
+            console.error('Error al cambiar la contraseña:', err);
+            res.status(500).json({ error: 'Error en la base de datos' });
+          } else {
+            res.status(200).json({ message: 'Contraseña cambiada con éxito' });
+          }
+        });
+      }
+    }
+  });
+});
 
 app.listen(3000, () => {
   console.log('Todo bien, corriendo en el puerto 3000!');

@@ -51,7 +51,7 @@
               <p>{{ activity.comentario }}</p>
               <a (click)="descargarArchivo(activity.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
               <button (click)="editActivity(activity)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteActivity(activity.id)" class="btn btn-danger">Eliminar</button>
+              <button (click)="deleteActivity(activity.id_guia)" class="btn btn-danger">Eliminar</button>
             </ng-container>
             <ng-template #editTemplate>
               <div class="form-group">

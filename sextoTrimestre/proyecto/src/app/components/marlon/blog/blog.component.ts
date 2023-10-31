@@ -19,6 +19,11 @@ export class BlogComponent implements OnInit {
 
   loadNews() {
     this.blogService.getNews().subscribe(data => {
+      console.log('Datos de noticias:', data);
+      if (data.length > 0) {
+        console.log('Primer objeto:', data[0]);
+      }
+  
       this.newsList = data;
     });
   }
@@ -31,7 +36,12 @@ export class BlogComponent implements OnInit {
   }
 
   editNews(news: any) {
-    this.editingNews = { ...news }; 
+    if (news && news.id_noticias) {
+        console.log('Editar noticia ID:', news.id_noticias);
+        this.editingNews = { ...news }; 
+    } else {
+        console.log('No se encontró un ID válido para editar la noticia.');
+    }
   }
 
   cancelEdit() {
@@ -39,16 +49,20 @@ export class BlogComponent implements OnInit {
   }
 
   updateNews() {
-    this.blogService.updateNews(this.editingNews.id, this.editingNews).subscribe(() => {
+    this.blogService.updateNews(this.editingNews.id_noticias, this.editingNews).subscribe(() => {
       this.loadNews();
       this.editingNews = null;
     });
   }
 
   deleteNews(newsId: number) {
-    const newsIdStr = newsId.toString();
-    this.blogService.deleteNews(newsIdStr).subscribe(() => {
-      this.loadNews();
-    });
-  }
+    if (newsId) {
+      console.log('Eliminar noticia ID:', newsId);
+      this.blogService.deleteNews(newsId.toString()).subscribe(() => {
+        this.newsList = this.newsList.filter(news => news.id_noticias !== newsId);
+      });
+    } else {
+      console.log('No se encontró un ID válido para eliminar la noticia.');
+    }
+  }  
 }
