@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Agregado Validators
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from '../service/service.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-update-password',
@@ -11,11 +12,11 @@ import { Router } from '@angular/router';
 export class UpdatePasswordComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private service: ServiceService, private router: Router) {
+  constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
-      passwordAnterior: ['', Validators.required], // Agregado Validators.required
-      nuevaPassword: ['', Validators.required], // Agregado Validators.required
-      confirmarPassword: ['', Validators.required], // Agregado Validators.required
+      passwordAnterior: ['', Validators.required],
+      nuevaPassword: ['', Validators.required],
+      confirmarPassword: ['', Validators.required],
     });
   }
 
@@ -23,40 +24,41 @@ export class UpdatePasswordComponent implements OnInit {
     // Puedes agregar lógica de inicialización si es necesaria
   }
 
-  cambiarContrasena() {
-    const passwordAnterior = this.form.value.passwordAnterior;
-    const nuevaPassword = this.form.value.nuevaPassword;
-    const confirmarPassword = this.form.value.confirmarPassword;
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
 
-    if (this.form.invalid) {
+  // En tu componente Angular (update-password.component.ts)
+
+  cambiarContrasena() {
+  const passwordAnterior = this.form.value.passwordAnterior;
+  const nuevaPassword = this.form.value.nuevaPassword;
+  const confirmarPassword = this.form.value.confirmarPassword;
+
+  if (this.form.invalid) {
       alert('Por favor, completa todos los campos obligatorios.');
       return;
-    }
+  }
 
-    if (nuevaPassword !== confirmarPassword) {
+  if (nuevaPassword !== confirmarPassword) {
       alert('Las contraseñas no coinciden.');
       return;
-    }
+  }
 
-    // Llama al servicio para cambiar la contraseña y maneja la respuesta
-    this.service.updatePassword(passwordAnterior, nuevaPassword).subscribe(
+  const email = this.authService.getUserEmail();
+
+  this.service.updatePassword(email, passwordAnterior, nuevaPassword).subscribe(
       (response: any) => {
-        if (response.status === 200) {
-          alert('La contraseña se cambió correctamente');
-
-          setTimeout(() => {
-            this.router.navigate(['/perfil']);
-          }, 2000);
-        } else if (response.status === 401) {
-          alert('La contraseña anterior es incorrecta.');
-        } else {
-          alert('Hubo un error al cambiar la contraseña.');
-        }
+        console.log('Respuesta del servidor:', response);
+        this.router.navigate(['/admin-perfil']);
       },
       (error: any) => {
-        console.error('Error al cambiar la contraseña:', error);
-        alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');
+          alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');
       }
-    );
-  }
+  );
+}
+
 }

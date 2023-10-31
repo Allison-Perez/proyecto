@@ -21,12 +21,16 @@ export class ServiceService {
     return this.http.post(url, userData);
   }
 
-  updatePassword(passwordAnterior:string, passwordNueva:string): Observable<any>{
-    const url = `${this.apiUrl}/api/actualizar-usuario?correo`;
+  updatePassword(email: string, passwordAnterior: string, passwordNueva: string): Observable<any> {
+    const url = `${this.apiUrl}/api/cambiar-contrasena`;
     const userData = {
-      'passwordAnterior': passwordAnterior,
-      'passwordNueva': passwordNueva
-    }
+        correo: email.slice(1, -1),
+        passwordAnterior: passwordAnterior,
+        nuevaPassword: passwordNueva
+    };
+
+    console.log('Datos a enviar al servidor:', userData);
+
     return this.http.post(url, userData);
-  }
+}
 }

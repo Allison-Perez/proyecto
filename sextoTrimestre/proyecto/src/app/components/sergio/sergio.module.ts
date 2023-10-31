@@ -16,7 +16,6 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
     AdminPerfilComponent,
     UpdatePasswordComponent,
     EditPerfilComponent,
-    UpdatePasswordComponent,
   ],
   imports: [
     CommonModule,

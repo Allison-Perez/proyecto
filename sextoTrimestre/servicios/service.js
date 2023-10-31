@@ -262,6 +262,43 @@ app.post('/api/actualizar-usuario', async (req, res) => {
 });
 
 
+app.post("/api/cambiar-contrasena", async (req, res) => {
+  try {
+    const { correo, passwordAnterior, nuevaPassword } = req.body;
+    const connection = await mysql.createConnection(dbConfig);
+
+    // Consultar al usuario en la base de datos por correo
+    const [rows] = await connection.execute("SELECT * FROM usuario WHERE correo = ?", [correo]);
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Usuario no encontrado" });
+    }
+
+    const usuario = rows[0];
+
+    // Verificar la contraseña anterior
+    const match = await bcrypt.compare(passwordAnterior, usuario.password);
+    if (!match) {
+      return res.status(401).json({ message: "La contraseña anterior es incorrecta" });
+    }
+
+    // Encriptar la nueva contraseña temporal
+    const passwordEncriptado = await bcrypt.hash(nuevaPassword, 10);
+
+    // Actualizar la contraseña en la base de datos
+    const updateSql = "UPDATE usuario SET password = ? WHERE correo = ?";
+    await connection.execute(updateSql, [passwordEncriptado, correo]);
+
+    // Cerrar la conexión y enviar la respuesta
+    connection.end();
+    res.status(200).json({ message: "Contraseña cambiada con éxito", nuevaPassword });
+  } catch (error) {
+    console.error("Error al cambiar la contraseña:", error);
+    res.status(500).json({ error: "Error al cambiar la contraseña" });
+  }
+});
+
+
+
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
