@@ -15,7 +15,7 @@ export class UpdatePasswordComponent implements OnInit {
   constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
       passwordAnterior: ['', Validators.required],
-      nuevaPassword: ['', Validators.required],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(8)]],
       confirmarPassword: ['', Validators.required],
     });
   }

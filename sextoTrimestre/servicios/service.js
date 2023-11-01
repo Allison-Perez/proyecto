@@ -26,6 +26,8 @@ function generarContrasenaTemporal() {
     .slice(0, longitud);
 }
 
+// LOGEO
+
 app.post("/login", async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -53,6 +55,8 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Error en el inicio de sesión" });
   }
 });
+
+// REGISTRO
 
 app.post("/registro", async (req, res) => {
   try {
@@ -103,6 +107,8 @@ app.post("/registro", async (req, res) => {
 });
 
 
+// RECUPERAR CORREO (VERIFICANDO SI EXISTE)
+
 app.post("/recuperar", async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -121,6 +127,8 @@ app.post("/recuperar", async (req, res) => {
     res.status(500).json({ error: "Error en la recuperación de contraseña" });
   }
 });
+
+// TRAE LA PREGUNTA DE SEGURIDAD
 
 
 app.get('/api/preguntaSeguridad/:correo', async (req, res) => {
@@ -154,6 +162,8 @@ app.get('/api/preguntaSeguridad/:correo', async (req, res) => {
   }
 });
 
+
+// VERIFICA LA RESPUESTA DE SEGURIDAD Y ASIGNACIÓN DE CONTRASEÑA TEMPORAL
 
 app.post('/api/verificarRespuesta', async (req, res) => {
   try {
@@ -202,6 +212,8 @@ app.post('/api/verificarRespuesta', async (req, res) => {
 });
 
 
+// MOSTRAR INFORMACIÓN EN EL PERFIL
+
 app.get('/api/obtener-usuario', async (req, res) => {
   const correo = req.query.correo;
   console.log(correo);
@@ -226,6 +238,8 @@ app.get('/api/obtener-usuario', async (req, res) => {
   }
 });
 
+
+// EDITAR LA INFORMACIÓN DEL PERFIL
 
 
 app.post('/api/actualizar-usuario', async (req, res) => {
@@ -260,6 +274,9 @@ app.post('/api/actualizar-usuario', async (req, res) => {
     res.status(500).json({ error: 'Error al actualizar la información del usuario' });
   }
 });
+
+
+// CAMBIAR LA CONTRASEÑA ESTANDO LOGEADO
 
 
 app.post("/api/cambiar-contrasena", async (req, res) => {

@@ -1,0 +1,21 @@
+<div class="navbar">
+  <div class="menu-icon" (click)="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+  <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin-perfil">Perfil</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/registro-usuarios">Registro de Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/edicion-usuarios">Edición de Usuarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+    </li>
+  </ul>
+</div>

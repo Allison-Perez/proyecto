@@ -7,6 +7,7 @@ import { AdminPerfilComponent } from './admin-perfil/admin-perfil.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
+import { NavComponent } from './nav/nav.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
     AdminPerfilComponent,
     UpdatePasswordComponent,
     EditPerfilComponent,
+    NavComponent,
   ],
   imports: [
     CommonModule,

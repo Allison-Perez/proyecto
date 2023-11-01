@@ -85,3 +85,38 @@ body {
 .container .btn-primary:active {
   background-color: #088a88;
 }
+
+
+@media (max-width: 991px) {
+  .btn-primary {
+    margin-right: 20px; /* Vuelve a agregar margen derecho entre los botones */
+    margin-top: 10px; /* Elimina el margen inferior entre los botones */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .container-user {
+    flex-direction: column; /* Cambia la dirección de los elementos en resoluciones pequeñas */
+    align-items: center;
+  }
+
+  .photo {
+    width: 250px; /* Ajusta el tamaño de la foto para resoluciones aún más pequeñas */
+    height: 250px;
+    margin-top: 20px; /* Agrega espacio entre la foto y la información en resoluciones más pequeñas */
+  }
+
+  .info {
+    text-align: center; /* Centra el texto en resoluciones pequeñas */
+  }
+
+  .btn-primary {
+    margin-right: 0;
+    margin: 10px; /* Agrega espacio entre los botones en resoluciones pequeñas */
+  }
+
+  h1 {
+    margin-top: 20px; /* Agrega espacio entre el h1 y la foto en resoluciones pequeñas */
+  }
+}
