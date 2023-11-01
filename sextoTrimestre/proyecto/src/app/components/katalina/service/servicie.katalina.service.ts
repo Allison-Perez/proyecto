@@ -55,4 +55,13 @@ export class ServiceService {
   updateHorario(horarioId: string, updatedData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update/${horarioId}`, updatedData);
   }
+  
+  cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
+    const endpoint = '/cambiar-contrasena'; 
+    const url = `${this.apiUrl}${endpoint}`;
+    const body = { contrasenaAntigua, contrasenaNueva };
+
+    return this.http.post<any>(url, body);
+  }
+
 }

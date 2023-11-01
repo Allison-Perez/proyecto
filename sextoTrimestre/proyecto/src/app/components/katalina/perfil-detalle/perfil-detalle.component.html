@@ -20,6 +20,18 @@
           <li class="nav-item">
             <a routerLink="/indexKatalina" class="nav-link active"  id="item"  aria-current="page">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -37,8 +49,8 @@
           <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
           <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
         </div>
-        <button class="button1"  routerLink="/edit-perfil">Editar</button>
-        <button class="button2" onclick="editarPassword()">Cambiar contraseña</button>
+        <button class="button1" (click)="editarInformacion()">Editar</button>
+        <button class="button2" [routerLink]="['/edit-password']">Cambiar contraseña</button>
       </div>
     </div>
   </div>

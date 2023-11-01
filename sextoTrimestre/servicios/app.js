@@ -4,7 +4,8 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const crypto = require('crypto');
 const mysql = require('mysql2/promise');
-
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -19,14 +20,13 @@ const dbConfig = {
   database: "acanner",
 };
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos MySQL:', err);
-    return;
-  }
-  console.log('Conexión a MySQL establecida');
-});
+let connection;
 
+const initializeConnection = async () => {
+  connection = await mysql.createConnection(dbConfig);
+};
+
+initializeConnection();
 
 function generarContrasenaTemporal() {
   const longitud = 12;

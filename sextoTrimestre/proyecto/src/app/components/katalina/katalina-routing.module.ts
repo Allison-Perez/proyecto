@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IndexKatalinaComponent } from './index.katalina/index.katalina.component';
 import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
+import { EditPasswordComponent } from './edit-password/edit-password.component';
 import { PerfilDetalleComponent } from './perfil-detalle/perfil-detalle.component';
 
 
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'ver-blog', component: VerBlogComponent  },
   { path: 'ver-asistencias', component: VerAsistenciaComponent  },
   { path: 'ver-actvidades', component: VerActividadComponent  },
-  { path: 'edit-perfil', component: EditPerfilComponent  },
+  { path: 'edit-perfil', component: EditPerfilComponent},
+  { path: 'edit-password', component: EditPasswordComponent},
   { path: 'perfil-detalle', component: PerfilDetalleComponent },
   { path: 'indexKatalina', component: IndexKatalinaComponent },
 ];

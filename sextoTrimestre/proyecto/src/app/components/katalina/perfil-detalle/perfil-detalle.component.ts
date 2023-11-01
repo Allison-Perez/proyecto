@@ -42,14 +42,7 @@ export class PerfilDetalleComponent implements OnInit {
   }
 
   editarPassword() {
-    this.router.navigate(['/update-password']);
-  }
-
-  logout() {
-    this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
-    this.router.navigate(['/login']);
+    this.router.navigate(['/edit-password']);
   }
 
 }
