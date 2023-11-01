@@ -1,0 +1,66 @@
+<app-nav></app-nav>
+<body>
+  <div class="container">
+    <div class="containerFormRegister">
+      <h2 class="title_register">¡Registrate!</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register_form">
+        <div class="row d-flex justify-content-center mx-auto">
+          <div class="col-md-6 form_container">
+            <input formControlName="primer_nombre" type="text" class="form-control name" placeholder="Primer nombre" />
+            <input formControlName="primer_apellido" type="text" class="form-control first_last_name"
+              placeholder="Primer apellido" />
+            <select formControlName="tipo_documento" class="form-control">
+              <option value="" disabled selected>Tipo de documento</option>
+              <option value="1">CC</option>
+              <option value="2">TI</option>
+              <option value="3">CE</option>
+            </select>
+            <div class="form-group birth_date_container">
+              <label class="birth_date" for="birth_date">Fecha de nacimiento</label>
+              <input formControlName="fecha_nacimiento" type="date" class="form-control birth_date" id="birth_date"
+                name="fecha_nacimiento" />
+            </div>
+            <input formControlName="correo" type="email" class="form-control email" placeholder="Correo" />
+
+            <select formControlName="pregunta_seguridad" class="form-control">
+              <option value="" disabled selected>
+                Pregunta de seguridad
+              </option>
+              <option value="1">Nombre de tu primera mascota</option>
+              <option value="2">Ciudad donde naciste</option>
+              <option value="3">Nombre de tu mejor amigo</option>
+              <option value="4">cantante favorito</option>
+              <option value="5">Comida favorita</option>
+              <option value="6">Nombre de tu profesor favorito</option>
+            </select>
+          </div>
+          <div class="col-md-6 form_container">
+            <input formControlName="segundo_nombre" type="text" class="form-control second_name"
+              placeholder="Segundo nombre" />
+            <input formControlName="segundo_apellido" type="text" class="form-control second_last_name"
+              placeholder="Segundo apellido" />
+            <input formControlName="id_usuario" type="text" class="form-control document_number"
+              placeholder="Numero de documento" />
+            <select formControlName="ficha" class="form-control">
+              <option value="" selected>Numero de ficha</option>
+              <option value="2558104">2558104</option>
+            </select>
+            <input formControlName="password" type="password" class="form-control password" placeholder="Contraseña" />
+            <input formControlName="respuesta_seguridad" type="text" class="form-control security-response"
+              placeholder="Respuesta de seguridad" />
+          </div>
+
+          <div *ngIf="showError" class="alert alert-danger mt-2">
+            Por favor, complete todos los campos obligatorios y asegúrese de que el correo sea válido.
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-8 offset-md-3 buttons_container justify-content-center">
+            <input class="btn btn-primary form_submit" type="submit" value="Registrarse" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

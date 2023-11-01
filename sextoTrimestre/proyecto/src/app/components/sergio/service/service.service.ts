@@ -33,4 +33,9 @@ export class ServiceService {
 
     return this.http.post(url, userData);
 }
+
+  registro(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/registro`, data);
+  }
+
 }

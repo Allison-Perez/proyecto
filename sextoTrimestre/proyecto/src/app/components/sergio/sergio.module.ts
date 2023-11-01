@@ -8,6 +8,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
 import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
+import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
+import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { NavComponent } from './nav/nav.component';
     UpdatePasswordComponent,
     EditPerfilComponent,
     NavComponent,
+    RegistrosAdminComponent,
+    ModificarUsuariosComponent,
   ],
   imports: [
     CommonModule,
