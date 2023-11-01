@@ -5,7 +5,11 @@ import { ServiceService } from '../service/servicie.katalina.service';
 @Component({
   selector: 'app-edit-perfil',
   templateUrl: './edit-perfil.component.html',
+<<<<<<< HEAD
   styleUrls: ['./edit-perfil.component.css'],
+=======
+  styleUrls: ['./edit-perfil.component.scss']
+>>>>>>> c827ba85151be2a4b9401e677fe27438717865ed
 })
 export class EditPerfilComponent implements OnInit {
   form: FormGroup;

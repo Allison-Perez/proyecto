@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute para
 @Component({
   selector: 'app-perfil-detalle',
   templateUrl: './perfil-detalle.component.html',
-  styleUrls: ['./perfil-detalle.component.css'],
+  styleUrls: ['./perfil-detalle.component.scss'],
 })
 export class PerfilDetalleComponent implements OnInit {
   userData: any;

@@ -4,7 +4,7 @@ import { ServiceService } from '../service/servicie.katalina.service';
 @Component({
   selector: 'app-ver-horarios',
   templateUrl: './ver-horarios.component.html',
-  styleUrls: ['./ver-horarios.component.css']
+  styleUrls: ['./ver-horarios.component.scss']
 })
 export class VerHorariosComponent {
   horarioList: any[] = [];
@@ -36,21 +36,21 @@ export class VerHorariosComponent {
       if (this.selectedFile) {
         formData.append('archivo', this.selectedFile);
       }
-      
+
       this.ServiceService .updateHorario(this.editingHorario.id, formData).subscribe(
         () => {
           this.loadHorario();
           this.editingHorario = null;
-          this.selectedFile = null; 
+          this.selectedFile = null;
         },
         (error) => {
           console.error('Error al actualizar horario:', error);
-          
+
         }
       );
     }
   }
-  
+
 
 
   descargarArchivo(archivoUrl: string) {

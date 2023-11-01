@@ -4,7 +4,7 @@ import { ServiceService } from '../service/servicie.katalina.service';
 @Component({
   selector: 'app-ver-asistencia',
   templateUrl: './ver-asistencia.component.html',
-  styleUrls: ['./ver-asistencia.component.css']
+  styleUrls: ['./ver-asistencia.component.scss']
 })
 export class VerAsistenciaComponent {
   asistenciaList: any[] = [];
@@ -27,7 +27,7 @@ export class VerAsistenciaComponent {
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
-  
+
   updateAsistencia() {
     if (this.editingAsistencia) {
       const formData = new FormData();
@@ -36,21 +36,21 @@ export class VerAsistenciaComponent {
       if (this.selectedFile) {
         formData.append('archivo', this.selectedFile);
       }
-      
+
       this.ServiceService.updateAsistencia(this.editingAsistencia.id, formData).subscribe(
         () => {
           this.loadAsistencia();
           this.editingAsistencia = null;
-          this.selectedFile = null; 
+          this.selectedFile = null;
         },
         (error) => {
           console.error('Error al actualizar asistencia:', error);
-          
+
         }
       );
     }
   }
-  
+
 
   descargarArchivo(archivoUrl: string) {
     // Construye la URL del servidor para descargar el archivo
