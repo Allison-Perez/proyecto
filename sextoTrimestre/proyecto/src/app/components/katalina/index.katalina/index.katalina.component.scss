@@ -1,0 +1,33 @@
+.nombre{
+    font-weight: bold;
+}
+.titulo {
+    color: #0a7775;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3%;
+}
+.sub-titulo{
+    font-weight: bold;
+    text-align: center; 
+}
+.descripción {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 20%;
+    width: 250px; 
+    height: 300px;
+}
+
+.imagen {
+    margin-top: -20% ;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    height: 50vh;
+    width: 85%;
+}
+.nav-img{
+    width: 40px;
+}
