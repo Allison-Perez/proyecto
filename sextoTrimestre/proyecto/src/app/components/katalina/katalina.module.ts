@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 import { IndexKatalinaComponent } from './index.katalina/index.katalina.component';
 
@@ -17,9 +16,24 @@ import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
 
 @NgModule({
-  declarations: [ PerfilDetalleComponent, IndexKatalinaComponent, EditPerfilComponent, VerActividadComponent, VerAsistenciaComponent, VerBlogComponent, VerHorariosComponent, EditPasswordComponent],
-  imports: [BrowserModule, HttpClientModule, FormsModule, KatalinaRoutingModule, CommonModule,ReactiveFormsModule], 
+  declarations: [
+    PerfilDetalleComponent,
+    IndexKatalinaComponent,
+    EditPerfilComponent,
+    VerActividadComponent,
+    VerAsistenciaComponent,
+    VerBlogComponent,
+    VerHorariosComponent,
+    EditPasswordComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    KatalinaRoutingModule,
+    CommonModule,
+    ReactiveFormsModule
+  ],
   providers: [],
-  bootstrap: [],
+  bootstrap: [IndexKatalinaComponent], 
 })
 export class KatalinaModule { }

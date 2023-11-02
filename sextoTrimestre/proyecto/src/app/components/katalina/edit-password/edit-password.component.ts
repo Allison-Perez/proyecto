@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from '../service/servicie.katalina.service';
 
+
 @Component({
   selector: 'app-edit-password',
   templateUrl: './edit-password.component.html',
-  styleUrls: ['./edit-password.component.css'],
+  styleUrls: ['./edit-password.component.scss'],
 })
 export class EditPasswordComponent {
   cambiarContrasenaForm: FormGroup;
