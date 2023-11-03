@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import Validators for form validation
 import { ServiceService } from '../service/servicie.katalina.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-edit-perfil',
@@ -11,53 +13,56 @@ export class EditPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
 
-  constructor(private fb: FormBuilder, private service: ServiceService) {
+  constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
-      primerNombre: ['', Validators.required], // Apply validation as needed
+      primerNombre: ['', Validators.required],
       segundoNombre: [''],
       primerApellido: ['', Validators.required],
-      segundoApellido: [''],
-      correo: [{ value: '', disabled: true }, Validators.required], // Disable email input
+      segundoApellido: ['', Validators.required],
+      correo: ['']
     });
   }
 
   ngOnInit() {
-    const correo: any = localStorage.getItem('user_email');
+    // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
+    let correo:any = localStorage.getItem('user_email');
+    correo = correo.replace(/^"(.*)"$/, '$1');
+
     if (correo) {
-      this.service.getUserInfoByEmail(correo).subscribe(
-        (data) => {
-          this.userData = data;
-          this.form.patchValue(data);
-        },
-        (error) => {
-          console.error('Error fetching user info:', error);
-        }
-      );
+      // Llama a tu servicio para obtener la información del usuario por correo
+      this.service.getUserInfoByEmail(correo).subscribe(data => {
+        this.userData = data;
+        this.form.patchValue(data); // Llena el formulario con los datos del usuario
+      });
     } else {
+      // Maneja el caso en el que el correo no esté disponible, por ejemplo, redirigiendo o mostrando un mensaje de error.
       console.error('El correo no está disponible');
     }
   }
 
-  guardarCambios() {
-    if (this.form.valid) {
-      const userData = this.form.getRawValue(); // Get all form values
-      const correo = userData.correo;
 
-      this.service.updateUserInfoByEmail(correo, userData).subscribe(
-        (response) => {
-          if (response.status === 200 || response.status === 204) {
-            alert('Los cambios se guardaron correctamente');
-          } else {
-            alert('Hubo un error al guardar los cambios');
-          }
-        },
-        (error) => {
-          console.error('Error saving changes:', error);
-          alert('Hubo un error al guardar los cambios');
-        }
-      );
-    } else {
-      alert('Por favor, complete los campos requeridos.');
+  guardarCambios() {
+
+    if (this.form.invalid) {
+      alert('Por favor, completa los campos obligatorios.');
+      return;
     }
+
+    const correo = this.form.value.correo;
+    const userData = this.form.value;
+
+    this.service.updateUserInfoByEmail(correo, userData).subscribe(response => {
+      // Maneja la respuesta de la actualización
+      if (response.status === 200 || 204) {
+        alert('Los cambios se guardaron correctamente');
+
+        setTimeout(() => {
+          this.router.navigate(['/admin-perfil']);
+        }, 1000);
+
+      } else {
+        alert('Hubo un error al guardar los cambios');
+      }
+    });
   }
 }

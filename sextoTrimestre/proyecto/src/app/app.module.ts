@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { AllisonModule } from './components/allison/allison.module';
 import { SergioModule } from './components/sergio/sergio.module';
+import { KatalinaModule } from './components/katalina/katalina.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SergioModule } from './components/sergio/sergio.module';
     AppRoutingModule,
     AllisonModule,
     SergioModule,
+    KatalinaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,16 +11,6 @@ export class ServiceService {
 
   apiUrl = 'http://localhost:3000';
 
-  getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
-    return this.http.get(url);
-  }
-
-  updateUserInfoByEmail(email: string, userData: any): Observable<any> {
-    const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
-    return this.http.post(url, userData);
-  }
-
     // VER ACTIVIDADES 
     getActivities(): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUrl}/list`);
@@ -63,5 +53,26 @@ export class ServiceService {
 
     return this.http.post<any>(url, body);
   }
+  getUserInfoByEmail(email: string): Observable<any> {
+    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    return this.http.get(url);
+  }
 
+  updateUserInfoByEmail(email: string, userData: any): Observable<any> {
+    const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
+    return this.http.post(url, userData);
+  }
+
+  updatePassword(email: string, passwordAnterior: string, passwordNueva: string): Observable<any> {
+    const url = `${this.apiUrl}/api/cambiar-contrasena`;
+    const userData = {
+        correo: email.slice(1, -1),
+        passwordAnterior: passwordAnterior,
+        nuevaPassword: passwordNueva
+    };
+
+    console.log('Datos a enviar al servidor:', userData);
+
+    return this.http.post(url, userData);
+  }
 }
