@@ -9,13 +9,13 @@ import { PerfilDetalleComponent } from './perfil-detalle/perfil-detalle.componen
 
 import { VerActividadComponent } from './ver-actividad/ver-actividad.component';
 import { VerAsistenciaComponent } from './ver-asistencia/ver-asistencia.component';
-import { VerBlogComponent } from './ver-blog/ver-blog.component';
+// import { VerBlogComponent } from './ver-blog/ver-blog.component';
 import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 
 
 const routes: Routes = [
   { path: 'ver-horarios', component: VerHorariosComponent  },
-  { path: 'ver-blog', component: VerBlogComponent  },
+  // { path: 'ver-blog', component: VerBlogComponent  },
   { path: 'ver-asistencias', component: VerAsistenciaComponent  },
   { path: 'ver-actvidades', component: VerActividadComponent  },
   { path: 'edit-perfil', component: EditPerfilComponent},
