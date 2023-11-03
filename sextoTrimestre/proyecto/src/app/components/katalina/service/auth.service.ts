@@ -6,21 +6,28 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private isAuthenticated: boolean = false;
 
-  login() {
+  login(userEmail: string) { // Añade userEmail como parámetro
     // Implementa la lógica de inicio de sesión aquí y establece this.isAuthenticated en true si el inicio de sesión es exitoso.
     this.isAuthenticated = true;
+
+    // Guarda el correo electrónico del usuario en el localStorage al iniciar sesión
+    localStorage.setItem('user_email', userEmail);
   }
 
   logout() {
     // Implementa la lógica de cierre de sesión aquí y establece this.isAuthenticated en false.
-    this.isAuthenticated = false;
 
     // Elimina el correo electrónico del usuario del almacenamiento local al cerrar sesión.
     localStorage.removeItem('user_email');
+    this.isAuthenticated = false;
   }
 
   isLoggedIn() {
     return this.isAuthenticated;
+  }
+
+  getUserEmail() {
+    return localStorage.getItem('user_email') || '';
   }
 
   constructor() { }
