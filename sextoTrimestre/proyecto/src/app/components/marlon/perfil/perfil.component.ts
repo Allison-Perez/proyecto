@@ -32,7 +32,7 @@ export class PerfilComponent implements OnInit {
     const correo: any = localStorage.getItem('user_email');
 
     // Llama al servicio para obtener la información del usuario
-    this.service.getUserInfoByEmail(correo).subscribe(data => {
+    this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
       this.userData = data;
     });
   }

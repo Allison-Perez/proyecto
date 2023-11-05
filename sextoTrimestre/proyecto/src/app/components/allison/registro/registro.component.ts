@@ -10,6 +10,7 @@ import { of } from 'rxjs';
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss']
 })
+
 export class RegistroComponent {
   infoUser = {};
 

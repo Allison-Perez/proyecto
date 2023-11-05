@@ -5,8 +5,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { Validators } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-edit-perfil',
   templateUrl: './edit-perfil.component.html',

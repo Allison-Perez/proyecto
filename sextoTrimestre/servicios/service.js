@@ -18,6 +18,7 @@ const dbConfig = {
   database: "acanner",
 };
 
+
 function generarContrasenaTemporal() {
   const longitud = 12;
   return crypto.randomBytes(Math.ceil(longitud / 2))
