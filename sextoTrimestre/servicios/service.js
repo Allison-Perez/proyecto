@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As",
+  password: "",
   database: "acanner",
 };
 
