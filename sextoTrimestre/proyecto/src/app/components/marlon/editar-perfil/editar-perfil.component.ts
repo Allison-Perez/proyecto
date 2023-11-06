@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EditarPerfilService } from '../services/editar-perfil.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -12,38 +15,63 @@ export class EditarPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
 
-  constructor(private fb: FormBuilder, private service: EditarPerfilService) {
+  constructor(private fb: FormBuilder, private service: EditarPerfilService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
-      primerNombre: [''],
+      primerNombre: ['', Validators.required],
       segundoNombre: [''],
-      primerApellido: [''],
-      segundoApellido: [''],
+      primerApellido: ['', Validators.required],
+      segundoApellido: ['', Validators.required],
       correo: ['']
     });
   }
 
   ngOnInit() {
-    const correo: any = localStorage.getItem('user_email');
+    // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
+    let correo:any = localStorage.getItem('user_email');
+    correo = correo.replace(/^"(.*)"$/, '$1');
+
     if (correo) {
+      // Llama a tu servicio para obtener la información del usuario por correo
       this.service.getUserInfoByEmail(correo).subscribe(data => {
         this.userData = data;
-        this.form.patchValue(data); 
+        this.form.patchValue(data); // Llena el formulario con los datos del usuario
       });
-    }else{
+    } else {
+      // Maneja el caso en el que el correo no esté disponible, por ejemplo, redirigiendo o mostrando un mensaje de error.
       console.error('El correo no está disponible');
     }
   }
 
-  guardarCambios(){
+
+  guardarCambios() {
+
+    if (this.form.invalid) {
+      alert('Por favor, completa los campos obligatorios.');
+      return;
+    }
+
     const correo = this.form.value.correo;
     const userData = this.form.value;
 
     this.service.updateUserInfoByEmail(correo, userData).subscribe(response => {
-      if (response.status === 200 || response.status === 204) {
+      // Maneja la respuesta de la actualización
+      if (response.status === 200 || 204) {
         alert('Los cambios se guardaron correctamente');
+
+        setTimeout(() => {
+          this.router.navigate(['/perfil']);
+        }, 1000);
+
       } else {
         alert('Hubo un error al guardar los cambios');
       }
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
   }
 }

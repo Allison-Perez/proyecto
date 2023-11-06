@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CambiarPasswordService } from '../services/cambiar-password.service'; 
+import { ServiceService } from '../services/perfil.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-cambiar-password',
@@ -8,36 +10,46 @@ import { CambiarPasswordService } from '../services/cambiar-password.service';
   styleUrls: ['./cambiar-password.component.css']
 })
 export class CambiarPasswordComponent {
-  cambiarContrasenaForm: FormGroup;
-  mensaje: string = '';
+  form: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private cambiarPasswordService: CambiarPasswordService
+    private fb: FormBuilder,
+    private service: ServiceService,
+    private router: Router,
+    private authService: AuthService
   ) {
-    this.cambiarContrasenaForm = this.formBuilder.group({
-      contrasenaAntigua: ['', [Validators.required]],
-      contrasenaNueva: ['', [Validators.required]],
-      confirmarContrasena: ['', [Validators.required]]
+    this.form = this.fb.group({
+      passwordAnterior: ['', Validators.required],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(8)]],
+      confirmarPassword: ['', Validators.required]
     });
   }
 
   cambiarContrasena() {
-    if (this.cambiarContrasenaForm.valid) {
-      const { contrasenaAntigua, contrasenaNueva, confirmarContrasena } = this.cambiarContrasenaForm.value;
+    const passwordAnterior = this.form.value.passwordAnterior;
+    const nuevaPassword = this.form.value.nuevaPassword;
+    const confirmarPassword = this.form.value.confirmarPassword;
 
-      if (contrasenaNueva !== confirmarContrasena) {
-        this.mensaje = 'Las contraseñas no coinciden. Por favor, inténtalo de nuevo.';
-      } else {
-        this.cambiarPasswordService.cambiarContrasena(contrasenaAntigua, contrasenaNueva).subscribe(
-          (response) => {
-            this.mensaje = response.message;
-          },
-          (error) => {
-            this.mensaje = 'Error al cambiar la contraseña. Verifica tus credenciales y vuelve a intentarlo.';
-          }
-        );
-      }
+    if (this.form.invalid) {
+      alert('Por favor, completa todos los campos obligatorios.');
+      return;
     }
+
+    if (nuevaPassword !== confirmarPassword) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
+
+    const email = this.authService.getUserEmail();
+
+    this.service.updatePassword(email, passwordAnterior, nuevaPassword).subscribe(
+      (response: any) => {
+        console.log('Respuesta del servidor:', response);
+        this.router.navigate(['/perfil']);
+      },
+      (error: any) => {
+        alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');
+      }
+    );
   }
 }

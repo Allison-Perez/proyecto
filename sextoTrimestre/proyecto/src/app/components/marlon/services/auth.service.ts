@@ -18,7 +18,10 @@ export class AuthService {
     // Elimina el correo electrónico del usuario del almacenamiento local al cerrar sesión.
     localStorage.removeItem('user_email');
   }
-
+  
+  getUserEmail() {
+    return localStorage.getItem('user_email') || '';
+  }
   isLoggedIn() {
     return this.isAuthenticated;
   }
