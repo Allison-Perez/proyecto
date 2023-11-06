@@ -14,6 +14,7 @@ export class VerHorariosComponent {
 
   constructor(private ServiceService : ServiceService ) {}
 
+  
   ngOnInit() {
     this.loadHorario();
   }
@@ -27,7 +28,7 @@ export class VerHorariosComponent {
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
-
+  
   updateHorario() {
     if (this.editingHorario) {
       const formData = new FormData();

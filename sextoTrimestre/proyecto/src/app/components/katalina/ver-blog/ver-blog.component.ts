@@ -7,11 +7,12 @@ import { ServiceService } from '../service/servicie.katalina.service';
   styleUrls: ['./ver-blog.component.scss']
 })
 export class VerBlogComponent {
+
+  constructor(private ServiceService: ServiceService) { }
+
   newsList: any[] = [];
   newNews: any = { titulo: '', contenido: '' };
   editingNews: any | null = null;
-
-  constructor(private ServiceService: ServiceService) { }
 
   ngOnInit() {
     this.loadNews();
@@ -19,12 +20,16 @@ export class VerBlogComponent {
 
   loadNews() {
     this.ServiceService.getNews().subscribe(data => {
+      console.log('Datos de noticias:', data);
+      if (data.length > 0) {
+        console.log('Primer objeto:', data[0]);
+      }
+  
       this.newsList = data;
     });
   }
-
   updateNews() {
-    this.ServiceService.updateNews(this.editingNews.id, this.editingNews).subscribe(() => {
+    this.ServiceService.updateNews(this.editingNews.id_noticias, this.editingNews).subscribe(() => {
       this.loadNews();
       this.editingNews = null;
     });

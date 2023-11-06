@@ -24,10 +24,6 @@ export class VerAsistenciaComponent {
     });
   }
 
-  handleFileInput(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
-
   updateAsistencia() {
     if (this.editingAsistencia) {
       const formData = new FormData();
