@@ -18,13 +18,8 @@ import { MarlonModule } from './components/marlon/marlon.module';
     AppRoutingModule,
     AllisonModule,
     SergioModule,
-<<<<<<< HEAD
     KatalinaModule,
     MarlonModule
-=======
-    MarlonModule,
-    KatalinaModule
->>>>>>> 742df2c785a087daa00881bb1a34f4c2025b6609
   ],
   providers: [],
   bootstrap: [AppComponent]
