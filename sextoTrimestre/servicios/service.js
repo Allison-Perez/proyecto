@@ -19,8 +19,6 @@ const dbConfig = {
   database: "acanner",
 };
 
-
-
 function generarContrasenaTemporal() {
   const longitud = 12;
   return crypto.randomBytes(Math.ceil(longitud / 2))
@@ -435,23 +433,27 @@ app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => 
 });
 
 // Ruta para actualizar una actividad por su ID
-app.put('/api/actividad/update/:id_guia', async (req, res) => {
+app.put('/api/actividad/update/:id_guia', upload.single('archivo'), async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
     const { nombreArchivo, comentario } = req.body;
-    const { id_actividad } = req.params;
+    const { id_guia } = req.params;
     const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    if (!nombreArchivo || !comentario || !id_guia) {
+      return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+    }
 
     let updateQuery;
     let queryParams;
 
     if (archivoUrl) {
       updateQuery = 'UPDATE guias SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_guia = ?';
-      queryParams = [nombreArchivo, comentario, archivoUrl, id_actividad];
+      queryParams = [nombreArchivo, comentario, archivoUrl, id_guia];
     } else {
       updateQuery = 'UPDATE guias SET nombreArchivo = ?, comentario = ? WHERE id_guia = ?';
-      queryParams = [nombreArchivo, comentario, id_actividad];
+      queryParams = [nombreArchivo, comentario, id_guia];
     }
 
     await connection.execute(updateQuery, queryParams);
@@ -464,15 +466,16 @@ app.put('/api/actividad/update/:id_guia', async (req, res) => {
   }
 });
 
+
 // Ruta para eliminar una actividad por su ID
 app.delete('/api/actividad/delete/:id_guia', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
-    const { id_actividad } = req.params;
+    const { id_guia } = req.params;
     const deleteQuery = 'DELETE FROM guias WHERE id_guia = ?';
     
-    await connection.execute(deleteQuery, [id_actividad]);
+    await connection.execute(deleteQuery, [id_guia]);
 
     connection.end();
     res.status(200).json({ message: 'Actividad eliminada exitosamente' });
@@ -515,7 +518,7 @@ app.post('/api/asistencia/create', upload.single('archivo'), async (req, res) =>
       return;
     }
 
-    const insertQuery = 'INSERT INTO asistencia (nombreArchivo, comentario, archivoUrl) VALUES (?, ?, ?';
+    const insertQuery = 'INSERT INTO asistencia (nombreArchivo, comentario, archivoUrl) VALUES (?, ?, ?)';
 
     await connection.execute(insertQuery, [nombreArchivo, comentario, archivoUrl]);
 
@@ -528,7 +531,7 @@ app.post('/api/asistencia/create', upload.single('archivo'), async (req, res) =>
 });
 
 // Ruta para actualizar una asistencia por su ID
-app.put('/api/asistencia/update/:id_asistencia', async (req, res) => {
+app.put('/api/asistencia/update/:id_asistencia', upload.single('archivo'), async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
@@ -539,7 +542,7 @@ app.put('/api/asistencia/update/:id_asistencia', async (req, res) => {
     let updateQuery;
     let queryParams;
 
-    if (archivoUrl) {
+    if (archivoUrl !== null) {
       updateQuery = 'UPDATE asistencia SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_asistencia = ?';
       queryParams = [nombreArchivo, comentario, archivoUrl, id_asistencia];
     } else {
@@ -556,6 +559,7 @@ app.put('/api/asistencia/update/:id_asistencia', async (req, res) => {
     res.status(500).json({ error: 'No se pudo actualizar la asistencia' });
   }
 });
+
 
 // Ruta para eliminar una asistencia por su ID
 app.delete('/api/asistencia/delete/:id_asistencia', async (req, res) => {
@@ -634,7 +638,7 @@ app.post('/api/horario/create',upload.single('archivo'), async (req, res) => {
 });
 
 // Ruta para actualizar un horario por su ID
-app.put('/api/horario/update/:id_horario', async (req, res) => {
+app.put('/api/horario/update/:id_horario', upload.single('archivo'), async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
@@ -642,16 +646,26 @@ app.put('/api/horario/update/:id_horario', async (req, res) => {
     const { id_horario } = req.params;
     const archivoUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-    let updateQuery;
-    let queryParams;
+    let updateQuery = 'UPDATE horario SET ';
+    let queryParams = [];
 
-    if (archivoUrl) {
-      updateQuery = 'UPDATE horario SET nombreArchivo = ?, comentario = ?, archivoUrl = ? WHERE id_horario = ?';
-      queryParams = [nombreArchivo, comentario, archivoUrl, id_horario];
-    } else {
-      updateQuery = 'UPDATE horario SET nombreArchivo = ?, comentario = ? WHERE id_horario = ?';
-      queryParams = [nombreArchivo, comentario, id_horario];
+    if (nombreArchivo !== undefined) {
+      updateQuery += 'nombreArchivo = ?, ';
+      queryParams.push(nombreArchivo);
     }
+
+    if (comentario !== undefined) {
+      updateQuery += 'comentario = ?, ';
+      queryParams.push(comentario);
+    }
+
+    if (archivoUrl !== undefined) {
+      updateQuery += 'archivoUrl = ? ';
+      queryParams.push(archivoUrl);
+    }
+
+    updateQuery += 'WHERE id_horario = ?';
+    queryParams.push(id_horario);
 
     await connection.execute(updateQuery, queryParams);
 

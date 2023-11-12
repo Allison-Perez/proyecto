@@ -91,12 +91,10 @@ createHorario() {
   }
 
   descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
     link.click();
   }
-  
 }
