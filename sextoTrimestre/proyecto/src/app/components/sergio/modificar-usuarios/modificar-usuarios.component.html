@@ -1,0 +1,23 @@
+<p>modificar-usuarios works!</p>
+<div>
+  <h2>Listado de Usuarios</h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="searchUsuario()">
+    <label for="tipoDocumento">Tipo de Documento:</label>
+    <select formControlName="tipoDocumento">
+      <!-- Opciones de tipo de documento -->
+    </select>
+
+    <label for="idUsuario">ID de Usuario:</label>
+    <input type="text" formControlName="idUsuario">
+
+    <button type="submit">Buscar</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let usuario of usuarios">
+      {{ usuario.primer_nombre }} {{ usuario.primer_apellido }}
+      <!-- Mostrar otros detalles del usuario según sea necesario -->
+    </li>
+  </ul>
+</div>
