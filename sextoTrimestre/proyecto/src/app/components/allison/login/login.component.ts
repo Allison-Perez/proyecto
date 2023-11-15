@@ -39,7 +39,7 @@ export class LoginComponent {
           const email = this.loginForm.value.correo
           console.log(email);
           localStorage.setItem('user_email', JSON.stringify(email))
-          this.router.navigate(['/vista-instructor']);
+
         }
       });
 
