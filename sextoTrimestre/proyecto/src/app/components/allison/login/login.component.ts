@@ -1,9 +1,12 @@
+// login.component.ts
+
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from '../service/service.service';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { AuthService } from '../service/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -15,11 +18,11 @@ export class LoginComponent {
   showAlert = false;
   loginForm: FormGroup;
 
-  constructor(private fb:FormBuilder, private http: ServiceService, private router: Router){
+  constructor(private fb: FormBuilder, private http: ServiceService, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
-    })
+    });
   }
 
   onSubmit() {
@@ -36,16 +39,35 @@ export class LoginComponent {
         })
       ).subscribe(response => {
         if (response) {
-          const email = this.loginForm.value.correo
+          const email = this.loginForm.value.correo;
           console.log(email);
-          localStorage.setItem('user_email', JSON.stringify(email))
+          localStorage.setItem('user_email', JSON.stringify(email));
 
+          const userRole = response.rol;
+          this.authService.setAuthenticationStatus(true, userRole);
+          this.redirectToRoleView(userRole);
         }
       });
 
-    } else{
+    } else {
       this.showAlert = true;
     }
   }
 
+  private redirectToRoleView(userRole: number): void {
+    switch (userRole) {
+      case 1:
+        this.router.navigate(['/vista-instructor']);
+        break;
+      case 2:
+        this.router.navigate(['/index.katalina']);
+        break;
+      case 3:
+        this.router.navigate(['/admin-perfil']);
+        break;
+      default:
+
+        break;
+    }
+  }
 }

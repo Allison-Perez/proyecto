@@ -11,6 +11,7 @@ export class AuthService {
 
   private apiUrl = 'http://localhost:3000';
   private _isAuthenticated = false;
+  private _userRole: number = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -24,9 +25,15 @@ export class AuthService {
     return this._isAuthenticated;
   }
 
-  // Método para establecer el estado de autenticación
-  setAuthenticationStatus(status: boolean): void {
+  // Método para obtener el rol del usuario
+  getUserRole(): number {
+    return this._userRole;
+  }
+
+  // Método para establecer el estado de autenticación y el rol
+  setAuthenticationStatus(status: boolean, role: number): void {
     this._isAuthenticated = status;
+    this._userRole = role;
   }
 
   // Otros métodos relacionados con la autenticación pueden ir aquí

@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "111019As",
   database: "acanner",
 };
 
@@ -49,7 +49,7 @@ app.post("/login", async (req, res) => {
 
     // Cerrar la conexión y enviar la respuesta
     connection.end();
-    res.status(200).json({ message: "Inicio de sesión exitoso" });
+    res.status(200).json({ message: "Inicio de sesión exitoso",rol: usuario.rol });
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);
     res.status(500).json({ error: "Error en el inicio de sesión" });
@@ -358,7 +358,7 @@ app.put('/api/blog/update/:id_noticias', async (req, res) => {
 // Ruta para eliminar una noticia por su ID
 app.delete('/api/blog/delete/:id_noticias', async (req, res) => {
   try {
-    const connection = await mysql.createConnection(dbConfig); 
+    const connection = await mysql.createConnection(dbConfig);
 
     const { id_noticias } = req.params;
     const deleteQuery = 'DELETE FROM noticias WHERE id_noticias = ?';
@@ -377,10 +377,10 @@ app.delete('/api/blog/delete/:id_noticias', async (req, res) => {
 // Ruta para obtener la lista de blogs
 app.get('/api/blog/list', async (req, res) => {
   try {
-    const connection = await mysql.createConnection(dbConfig); 
+    const connection = await mysql.createConnection(dbConfig);
     const selectQuery = 'SELECT * FROM noticias';
 
-    const [results] = await connection.execute(selectQuery); 
+    const [results] = await connection.execute(selectQuery);
 
     connection.end();
     res.status(200).json(results);
@@ -394,10 +394,10 @@ app.get('/api/blog/list', async (req, res) => {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); 
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -421,7 +421,7 @@ app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => 
     }
 
     const insertQuery = 'INSERT INTO guias (nombreArchivo, comentario, archivoUrl) VALUES (?, ?, ?)';
-    
+
     await connection.execute(insertQuery, [nombreArchivo, comentario, archivoUrl]);
 
     connection.end();
@@ -474,7 +474,7 @@ app.delete('/api/actividad/delete/:id_guia', async (req, res) => {
 
     const { id_guia } = req.params;
     const deleteQuery = 'DELETE FROM guias WHERE id_guia = ?';
-    
+
     await connection.execute(deleteQuery, [id_guia]);
 
     connection.end();
@@ -508,7 +508,7 @@ app.get('/api/actividad/list', async (req, res) => {
 app.post('/api/asistencia/create', upload.single('archivo'), async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
-    
+
     const { nombreArchivo, comentario } = req.body;
     const archivoUrl = req.file ? `/uploads/${req.file.filename}` : '';
 
@@ -615,7 +615,7 @@ app.get('/api/asistencia/download/:archivo', (req, res) => {
 app.post('/api/horario/create',upload.single('archivo'), async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
-    
+
     const { nombreArchivo, comentario } = req.body;
     const archivoUrl = req.file ? `/uploads/${req.file.filename}` : '';
 
