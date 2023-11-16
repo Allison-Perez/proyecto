@@ -95,6 +95,15 @@ select {
   justify-content: space-between;
 }
 
+
+.btn-primary:hover {
+  background-color: #088a88;
+}
+
+.container .btn-primary:active {
+  background-color: #088a88;
+}
+
 @media only screen and (max-width: 1500px) {
 
   .container {

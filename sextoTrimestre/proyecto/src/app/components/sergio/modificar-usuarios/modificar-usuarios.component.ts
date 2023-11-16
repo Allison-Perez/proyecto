@@ -1,43 +1,35 @@
-// Importaciones necesarias
-import { OnInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../service/user.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UsuarioService } from '../service/usuario.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-modificar-usuarios',
   templateUrl: './modificar-usuarios.component.html',
-  styleUrls: ['./modificar-usuarios.component.css'],
+  styleUrls: ['./modificar-usuarios.component.scss'],
 })
-export class ModificarUsuariosComponent implements OnInit {
-  //
-  // Declaración del formulario
-  searchForm: FormGroup;
-  usuarios = [{ primer_nombre: '', primer_apellido: '' }];
+export class ModificarUsuariosComponent implements OnInit, OnDestroy {
+  usuarios: any[]  = [];
+  private unsubscribe$ = new Subject<void>();
 
-  // Constructor con inyección de dependencias
-  constructor(private userService: UserService, private fb: FormBuilder) {
-    // Inicialización del formulario
-    this.searchForm = this.fb.group({
-      tipoDocumento: ['', Validators.required],
-      idUsuario: ['', Validators.required],
-    });
-  }
+  constructor(private usuarioService: UsuarioService) { }
 
-  // Método ngOnInit para inicialización de componentes
   ngOnInit(): void {
-    // Lógica que se ejecuta al iniciar el componente
-
-    // Ejemplo: Obtener lista de usuarios al iniciar el componente
-    this.userService.getUsers().subscribe((data) => {
-      // Manejar la respuesta
-      console.log(data);
-    });
+    this.usuarioService.getAllUsuarios()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(data => {
+        this.usuarios = data;
+      });
   }
 
-  // Método para buscar usuario
-  searchUsuario(): void {
-    // Ejemplo: Buscar usuario según tipoDocumento e idUsuario
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
-  // Otras funciones y lógica del componente
+  editUser(usuario: any) {
+    // Aquí puedes abrir un modal, redirigir a una página de edición, etc.
+    // Puedes usar Angular services para manejar la lógica de edición.
+    console.log('Editando usuario:', usuario);
+  }
 }

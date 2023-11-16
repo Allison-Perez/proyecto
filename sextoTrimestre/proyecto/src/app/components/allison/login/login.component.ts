@@ -63,7 +63,7 @@ export class LoginComponent {
         this.router.navigate(['/index.katalina']);
         break;
       case 3:
-        this.router.navigate(['/admin-perfil']);
+        this.router.navigate(['/vista-admin']);
         break;
       default:
 

@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'recuperar', component: RecuperarComponent },
   { path: 'validacion/:correo', component: ValidacionComponent },
   { path: 'index.katalina', component: IndexKatalinaComponent, canActivate: [AuthGuard], data: { expectedRole: 2 } },
-  { path: 'admin-perfil', component: VistaAdminComponent, canActivate: [AuthGuard], data: { expectedRole: 3 } },
+  { path: 'vista-admin', component: VistaAdminComponent, canActivate: [AuthGuard], data: { expectedRole: 3 } },
   { path: 'vista-instructor', component: VistaInstructorComponent, canActivate: [AuthGuard], data: { expectedRole: 1 } },
 ];
 

@@ -1,23 +1,35 @@
-<p>modificar-usuarios works!</p>
-<div>
-  <h2>Listado de Usuarios</h2>
+<app-nav></app-nav>
 
-  <form [formGroup]="searchForm" (ngSubmit)="searchUsuario()">
-    <label for="tipoDocumento">Tipo de Documento:</label>
-    <select formControlName="tipoDocumento">
-      <!-- Opciones de tipo de documento -->
-    </select>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Primer Nombre</th>
+      <th>Segundo Nombre</th>
+      <th>Primer Apellido1</th>
+      <th>Segundo Apellido</th>
+      <th>Fecha de Nacimiento</th>
+      <th>Ficha</th>
+      <th>Correo</th>
+      <th><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAWNJREFUSEvF1L9OVEEUx/HPNhR2JAQKTUgsIGIUqCEgtL6TgfA+PgH+QYU3oAARhECMxkIpFCrISc41u8u9y727bnaauZndfL9nfnNmWoY8WkPmG0Qwhpd4gNf4W1Zsv4JxvMVCQk/wAmfdkn4EAX+HeXzDJWbzexHf2yVNBRN4g+c4wjqusJ1rm9joVzCJ93iSgC8Zy3VKn2ELr/oRTGUsAf+BX5jBOf7kd6yHJOZ/o05EAd/DY1xgBb/xAXNJKtaPmx5yN3wJp2jvooAX63c6tdcOHmaVReXt8I94mrLVnEvvbJUg4LuYzliq4LEeO6gcZYKA7vwPeFjLBF8THnPczsg8+j9ubnTJZ6zdV3mxpTLBTf74KCEBj/6PzA+zizpua9OICkHIA/4pn4IDxIHWhldFVAjaCwv4Mn42fd57RVSw9vMsGsOrdtC0yJ7/r/NUDCSsE1FTQQdzJIKmFY/2DG4BKIpQGXdVxNIAAAAASUVORK5CYII="/></th>
 
-    <label for="idUsuario">ID de Usuario:</label>
-    <input type="text" formControlName="idUsuario">
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.id_usuario }}</td>
+      <td>{{ usuario.primer_nombre }} </td>
+      <td>{{ usuario.segundo_nombre }}</td>
+      <td>{{ usuario.primer_apellido }}
+      <td>{{ usuario.segundo_apellido }}</td>
+      <td>{{ usuario.fecha_nacimiento }}</td>
+      <td>{{ usuario.ficha }} </td>
+      <td>{{ usuario.correo }} </td>
+      <td (click)="editUser(usuario)">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvF0zFKBDEUh/HfnkALEWy19gI2Xkg7rdZGRAu19EaCN7ASbK0EtxeUB1PEcTLJTHbZtEm+7+X/XhY2vBYb5msV3OAb17lCWwQPuOjAl3gckswV7OEV+wn0Crd9yRzBLr5whGccdNAl7loFZ4hKT/COQ7x08TRHFHlH7rE+cIo37GDV2uRo4n0PEpJjfI6Nek0P0spT1hPOS/+oJGiCh3xMkINHMyOyqpUTrAWee8Ha4DnBz8DbJ8WS3h+KqC+YDa95QRO8NEVVU1I6VPoHpfvF/a0IhqaoWGly4E/RNVM0Bf6vr1uJaGrFo+d/AQouJhks7bRaAAAAAElFTkSuQmCC"/>
+      </td>
 
-    <button type="submit">Buscar</button>
-  </form>
+    </tr>
+  </tbody>
+</table>
 
-  <ul>
-    <li *ngFor="let usuario of usuarios">
-      {{ usuario.primer_nombre }} {{ usuario.primer_apellido }}
-      <!-- Mostrar otros detalles del usuario según sea necesario -->
-    </li>
-  </ul>
-</div>
