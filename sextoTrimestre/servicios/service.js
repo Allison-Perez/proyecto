@@ -723,6 +723,7 @@ app.get("/api/usuarios", async (req, res) => {
   }
 });
 
+
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });

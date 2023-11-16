@@ -26,3 +26,12 @@ th{
 td {
   color: black;
 }
+
+td.edit-mode {
+  width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+}
+
+/* Establecer un ancho fijo para las celdas en modo de visualización */
+td.view-mode {
+  width: 100px; /* Puedes ajustar el ancho según tus necesidades */
+}

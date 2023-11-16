@@ -15,4 +15,12 @@ export class UsuarioService {
     return this.http.get<any[]>(`${this.apiUrl}/api/usuarios`);
   }
 
+  updateUsuario(userId: number, updatedUser: any): Observable<any> {
+    // Asegúrate de tener la ruta correcta para actualizar un usuario en tu backend
+    const url = `${this.apiUrl}/api/usuarios/${userId}`;
+
+    // Realiza la solicitud de actualización al backend
+    return this.http.put(url, updatedUser);
+  }
+
 }
