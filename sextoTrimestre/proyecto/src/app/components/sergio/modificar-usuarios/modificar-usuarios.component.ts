@@ -95,4 +95,26 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
       this.editingUserId = null;
     }
   }
+
+  saveChanges() {
+    if (this.editForm.valid) {
+      const userId = this.editForm.value.id_usuario;
+      const editedUser = this.editForm.value;
+
+      this.usuarioService.updateUsuario(userId, editedUser).subscribe(
+        (response) => {
+          console.log('Usuario actualizado correctamente:', response);
+        },
+        (error) => {
+          console.error('Error al actualizar el usuario:', error);
+        }
+      );
+
+      this.editingUserId = null;
+    }
+  }
+  cancelEdit() {
+    // Aquí puedes realizar acciones adicionales si es necesario antes de cancelar la edición
+    this.editingUserId = null;
+  }
 }

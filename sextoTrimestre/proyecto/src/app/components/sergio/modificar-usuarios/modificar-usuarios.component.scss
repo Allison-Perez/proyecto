@@ -1,5 +1,5 @@
 table {
-  width: 80%;
+  width: 90%;
   margin: 30px auto;
   border-collapse: collapse;
 }
@@ -35,3 +35,21 @@ td.edit-mode {
 td.view-mode {
   width: 100px; /* Puedes ajustar el ancho según tus necesidades */
 }
+
+.table_true {
+  max-width: 500px;
+}
+
+.table_true {
+  overflow: hidden; /* Para truncar el contenido si es necesario */
+  white-space: nowrap;
+  text-align: left;/* Para que el texto no se divida en varias líneas */
+}
+
+.table_true input {
+  width: 90%;
+  margin: auto;
+  box-sizing: border-box; /* Para incluir el padding y el borde en el ancho total */
+}
+
+
