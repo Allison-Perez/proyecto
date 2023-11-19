@@ -6,7 +6,7 @@
       <th>ID</th>
       <th>Primer Nombre</th>
       <th>Primer Apellido</th>
-      <th>Fecha de Nacimiento</th>
+      <!-- <th>Fecha de Nacimiento</th> -->
       <th>Ficha</th>
       <th>Correo</th>
       <th>Rol</th>
@@ -19,7 +19,7 @@
       <td *ngIf="usuario.editar === false">{{ usuario.id_usuario }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primer_nombre }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primer_apellido }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.fecha_nacimiento }}</td>
+      <!-- <td *ngIf="usuario.editar === false">{{ usuario.fecha_nacimiento }}</td> -->
       <td *ngIf="usuario.editar === false">{{ usuario.ficha }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.correo }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.rol }}</td>
@@ -30,7 +30,7 @@
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.id_usuario"></td>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_nombre"></td>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido"></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="date" [value]="usuario.fecha_nacimiento"></td>
+      <!-- <td class="table_true" *ngIf="usuario.editar === true"><input type="date" [value]="usuario.fecha_nacimiento"></td> -->
       <td class="table_true" *ngIf="usuario.editar === true">
         <select name="ficha" id="ficha">
           <option value="2558104">2558104</option>
@@ -44,8 +44,8 @@
         </select>
       </td>
       <td *ngIf="usuario.editar === true" (click)="editUser(i)">
-        <i class='bx bx-check'></i>
-        <i class='bx bx-x'></i>
+        <i class='bx bx-check' (click)="saveChanges()"></i>
+        <i class='bx bx-x' (click)="cancelEdit()"></i>
       </td>
 
 

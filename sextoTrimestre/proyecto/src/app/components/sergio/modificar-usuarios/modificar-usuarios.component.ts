@@ -22,7 +22,6 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
       segundo_nombre: [''],
       primer_apellido: ['', Validators.required],
       segundo_apellido: [''],
-      fecha_nacimiento: [''],
       ficha: [''],
       correo: ['', [Validators.required, Validators.email]],
     });
@@ -55,12 +54,11 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  editUser(usuario: any) {
+  editUser(i: number) {
     // Puedes abrir un modal aquí o realizar otras acciones antes de activar el modo de edición
-    this.activateEditMode(usuario.id_usuario);
-    this.usuarios[usuario].editar = true
-    // const user = this.usuarios[usuario]
-
+    this.activateEditMode(this.usuarios[i].id_usuario);
+    this.usuarios[i].editar = true;
+    // const user = this.usuarios[i];
   }
 
   activateEditMode(userId: number) {
@@ -72,49 +70,37 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
     this.editingUserId = userId;
   }
 
-  submitEditForm() {
-    if (this.editForm.valid) {
-      // Puedes realizar acciones necesarias antes de enviar el formulario, si es necesario
-      // Aquí puedes enviar el formulario a tu servicio para que haga la actualización en tu backend
-      const userId = this.editForm.value.id_usuario;
-      const editedUser = this.editForm.value;
-
-      // Llama al método del servicio para actualizar el usuario
-      this.usuarioService.updateUsuario(userId, editedUser).subscribe(
-        (response) => {
-          console.log('Usuario actualizado correctamente:', response);
-          // Puedes realizar acciones adicionales después de la actualización, si es necesario
-        },
-        (error) => {
-          console.error('Error al actualizar el usuario:', error);
-          // Puedes manejar el error aquí, si es necesario
-        }
-      );
-
-      // Desactiva el modo edición
-      this.editingUserId = null;
-    }
-  }
 
   saveChanges() {
+    console.log('entra');
+
     if (this.editForm.valid) {
-      const userId = this.editForm.value.id_usuario;
+      const userEmail = this.editForm.value.correo;
       const editedUser = this.editForm.value;
 
-      this.usuarioService.updateUsuario(userId, editedUser).subscribe(
+      console.log('Datos del usuario a enviar al servidor:', editedUser);
+
+      this.usuarioService.updateUsuarioByEmail(userEmail, editedUser).subscribe(
         (response) => {
           console.log('Usuario actualizado correctamente:', response);
+          // Respuesta exitosa (200)
         },
         (error) => {
           console.error('Error al actualizar el usuario:', error);
+          // Error interno en el servidor (500)
         }
       );
 
       this.editingUserId = null;
     }
   }
+
+
+
+
+
   cancelEdit() {
-    // Aquí puedes realizar acciones adicionales si es necesario antes de cancelar la edición
+    console.log('entra el cancelar')
     this.editingUserId = null;
   }
 }
