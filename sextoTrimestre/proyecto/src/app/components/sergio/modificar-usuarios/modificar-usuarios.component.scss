@@ -1,0 +1,55 @@
+table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #57a7a5;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
+
+th{
+  text-align: center;
+  color: white;
+}
+
+td {
+  color: black;
+}
+
+td.edit-mode {
+  width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+}
+
+/* Establecer un ancho fijo para las celdas en modo de visualización */
+td.view-mode {
+  width: 100px; /* Puedes ajustar el ancho según tus necesidades */
+}
+
+.table_true {
+  max-width: 500px;
+}
+
+.table_true {
+  overflow: hidden; /* Para truncar el contenido si es necesario */
+  white-space: nowrap;
+  text-align: left;/* Para que el texto no se divida en varias líneas */
+}
+
+.table_true input {
+  width: 90%;
+  margin: auto;
+  box-sizing: border-box; /* Para incluir el padding y el borde en el ancho total */
+}
+
+

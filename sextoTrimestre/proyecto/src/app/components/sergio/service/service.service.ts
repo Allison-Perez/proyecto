@@ -38,4 +38,15 @@ export class ServiceService {
     return this.http.post(`${this.apiUrl}/registro`, data);
   }
 
+  // MODIFICAR USUARIOS
+
+  getAllUsuarios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/api/usuarios`);
+  }
+
+  updateUsuarioByEmail(email: string, updatedUser: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/api/modificar-usuarios`, { email, updatedUser });
+  }
+
+
 }
