@@ -805,14 +805,13 @@ app.get("/api/usuarios", async (req, res) => {
 // });
 
 
-// INTENTO 2 NO SIRVE :(
 // app.post('/api/modificar-usuarios', async (req, res) => {
 //   try {
 //     console.log('Entro a la ruta de modificación de usuarios');
 
-//     // Asegúrate de que req.body y req.body.email estén definidos
-//     if (!req.body || !req.body.email) {
-//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
+//     // Asegúrate de que req.body y req.body.updatedUser estén definidos
+//     if (!req.body || !req.body.updatedUser) {
+//       return res.status(400).json({ error: 'Datos del usuario no proporcionados en la solicitud' });
 //     }
 
 //     const connection = await mysql.createConnection(dbConfig);
@@ -828,15 +827,21 @@ app.get("/api/usuarios", async (req, res) => {
 //       return res.status(404).json({ error: 'Usuario no encontrado' });
 //     }
 
-
-//     // Construye la consulta SQL dinámicamente en función de los campos proporcionados
-//     const updateSql = 'UPDATE usuario SET ' +
-//       Object.keys(userData).map(key => `${key} = ?`).join(', ') +
-//       ' WHERE correo = ?';
-
 //     // Construye el array de valores para la consulta SQL
 //     const values = Object.values(userData);
 //     values.push(userEmail);
+
+//     // Realiza la actualización en la base de datos utilizando el correo del usuario
+//     const updateSql = `
+//       UPDATE usuario
+//       SET
+//         primer_nombre = ?,
+//         segundo_nombre = ?,
+//         primer_apellido = ?,
+//         segundo_apellido = ?,
+//         ficha = ?,
+//         correo = ?
+//       WHERE correo = ?`;
 
 //     console.log('Consulta SQL:', updateSql);
 //     console.log('Valores:', values);
@@ -848,69 +853,13 @@ app.get("/api/usuarios", async (req, res) => {
 //     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
 //   } catch (error) {
 //     console.error('Error al actualizar el usuario:', error);
-//     res.status(500).json({ error: 'Error interno en el servidor' });
+//     throw sqlError;
+//     // Enviar una respuesta solo si no se ha enviado ninguna respuesta anteriormente
+//     if (!res.headersSent) {
+//       res.status(500).json({ error: 'Error interno en el servidor' });
+//     }
 //   }
 // });
-
-
-
-app.use(bodyParser.json());
-
-app.post('/api/modificar-usuarios', async (req, res) => {
-  try {
-    console.log('Entro a la ruta de modificación de usuarios');
-
-    // Asegúrate de que req.body y req.body.updatedUser estén definidos
-    if (!req.body || !req.body.updatedUser) {
-      return res.status(400).json({ error: 'Datos del usuario no proporcionados en la solicitud' });
-    }
-
-    const connection = await mysql.createConnection(dbConfig);
-    const userEmail = req.body.email;
-    const userData = req.body.updatedUser;
-
-    console.log('Datos del usuario a actualizar:', userData);
-
-    // Verifica si el usuario con el correo electrónico existe
-    const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
-
-    if (userExists.length === 0) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
-
-    // Construye el array de valores para la consulta SQL
-    const values = Object.values(userData);
-    values.push(userEmail);
-
-    // Realiza la actualización en la base de datos utilizando el correo del usuario
-    const updateSql = `
-      UPDATE usuario
-      SET
-        primer_nombre = ?,
-        segundo_nombre = ?,
-        primer_apellido = ?,
-        segundo_apellido = ?,
-        ficha = ?,
-        correo = ?
-      WHERE correo = ?`;
-
-    console.log('Consulta SQL:', updateSql);
-    console.log('Valores:', values);
-
-    await connection.execute(updateSql, values);
-
-    // Cerrar la conexión y enviar la respuesta
-    connection.end();
-    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-  } catch (error) {
-    console.error('Error al actualizar el usuario:', error);
-    throw sqlError;
-    // Enviar una respuesta solo si no se ha enviado ninguna respuesta anteriormente
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Error interno en el servidor' });
-    }
-  }
-});
 
 
 

@@ -58,6 +58,7 @@ export class RegistrosAdminComponent {
             this.registroExitoso = true;
             this.registroFallido = false;
             this.errorMessage = '';
+            this.showAlert('Registro exitoso');
           }
         });
 
@@ -68,5 +69,9 @@ export class RegistrosAdminComponent {
       this.registroExitoso = false;
       this.errorMessage = 'Por favor, completa todos los campos requeridos y asegúrate de que el correo sea válido.';
     }
+  }
+
+  showAlert(message: string) {
+    alert(message); // Puedes personalizar esto con una librería de notificaciones si lo prefieres
   }
 }
