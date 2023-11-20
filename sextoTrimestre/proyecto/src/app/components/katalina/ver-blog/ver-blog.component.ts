@@ -7,12 +7,10 @@ import { ServiceService } from '../service/servicie.katalina.service';
   styleUrls: ['./ver-blog.component.scss']
 })
 export class VerBlogComponent {
-
-  constructor(private ServiceService: ServiceService) { }
-
   newsList: any[] = [];
   newNews: any = { titulo: '', contenido: '' };
   editingNews: any | null = null;
+  constructor(private ServiceService: ServiceService) { }
 
   ngOnInit() {
     this.loadNews();

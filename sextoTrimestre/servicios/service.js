@@ -10,14 +10,13 @@ const { log } = require("console");
 const app = express();
 const port = 3000;
 
-
 app.use(cors());
 app.use(bodyParser.json());
 
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As",
+  password: "",
   database: "acanner",
 };
 

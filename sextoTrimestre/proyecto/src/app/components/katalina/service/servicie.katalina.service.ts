@@ -13,7 +13,7 @@ export class ServiceService {
 
     // VER ACTIVIDADES 
     getActivities(): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/list`);
+      return this.http.get<any[]>(`${this.apiUrl}/api/actividad/list`);
     }
       
     updateActivity(activityId: string, updatedData: any): Observable<any> {
@@ -22,7 +22,7 @@ export class ServiceService {
 
    // VER ASISTENCIAS
   getAsistencia(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/list`);
+    return this.http.get<any[]>(`${this.apiUrl}/api/asistencia/list`);
   }
    // Actualizar una asistencia con archivo y comentario
    updateAsistencia(asistenciaId: string, updatedData: any): Observable<any> {
@@ -31,7 +31,7 @@ export class ServiceService {
 
   // VER BLOG
   getNews(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/list`);
+    return this.http.get<any[]>(`${this.apiUrl}/api/blog/list`);
   }
 
   updateNews(newsId: string, updatedData: any): Observable<any> {
@@ -40,7 +40,7 @@ export class ServiceService {
 
    // VER HORARIOS
   getHorario(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/list`);
+    return this.http.get<any[]>(`${this.apiUrl}/api/horario/list`);
   }
   updateHorario(horarioId: string, updatedData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update/${horarioId}`, updatedData);
