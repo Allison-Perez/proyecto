@@ -10,6 +10,7 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
+import { ModificarInfoComponent } from './modificar-info/modificar-info.component';
 
 
 @NgModule({
@@ -22,6 +23,8 @@ import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuar
     NavComponent,
     RegistrosAdminComponent,
     ModificarUsuariosComponent,
+    ModificarInfoComponent,
+
   ],
   imports: [
     CommonModule,

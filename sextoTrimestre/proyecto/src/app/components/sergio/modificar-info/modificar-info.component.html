@@ -1,0 +1,14 @@
+
+<div>
+  <h2>Modificar Información de Usuario</h2>
+  <form>
+    <label for="rol">Rol:</label>
+<select id="rol" name="rol" [(ngModel)]="selectedRol">
+  <option value="1">Instructor</option>
+  <option value="2">Aprendiz</option>
+  <option value="3">Admin</option>
+</select>
+
+    <button type="button" (click)="guardarCambios()">Guardar Cambios</button>
+  </form>
+</div>

@@ -44,9 +44,11 @@ export class ServiceService {
     return this.http.get<any[]>(`${this.apiUrl}/api/usuarios`);
   }
 
-  updateUsuarioByEmail(email: string, updatedUser: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/modificar-usuarios`, { email, updatedUser });
-  }
+ // service.service.ts
+ updateUserInfo(correo: string, userData: any): Observable<any> {
+  const url = `${this.apiUrl}/api/modificar-usuario?correo=${correo}`;
+  return this.http.put(url, userData);
+}
 
 
 }

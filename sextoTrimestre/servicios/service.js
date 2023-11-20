@@ -315,64 +315,54 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
 });
 
 
+// TRAER LOS USUARIOS A MODIFICAR
+
+app.get("/api/usuarios", async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute("SELECT * FROM usuario");
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+    res.status(500).json({ error: "Error al obtener usuarios" });
+  }
+});
+
+
+
 // modificar usuarios
 
-app.post('/api/modificar-usuarios', async (req, res) => {
-   try {
- console.log('Entro a la ruta de modificación de usuarios');
+let connection;
 
-  //     // Asegúrate de que req.body y req.body.updatedUser estén definidos
-      if (!req.body || !req.body.updatedUser) {
-        return res.status(400).json({ error: 'Datos del usuario no proporcionados en la solicitud' });
-     }
+async function connectToDatabase() {
+  connection = await mysql.createConnection(dbConfig);
+}
 
-     const connection = await mysql.createConnection(dbConfig);
-      const userEmail = req.body.email;
-      const userData = req.body.updatedUser;
+app.put('/api/modificar-usuario', async (req, res) => {
+  try {
+    const correo = req.query.correo;
+    const nuevoUsuario = req.body;
 
-      console.log('Datos del usuario a actualizar:', userData);
+    console.log(`Actualizando usuario con correo: ${correo}`);
+    console.log('Nuevo usuario:', nuevoUsuario);
 
-      // Verifica si el usuario con el correo electrónico existe
-     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
+    await connectToDatabase(); // Conectar a la base de datos antes de la consulta
 
-     if (userExists.length === 0) {
-        return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
+    const sql = 'UPDATE usuario SET ? WHERE correo = ?';
 
-      // Construye el array de valores para la consulta SQL
-      const values = Object.values(userData);
-      values.push(userEmail);
+    const [result] = await connection.query(sql, [nuevoUsuario, correo]);
 
-      // Realiza la actualización en la base de datos utilizando el correo del usuario
-      const updateSql = `
-        UPDATE usuario
-        SET
-          primer_nombre = ?,
-         segundo_nombre = ?,
-          primer_apellido = ?,
-          segundo_apellido = ?,
-          ficha = ?,
-          correo = ?
-        WHERE correo = ?`;
+    // Cerrar la conexión y enviar la respuesta
+    await connection.end();
 
-     console.log('Consulta SQL:', updateSql);
-      console.log('Valores:', values);
-
-     await connection.execute(updateSql, values);
-
-     // Cerrar la conexión y enviar la respuesta
-     connection.end();
-      res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-   } catch (error) {
-     console.error('Error al actualizar el usuario:', error);
-     throw sqlError;
-     // Enviar una respuesta solo si no se ha enviado ninguna respuesta anteriormente
-     if (!res.headersSent) {
-        res.status(500).json({ error: 'Error interno en el servidor' });
-      }
-    }
-  });
-
+    console.log('Usuario actualizado correctamente');
+    res.send('Usuario actualizado correctamente');
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error);
+    res.status(500).send('Error al actualizar usuario');
+  }
+});
 
 
 
