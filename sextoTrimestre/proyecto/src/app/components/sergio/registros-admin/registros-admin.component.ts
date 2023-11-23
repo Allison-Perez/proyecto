@@ -27,7 +27,7 @@ export class RegistrosAdminComponent {
       primer_nombre: ['', Validators.required],
       primer_apellido: ['', Validators.required],
       tipo_documento: ['', Validators.required],
-      fecha_nacimiento: ['', Validators.required],
+      fecha_nacimiento: ['', [Validators.required, this.validateFechaNacimiento]],
       correo: ['', [Validators.required, Validators.email]],
       pregunta_seguridad: ['', Validators.required],
       segundo_nombre: [''],
@@ -54,11 +54,12 @@ export class RegistrosAdminComponent {
           return of(null);
         })
         ).subscribe(response => {
+          console.log('Registration Response:', response);
           if (response) {
             this.registroExitoso = true;
             this.registroFallido = false;
             this.errorMessage = '';
-            this.showAlert('Registro exitoso');
+
           }
         });
 
@@ -71,7 +72,18 @@ export class RegistrosAdminComponent {
     }
   }
 
-  showAlert(message: string) {
-    alert(message); // Puedes personalizar esto con una librería de notificaciones si lo prefieres
+  validateFechaNacimiento(control: import('@angular/forms').AbstractControl) {
+    const birthDate = new Date(control.value);
+    const currentDate = new Date();
+
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    console.log('Edad:', age);
+
+    if (age < 14) {
+      return { menorDe14: true };
+    }
+
+    return null;
   }
+
 }

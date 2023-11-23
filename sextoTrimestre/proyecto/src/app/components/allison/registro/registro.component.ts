@@ -22,7 +22,7 @@ export class RegistroComponent {
       primer_nombre: ['', Validators.required],
       primer_apellido: ['', Validators.required],
       tipo_documento: ['', Validators.required],
-      fecha_nacimiento: ['', Validators.required],
+      fecha_nacimiento: ['', [Validators.required, this.validateFechaNacimiento]],
       correo: ['', [Validators.required, Validators.email]],
       pregunta_seguridad: ['', Validators.required],
       segundo_nombre: [''],
@@ -55,6 +55,18 @@ export class RegistroComponent {
     }
   }
 
+  validateFechaNacimiento(control: import('@angular/forms').AbstractControl) {
+    const birthDate = new Date(control.value);
+    const currentDate = new Date();
 
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    console.log('Edad:', age);
+
+    if (age < 14) {
+      return { menorDe14: true };
+    }
+
+    return null;
+  }
 
 }

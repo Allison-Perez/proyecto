@@ -66,6 +66,14 @@
             Por favor, complete todos los campos obligatorios y asegúrese de que el correo sea válido.
           </div>
 
+          <div *ngIf="registerForm.get('fecha_nacimiento')?.hasError('menorDe14')" class="alert alert-danger mt-2">
+            Debes ser mayor de 14 años para registrarte.
+</div>
+
+<div *ngIf="registerForm.get('password')?.hasError('minlength')" class="alert alert-danger mt-2">
+  La contraseña debe tener al menos 8 caracteres.
+</div>
+
         </div>
         <div class="row">
           <div class="col-md-8 offset-md-3 buttons_container">
