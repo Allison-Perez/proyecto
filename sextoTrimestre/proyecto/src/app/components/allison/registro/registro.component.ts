@@ -54,4 +54,7 @@ export class RegistroComponent {
       this.showError = true;
     }
   }
+
+
+
 }
