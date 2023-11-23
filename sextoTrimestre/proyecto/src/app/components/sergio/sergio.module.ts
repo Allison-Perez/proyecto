@@ -9,8 +9,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
-import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
-import { ModificarInfoComponent } from './modificar-info/modificar-info.component';
+
 
 
 @NgModule({
@@ -22,8 +21,7 @@ import { ModificarInfoComponent } from './modificar-info/modificar-info.componen
     EditPerfilComponent,
     NavComponent,
     RegistrosAdminComponent,
-    ModificarUsuariosComponent,
-    ModificarInfoComponent,
+
 
   ],
   imports: [
