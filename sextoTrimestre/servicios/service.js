@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "111019As",
   database: "acanner",
 };
 
@@ -728,80 +728,64 @@ app.get("/api/usuarios", async (req, res) => {
 
 // INTENTO 1, FUNCIONA SI EDITO TODOS LOS CAMPOS
 
-// app.post('/api/modificar-usuarios', async (req, res) => {
-//   try {
-//     console.log('Entro a la ruta de modificación de usuarios');
+app.post('/api/modificar-usuarios', async (req, res) => {
+  try {
+    console.log('Entro a la ruta de modificación de usuarios');
 
-//     // Asegúrate de que req.body y req.body.email estén definidos
-//     if (!req.body || !req.body.email) {
-//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
-//     }
+    // Asegúrate de que req.body y req.body.email estén definidos
+    if (!req.body || !req.body.email) {
+      return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
+    }
 
-//     const connection = await mysql.createConnection(dbConfig);
-//     const userEmail = req.body.email;
-//     const userData = req.body;
+    const connection = await mysql.createConnection(dbConfig);
+    const userEmail = req.body.email;
+    const userData = req.body.updatedUser;
 
-//     console.log('Datos del usuario a actualizar:', userData);
+    console.log('Datos del usuario a actualizar:', userData);
 
-//     // Asegúrate de que los campos necesarios no estén undefined
-//     // if (!userData.primer_nombre || !userData.primer_apellido) {
-//     //   return res.status(400).json({ error: 'Campos obligatorios faltantes' });
-//     // }
+    // Asegúrate de que los campos necesarios no estén undefined
+    // if (!userData.primer_nombre || !userData.primer_apellido) {
+    //   return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+    // }
 
-//     // Verifica si el usuario con el correo electrónico existe
-//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
+    // Verifica si el usuario con el correo electrónico existe
+    const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
 
-//     if (userExists.length === 0) {
-//       return res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
+    if (userExists.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
 
-//     // Realiza la actualización en la base de datos utilizando el correo del usuario
-//     const updateSql = `
-//       UPDATE usuario
-//       SET
-//         primer_nombre = ?,
-//         segundo_nombre = ?,
-//         primer_apellido = ?,
-//         segundo_apellido = ?,
-//         fecha_nacimiento = ?,
-//         ficha = ?,
-//         rol = ?
-//       WHERE correo = ?`;
+    // Realiza la actualización en la base de datos utilizando el correo del usuario
+    const updateSql = `
+      UPDATE usuario
+      SET
+        primer_nombre = ?,
+        primer_apellido = ?,
+        ficha = ?,
+        rol = ?
+      WHERE correo = ?`;
 
-//     const {
-//       primer_nombre,
-//       segundo_nombre,
-//       primer_apellido,
-//       segundo_apellido,
-//       fecha_nacimiento,
-//       ficha,
-//       rol
-//     } = userData;
+    const values = [
+      userData.primer_nombre,
+      userData.primer_apellido,
+      userData.ficha,
+      userData.rol,
+      userEmail
+    ];
 
-//     const values = [
-//       primer_nombre,
-//       segundo_nombre,
-//       primer_apellido,
-//       segundo_apellido,
-//       fecha_nacimiento,
-//       ficha,
-//       rol,
-//       userEmail
-//     ];
+    console.log('Consulta SQL:', updateSql);
+    console.log('Valores:', values);
 
-//     console.log('Consulta SQL:', updateSql);
-//     console.log('Valores:', values);
+    await connection.execute(updateSql, values);
 
-//     await connection.execute(updateSql, values);
-
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar el usuario:', error);
-//     res.status(500).json({ error: 'Error interno en el servidor' });
-//   }
-// });
+    // Cerrar la conexión y enviar la respuesta
+    connection.end();
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
+    res.status(500).json({ error: 'Error interno en el servidor' });
+  }
+});
 
 
 // app.post('/api/modificar-usuarios', async (req, res) => {

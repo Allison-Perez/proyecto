@@ -19,11 +19,10 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
     this.editForm = this.fb.group({
       id_usuario: [''],
       primer_nombre: ['', Validators.required],
-      segundo_nombre: [''],
       primer_apellido: ['', Validators.required],
-      segundo_apellido: [''],
       ficha: [''],
       correo: ['', [Validators.required, Validators.email]],
+      rol: ['', [Validators.required]]
     });
   }
 
@@ -78,12 +77,14 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
       const userEmail = this.editForm.value.correo;
       const editedUser = this.editForm.value;
 
+      this.editForm.get('correo')
+
       console.log('Datos del usuario a enviar al servidor:', editedUser);
 
       this.usuarioService.updateUsuarioByEmail(userEmail, editedUser).subscribe(
         (response) => {
           console.log('Usuario actualizado correctamente:', response);
-          // Respuesta exitosa (200)
+          this.ngOnInit()
         },
         (error) => {
           console.error('Error al actualizar el usuario:', error);
@@ -96,11 +97,8 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
   }
 
 
-
-
-
-  cancelEdit() {
-    console.log('entra el cancelar')
-    this.editingUserId = null;
+  cancelEdit(i: number) {
+    this.activateEditMode(this.usuarios[i].id_usuario);
+    this.usuarios[i].editar = false;
   }
 }

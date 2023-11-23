@@ -6,7 +6,6 @@
       <th>ID</th>
       <th>Primer Nombre</th>
       <th>Primer Apellido</th>
-      <!-- <th>Fecha de Nacimiento</th> -->
       <th>Ficha</th>
       <th>Correo</th>
       <th>Rol</th>
@@ -14,12 +13,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let usuario of usuarios; let i = index">
+    <tr *ngFor="let usuario of usuarios; let i = index" [formGroup]="editForm">
 
       <td *ngIf="usuario.editar === false">{{ usuario.id_usuario }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primer_nombre }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primer_apellido }}</td>
-      <!-- <td *ngIf="usuario.editar === false">{{ usuario.fecha_nacimiento }}</td> -->
       <td *ngIf="usuario.editar === false">{{ usuario.ficha }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.correo }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.rol }}</td>
@@ -27,17 +25,16 @@
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvF0zFKBDEUh/HfnkALEWy19gI2Xkg7rdZGRAu19EaCN7ASbK0EtxeUB1PEcTLJTHbZtEm+7+X/XhY2vBYb5msV3OAb17lCWwQPuOjAl3gckswV7OEV+wn0Crd9yRzBLr5whGccdNAl7loFZ4hKT/COQ7x08TRHFHlH7rE+cIo37GDV2uRo4n0PEpJjfI6Nek0P0spT1hPOS/+oJGiCh3xMkINHMyOyqpUTrAWee8Ha4DnBz8DbJ8WS3h+KqC+YDa95QRO8NEVVU1I6VPoHpfvF/a0IhqaoWGly4E/RNVM0Bf6vr1uJaGrFo+d/AQouJhks7bRaAAAAAElFTkSuQmCC"/>
       </td>
 
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.id_usuario"></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_nombre"></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido"></td>
-      <!-- <td class="table_true" *ngIf="usuario.editar === true"><input type="date" [value]="usuario.fecha_nacimiento"></td> -->
+      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.id_usuario" disabled></td>
+      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_nombre" formControlName="primer_nombre"></td>
+      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido" formControlName="primer_apellido"></td>
       <td class="table_true" *ngIf="usuario.editar === true">
-        <select name="ficha" id="ficha">
+        <select name="ficha" id="ficha" formControlName="ficha">
           <option value="2558104">2558104</option>
         </select>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="email" [value]="usuario.correo"></td>
       <td class="table_true" *ngIf="usuario.editar  === true">
-        <select name="rol_options" id="rol_options">
+        <select name="rol_options" id="rol_options" formControlName="rol">
           <option value="1">Instructor</option>
           <option value="2">Aprendiz</option>
           <option value="3">Admin</option>
@@ -45,7 +42,7 @@
       </td>
       <td *ngIf="usuario.editar === true" (click)="editUser(i)">
         <i class='bx bx-check' (click)="saveChanges()"></i>
-        <i class='bx bx-x' (click)="cancelEdit()"></i>
+        <i class='bx bx-x' (click)="cancelEdit(i)"></i>
       </td>
 
 
