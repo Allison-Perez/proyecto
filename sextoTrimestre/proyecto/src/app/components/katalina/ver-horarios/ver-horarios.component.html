@@ -35,12 +35,14 @@
   </nav>
   <h2 class="subtitulo mt-5">Horarios</h2>
   <ul class="list-group">
-    <li class="list-group-item" *ngFor="let horario of horarioList">
-        <h4>{{ horario.nombreArchivo }}</h4>
-        <p>{{ horario.comentario }}</p>
-        <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-    </li>
-  </ul>
+    <div>
+        <li class="list-group-item" *ngFor="let horario of horarioList">
+            <h4>{{ horario.nombreArchivo }}</h4>
+            <p>{{ horario.comentario }}</p>
+            <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
+        </li>
+      </ul>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
