@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As",
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -339,15 +339,15 @@ app.post('/api/blog/create', async (req, res) => {
 // Ruta para actualizar una noticia por su ID
 app.put('/api/blog/update/:id_noticias', async (req, res) => {
   try {
-    const connection = await mysql.createConnection(dbConfig); // Crear una nueva conexión
+    const connection = await mysql.createConnection(dbConfig); 
 
     const { titulo, contenido } = req.body;
     const { id_noticias } = req.params;
     const updateQuery = 'UPDATE noticias SET titulo = ?, contenido = ? WHERE id_noticias = ?';
 
-    await connection.execute(updateQuery, [titulo, contenido, id_noticias]); // Usar la conexión para realizar la consulta
+    await connection.execute(updateQuery, [titulo, contenido, id_noticias]); 
 
-    // Cerrar la conexión y enviar la respuesta
+    
     connection.end();
     res.status(200).json({ message: 'Noticia actualizada exitosamente' });
   } catch (error) {

@@ -3,6 +3,7 @@ body {
   padding: 0;
   height: 100vh;
   overflow: hidden;
+  background: linear-gradient(#D1D5D5, #0b4f6c);
 }
 
 .degradado {
@@ -14,6 +15,11 @@ body {
   background: linear-gradient(to right, rgba(5, 122, 122, 1), rgba(8, 138, 136, 0.7), rgba(5, 107, 105, 0.5), transparent);
   z-index: -1;
 }
+
+.black-title {
+  color: #000; 
+}
+
 
 @media (max-width: 767px) {
 body {

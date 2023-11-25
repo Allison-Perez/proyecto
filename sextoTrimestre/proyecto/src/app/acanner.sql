@@ -43,13 +43,12 @@ CREATE TABLE `aprendiz` (
 --
 
 CREATE TABLE `asistencia` (
-  `id_asistencia` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `confirmación` tinyint(1) NOT NULL,
-  `ficha` int(11) NOT NULL,
-  `instructor` int(11) NOT NULL,
-  `aprendiz` int(11) NOT NULL
+  `id_asistencia` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `nombreArchivo` varchar(255) NOT NULL,
+  `comentario` TEXT NOT NULL,
+  `archivoUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -71,12 +70,10 @@ CREATE TABLE `ficha` (
 --
 
 CREATE TABLE `guias` (
-  `id_guia` int(11) NOT NULL,
-  `nombre_guia` varchar(45) NOT NULL,
-  `fecha` date NOT NULL,
-  `ruta_archivo` varchar(45) NOT NULL,
-  `instructor` int(11) NOT NULL,
-  `ficha` int(11) NOT NULL
+  `id_guia` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `nombreArchivo` varchar(255) NOT NULL,
+  `comentario` TEXT NOT NULL,
+  `archivoUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -86,12 +83,10 @@ CREATE TABLE `guias` (
 --
 
 CREATE TABLE `horario` (
-  `id_horario` int(11) NOT NULL,
-  `hora_entrada` time NOT NULL,
-  `hora_descanso` time NOT NULL,
-  `hora_salida` time NOT NULL,
-  `ficha` int(11) NOT NULL,
-  `instructor` int(11) NOT NULL
+  `id_horario` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `nombreArchivo` varchar(255) NOT NULL,
+  `comentario` TEXT NOT NULL,
+  `archivoUrl` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -124,11 +119,10 @@ CREATE TABLE `instructor_ficha` (
 --
 
 CREATE TABLE `noticias` (
-  `id_noticias` int(11) NOT NULL,
-  `titulo` varchar (255) NOT NULL,
-  `instructor` int(11) NOT NULL,
-  `contenido` longtext NOT NULL,
-  `ficha` int(11) NOT NULL
+  `id_noticias` int(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `titulo` varchar(255) NOT NULL,
+  `contenido` TEXT NOT NULL,
+  `fecha_publicacion` TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
