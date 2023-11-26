@@ -2,7 +2,7 @@
     color: #0a7775;
     font-weight: bold;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 2%;
 }
 .sub-titulo{
     font-weight: bold;
@@ -18,12 +18,10 @@
 }
 
 .imagen {
-    margin-top: -20% ;
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    height: 50vh;
-    width: 85%;
+    margin-top: -150px;
+    margin-left: 300px;
+    height: 300px;
+    width: 400px;
 }
 .nav-img{
     width: 50px;
@@ -105,10 +103,26 @@
     }
   
     .show-menu .nav-item {
-      margin: 10px 0;
+      margin: 0px 0;
     }
   
     .show-menu{
       display: block;
     }
   }
+
+//RESPONSIVE
+@media (max-width: 401px){
+
+  .imagen {
+    margin-top: 40px;
+    margin-left: 5px;
+    height: 300px;
+    width: 400px;
+  }
+}
+
+
+
+
+
