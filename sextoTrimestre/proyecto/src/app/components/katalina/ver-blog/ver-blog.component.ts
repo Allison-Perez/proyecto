@@ -10,8 +10,14 @@ export class VerBlogComponent {
   newsList: any[] = [];
   newNews: any = { titulo: '', contenido: '' };
   editingNews: any | null = null;
+  isMenuOpen: boolean = false;
   constructor(private ServiceService: ServiceService) { }
 
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }  
+  
   ngOnInit() {
     this.loadNews();
   }

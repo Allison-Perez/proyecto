@@ -22,3 +22,87 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
+
+   /* Estilos para el menú hamburguesa */
+  
+.nav ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  
+  .nav .nav-item {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .nav-link {
+    color: #070707;
+  }
+  .nombre{
+    color: black;
+    font-weight: bold;
+  }
+  
+  .nav-item:last-child .btn-primary {
+    cursor: pointer;
+  }
+  
+  
+  .menu-icon {
+    cursor: pointer;
+    display: none;
+  }
+  
+  .menu-icon .bar {
+    width: 20px;
+    height: 3px;
+    background-color: #088a88;
+    margin: 6px 0;
+  }
+  
+  /* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+  .show-menu .menu-icon {
+    display: block;
+  }
+  
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .show-menu .nav-item {
+    margin: 10px 0;
+  }
+  
+  /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+  @media (max-width: 601px) {
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .nav {
+      display: none;
+    }
+  
+    .menu-icon {
+      cursor: pointer;
+      display: block;
+      margin-right: 20px;
+    }
+  
+    /* Estilos para mostrar el menú en pantallas pequeñas */
+    .show-menu .nav {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .show-menu .nav-item {
+      margin: 10px 0;
+    }
+  
+    .show-menu{
+      display: block;
+    }
+  }

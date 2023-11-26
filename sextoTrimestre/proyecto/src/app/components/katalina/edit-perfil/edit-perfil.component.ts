@@ -12,6 +12,7 @@ import { AuthService } from '../service/auth.service';
 export class EditPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
+  isMenuOpen: boolean = false;
 
   constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
@@ -22,7 +23,10 @@ export class EditPerfilComponent implements OnInit {
       correo: ['']
     });
   }
-
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   ngOnInit() {
     // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
     let correo:any = localStorage.getItem('user_email');

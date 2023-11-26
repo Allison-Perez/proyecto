@@ -11,8 +11,14 @@ export class VerActividadComponent {
   newActivity: any = { nombreArchivo: '', comentario: '' };
   editingActivity: any | null = null;
   selectedFile: File | null = null;
+  isMenuOpen: boolean = false;
 
   constructor(private ServiceService: ServiceService) {}
+
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }  
 
   ngOnInit() {
     this.loadActivities();
@@ -61,3 +67,4 @@ export class VerActividadComponent {
   }
 
 }
+

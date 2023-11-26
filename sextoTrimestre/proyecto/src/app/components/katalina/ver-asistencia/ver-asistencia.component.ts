@@ -11,9 +11,15 @@ export class VerAsistenciaComponent {
   newAsistencia: any = { nombreArchivo: '', comentario: '' };
   editingAsistencia: any | null = null;
   selectedFile: File | null = null;
+  isMenuOpen: boolean = false;
 
   constructor(private ServiceService: ServiceService) {}
 
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }  
+  
   ngOnInit() {
     this.loadAsistencia();
   }

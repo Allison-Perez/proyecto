@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute para
 })
 export class PerfilDetalleComponent implements OnInit {
   userData: any;
+  isMenuOpen: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -27,6 +28,10 @@ export class PerfilDetalleComponent implements OnInit {
     }
   }
 
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   ngOnInit() {
     // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
     const correo: any = localStorage.getItem('user_email');

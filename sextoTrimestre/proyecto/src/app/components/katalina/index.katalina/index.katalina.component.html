@@ -3,40 +3,36 @@
   <div class="container-fluid">
     <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
     <a class="nav-link nombre" href="#">A C A N N E R</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse flex-row-reverse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
-            <i class="fas fa-user"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
-        </li>
-      </ul>
+    <div class="navbar">
+      <div class="navbar">
+        <div class="menu-icon" (click)="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+            <li class="nav-item">
+              <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
+                <i class="fas fa-user"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+            </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>

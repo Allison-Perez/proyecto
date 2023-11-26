@@ -1,42 +1,37 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="collapse navbar-collapse flex-row-reverse"
-      id="navbarNavDropdown"
-    >
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a routerLink="/indexKatalina" class="nav-link active" id="item" aria-current="page">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-actividades" class="nav-link">Actividades</a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
-        </li>
-      </ul>
+    <div class="navbar">
+      <div class="navbar">
+        <div class="menu-icon" (click)="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+          <li class="nav-item">
+            <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
+              <i class="fas fa-user"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
-
 <div class="container">
   <h4 class="display-4">Editar Perfil</h4>
   <form [formGroup]="form" (ngSubmit)="guardarCambios()">

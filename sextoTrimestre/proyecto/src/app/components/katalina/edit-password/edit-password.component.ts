@@ -12,6 +12,7 @@ import { AuthService } from '../service/auth.service';
 export class EditPasswordComponent {
   cambiarContrasenaForm: FormGroup;
   mensaje: string = '';
+  isMenuOpen: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,5 +53,9 @@ export class EditPasswordComponent {
         alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');
       }
     );
+  }
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
