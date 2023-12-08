@@ -27,6 +27,10 @@
   
 }
 
+.nav-link{
+    color: #008a88;
+}
+
 .navbar {
     display: flex;
     align-items: center;
