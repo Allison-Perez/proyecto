@@ -12,7 +12,7 @@
         .titulo {
             font-size: 32px;
             font-weight: bold;
-            background: linear-gradient(120deg, #00aaff, #aa00ff);
+            background:  #008a88;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -44,7 +44,7 @@
                         <a class="nav-link" routerLink="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/actividad">Guias</a>
+                        <a class="nav-link" routerLink="/actividad">Actividades</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/asistencia">Asistencia</a>
@@ -53,8 +53,12 @@
                         <a class="nav-link" routerLink="/horario">Horario</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/perfil"><img src="../../assets/imagenes/perfil.png"
-                                alt="Logo de la página" width="50" height="50"></a>
+                        <a class="nav-link" routerLink="/perfil"><img src="../../assets/imagenes/perfil_ins.png"
+                                alt="Logo de la página" width="30" height="30"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="logout()"><img src="../../assets/imagenes/salir.png"
+                                alt="Logo de la página" width="28" height="28"></a>
                     </li>
                 </ul>
             </div>
