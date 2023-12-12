@@ -26,14 +26,15 @@
     </header>
     <div class="container mt-5">
         <h3 class="titulo">Crear Noticia</h3>
-        <form (submit)="createNews()">
+        <form (ngSubmit)="createNews(form)" #form="ngForm">
             <div class="form-group">
-                <label for="titulo">Título:</label>
-                <input [(ngModel)]="newNews.titulo" name="titulo" class="form-control" required>
+              <label for="titulo">Título:</label>
+              <input [(ngModel)]="newNews.titulo" name="titulo" class="form-control" required>
+              <div *ngIf="form.controls['titulo'].invalid && (form.controls['titulo'].dirty || form.controls['titulo'].touched)" class="text-danger">Diligenciar todos los campos</div>
             </div>
             <div class="form-group">
-                <label for="contenido">Contenido:</label>
-                <textarea [(ngModel)]="newNews.contenido" name="contenido" class="form-control" required></textarea>
+              <label for="contenido">Contenido:</label>
+              <textarea [(ngModel)]="newNews.contenido" name="contenido" class="form-control" required></textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Guardar</button>

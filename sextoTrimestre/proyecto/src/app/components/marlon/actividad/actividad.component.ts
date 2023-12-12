@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityService } from '../services/actividad.service';
+import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-actividad',
@@ -28,29 +29,29 @@ export class ActividadComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   
-createActivity() {
-  if (this.selectedFile) {
-    const formData = new FormData();
-    formData.append('nombreArchivo', this.newActivity.nombreArchivo);
-    formData.append('comentario', this.newActivity.comentario);
-    formData.append('archivo', this.selectedFile);
+  createActivity(form: NgForm) {
+    if (form.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('nombreArchivo', this.newActivity.nombreArchivo);
+      formData.append('comentario', this.newActivity.comentario);
+      formData.append('archivo', this.selectedFile);
 
-    this.actividadService.createActivity(formData).subscribe(
-      () => {
-        this.loadActivities();
-        this.newActivity = { nombreArchivo: '', comentario: '' };
-        this.selectedFile = null;
-      },
-      (error) => {
-        console.error('Error al crear actividad:', error);
-       
-      }
-    );
-  } else {
-    console.log('No se ha seleccionado ningún archivo.');
-  
+      this.actividadService.createActivity(formData).subscribe(
+        () => {
+          this.loadActivities();
+          this.newActivity = { nombreArchivo: '', comentario: '' };
+          this.selectedFile = null;
+          form.resetForm();
+        },
+        (error) => {
+          console.error('Error al crear actividad:', error);
+        }
+      );
+    } else {
+      
+      console.log('Diligenciar todos los campos.');
+    }
   }
-}
 
   editActivity(activity: any) {
     this.editingActivity = { ...activity };

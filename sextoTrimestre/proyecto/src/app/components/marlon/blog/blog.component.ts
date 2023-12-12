@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../services/blog.service'; 
+import { BlogService } from '../services/blog.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-blog',
@@ -7,6 +8,7 @@ import { BlogService } from '../services/blog.service';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
+  showErrorMessage: boolean = false;
   newsList: any[] = [];
   newNews: any = { titulo: '', contenido: '' };
   editingNews: any | null = null;
@@ -28,12 +30,19 @@ export class BlogComponent implements OnInit {
     });
   }
 
-  createNews() {
-    this.blogService.createNews(this.newNews).subscribe(() => {
-      this.loadNews(); 
-      this.newNews = { titulo: '', contenido: '' };
-    });
+  createNews(form: NgForm) {
+    // Verificamos si el formulario es válido antes de enviar la solicitud
+    if (form.valid) {
+      this.blogService.createNews(this.newNews).subscribe(() => {
+        this.loadNews();
+        this.newNews = { titulo: '', contenido: '' };
+      });
+    } else {
+      // Mostramos el mensaje de error
+      this.showErrorMessage = true;
+    }
   }
+
 
   editNews(news: any) {
     if (news && news.id_noticias) {
