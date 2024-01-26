@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As",
   database: "acanner",
 };
 
@@ -786,64 +786,6 @@ app.post('/api/modificar-usuarios', async (req, res) => {
     res.status(500).json({ error: 'Error interno en el servidor' });
   }
 });
-
-
-// app.post('/api/modificar-usuarios', async (req, res) => {
-//   try {
-//     console.log('Entro a la ruta de modificación de usuarios');
-
-//     // Asegúrate de que req.body y req.body.updatedUser estén definidos
-//     if (!req.body || !req.body.updatedUser) {
-//       return res.status(400).json({ error: 'Datos del usuario no proporcionados en la solicitud' });
-//     }
-
-//     const connection = await mysql.createConnection(dbConfig);
-//     const userEmail = req.body.email;
-//     const userData = req.body.updatedUser;
-
-//     console.log('Datos del usuario a actualizar:', userData);
-
-//     // Verifica si el usuario con el correo electrónico existe
-//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
-
-//     if (userExists.length === 0) {
-//       return res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
-
-//     // Construye el array de valores para la consulta SQL
-//     const values = Object.values(userData);
-//     values.push(userEmail);
-
-//     // Realiza la actualización en la base de datos utilizando el correo del usuario
-//     const updateSql = `
-//       UPDATE usuario
-//       SET
-//         primer_nombre = ?,
-//         segundo_nombre = ?,
-//         primer_apellido = ?,
-//         segundo_apellido = ?,
-//         ficha = ?,
-//         correo = ?
-//       WHERE correo = ?`;
-
-//     console.log('Consulta SQL:', updateSql);
-//     console.log('Valores:', values);
-
-//     await connection.execute(updateSql, values);
-
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar el usuario:', error);
-//     throw sqlError;
-//     // Enviar una respuesta solo si no se ha enviado ninguna respuesta anteriormente
-//     if (!res.headersSent) {
-//       res.status(500).json({ error: 'Error interno en el servidor' });
-//     }
-//   }
-// });
-
 
 
 app.listen(port, () => {
