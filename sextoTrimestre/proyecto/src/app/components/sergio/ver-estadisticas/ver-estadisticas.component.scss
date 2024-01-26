@@ -1,0 +1,72 @@
+/* app.component.css */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+
+
+.sidebar {
+  width: 200px;
+  background-color: #088a88;
+  padding: 5px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+}
+
+.sidebar ul {
+  margin: 10px;
+  margin-top: 30px; /* Ajusta según sea necesario para aumentar el espacio entre el título y la lista */
+}
+
+.sidebar ul li {
+  margin-bottom: 25px; /* Ajusta según sea necesario para aumentar el espacio entre elementos de la lista */
+}
+
+.container .sidebar ul li a span.material-symbols-outlined {
+  vertical-align: middle;
+  margin-right: 10px; /* Ajusta según sea necesario para aumentar el espacio entre el icono y el texto */
+}
+
+.container .sidebar ul li a {
+  color: #ffffff;
+  font-weight: normal;
+}
+
+
+h2 {
+  text-align: left;
+  font-family: 'Lobster', sans-serif;
+  margin: 10px;
+  color: #ffffff;
+  font-size: 28px;
+  margin-bottom: 50px;
+}
+
+ul {
+  margin-top: 50px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #007bff;
+}
+

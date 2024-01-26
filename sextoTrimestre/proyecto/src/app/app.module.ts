@@ -7,6 +7,7 @@ import { AllisonModule } from './components/allison/allison.module';
 import { SergioModule } from './components/sergio/sergio.module';
 import { KatalinaModule } from './components/katalina/katalina.module';
 import { MarlonModule } from './components/marlon/marlon.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MarlonModule } from './components/marlon/marlon.module';
     AllisonModule,
     SergioModule,
     KatalinaModule,
-    MarlonModule
+    MarlonModule,
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

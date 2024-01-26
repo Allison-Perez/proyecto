@@ -8,6 +8,7 @@ import { NavComponent } from './nav/nav.component';
 import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
+import { VerEstadisticasComponent } from './ver-estadisticas/ver-estadisticas.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'update-password', component: UpdatePasswordComponent},
   { path: 'nav', component:NavComponent },
   { path: 'registros-admin', component: RegistrosAdminComponent },
-  {path: 'modificar-usuarios', component: ModificarUsuariosComponent}
+  {path: 'modificar-usuarios', component: ModificarUsuariosComponent},
+  {path: 'ver-estadisticas', component: VerEstadisticasComponent}
 ];
 
 @NgModule({

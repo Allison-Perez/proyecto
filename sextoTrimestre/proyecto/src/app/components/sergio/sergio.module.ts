@@ -10,6 +10,8 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
+import { VerEstadisticasComponent } from './ver-estadisticas/ver-estadisticas.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -22,8 +24,10 @@ import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuar
     NavComponent,
     RegistrosAdminComponent,
     ModificarUsuariosComponent,
+    VerEstadisticasComponent,
   ],
   imports: [
+    MatIconModule,
     CommonModule,
     SergioRoutingModule,
     FormsModule, // Importa FormsModule aquí

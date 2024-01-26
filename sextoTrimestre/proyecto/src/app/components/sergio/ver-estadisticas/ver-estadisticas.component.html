@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<div class="container">
+
+  <div class="sidebar">
+    <div class="container-tittle">
+      <h2>Acanner</h2>
+    </div>
+
+    <ul>
+      <li><a routerLink="/vista-admin"><span class="material-symbols-outlined">
+        home_app_logo
+        </span>Inicio</a></li>
+      <li><a routerLink="/admin-perfil"> <span class="material-symbols-outlined">
+        account_circle
+        </span>Perfil</a></li>
+      <li><a routerLink="/registros-admin"><span class="material-symbols-outlined">
+        app_registration
+        </span>Registro de Usuarios</a></li>
+      <li><a routerLink="/modificar-usuarios"><span class="material-symbols-outlined">
+        edit
+        </span>Edición de Usuarios</a></li>
+      <li><a routerLink="/ver-estadisticas"><span class="material-symbols-outlined">
+        bar_chart_4_bars
+        </span> Ver Estadísticas</a></li>
+      <li><a (click)="logout()"> <span class="material-symbols-outlined">
+        logout
+        </span> Cerrar Sesión</a></li>
+    </ul>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+
+
+ <style>
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 0;
+    color: white;
+  }
+  </style>
+
+
+<span class="material-symbols-outlined">
+  home_app_logo
+  </span>
