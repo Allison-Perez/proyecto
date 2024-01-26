@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AsistenciaService } from '../services/asistencia.service';
+import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-asistencia',
@@ -28,29 +29,29 @@ export class AsistenciaComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   
-createAsistencia() {
-  if (this.selectedFile) {
-    const formData = new FormData();
-    formData.append('nombreArchivo', this.newAsistencia.nombreArchivo);
-    formData.append('comentario', this.newAsistencia.comentario);
-    formData.append('archivo', this.selectedFile);
-
-    this.asistenciaService.createAsistencia(formData).subscribe(
-      () => {
-        this.loadAsistencia();
-        this.newAsistencia = { nombreArchivo: '', comentario: '' };
-        this.selectedFile = null;
-      },
-      (error) => {
-        console.error('Error al crear asistencia:', error);
-       
-      }
-    );
-  } else {
-    console.log('No se ha seleccionado ningún archivo.');
+  createAsistencia(form: NgForm) {
   
+    if (form.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('nombreArchivo', this.newAsistencia.nombreArchivo);
+      formData.append('comentario', this.newAsistencia.comentario);
+      formData.append('archivo', this.selectedFile);
+
+      this.asistenciaService.createAsistencia(formData).subscribe(
+        () => {
+          this.loadAsistencia();
+          this.newAsistencia = { nombreArchivo: '', comentario: '' };
+          this.selectedFile = null;
+          form.resetForm();
+        },
+        (error) => {
+          console.error('Error al crear asistencia:', error);
+        }
+      );
+    } else {
+      console.log('Diligenciar todos los campos.');
+    }
   }
-}
 
   editAsistencia(asistencia: any) {
     this.editingAsistencia = { ...asistencia };

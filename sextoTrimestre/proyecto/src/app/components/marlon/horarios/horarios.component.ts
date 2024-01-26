@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HorarioService } from '../services/horarios.service';
+import { NgForm } from '@angular/forms'; 
 
 @Component({
   selector: 'app-horarios',
@@ -28,29 +29,28 @@ export class HorariosComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   
-createHorario() {
-  if (this.selectedFile) {
-    const formData = new FormData();
-    formData.append('nombreArchivo', this.newHorario.nombreArchivo);
-    formData.append('comentario', this.newHorario.comentario);
-    formData.append('archivo', this.selectedFile);
+  createHorario(form: NgForm) {
+    if (form.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('nombreArchivo', this.newHorario.nombreArchivo);
+      formData.append('comentario', this.newHorario.comentario);
+      formData.append('archivo', this.selectedFile);
 
-    this.horarioService.createHorario(formData).subscribe(
-      () => {
-        this.loadHorario();
-        this.newHorario = { nombreArchivo: '', comentario: '' };
-        this.selectedFile = null;
-      },
-      (error) => {
-        console.error('Error al crear horario:', error);
-       
-      }
-    );
-  } else {
-    console.log('No se ha seleccionado ningún archivo.');
-  
+      this.horarioService.createHorario(formData).subscribe(
+        () => {
+          this.loadHorario();
+          this.newHorario = { nombreArchivo: '', comentario: '' };
+          this.selectedFile = null;
+          form.resetForm();
+        },
+        (error) => {
+          console.error('Error al crear horario:', error);
+        }
+      );
+    } else {
+      console.log('Diligenciar todos los campos.');
+    }
   }
-}
 
   editHorario(horario: any) {
     this.editingHorario = { ...horario };
