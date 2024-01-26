@@ -1,0 +1,26 @@
+<body>
+
+  <app-nav></app-nav>
+
+  <div class="edit-form-container">
+
+    <h2 class="my-4">Editar Perfil de Usuario</h2>
+
+    <form (submit)="guardarCambios()" [formGroup]="form" class="edit-form">
+      <label for="primerNombre">Primer Nombre:</label>
+      <input type="text" id="primerNombre" formControlName="primerNombre" required>
+
+      <label for="segundoNombre">Segundo Nombre:</label>
+      <input type="text" id="segundoNombre" formControlName="segundoNombre">
+
+      <label for="primerApellido">Primer Apellido:</label>
+      <input type="text" id="primerApellido" formControlName="primerApellido" required>
+
+      <label for="segundoApellido">Segundo Apellido:</label>
+      <input type="text" id="segundoApellido" formControlName="segundoApellido" required>
+
+      <button type="submit" class="btn-primary" [disabled]="form.pristine">Guardar Cambios</button>
+    </form>
+  </div>
+
+  </body>

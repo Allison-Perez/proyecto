@@ -1,0 +1,29 @@
+<html>
+<body>
+
+
+  <div class="container">
+    <h1>Validación de Seguridad</h1>
+    <p>Por favor, responde la pregunta de seguridad:</p>
+    <p>{{ descripcionP }}</p>
+    <input [(ngModel)]="respuestaUsuario" type="text" placeholder="Ingrese su respuesta" class="form-control" />
+
+    <div class="container_link_form">
+      <a class="link_remember_password" href="/login">Regresar a Login</a>
+      <button (click)="validarRespuesta()" class="btn btn-primary">Validar Respuesta</button>
+    </div>
+
+    <div *ngIf="seIntentoValidar && !esValido" class="alert alert-danger">
+      La respuesta es incorrecta.
+    </div>
+    <div *ngIf="esValido" class="alert alert-success">
+      ¡La respuesta es válida!
+      <p>Tu contraseña temporal es: {{ contrasenaTemporal }}</p>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
+    <a class="nav-link nombre" href="#">A C A N N E R</a>
+    <div class="navbar">
+      <div class="navbar">
+        <div class="menu-icon" (click)="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+            <li class="nav-item">
+              <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
+                <i class="fas fa-user"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<h1 class="titulo">Bienvenido Aprendiz</h1>
+<h4 class="sub-titulo">Formacion ADSO</h4>
+  <div class="descripción">
+    <p >Bienvenido a ACANNER, una plataforma que busca mejorar la gestión del tiempo y el control de tus actividades pendientes. Destacamos por nuestra colaboración con el SENA (Servicio Nacional de Aprendizaje), lo que te proporciona acceso a recursos educativos para enriquecer tu crecimiento personal y profesional.</p>
+  </div>
+  <div class="imagen">
+    <img class="imagen img-fluid" src="https://www.negitec.com/nicaragua/wp-content/uploads/sites/4/2020/05/desarrollo-software.png" alt="Descripción de la imagen">
+  </div>
+

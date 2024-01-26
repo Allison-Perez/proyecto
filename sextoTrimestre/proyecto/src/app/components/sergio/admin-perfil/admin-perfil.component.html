@@ -1,0 +1,28 @@
+<body>
+  <app-nav></app-nav>
+
+  <div class="container">
+    <div class="container-user">
+      <div class="photo">
+        <img src="assets/imagenes/perfil.jpg" alt="imagen por el usuario">
+
+      </div>
+
+      <div class="info">
+        <h1>Perfil Administrador</h1>
+        <br>
+        <div id="perfil">
+          <p class="bold-p">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
+          <p class="bold-p">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
+          <p class="bold-p">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
+          <p class="bold-p">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
+          <p class="bold-p">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
+          <p class="bold-p">Correo: <span id="correo">{{ userData.correo }}</span></p>
+        </div>
+        <button (click)="editarInformacion()" class="btn-primary">Editar</button>
+        <button (click)="editarPassword()" class="btn-primary">Cambiar contraseña</button>
+      </div>
+    </div>
+
+  </div>
+</body>

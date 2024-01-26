@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCANER</title>
+    <link rel="icon" type="icon" href="../../assets/imagenes/LOGO ACANNER SIN FONDO.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        .titulo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(120deg, #00aaff, #aa00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitulo {
+            font-size: 24px;
+        }
+        .descripcion {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<header class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/marlon">
+            <img src="../../assets/imagenes/LOGO SIN FONDO.png" alt="Logo de la página" width="40" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/vista-instructor">Inicio</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="perfil-detalle">
+    <h4 class="display-4">Editar Perfil</h4>
+    <form [formGroup]="form" (ngSubmit)="guardarCambios()">
+        <div class="form-group">
+            <label for="primerNombre">Primer Nombre:</label>
+            <input type="text" id="primerNombre" formControlName="primerNombre" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="segundoNombre">Segundo Nombre:</label>
+            <input type="text" id="segundoNombre" formControlName="segundoNombre" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="primerApellido">Primer Apellido:</label>
+            <input type text id="primerApellido" formControlName="primerApellido" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="segundoApellido">Segundo Apellido:</label>
+            <input type="text" id="segundoApellido" formControlName="segundoApellido" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
