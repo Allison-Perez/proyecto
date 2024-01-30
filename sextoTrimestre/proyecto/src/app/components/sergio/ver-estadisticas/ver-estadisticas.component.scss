@@ -7,7 +7,9 @@
   height: 100vh;
 }
 
-
+.container router-outlet {
+  margin-left: 300px; /* Ancho de la barra lateral */
+}
 
 .sidebar {
   width: 200px;
