@@ -12,7 +12,8 @@ import { RegistrosAdminComponent } from './registros-admin/registros-admin.compo
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
 import { VerEstadisticasComponent } from './ver-estadisticas/ver-estadisticas.component';
 import { MatIconModule } from '@angular/material/icon';
-
+import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -25,10 +26,12 @@ import { MatIconModule } from '@angular/material/icon';
     RegistrosAdminComponent,
     ModificarUsuariosComponent,
     VerEstadisticasComponent,
+    StatisticsInstructoresComponent,
   ],
   imports: [
     MatIconModule,
     CommonModule,
+    NgChartsModule,
     SergioRoutingModule,
     FormsModule, // Importa FormsModule aquí
     ReactiveFormsModule, // Importa ReactiveFormsModule aquí

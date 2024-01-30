@@ -27,6 +27,55 @@ function generarContrasenaTemporal() {
     .slice(0, longitud);
 }
 
+// ...
+
+async function llenarTablas() {
+  try {
+    // Crear la conexión a la base de datos
+    const connection = await mysql.createConnection(dbConfig);
+
+    // Llenar la tabla instructor
+    const fillInstructorQuery = `
+      INSERT INTO instructor (id_instructor, tipo_instructor)
+      SELECT id_usuario, 1 FROM usuario WHERE rol = 1;
+    `;
+    await connection.query(fillInstructorQuery);
+
+    // Llenar la tabla ficha (descomentar si es necesario)
+    // const fillFichaQuery = `
+    //   INSERT INTO ficha (id_ficha, id_aprendiz, numero_ficha, trimestre)
+    //   SELECT DISTINCT u.ficha, u.id_usuario, f.numero_ficha, 1
+    //   FROM usuario u
+    //   JOIN ficha f ON u.ficha = f.id_ficha;
+    // `;
+    // await connection.query(fillFichaQuery);
+
+    // Llenar la tabla instructor_ficha
+    const fillInstructorFichaQuery = `
+      INSERT INTO instructor_ficha (id_instructor, id_ficha, estado)
+      SELECT i.id_instructor, u.ficha, 1
+      FROM instructor i
+      JOIN usuario u ON i.id_instructor = u.id_usuario
+      WHERE u.rol = 1;
+    `;
+    await connection.query(fillInstructorFichaQuery);
+
+    // Cerrar la conexión después de ejecutar las consultas
+    connection.end();
+    
+    console.log('Tablas llenadas exitosamente.');
+  } catch (error) {
+    console.error('Error al llenar las tablas:', error);
+  }
+}
+
+// Establecer la conexión y llamar a la función para llenar las tablas
+mysql.createConnection(dbConfig)
+  .then((connection) => llenarTablas())
+  .catch((error) => console.error('Error al conectar con la base de datos:', error));
+
+
+
 // LOGEO
 
 app.post("/login", async (req, res) => {
@@ -743,12 +792,6 @@ app.post('/api/modificar-usuarios', async (req, res) => {
 
     console.log('Datos del usuario a actualizar:', userData);
 
-    // Asegúrate de que los campos necesarios no estén undefined
-    // if (!userData.primer_nombre || !userData.primer_apellido) {
-    //   return res.status(400).json({ error: 'Campos obligatorios faltantes' });
-    // }
-
-    // Verifica si el usuario con el correo electrónico existe
     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
 
     if (userExists.length === 0) {
@@ -785,6 +828,28 @@ app.post('/api/modificar-usuarios', async (req, res) => {
     console.error('Error al actualizar el usuario:', error);
     res.status(500).json({ error: 'Error interno en el servidor' });
   }
+});
+
+app.get('/api/staticsInstructores', async (req, res) => {
+  const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
+
+try {
+  const connection = await mysql.createConnection(dbConfig);
+
+  const [rows] = await connection.execute(sql);
+
+  await connection.end();
+
+  if (rows.length > 0) {
+    res.json(rows);
+  } else {
+    res.status(404).json({ error: 'Usuarios no encontrados' });
+  }
+} catch (error) {
+  console.error('Error al obtener los usuarios: ' + error);
+  res.status(500).json({ error: 'Error al obtener los usuarios' });
+}
+
 });
 
 

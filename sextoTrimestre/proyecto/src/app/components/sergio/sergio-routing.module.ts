@@ -9,6 +9,7 @@ import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
 import { VerEstadisticasComponent } from './ver-estadisticas/ver-estadisticas.component';
+import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'nav', component:NavComponent },
   { path: 'registros-admin', component: RegistrosAdminComponent },
   {path: 'modificar-usuarios', component: ModificarUsuariosComponent},
-  {path: 'ver-estadisticas', component: VerEstadisticasComponent}
+  {path: 'ver-estadisticas', component: VerEstadisticasComponent},
+  {path: 'estadisticas-instructores', component: StatisticsInstructoresComponent}
 ];
 
 @NgModule({

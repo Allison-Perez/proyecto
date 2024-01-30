@@ -38,4 +38,9 @@ export class ServiceService {
     return this.http.post(`${this.apiUrl}/registro`, data);
   }
 
+  getStaticsInstructores(): Observable<any[]> {
+    const url = `${this.apiUrl}/api/staticsInstructores`;
+    return this.http.get<any[]>(url);
+  }
+
 }
