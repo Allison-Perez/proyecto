@@ -1,45 +1,6 @@
-<!-- instructor-stats.component.html
-<h1>Estadísticas de Instructores</h1>
-<div *ngIf="instructores; else loading">
-  <ul>
-    <li *ngFor="let instructor of instructores">
-      ID: {{ instructor.id_usuario }}, Nombre: {{ instructor.primer_nombre }} {{ instructor.primer_apellido }}, Correo: {{ instructor.correo }}
-    </li>
-  </ul>
-</div>
-<ng-template #loading>Cargando instructores...</ng-template> -->
-<!-- statistics-instructores.component.html -->
-
-
-
-
-<!-- <h1>Estadísticas de Instructores</h1>
-<div *ngIf="instructores; else loading">
-
-  <div style="display: block">
-    <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend">
-    </canvas>
-  </div>
-
-  <ul>
-    <li *ngFor="let instructor of instructores">
-      ID: {{ instructor.id_usuario }}, Nombre: {{ instructor.primer_nombre }} {{ instructor.primer_apellido }}, Correo: {{ instructor.correo }}, Ficha: {{ instructor.ficha }}
-    </li>
-  </ul>
-</div>
-<ng-template #loading>Cargando instructores...</ng-template> -->
-
-<!-- usuarios.component.html -->
-<!-- statistics-instructores.component.html -->
-
-
-<!-- statistics-instructores.component.html -->
-
+<!--
 <div class="container">
+  <app-ver-estadisticas></app-ver-estadisticas>
   <h2>Estadísticas de Instructores</h2>
 
   <form (ngSubmit)="applyFilters()" #filtroForm="ngForm">
@@ -78,4 +39,49 @@
       </tr>
     </tbody>
   </table>
+</div> -->
+
+<div class="container">
+  <!-- <app-ver-estadisticas></app-ver-estadisticas> -->
+
+  <div class="statistics-container">
+    <h2>Estadísticas de Instructores</h2>
+
+    <form (ngSubmit)="applyFilters()" #filtroForm="ngForm">
+      <div class="filters">
+        <label>Filtrar por Ficha:</label>
+        <select [(ngModel)]="selectedFicha" name="selectedFicha" ngModel>
+          <option value="">Todos</option>
+          <option value="2558104">2558104</option>
+          <option value="1800002">1800002</option>
+          <option value="1231236">1231236</option>
+        </select>
+
+        <button type="submit">Aplicar Filtros</button>
+      </div>
+    </form>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Ficha</th>
+          <th>Correo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let instructor of filteredInstructores">
+          <td>{{ instructor.id_usuario }}</td>
+          <td>{{ instructor.primer_nombre }} {{ instructor.segundo_nombre }}</td>
+          <td>{{ instructor.primer_apellido }} {{ instructor.segundo_apellido }}</td>
+          <td>{{ instructor.fecha_nacimiento }}</td>
+          <td>{{ instructor.ficha }}</td>
+          <td>{{ instructor.correo }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

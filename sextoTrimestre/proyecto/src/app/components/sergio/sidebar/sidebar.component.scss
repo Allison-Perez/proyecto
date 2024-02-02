@@ -1,15 +1,4 @@
-/* app.component.css */
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-
-
-.container {
-  display: flex;
-  height: 100vh;
-}
-
-.container router-outlet {
-  margin-left: 300px; /* Ancho de la barra lateral */
-}
 
 .sidebar {
   width: 200px;
@@ -19,28 +8,28 @@
   left: 0;
   top: 0;
   bottom: 0;
+  z-index: 2;
+  overflow-y: auto;
 
 }
 
 .sidebar ul {
   margin: 10px;
-  margin-top: 30px; /* Ajusta según sea necesario para aumentar el espacio entre el título y la lista */
+  margin-top: 30px;
 }
 
 .sidebar ul li {
-  margin-bottom: 25px; /* Ajusta según sea necesario para aumentar el espacio entre elementos de la lista */
+  margin-bottom: 25px;
 }
 
-.container .sidebar ul li a span.material-symbols-outlined {
+.sidebar ul li a span.material-symbols-outlined {
   vertical-align: middle;
-  margin-right: 10px; /* Ajusta según sea necesario para aumentar el espacio entre el icono y el texto */
+  margin-right: 10px;
 }
-
-.container .sidebar ul li a {
+.sidebar ul li a {
   color: #ffffff;
   font-weight: normal;
 }
-
 
 h2 {
   text-align: left;
@@ -67,8 +56,3 @@ a {
   color: #333;
   font-weight: bold;
 }
-
-a:hover {
-  color: #007bff;
-}
-

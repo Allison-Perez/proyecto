@@ -2,13 +2,18 @@
 
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
   justify-content: right;
-  // max-width: 1000px; /* Ajusta según sea necesario */
-  // margin: 0 auto; /* Centra el contenedor horizontalmente */
-  // text-align: center;
-  // padding: 0;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1000px;
+
+}
+
+.statistics-container {
+  margin-left: 2000px; /* Ajusta según sea necesario para alinear con la barra lateral */
+  flex-grow: 1; /* Ocupa todo el espacio restante */
+  padding: 60px; /* Añade espacio alrededor del contenido estadístico */
 }
 
 h2 {

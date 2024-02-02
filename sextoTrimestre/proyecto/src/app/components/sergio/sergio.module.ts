@@ -10,11 +10,10 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
-import { VerEstadisticasComponent } from './ver-estadisticas/ver-estadisticas.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
 import { NgChartsModule } from 'ng2-charts';
-
+import { SidebarComponent } from './sidebar/sidebar.component';
 @NgModule({
   declarations: [
     IndexComponent,
@@ -25,9 +24,10 @@ import { NgChartsModule } from 'ng2-charts';
     NavComponent,
     RegistrosAdminComponent,
     ModificarUsuariosComponent,
-    VerEstadisticasComponent,
+    SidebarComponent,
     StatisticsInstructoresComponent,
   ],
+
   imports: [
     MatIconModule,
     CommonModule,
