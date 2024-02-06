@@ -1,6 +1,141 @@
-.nav-link{
-    color: #008a88;
+/* Estilos de la barra lateral */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.sidebar {
+    width: 200px;
+    background-color: #088a88;
+    padding: 5px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    overflow-y: auto;
 }
-.mt-5{
-    color: #008a88;
+
+.sidebar ul {
+    margin: 10px;
+    margin-top: 30px;
+}
+
+.sidebar ul li {
+    margin-bottom: 25px;
+}
+
+.sidebar ul li a span.material-symbols-outlined {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    font-weight: normal;
+}
+
+h2 {
+    text-align: left;
+    font-family: 'Lobster', sans-serif;
+    margin: 10px;
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 50px;
+}
+
+ul {
+    margin-top: 50px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-right: -75px;
+}
+
+li {
+    list-style: none;
+    padding: 0px;
+    margin: 10px;
+    font-size: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: #088a88;
+    padding: 3px;
+}
+
+.navbar-brand {
+    margin-left: -125px;
+    color: #ffffff;
+    font-family: 'Lobster', sans-serif;
+    font-size: 28px;
+    font-weight: normal;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: normal;
+}
+
+/* Estilos del botón de estadísticas */
+.btn-light {
+    margin-left: -60px;
+    background-color: #f0f0f0;
+    color: #088a88;
+    border: none;
+}
+
+.btn-light:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilos de la sección de bienvenida */
+.welcome-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 11px rgba(0, 0, 0, 0.164);
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.titulo {
+    font-size: 32px;
+    font-weight: bold;
+    background: #088a88;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: white;
+}
+
+.subtitulo {
+    font-size: 22px;
+    color: #101111;
+}
+
+.descripcion {
+    font-size: 18px;
+    color: #333;
+}
+
+.image-container img {
+    border-radius: 8px;
+}
+
+.welcome-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.text-content {
+    flex: 1;
+    text-align: left;
+}
+
+.image-container {
+    flex-shrink: 0;
+    margin-left: 20px;
 }
