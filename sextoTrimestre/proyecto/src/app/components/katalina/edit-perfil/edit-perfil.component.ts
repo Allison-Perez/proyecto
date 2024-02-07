@@ -61,7 +61,7 @@ export class EditPerfilComponent implements OnInit {
         alert('Los cambios se guardaron correctamente');
 
         setTimeout(() => {
-          this.router.navigate(['/admin-perfil']);
+          this.router.navigate(['/perfil-detalle']);
         }, 1000);
 
       } else {

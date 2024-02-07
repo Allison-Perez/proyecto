@@ -49,5 +49,31 @@ export class PerfilDetalleComponent implements OnInit {
   editarPassword() {
     this.router.navigate(['/edit-password']);
   }
+  usuario = {
+    fotoPerfil: 'assets/fotos_perfil/sena.png'
+    // ... otras propiedades del usuario ...
+  };
 
+  abrirSelectorDeImagen() {
+    const inputFile = document.getElementById('inputFile');
+    inputFile?.click();
+  }
+
+  onImagenSeleccionada(event: any) {
+    const nuevaImagen = event.target.files[0];
+    // Lógica para subir la nueva imagen al servidor o almacenamiento en la nube.
+
+    // Después de subir la imagen con éxito, actualiza la URL de la foto en el frontend
+    // En este ejemplo, simplemente asignamos una URL estática, pero en la práctica
+    // deberías obtener la URL del servidor o almacenamiento en la nube.
+    this.usuario.fotoPerfil = 'assets/fotos_perfil/nueva-imagen.jpg';
+  }
+
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
 }
+
