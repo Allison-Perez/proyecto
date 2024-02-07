@@ -41,6 +41,7 @@
     color: white;
   }
   .nombre{
+    padding: 10px;
     color: white;
     font-size: 25px;
     font-family: 'Lobster',sans-serif;
@@ -116,6 +117,9 @@
   }
 
 /* Estilo del dropdown */
+  .otro {
+    color: #008a88;
+  }
   .dropdown {
     position: relative;
     display: inline-block;
@@ -123,8 +127,8 @@
 
   .dropdown-content { 
     display: none;
+    margin-top: 06px;
     position: absolute;
-    background-color: #008a88;
     min-width: 160px;
     border-radius: 10px; /* Añadido para esquinas redondas */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -133,7 +137,7 @@
 
   .dropdown:hover .dropdown-content {
     display: block;
-    left: -140px; 
+    left: -110px; 
   }
 
   .dropdown-button {
@@ -152,5 +156,5 @@
   }
 
   .dropdown-item:hover {
-    background-color: #ddd;
+    background-color: #008a88;
   }
