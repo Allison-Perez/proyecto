@@ -1,53 +1,56 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
   <div class="container-fluid">
-    <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
-    <div class="navbar">
-      <div class="navbar">
+    <a class="nav-link nombre" >Acanner</a>
         <div class="menu-icon" (click)="toggleMenu()">
           <div class="bar"></div>
           <div class="bar"></div>
           <div class="bar"></div>
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
-          <li class="nav-item">
-            <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
-              <i class="fas fa-user"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropdown-button">
+                <span class="material-symbols-outlined">more_horiz</span>
+              </button>
+              <div class="dropdown-content">
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                </li>
+              </div>
+            </div> 
         </ul>
-      </div>
-    </div>
   </div>
 </nav>
-      <div class="perfil-detalle">
-        <h1 class="display-4">Tu Perfil </h1>
-        <div class="container">
-          <div class="container-user">
-              <img src="assets/imagenes/sena.png" alt="Imagen" class="card-img-top small-centered">  
-        <div id="perfil" class="information">
-          <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
-          <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
-          <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
-          <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
-          <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
-          <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
-        </div>
-        <button class="button1" (click)="editarInformacion()">Editar</button>
-        <button class="button2" [routerLink]="['/edit-password']">Cambiar contraseña</button>
-      </div>
+<div class="perfil-detalle">
+  <h1 class="display-6">Tu Perfil</h1>
+    <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
+  <div class="container">
+    <div id="perfil" class="information">
+      <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
+      <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
+      <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
+      <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
+      <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
+      <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
     </div>
+      <button class="boton" (click)="editarInformacion()">Editar</button>
+      <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
+      <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
+        <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">            
   </div>
-  
+</div>
