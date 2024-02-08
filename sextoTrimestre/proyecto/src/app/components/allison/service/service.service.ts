@@ -24,7 +24,6 @@ export class ServiceService {
   }
 
   getPreguntaSeguridad(correo: string) {
-    // Realiza una solicitud GET para obtener la pregunta de seguridad
     return this.http.get(`${this.apiUrl}/api/preguntaSeguridad/${correo}`);
   }
 

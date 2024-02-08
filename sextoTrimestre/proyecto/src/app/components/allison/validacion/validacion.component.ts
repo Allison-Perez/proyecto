@@ -12,7 +12,7 @@ export class ValidacionComponent implements OnInit {
   preguntaSeguridad: string | null = null;
   respuestaUsuario: string = '';
   esValido: boolean = false;
-  descripcionP: string | null = null;
+  pregunta: string | null = null;
   seIntentoValidar: boolean = false;
   contrasenaTemporal: string | null = null;
 
@@ -29,8 +29,8 @@ export class ValidacionComponent implements OnInit {
       if (this.correo) {
         this.serviceService.getPreguntaSeguridad(this.correo).subscribe(
           (data: any) => {
-            this.preguntaSeguridad = data.pregunta;
-            this.descripcionP = data.descripcion;
+            this.preguntaSeguridad = data.idPregunta;
+            this.pregunta = data.pregunta;
           },
           (error) => {
             console.error('Error al obtener la pregunta de seguridad:', error);
