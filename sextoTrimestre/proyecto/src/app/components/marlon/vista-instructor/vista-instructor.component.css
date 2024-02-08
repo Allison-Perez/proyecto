@@ -80,23 +80,54 @@ a {
     font-weight: normal;
 }
 
-/* Estilos del botón de estadísticas */
-.btn-light {
-    margin-left: -60px;
-    background-color: #f0f0f0;
-    color: #088a88;
-    border: none;
+/* Estilos de menu de opciones */
+.bi-gear {
+    margin-right: 5px;
+    background-color: #fff;
+    color: #e0e0e0;
 }
 
-.btn-light:hover {
-    background-color: #e0e0e0;
+.bi-gear::before {
+    content: "\e988"; 
+    font-family: "bi";
+    margin-right: 5px;
 }
+
+/* Estilos para el submenú */
+.nav-item .submenu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    color:  #088a88;
+    min-width: 120px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 70.625rem;
+}
+
+.nav-item:hover .submenu {
+    display: block;
+}
+
+.nav-item .submenu li {
+    padding: 10px;
+    text-align: center;
+}
+
+.nav-item .submenu li:hover {
+    background-color: #f2f2f2;
+}
+
+.color{
+    color: #088a88;
+}
+
 
 /* Estilos de la sección de bienvenida */
 .welcome-container {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 11px rgba(0, 0, 0, 0.164);
+    
     margin-top: 40px;
     padding: 20px;
 }

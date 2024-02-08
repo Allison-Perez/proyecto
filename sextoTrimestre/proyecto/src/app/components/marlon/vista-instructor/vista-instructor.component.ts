@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ServiceService } from '../services/perfil.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./vista-instructor.component.css']
 })
 export class VistaInstructorComponent implements OnInit {
+  @ViewChild('optionsDropdown') optionsDropdown!: ElementRef;
   userData: any;
 
   constructor(
@@ -34,6 +35,11 @@ export class VistaInstructorComponent implements OnInit {
     this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
       this.userData = data;
     });
+  }
+
+  toggleDropdown() {
+    const dropdownMenu = this.optionsDropdown.nativeElement.nextElementSibling;
+    dropdownMenu.classList.toggle('show');
   }
 
   editarInformacion() {
