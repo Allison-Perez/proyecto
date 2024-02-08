@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //11019As
+  password: "11109As",
   database: "acanner",
 };
 
@@ -26,54 +26,6 @@ function generarContrasenaTemporal() {
     .toString('hex')
     .slice(0, longitud);
 }
-
-// ...
-
-async function llenarTablas() {
-  try {
-    // Crear la conexión a la base de datos
-    const connection = await mysql.createConnection(dbConfig);
-
-    // Llenar la tabla instructor
-    const fillInstructorQuery = `
-      INSERT INTO instructor (id_instructor, tipo_instructor)
-      SELECT id_usuario, 1 FROM usuario WHERE rol = 1;
-    `;
-    await connection.query(fillInstructorQuery);
-
-    // Llenar la tabla ficha (descomentar si es necesario)
-    // const fillFichaQuery = `
-    //   INSERT INTO ficha (id_ficha, id_aprendiz, numero_ficha, trimestre)
-    //   SELECT DISTINCT u.ficha, u.id_usuario, f.numero_ficha, 1
-    //   FROM usuario u
-    //   JOIN ficha f ON u.ficha = f.id_ficha;
-    // `;
-    // await connection.query(fillFichaQuery);
-
-    // Llenar la tabla instructor_ficha
-    const fillInstructorFichaQuery = `
-      INSERT INTO instructor_ficha (id_instructor, id_ficha, estado)
-      SELECT i.id_instructor, u.ficha, 1
-      FROM instructor i
-      JOIN usuario u ON i.id_instructor = u.id_usuario
-      WHERE u.rol = 1;
-    `;
-    await connection.query(fillInstructorFichaQuery);
-
-    // Cerrar la conexión después de ejecutar las consultas
-    connection.end();
-    
-    console.log('Tablas llenadas exitosamente.');
-  } catch (error) {
-    console.error('Error al llenar las tablas:', error);
-  }
-}
-
-// Establecer la conexión y llamar a la función para llenar las tablas
-mysql.createConnection(dbConfig)
-  .then((connection) => llenarTablas())
-  .catch((error) => console.error('Error al conectar con la base de datos:', error));
-
 
 
 // LOGEO
