@@ -57,7 +57,7 @@ CREATE TABLE usuario (
     primerApellido VARCHAR(45) NOT NULL,
     segundoApellido VARCHAR(45) NULL,
     fechaNacimiento DATE NOT NULL,
-    correo VARCHAR(250) NOT NULL,
+    correo VARCHAR(250) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     idPregunta INT NOT NULL,
     respuestaPregunta VARCHAR(45) NOT NULL,

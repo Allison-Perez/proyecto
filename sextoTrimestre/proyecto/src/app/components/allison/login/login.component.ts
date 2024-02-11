@@ -41,7 +41,7 @@ export class LoginComponent {
           console.log(email);
           localStorage.setItem('user_email', JSON.stringify(email));
 
-          const userRole = response.rol;
+          const userRole = response.idRol;
           this.authService.setAuthenticationStatus(true, userRole);
           this.redirectToRoleView(userRole);
         }
