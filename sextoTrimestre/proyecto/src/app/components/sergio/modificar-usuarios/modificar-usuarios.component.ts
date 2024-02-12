@@ -17,12 +17,12 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
 
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
-      id_usuario: [''],
-      primer_nombre: ['', Validators.required],
-      primer_apellido: ['', Validators.required],
+      documento: [''],
+      primerNombre: ['', Validators.required],
+      primerApellido: ['', Validators.required],
       ficha: [''],
       correo: ['', [Validators.required, Validators.email]],
-      rol: ['', [Validators.required]]
+      idRol: ['', [Validators.required]]
     });
   }
 

@@ -25,18 +25,16 @@ export class EditPerfilComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
+
     let correo:any = localStorage.getItem('user_email');
     correo = correo.replace(/^"(.*)"$/, '$1');
 
     if (correo) {
-      // Llama a tu servicio para obtener la información del usuario por correo
       this.service.getUserInfoByEmail(correo).subscribe(data => {
         this.userData = data;
-        this.form.patchValue(data); // Llena el formulario con los datos del usuario
+        this.form.patchValue(data);
       });
     } else {
-      // Maneja el caso en el que el correo no esté disponible, por ejemplo, redirigiendo o mostrando un mensaje de error.
       console.error('El correo no está disponible');
     }
   }
@@ -53,7 +51,6 @@ export class EditPerfilComponent implements OnInit {
     const userData = this.form.value;
 
     this.service.updateUserInfoByEmail(correo, userData).subscribe(response => {
-      // Maneja la respuesta de la actualización
       if (response.status === 200 || 204) {
         alert('Los cambios se guardaron correctamente');
 
@@ -69,8 +66,6 @@ export class EditPerfilComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
 }

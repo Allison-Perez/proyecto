@@ -24,18 +24,18 @@ export class RegistrosAdminComponent {
 
   constructor(private http:ServiceService, private fb: FormBuilder, private router: Router){
     this.registerForm = this.fb.group({
-      primer_nombre: ['', Validators.required],
-      primer_apellido: ['', Validators.required],
-      tipo_documento: ['', Validators.required],
-      fecha_nacimiento: ['', [Validators.required, this.validateFechaNacimiento]],
+      primerNombre: ['', Validators.required],
+      primerApellido: ['', Validators.required],
+      tipoDocumento: ['', Validators.required],
+      fechaNacimiento: ['', [Validators.required, this.validateFechaNacimiento]],
       correo: ['', [Validators.required, Validators.email]],
-      pregunta_seguridad: ['', Validators.required],
-      segundo_nombre: [''],
-      segundo_apellido: ['', Validators.required],
-      id_usuario: ['', Validators.required],
+      idPregunta: ['', Validators.required],
+      segundoNombre: [''],
+      segundoApellido : [''],
+      documento: ['', Validators.required],
       ficha: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      respuesta_seguridad: ['', Validators.required]
+      respuestaPregunta: ['', Validators.required]
     });
 
     this.registroExitoso = false;
