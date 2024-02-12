@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As",
+  password: "", //1109As
   database: "acanner",
 };
 
@@ -360,6 +360,82 @@ app.post('/api/verificarRespuesta', async (req, res) => {
 // });
 
 // BLOG
+
+// Creación de un nuevo blog
+app.post("/crearBlog", async (req, res) => {
+  try {
+    const { titulo, urlImagen, comentario, fecha, idUsuario, idFicha } = req.body;
+
+    if (titulo && urlImagen && comentario && fecha && idUsuario && idFicha) {
+      const connection = await mysql.createConnection(dbConfig);
+
+      const sql = `INSERT INTO blog (nombre, urlImagen, comentario, fecha, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
+
+      await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idUsuario, idFicha]);
+      connection.end();
+
+      res.status(201).json({ message: "Blog creado exitosamente" });
+    } else {
+      res.status(400).json({ error: "Faltan campos obligatorios para crear el blog" });
+    }
+  } catch (error) {
+    console.error("Error al crear el blog:", error);
+    res.status(500).json({ error: "Error al crear el blog" });
+  }
+});
+
+// Obtener blogs por ficha
+app.get("/blogsPorFicha/:idFicha", async (req, res) => {
+  try {
+    const { idFicha } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
+    const [rows] = await connection.execute(sql, [idFicha]);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener los blogs por ficha:", error);
+    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+  }
+});
+
+// Editar y eliminar un blog específico
+app.put("/editarBlog/:idBlog", async (req, res) => {
+  try {
+    const { idBlog } = req.params;
+    const { titulo, urlImagen, comentario, fecha } = req.body;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `UPDATE blog SET nombre = ?, urlImagen = ?, comentario = ?, fecha = ? WHERE identificador = ?`;
+    await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idBlog]);
+
+    connection.end();
+    res.status(200).json({ message: "Blog actualizado exitosamente" });
+  } catch (error) {
+    console.error("Error al editar el blog:", error);
+    res.status(500).json({ error: "Error al editar el blog" });
+  }
+});
+
+app.delete("/eliminarBlog/:idBlog", async (req, res) => {
+  try {
+    const { idBlog } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `DELETE FROM blog WHERE identificador = ?`;
+    await connection.execute(sql, [idBlog]);
+
+    connection.end();
+    res.status(200).json({ message: "Blog eliminado exitosamente" });
+  } catch (error) {
+    console.error("Error al eliminar el blog:", error);
+    res.status(500).json({ error: "Error al eliminar el blog" });
+  }
+});
+
 
 /// Ruta para crear un blog
 // app.post('/api/blog/create', async (req, res) => {
