@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../services/blog.service';
 import { NgForm } from '@angular/forms';
+import { BlogService } from '../services/blog.service'; 
 
 @Component({
   selector: 'app-blog',
@@ -8,70 +8,58 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent implements OnInit {
-  showErrorMessage: boolean = false;
   newsList: any[] = [];
-  newNews: any = { titulo: '', contenido: '' };
-  editingNews: any | null = null;
+  newBlog: any = { titulo: '', urlImagen: '', comentario: '', fecha: '', idUsuario: '', idFicha: '' };
+  editingBlog: any | null = null;
 
   constructor(private blogService: BlogService) { }
 
   ngOnInit() {
-    this.loadNews();
+    this.loadBlogs();
   }
 
-  loadNews() {
-    this.blogService.getNews().subscribe(data => {
-      console.log('Datos de noticias:', data);
-      if (data.length > 0) {
-        console.log('Primer objeto:', data[0]);
-      }
-  
-      this.newsList = data;
-    });
-  }
+  loadBlogs() {
+    const blogsPorFicha = this.blogService.getBlogsPorFicha();
 
-  createNews(form: NgForm) {
-    // Verificamos si el formulario es válido antes de enviar la solicitud
-    if (form.valid) {
-      this.blogService.createNews(this.newNews).subscribe(() => {
-        this.loadNews();
-        this.newNews = { titulo: '', contenido: '' };
+    if (blogsPorFicha) {
+      blogsPorFicha.subscribe(data => {
+        this.newsList = data;
       });
     } else {
-      // Mostramos el mensaje de error
-      this.showErrorMessage = true;
+      // Manejo de error: No se pudo obtener la lista de blogs por ficha
     }
   }
 
-
-  editNews(news: any) {
-    if (news && news.id_noticias) {
-        console.log('Editar noticia ID:', news.id_noticias);
-        this.editingNews = { ...news }; 
-    } else {
-        console.log('No se encontró un ID válido para editar la noticia.');
+  createBlog(form: NgForm) {
+    if (form.valid) {
+      this.blogService.crearBlog(this.newBlog)
+        .subscribe(() => {
+          this.loadBlogs();
+          this.newBlog = { titulo: '', urlImagen: '', comentario: '', fecha: '', idUsuario: '', idFicha: '' };
+        });
     }
+  }
+
+  editBlog(blog: any) {
+    this.editingBlog = { ...blog };
   }
 
   cancelEdit() {
-    this.editingNews = null;
+    this.editingBlog = null;
   }
 
-  updateNews() {
-    this.blogService.updateNews(this.editingNews.id_noticias, this.editingNews).subscribe(() => {
-      this.loadNews();
-      this.editingNews = null;
-    });
-  }
-
-  deleteNews(newsId: number) {
-    if (newsId) {
-      console.log('Eliminar noticia ID:', newsId);
-      this.blogService.deleteNews(newsId.toString()).subscribe(() => {
-        this.newsList = this.newsList.filter(news => news.id_noticias !== newsId);
+  updateBlog() {
+    this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog)
+      .subscribe(() => {
+        this.loadBlogs();
+        this.editingBlog = null;
       });
-    } else {
-      console.log('No se encontró un ID válido para eliminar la noticia.');
-    }
-  }  
+  }
+
+  deleteBlog(blogId: number) {
+    this.blogService.eliminarBlog(blogId)
+      .subscribe(() => {
+        this.newsList = this.newsList.filter(blog => blog.identificador !== blogId);
+      });
+  }
 }
