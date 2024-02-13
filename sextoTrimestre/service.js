@@ -353,98 +353,96 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
   }
 });
 
-// ADMIN LISTA Y EDITA USUARIOS
+// ADMIN LISTA USUARIOS
 
-app.get("/api/usuarios", async (req, res) => {
-  try {
-    const connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.execute("SELECT * FROM usuario");
-    connection.end();
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error("Error al obtener usuarios:", error);
-    res.status(500).json({ error: "Error al obtener usuarios" });
-  }
-});
+// app.get("/api/usuarios", async (req, res) => {
+//   try {
+//     const connection = await mysql.createConnection(dbConfig);
+//     const [rows] = await connection.execute("SELECT * FROM usuario");
+//     connection.end();
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error("Error al obtener usuarios:", error);
+//     res.status(500).json({ error: "Error al obtener usuarios" });
+//   }
+// });
 
-app.post('/api/modificar-usuarios', async (req, res) => {
-  try {
-    console.log('Entro a la ruta de modificación de usuarios');
+// ADMIN MODIFICA USUARIOS
 
-    // Asegúrate de que req.body y req.body.email estén definidos
-    if (!req.body || !req.body.email) {
-      return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
-    }
+// app.post('/api/modificar-usuarios', async (req, res) => {
+//   try {
+//     console.log('Entro a la ruta de modificación de usuarios');
 
-    const connection = await mysql.createConnection(dbConfig);
-    const userEmail = req.body.email;
-    const userData = req.body.updatedUser;
+//     // Asegúrate de que req.body y req.body.email estén definidos
+//     if (!req.body || !req.body.email) {
+//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
+//     }
 
-    console.log('Datos del usuario a actualizar:', userData);
+//     const connection = await mysql.createConnection(dbConfig);
+//     const userEmail = req.body.email;
+//     const userData = req.body.updatedUser;
 
-    const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
+//     console.log('Datos del usuario a actualizar:', userData);
 
-    if (userExists.length === 0) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
+//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
 
-    // Realiza la actualización en la base de datos utilizando el correo del usuario
-    const updateSql = `
-      UPDATE usuario
-      SET
-        primer_nombre = ?,
-        primer_apellido = ?,
-        ficha = ?,
-        rol = ?
-      WHERE correo = ?`;
+//     if (userExists.length === 0) {
+//       return res.status(404).json({ error: 'Usuario no encontrado' });
+//     }
 
-    const values = [
-      userData.primer_nombre,
-      userData.primer_apellido,
-      userData.ficha,
-      userData.rol,
-      userEmail
-    ];
+//     const updateSql = `
+//       UPDATE usuario
+//       SET
+//         primer_nombre = ?,
+//         primer_apellido = ?,
+//         ficha = ?,
+//         rol = ?
+//       WHERE correo = ?`;
 
-    console.log('Consulta SQL:', updateSql);
-    console.log('Valores:', values);
+//     const values = [
+//       userData.primer_nombre,
+//       userData.primer_apellido,
+//       userData.ficha,
+//       userData.rol,
+//       userEmail
+//     ];
 
-    await connection.execute(updateSql, values);
+//     console.log('Consulta SQL:', updateSql);
+//     console.log('Valores:', values);
 
-    // Cerrar la conexión y enviar la respuesta
-    connection.end();
-    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-  } catch (error) {
-    console.error('Error al actualizar el usuario:', error);
-    res.status(500).json({ error: 'Error interno en el servidor' });
-  }
-});
+//     await connection.execute(updateSql, values);
+//     connection.end();
+//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+//   } catch (error) {
+//     console.error('Error al actualizar el usuario:', error);
+//     res.status(500).json({ error: 'Error interno en el servidor' });
+//   }
+// });
+
 
 // LISTADO DE INSTRUCTORES EN ADMIN
 
-app.get('/api/staticsInstructores', async (req, res) => {
-  const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
+// app.get('/api/staticsInstructores', async (req, res) => {
+//   const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
 
-try {
-  const connection = await mysql.createConnection(dbConfig);
+// try {
+//   const connection = await mysql.createConnection(dbConfig);
 
-  const [rows] = await connection.execute(sql);
+//   const [rows] = await connection.execute(sql);
 
-  await connection.end();
+//   await connection.end();
 
-  if (rows.length > 0) {
-    res.json(rows);
-  } else {
-    res.status(404).json({ error: 'Usuarios no encontrados' });
-  }
-} catch (error) {
-  console.error('Error al obtener los usuarios: ' + error);
-  res.status(500).json({ error: 'Error al obtener los usuarios' });
-}
+//   if (rows.length > 0) {
+//     res.json(rows);
+//   } else {
+//     res.status(404).json({ error: 'Usuarios no encontrados' });
+//   }
+// } catch (error) {
+//   console.error('Error al obtener los usuarios: ' + error);
+//   res.status(500).json({ error: 'Error al obtener los usuarios' });
+// }
 
-});
-
-
+// });
 
 
 
