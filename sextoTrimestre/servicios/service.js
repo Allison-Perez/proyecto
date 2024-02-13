@@ -111,15 +111,25 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Correo o contraseña incorrectos" });
     }
 
+    // Obtener información adicional del usuario, como nombre, apellido, etc.
+    const userInfo = {
+      idUsuario: usuario.identificador,
+      primerNombre: usuario.primerNombre,
+      segundoNombre: usuario.segundoNombre,
+      primerApellido: usuario.primerApellido,
+      segundoApellido: usuario.segundoApellido,
+      correo: usuario.correo,
+    };
+
+
     // Cerrar la conexión y enviar la respuesta
     connection.end();
-    res.status(200).json({ message: "Inicio de sesión exitoso",idRol: usuario.idRol });
+    res.status(200).json({ message: "Inicio de sesión exitoso",idRol: usuario.idRol, userInfo: userInfo });
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);
     res.status(500).json({ error: "Error en el inicio de sesión" });
   }
 });
-
 
 // RECUPERAR CORREO (VERIFICANDO SI EXISTE)
 
@@ -175,40 +185,7 @@ app.get('/api/preguntaSeguridad/:correo', async (req, res) => {
   }
 });
 
-
-// app.get('/api/preguntaSeguridad/:correo', async (req, res) => {
-//   const correo = req.params.correo;
-
-//   console.log(correo);
-
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-
-//     const sql = `
-//       SELECT u.idPregunta, p.pregunta
-//       FROM usuario u
-//       LEFT JOIN preguntaSeguridad p ON u.idPregunta = p.identificador
-//       WHERE u.correo = ?`;
-
-//     const [rows] = await connection.execute(sql, [correo]);
-
-//     await connection.end();
-
-//     if (rows.length > 0) {
-//       const preguntaSeguridad = rows[0].idPregunta;
-//       const pregunta = rows[0].pregunta;
-//       res.json({ pregunta: preguntaSeguridad, pregunta: pregunta });
-//     } else {
-//       res.status(404).json({ mensaje: 'Correo no encontrado' });
-//     }
-//   } catch (error) {
-//     console.error('Error al consultar la pregunta de seguridad:', error);
-//     res.status(500).json({ mensaje: 'Error al consultar la pregunta de seguridad' });
-//   }
-// });
-
-
-// VERIFICA LA RESPUESTA DE SEGURIDAD Y ASIGNACIÓN DE CONTRASEÑA TEMPORAL
+// VERIFICA RESPUESTA Y MANDA CONTRASEÑA TEMPORAL
 
 app.post('/api/verificarRespuesta', async (req, res) => {
   try {
@@ -256,188 +233,303 @@ app.post('/api/verificarRespuesta', async (req, res) => {
   }
 });
 
+// MOSTRAR INFORMACIÓN EN EL PERFIL ADMIN
 
-// MOSTRAR INFORMACIÓN EN EL PERFIL
+app.get('/api/obtener-usuario', async (req, res) => {
+  const correo = req.query.correo;
+  console.log(correo);
+  const sql = `SELECT primerNombre, segundoNombre, primerApellido, segundoApellido, correo, password FROM usuario WHERE correo = ?`;
 
-// app.get('/api/obtener-usuario', async (req, res) => {
-//   const correo = req.query.correo;
-//   console.log(correo);
-//   const sql = `SELECT primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, ficha, correo, password FROM usuario WHERE correo = ?`;
+  try {
+    const connection = await mysql.createConnection(dbConfig);
 
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(sql, [correo]);
 
-//     const [rows] = await connection.execute(sql, [correo]);
+    await connection.end();
 
-//     await connection.end();
 
-//     if (rows.length === 1) {
-//       const usuario = rows[0];
-//       res.json(usuario);
-//     } else {
-//       res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
-//   } catch (error) {
-//     console.error('Error al obtener el usuario: ' + error);
-//     res.status(500).json({ error: 'Error al obtener el usuario' });
-//   }
-// });
+// Obtener un usuario por correo electrónico
+app.get("/api/obtener-usuario", async (req, res) => {
+  try {
+    const { correo } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
 
+    const sql = `SELECT * FROM usuario WHERE correo = ?`;
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+    if (rows.length > 0) {
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(404).json({ error: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al obtener el usuario por correo:", error);
+    res.status(500).json({ error: "Error al obtener el usuario por correo" });
+  }
+});
+
+
+    if (rows.length === 1) {
+      const usuario = rows[0];
+      res.json(usuario);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener el usuario: ' + error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
+  }
+});
 
 // EDITAR LA INFORMACIÓN DEL PERFIL
 
+app.post('/api/actualizar-usuario', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const { correo } = req.query;
+    const userData = req.body;
 
-// app.post('/api/actualizar-usuario', async (req, res) => {
+    if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido) {
+      return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+    }
+
+    const updateSql = `
+      UPDATE usuario
+      SET
+        primerNombre = ?,
+        segundoNombre = ?,
+        primerApellido = ?,
+        segundoApellido = ?
+      WHERE correo = ?`; 
+    const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
+    const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+
+    await connection.execute(updateSql, values);
+
+
+    connection.end();
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar la información del usuario:', error);
+    res.status(500).json({ error: 'Error al actualizar la información del usuario' });
+  }
+});
+
+// CAMBIAR LA CONTRASEÑA ESTANDO LOGEADO
+
+app.post("/api/cambiar-contrasena", async (req, res) => {
+  try {
+    const { correo, passwordAnterior, nuevaPassword } = req.body;
+    const connection = await mysql.createConnection(dbConfig);
+
+    // Consultar al usuario en la base de datos por correo
+    const [rows] = await connection.execute("SELECT * FROM usuario WHERE correo = ?", [correo]);
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Usuario no encontrado" });
+    }
+
+    const usuario = rows[0];
+
+    // Verificar la contraseña anterior
+    const match = await bcrypt.compare(passwordAnterior, usuario.password);
+    if (!match) {
+      return res.status(401).json({ message: "La contraseña anterior es incorrecta" });
+    }
+
+    // Encriptar la nueva contraseña temporal
+    const passwordEncriptado = await bcrypt.hash(nuevaPassword, 10);
+
+    // Actualizar la contraseña en la base de datos
+    const updateSql = "UPDATE usuario SET password = ? WHERE correo = ?";
+    await connection.execute(updateSql, [passwordEncriptado, correo]);
+
+    // Cerrar la conexión y enviar la respuesta
+    connection.end();
+    res.status(200).json({ message: "Contraseña cambiada con éxito", nuevaPassword });
+  } catch (error) {
+    console.error("Error al cambiar la contraseña:", error);
+    res.status(500).json({ error: "Error al cambiar la contraseña" });
+  }
+});
+
+// ADMIN LISTA USUARIOS
+
+// app.get("/api/usuarios", async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
-//     const { correo } = req.query;
-//     const userData = req.body;
+//     const [rows] = await connection.execute("SELECT * FROM usuario");
+//     connection.end();
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error("Error al obtener usuarios:", error);
+//     res.status(500).json({ error: "Error al obtener usuarios" });
+//   }
+// });
 
-//     if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido) {
-//       return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+// ADMIN MODIFICA USUARIOS
+
+// app.post('/api/modificar-usuarios', async (req, res) => {
+//   try {
+//     console.log('Entro a la ruta de modificación de usuarios');
+
+//     // Asegúrate de que req.body y req.body.email estén definidos
+//     if (!req.body || !req.body.email) {
+//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
 //     }
 
-//     // Realiza la actualización en la base de datos utilizando el correo
+//     const connection = await mysql.createConnection(dbConfig);
+//     const userEmail = req.body.email;
+//     const userData = req.body.updatedUser;
+
+//     console.log('Datos del usuario a actualizar:', userData);
+
+//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
+
+//     if (userExists.length === 0) {
+//       return res.status(404).json({ error: 'Usuario no encontrado' });
+//     }
+
 //     const updateSql = `
 //       UPDATE usuario
 //       SET
 //         primer_nombre = ?,
-//         segundo_nombre = ?,
 //         primer_apellido = ?,
-//         segundo_apellido = ?
-//       WHERE correo = ?`; // Eliminado "ficha" de la consulta SQL
-//     const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
-//     const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+//         ficha = ?,
+//         rol = ?
+//       WHERE correo = ?`;
+
+//     const values = [
+//       userData.primer_nombre,
+//       userData.primer_apellido,
+//       userData.ficha,
+//       userData.rol,
+//       userEmail
+//     ];
+
+//     console.log('Consulta SQL:', updateSql);
+//     console.log('Valores:', values);
 
 //     await connection.execute(updateSql, values);
-
-//     // Cerrar la conexión y enviar la respuesta
 //     connection.end();
 //     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
 //   } catch (error) {
-//     console.error('Error al actualizar la información del usuario:', error);
-//     res.status(500).json({ error: 'Error al actualizar la información del usuario' });
+//     console.error('Error al actualizar el usuario:', error);
+//     res.status(500).json({ error: 'Error interno en el servidor' });
 //   }
 // });
 
 
-// CAMBIAR LA CONTRASEÑA ESTANDO LOGEADO
+// LISTADO DE INSTRUCTORES EN ADMIN
 
+// app.get('/api/staticsInstructores', async (req, res) => {
+//   const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
 
-// app.post("/api/cambiar-contrasena", async (req, res) => {
-//   try {
-//     const { correo, passwordAnterior, nuevaPassword } = req.body;
-//     const connection = await mysql.createConnection(dbConfig);
+// try {
+//   const connection = await mysql.createConnection(dbConfig);
 
-//     // Consultar al usuario en la base de datos por correo
-//     const [rows] = await connection.execute("SELECT * FROM usuario WHERE correo = ?", [correo]);
-//     if (rows.length === 0) {
-//       return res.status(401).json({ message: "Usuario no encontrado" });
-//     }
+//   const [rows] = await connection.execute(sql);
 
-//     const usuario = rows[0];
+//   await connection.end();
 
-//     // Verificar la contraseña anterior
-//     const match = await bcrypt.compare(passwordAnterior, usuario.password);
-//     if (!match) {
-//       return res.status(401).json({ message: "La contraseña anterior es incorrecta" });
-//     }
-
-//     // Encriptar la nueva contraseña temporal
-//     const passwordEncriptado = await bcrypt.hash(nuevaPassword, 10);
-
-//     // Actualizar la contraseña en la base de datos
-//     const updateSql = "UPDATE usuario SET password = ? WHERE correo = ?";
-//     await connection.execute(updateSql, [passwordEncriptado, correo]);
-
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: "Contraseña cambiada con éxito", nuevaPassword });
-//   } catch (error) {
-//     console.error("Error al cambiar la contraseña:", error);
-//     res.status(500).json({ error: "Error al cambiar la contraseña" });
+//   if (rows.length > 0) {
+//     res.json(rows);
+//   } else {
+//     res.status(404).json({ error: 'Usuarios no encontrados' });
 //   }
+// } catch (error) {
+//   console.error('Error al obtener los usuarios: ' + error);
+//   res.status(500).json({ error: 'Error al obtener los usuarios' });
+// }
+
 // });
+
+
+
+// MARLON
 
 // BLOG
 
 // Creación de un nuevo blog
-app.post("/crearBlog", async (req, res) => {
-  try {
-    const { titulo, urlImagen, comentario, fecha, idUsuario, idFicha } = req.body;
 
-    if (titulo && urlImagen && comentario && fecha && idUsuario && idFicha) {
-      const connection = await mysql.createConnection(dbConfig);
+// app.post("/crearBlog", async (req, res) => {
+//   try {
+//     const { titulo, urlImagen, comentario, fecha, idUsuario, idFicha } = req.body;
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, comentario, fecha, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
+//     if (titulo && urlImagen && comentario && fecha && idUsuario && idFicha) {
+//       const connection = await mysql.createConnection(dbConfig);
 
-      await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idUsuario, idFicha]);
-      connection.end();
+//       const sql = `INSERT INTO blog (nombre, urlImagen, comentario, fecha, idUsuario, idFicha)
+//                    VALUES (?, ?, ?, ?, ?, ?)`;
 
-      res.status(201).json({ message: "Blog creado exitosamente" });
-    } else {
-      res.status(400).json({ error: "Faltan campos obligatorios para crear el blog" });
-    }
-  } catch (error) {
-    console.error("Error al crear el blog:", error);
-    res.status(500).json({ error: "Error al crear el blog" });
-  }
-});
+//       await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idUsuario, idFicha]);
+//       connection.end();
+
+//       res.status(201).json({ message: "Blog creado exitosamente" });
+//     } else {
+//       res.status(400).json({ error: "Faltan campos obligatorios para crear el blog" });
+//     }
+//   } catch (error) {
+//     console.error("Error al crear el blog:", error);
+//     res.status(500).json({ error: "Error al crear el blog" });
+//   }
+// });
 
 // Obtener blogs por ficha
-app.get("/blogsPorFicha/:idFicha", async (req, res) => {
-  try {
-    const { idFicha } = req.params;
-    const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
-    const [rows] = await connection.execute(sql, [idFicha]);
+// app.get("/blogsPorFicha/:idFicha", async (req, res) => {
+//   try {
+//     const { idFicha } = req.params;
+//     const connection = await mysql.createConnection(dbConfig);
 
-    connection.end();
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error("Error al obtener los blogs por ficha:", error);
-    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
-  }
-});
+//     const sql = `SELECT * FROM blog WHERE idFicha = ?`;
+//     const [rows] = await connection.execute(sql, [idFicha]);
+
+//     connection.end();
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error("Error al obtener los blogs por ficha:", error);
+//     res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+//   }
+// });
 
 // Editar y eliminar un blog específico
-app.put("/editarBlog/:idBlog", async (req, res) => {
-  try {
-    const { idBlog } = req.params;
-    const { titulo, urlImagen, comentario, fecha } = req.body;
-    const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `UPDATE blog SET nombre = ?, urlImagen = ?, comentario = ?, fecha = ? WHERE identificador = ?`;
-    await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idBlog]);
+// app.put("/editarBlog/:idBlog", async (req, res) => {
+//   try {
+//     const { idBlog } = req.params;
+//     const { titulo, urlImagen, comentario, fecha } = req.body;
+//     const connection = await mysql.createConnection(dbConfig);
 
-    connection.end();
-    res.status(200).json({ message: "Blog actualizado exitosamente" });
-  } catch (error) {
-    console.error("Error al editar el blog:", error);
-    res.status(500).json({ error: "Error al editar el blog" });
-  }
-});
+//     const sql = `UPDATE blog SET nombre = ?, urlImagen = ?, comentario = ?, fecha = ? WHERE identificador = ?`;
+//     await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idBlog]);
 
-app.delete("/eliminarBlog/:idBlog", async (req, res) => {
-  try {
-    const { idBlog } = req.params;
-    const connection = await mysql.createConnection(dbConfig);
+//     connection.end();
+//     res.status(200).json({ message: "Blog actualizado exitosamente" });
+//   } catch (error) {
+//     console.error("Error al editar el blog:", error);
+//     res.status(500).json({ error: "Error al editar el blog" });
+//   }
+// });
 
-    const sql = `DELETE FROM blog WHERE identificador = ?`;
-    await connection.execute(sql, [idBlog]);
+// app.delete("/eliminarBlog/:idBlog", async (req, res) => {
+//   try {
+//     const { idBlog } = req.params;
+//     const connection = await mysql.createConnection(dbConfig);
 
-    connection.end();
-    res.status(200).json({ message: "Blog eliminado exitosamente" });
-  } catch (error) {
-    console.error("Error al eliminar el blog:", error);
-    res.status(500).json({ error: "Error al eliminar el blog" });
-  }
-});
+//     const sql = `DELETE FROM blog WHERE identificador = ?`;
+//     await connection.execute(sql, [idBlog]);
 
+//     connection.end();
+//     res.status(200).json({ message: "Blog eliminado exitosamente" });
+//   } catch (error) {
+//     console.error("Error al eliminar el blog:", error);
+//     res.status(500).json({ error: "Error al eliminar el blog" });
+//   }
+// });
 
-/// Ruta para crear un blog
+//Ruta para crear un blog
+
 // app.post('/api/blog/create', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig); // Crear una nueva conexión
@@ -456,7 +548,8 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 //   }
 // });
 
-// Ruta para actualizar una noticia por su ID
+//Ruta para actualizar una noticia por su ID
+
 // app.put('/api/blog/update/:id_noticias', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig); 
@@ -477,6 +570,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para eliminar una noticia por su ID
+
 // app.delete('/api/blog/delete/:id_noticias', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -496,6 +590,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para obtener la lista de blogs
+
 // app.get('/api/blog/list', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -528,6 +623,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // ACTIVIDAD
 
 // Ruta para crear una actividad
+
 // app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -554,6 +650,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para actualizar una actividad por su ID
+
 // app.put('/api/actividad/update/:id_guia', upload.single('archivo'), async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -589,6 +686,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 
 
 // Ruta para eliminar una actividad por su ID
+
 // app.delete('/api/actividad/delete/:id_guia', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -608,6 +706,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 
 
 // Ruta para obtener la lista de actividades
+
 // app.get('/api/actividad/list', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -626,6 +725,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // ASISTENCIA
 
 // Ruta para crear una asistencia
+
 // app.post('/api/asistencia/create', upload.single('archivo'), async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -652,6 +752,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para actualizar una asistencia por su ID
+
 // app.put('/api/asistencia/update/:id_asistencia', upload.single('archivo'), async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -681,8 +782,8 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 //   }
 // });
 
-
 // Ruta para eliminar una asistencia por su ID
+
 // app.delete('/api/asistencia/delete/:id_asistencia', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -701,6 +802,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para obtener la lista de asistencia
+
 // app.get('/api/asistencia/list', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -716,8 +818,8 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 //   }
 // });
 
-
 // Descargar archivos de asistencia
+
 // app.get('/api/asistencia/download/:archivo', (req, res) => {
 //   const archivo = req.params.archivo;
 //   const rutaArchivo = path.join(__dirname, 'uploads', archivo);
@@ -759,6 +861,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para actualizar un horario por su ID
+
 // app.put('/api/horario/update/:id_horario', upload.single('archivo'), async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -799,6 +902,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para eliminar un horario por su ID
+
 // app.delete('/api/horario/delete/:id_horario', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -817,6 +921,7 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 // });
 
 // Ruta para obtener la lista de horarios
+
 // app.get('/api/horario/list', async (req, res) => {
 //   try {
 //     const connection = await mysql.createConnection(dbConfig);
@@ -832,96 +937,6 @@ app.delete("/eliminarBlog/:idBlog", async (req, res) => {
 //   }
 // });
 
-// app.get("/api/usuarios", async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-//     const [rows] = await connection.execute("SELECT * FROM usuario");
-//     connection.end();
-//     res.status(200).json(rows);
-//   } catch (error) {
-//     console.error("Error al obtener usuarios:", error);
-//     res.status(500).json({ error: "Error al obtener usuarios" });
-//   }
-// });
-
-// ADMIN EDITA USUARIOS
-
-// INTENTO 1, FUNCIONA SI EDITO TODOS LOS CAMPOS
-
-// app.post('/api/modificar-usuarios', async (req, res) => {
-//   try {
-//     console.log('Entro a la ruta de modificación de usuarios');
-
-//     // Asegúrate de que req.body y req.body.email estén definidos
-//     if (!req.body || !req.body.email) {
-//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
-//     }
-
-//     const connection = await mysql.createConnection(dbConfig);
-//     const userEmail = req.body.email;
-//     const userData = req.body.updatedUser;
-
-//     console.log('Datos del usuario a actualizar:', userData);
-
-//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
-
-//     if (userExists.length === 0) {
-//       return res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
-
-//     // Realiza la actualización en la base de datos utilizando el correo del usuario
-//     const updateSql = `
-//       UPDATE usuario
-//       SET
-//         primer_nombre = ?,
-//         primer_apellido = ?,
-//         ficha = ?,
-//         rol = ?
-//       WHERE correo = ?`;
-
-//     const values = [
-//       userData.primer_nombre,
-//       userData.primer_apellido,
-//       userData.ficha,
-//       userData.rol,
-//       userEmail
-//     ];
-
-//     console.log('Consulta SQL:', updateSql);
-//     console.log('Valores:', values);
-
-//     await connection.execute(updateSql, values);
-
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar el usuario:', error);
-//     res.status(500).json({ error: 'Error interno en el servidor' });
-//   }
-// });
-
-// app.get('/api/staticsInstructores', async (req, res) => {
-//   const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
-
-// try {
-//   const connection = await mysql.createConnection(dbConfig);
-
-//   const [rows] = await connection.execute(sql);
-
-//   await connection.end();
-
-//   if (rows.length > 0) {
-//     res.json(rows);
-//   } else {
-//     res.status(404).json({ error: 'Usuarios no encontrados' });
-//   }
-// } catch (error) {
-//   console.error('Error al obtener los usuarios: ' + error);
-//   res.status(500).json({ error: 'Error al obtener los usuarios' });
-// }
-
-// });
 
 
 app.listen(port, () => {

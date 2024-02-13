@@ -1,8 +1,7 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class AuthService {
   private _isAuthenticated = false;
   private _userRole: number = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   // Método para realizar la autenticación
   login(data: any): Observable<any> {
@@ -36,5 +35,19 @@ export class AuthService {
     this._userRole = role;
   }
 
-  // Otros métodos relacionados con la autenticación pueden ir aquí
+  // Método para obtener el ID del usuario actual
+  getIdUsuarioActual(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.idUsuario;
+    }
+    return null;
+  }
+
+  // Método para obtener la información del usuario
+  getUserInfo(): any {
+    // Implementa la lógica para obtener la información del usuario, si es necesario
+    return {};
+  }
 }

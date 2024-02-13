@@ -6,70 +6,76 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register_form">
         <div class="row d-flex justify-content-center mx-auto">
           <div class="col-md-6 form_container">
-            <input formControlName="primer_nombre" type="text" class="form-control name" placeholder="Primer nombre" />
-            <input formControlName="primer_apellido" type="text" class="form-control first_last_name"
+            <input formControlName="primerNombre" type="text" class="form-control name" placeholder="Primer nombre" />
+            <input formControlName="primerApellido" type="text" class="form-control first_last_name"
               placeholder="Primer apellido" />
-            <select formControlName="tipo_documento" class="form-control">
+            <select formControlName="tipoDocumento" class="form-control">
               <option value="" disabled selected>Tipo de documento</option>
-              <option value="1">CC</option>
-              <option value="2">TI</option>
-              <option value="3">CE</option>
+              <option value="CC">CC</option>
+              <option value="TI">TI</option>
+              <option value="CE">CE</option>
             </select>
             <div class="form-group birth_date_container">
               <label class="birth_date" for="birth_date">Fecha de nacimiento</label>
-              <input formControlName="fecha_nacimiento" type="date" class="form-control birth_date" id="birth_date"
-                name="fecha_nacimiento" />
+              <input formControlName="fechaNacimiento" type="date" class="form-control birth_date" id="birth_date"
+                name="fechaNacimiento" />
             </div>
             <input formControlName="correo" type="email" class="form-control email" placeholder="Correo" />
 
-            <select formControlName="pregunta_seguridad" class="form-control">
+            <select formControlName="idPregunta"  placeholder="Pregunta de seguridad" class="form-control">
               <option value="" disabled selected>
                 Pregunta de seguridad
               </option>
               <option value="1">Nombre de tu primera mascota</option>
               <option value="2">Ciudad donde naciste</option>
               <option value="3">Nombre de tu mejor amigo</option>
-              <option value="4">cantante favorito</option>
+              <option value="4">Cantante favorito</option>
               <option value="5">Comida favorita</option>
               <option value="6">Nombre de tu profesor favorito</option>
             </select>
           </div>
           <div class="col-md-6 form_container">
-            <input formControlName="segundo_nombre" type="text" class="form-control second_name"
+            <input formControlName="segundoNombre" type="text" class="form-control second_name"
               placeholder="Segundo nombre" />
-            <input formControlName="segundo_apellido" type="text" class="form-control second_last_name"
+            <input formControlName="segundoApellido" type="text" class="form-control second_last_name"
               placeholder="Segundo apellido" />
-            <input formControlName="id_usuario" type="text" class="form-control document_number"
+            <input formControlName="documento" type="text" class="form-control document_number"
               placeholder="Numero de documento" />
             <select formControlName="ficha" class="form-control">
               <option value="" selected>Numero de ficha</option>
-              <option value="2558104">2558104</option>
-              <option value="1800002">1800002</option>
-              <option value="1231236">1231236</option>
+              <option value="1">2558104</option>
+              <option value="2">1800002</option>
+              <option value="3">1231236</option>
+              <option value="4">2634256</option>
+              <option value="5">2789008</option>
+
             </select>
             <input formControlName="password" type="password" class="form-control password" placeholder="Contraseña" />
-            <input formControlName="respuesta_seguridad" type="text" class="form-control security-response"
+            <input formControlName="respuestaPregunta" type="text" class="form-control security-response"
               placeholder="Respuesta de seguridad" />
           </div>
 
           <div *ngIf="showError" class="alert alert-danger mt-2">
             Por favor, complete todos los campos obligatorios y asegúrese de que el correo sea válido.
           </div>
-          <div *ngIf="registerForm.get('fecha_nacimiento')?.hasError('menorDe14')" class="alert alert-danger mt-2">
+
+          <div *ngIf="registerForm.get('fechaNacimiento')?.hasError('menorDe14')" class="alert alert-danger mt-2">
             Debes ser mayor de 14 años para registrarte.
-          </div>
+</div>
 
-          <div *ngIf="registerForm.get('password')?.hasError('minlength')" class="alert alert-danger mt-2">
-            La contraseña debe tener al menos 8 caracteres.
-          </div>
+<div *ngIf="registerForm.get('password')?.hasError('minlength')" class="alert alert-danger mt-2">
+  La contraseña debe tener al menos 8 caracteres.
+</div>
 
-          <div *ngIf="registroExitoso" class="alert alert-success mt-2">
-            ¡Registro exitoso!
-          </div>
+<div *ngIf="registroExitoso" class="alert alert-success mt-2">
+  ¡Registro exitoso!
+</div>
+
 
         </div>
         <div class="row">
-          <div class="col-md-8 offset-md-3 buttons_container justify-content-center">
+          <div class="col-md-8 offset-md-3 buttons_container">
+            <a class="btn btn-primary form_submit" href="login">Login</a>
             <input class="btn btn-primary form_submit" type="submit" value="Registrarse" />
           </div>
         </div>

@@ -17,3 +17,27 @@
     background-color: #008a88;
     border-color: #008a88;
 }
+
+/* Estilos personalizados */
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.subtitulo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.blog-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+.blog-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}

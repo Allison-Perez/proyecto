@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service/service.service';
-import { Router } from '@angular/router'; // Agrega esta importación
+import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 
 @Component({
@@ -15,23 +15,20 @@ export class AdminPerfilComponent implements OnInit {
   constructor(
     private service: ServiceService,
     private router: Router,
-    private authService: AuthService // Separar las inyecciones con comas
+    private authService: AuthService
   ) {
     this.userData = {
-      primer_nombre: '',
-      segundo_nombre: '',
-      primer_apellido: '',
-      segundo_apellido: '',
-      ficha: '',
+      primerNombre: '',
+      segundoNombre: '',
+      primerApellido: '',
+      segundoApellido: '',
       correo: '',
     }
   }
 
   ngOnInit() {
-    // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
     const correo: any = localStorage.getItem('user_email');
 
-    // Llama al servicio para obtener la información del usuario
     this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
       this.userData = data;
     });
@@ -47,8 +44,7 @@ export class AdminPerfilComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+
     this.router.navigate(['/login']);
   }
 
