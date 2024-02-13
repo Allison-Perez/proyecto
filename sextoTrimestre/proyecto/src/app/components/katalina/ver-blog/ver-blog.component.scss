@@ -1,107 +1,164 @@
-.nombre{
-    font-weight: bold;
-}
-.nav-img{
-    width: 50px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 .subtitulo{
     color: #0a7775;
-    font-weight: bold;
+    font-size: 30px;
     text-align: center; 
+    font-family: 'Lobster',sans-serif;
 }
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 80%;
-    position: absolute;
-    top: 65%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+
+
+/*Container*/
+.instagram-div {
+  margin-left: 30px;
+  max-width: 400px;
+  width: 100%;
+  background-color: #ffffff; /* Color de fondo del div */
+  border: 1px solid #e0e0e0; /* Borde similar al de Instagram */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra similar al de Instagram */
+  padding: 30px;
+  text-align: center;
+}
+
+.instagram-div img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Esquinas redondeadas similar al de Instagram */
+  margin-bottom: 10px;
+}
+
+.instagram-div p {
+  font-size: 16px;
+  color: #262626; /* Color del texto similar al de Instagram */
+}
+
+/* Estilos Nav */
+nav{
+  background-color: #008a88;
+}
+
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(12, 12, 12);
+}
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 601px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
   }
-    /* Estilos para el menú hamburguesa */
-  
-.nav ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-  }
-  
-  .nav .nav-item {
-    cursor: pointer;
-    margin-bottom: 5px;
-  }
-  
-  .nav-link {
-    color: #070707;
-  }
-  .nombre{
-    color: black;
-    font-weight: bold;
-  }
-  
-  .nav-item:last-child .btn-primary {
-    cursor: pointer;
-  }
-  
-  
-  .menu-icon {
-    cursor: pointer;
+
+  .nav {
     display: none;
   }
-  
-  .menu-icon .bar {
-    width: 20px;
-    height: 3px;
-    background-color: #088a88;
-    margin: 6px 0;
-  }
-  
-  /* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
-  .show-menu .menu-icon {
+
+  .menu-icon {
+    cursor: pointer;
     display: block;
+    margin-right: 20px;
   }
-  
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
   .show-menu .nav {
     display: flex;
     flex-direction: column;
   }
-  
+
   .show-menu .nav-item {
-    margin: 10px 0;
+    margin: 0px 0;
   }
-  
-  /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
-  @media (max-width: 601px) {
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-    }
-  
-    .nav {
-      display: none;
-    }
-  
-    .menu-icon {
-      cursor: pointer;
-      display: block;
-      margin-right: 20px;
-    }
-  
-    /* Estilos para mostrar el menú en pantallas pequeñas */
-    .show-menu .nav {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    .show-menu .nav-item {
-      margin: 10px 0;
-    }
-  
-    .show-menu{
-      display: block;
-    }
+
+  .show-menu{
+    display: block;
   }
+}
+
+
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content { 
+  display: none;
+  margin-top: 06px;
+  position: absolute;
+  min-width: 160px;
+  border-radius: 10px; /* Añadido para esquinas redondas */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  left: -110px; 
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #0f0f0f;
+}
+

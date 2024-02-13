@@ -44,7 +44,6 @@ export class EditPerfilComponent implements OnInit {
     }
   }
 
-
   guardarCambios() {
 
     if (this.form.invalid) {

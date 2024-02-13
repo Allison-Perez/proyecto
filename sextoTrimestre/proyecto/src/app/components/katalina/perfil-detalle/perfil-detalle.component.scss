@@ -33,7 +33,6 @@ span {
     margin: 10px ;
   }
   
-  /* Estilo de hover del botón */
   .boton:hover {
     background-color: #067e7c; /* Nuevo color al pasar el mouse sobre el botón */
   }
@@ -53,17 +52,10 @@ h1 {
 }
 
   button {
-    background-color: #007BFF;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
+  color: #fff;
   }
   
-  button:hover {
-    background-color: #0056b3;
-  }
+  
 
 /* Responsive */
  @media (max-width: 601px){
@@ -97,6 +89,10 @@ nav{
 
 .nav-link {
   color: white;
+}
+
+.nav-link:hover{
+  color: rgb(12, 12, 12);
 }
 .nombre{
   padding: 10px;
@@ -168,6 +164,9 @@ nav{
 .otro {
   color: #008a88;
 }
+button {
+  color: #fff;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -204,5 +203,5 @@ nav{
 }
 
 .dropdown-item:hover {
-  background-color: #008a88;
+  background-color: #0f0f0f;
 }
