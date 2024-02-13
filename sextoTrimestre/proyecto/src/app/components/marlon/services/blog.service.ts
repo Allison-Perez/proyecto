@@ -1,33 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  private apiUrl = 'http://localhost:3000';
 
-  getBlogsPorFicha() {
-    const userInfo = this.authService.getUserInfo();
-    const fichaId = userInfo ? userInfo.fichaId : null;
+  constructor(private http: HttpClient) { }
 
-    if (fichaId) {
-      return this.httpClient.get<any[]>(`http://localhost:3000/blogsPorFicha/${fichaId}`);
-    } else {
-      return null;
-    }
+  crearBlog(blogData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers: headers });
   }
 
-  crearBlog(blog: any) {
-    return this.httpClient.post('http://localhost:3000/crearBlog', blog);
+  getBlogsPorFicha(idFicha: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
   }
 
-  editarBlog(blogId: number, blog: any) {
-    return this.httpClient.put(`http://localhost:3000/editarBlog/${blogId}`, blog);
+  editarBlog(idBlog: number, blogData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(`${this.apiUrl}/editarBlog/${idBlog}`, blogData, { headers: headers });
   }
 
-  eliminarBlog(blogId: number) {
-    return this.httpClient.delete(`http://localhost:3000/eliminarBlog/${blogId}`);
+  eliminarBlog(idBlog: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/eliminarBlog/${idBlog}`);
   }
 }

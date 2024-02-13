@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As",
+  password: "",//111019As
   database: "acanner",
 };
 
@@ -111,9 +111,20 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Correo o contraseña incorrectos" });
     }
 
+    // Obtener información adicional del usuario, como nombre, apellido, etc.
+    const userInfo = {
+      idUsuario: usuario.identificador,
+      primerNombre: usuario.primerNombre,
+      segundoNombre: usuario.segundoNombre,
+      primerApellido: usuario.primerApellido,
+      segundoApellido: usuario.segundoApellido,
+      correo: usuario.correo,
+    };
+
+
     // Cerrar la conexión y enviar la respuesta
     connection.end();
-    res.status(200).json({ message: "Inicio de sesión exitoso",idRol: usuario.idRol });
+    res.status(200).json({ message: "Inicio de sesión exitoso",idRol: usuario.idRol, userInfo: userInfo });
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);
     res.status(500).json({ error: "Error en el inicio de sesión" });
@@ -282,6 +293,28 @@ app.post('/api/verificarRespuesta', async (req, res) => {
 //     res.status(500).json({ error: 'Error al obtener el usuario' });
 //   }
 // });
+
+// Obtener un usuario por correo electrónico
+app.get("/api/obtener-usuario", async (req, res) => {
+  try {
+    const { correo } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT * FROM usuario WHERE correo = ?`;
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+    if (rows.length > 0) {
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(404).json({ error: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al obtener el usuario por correo:", error);
+    res.status(500).json({ error: "Error al obtener el usuario por correo" });
+  }
+});
+
 
 
 // EDITAR LA INFORMACIÓN DEL PERFIL

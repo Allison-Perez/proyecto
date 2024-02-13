@@ -7,14 +7,15 @@ export class AuthService {
   private isAuthenticated: boolean = false;
   private userInfo: any = null; // Almacenará la información del usuario actual
 
-  login() {
+  login(userInfo: any) {
     // Implementa la lógica de inicio de sesión aquí y establece this.isAuthenticated en true si el inicio de sesión es exitoso.
     this.isAuthenticated = true;
 
-    // Aquí iría la lógica para obtener la información del usuario después de iniciar sesión.
-    // Supongamos que userInfo es un objeto que contiene información sobre el usuario, incluida su ficha.
-    // Ejemplo:
-    // this.userInfo = { email: 'usuario@ejemplo.com', fichaId: 1, ... };
+    // Almacena la información del usuario
+    this.userInfo = userInfo;
+
+    // Almacena el correo electrónico del usuario en el almacenamiento local
+    localStorage.setItem('user_email', userInfo.email);
   }
 
   logout() {
