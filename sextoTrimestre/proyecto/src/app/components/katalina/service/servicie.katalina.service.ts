@@ -54,7 +54,7 @@ export class ServiceService {
     return this.http.post<any>(url, body);
   }
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
     return this.http.get(url);
   }
 

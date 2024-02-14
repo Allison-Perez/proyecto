@@ -248,8 +248,8 @@ app.get('/api/obtener-usuario', async (req, res) => {
     await connection.end();
 
 
-// Obtener un usuario por correo electrónico
-app.get("/api/obtener-usuario", async (req, res) => {
+// Obtener un usuario por correo electrónico 
+app.get("/api/obtenerUsuario", async (req, res) => {
   try {
     const { correo } = req.query;
     const connection = await mysql.createConnection(dbConfig);
