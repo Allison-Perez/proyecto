@@ -20,9 +20,9 @@ export class PerfilDetalleComponent implements OnInit {
   ) {
     this.userData = {
       primerNombre: '',
-      segundo_nombre: '',
-      primer_apellido: '',
-      segundo_apellido: '',
+      segundoNombre: '',
+      primerApellido: '',
+      segundoApellido: '',
       ficha: '',
       correo: '',
     }

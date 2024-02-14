@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 
 .titulo {
     color: #008a88;
-    font-size: 50px;
     font-weight: bold;
     text-align: left;
     margin-left: 200px;
     margin-top: 10%;
-    font-family: 'Lobster',sans-serif;
+    font-family: "Outfit", sans-serif;
+    font-size: 50px;
+    font-style: normal;
 }
 .sub-titulo{
     font-weight: bold;
@@ -149,7 +151,6 @@ button {
     padding: 10px;
     font-size: 16px;
     border: none;
-    cursor: pointer;
     background-color: #008a88;
 }
 
