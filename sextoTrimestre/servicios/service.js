@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "",
+  password: "111019As",
   database: "acanner",
 };
 
@@ -246,7 +246,17 @@ app.get('/api/obtener-usuario', async (req, res) => {
     const [rows] = await connection.execute(sql, [correo]);
 
     await connection.end();
-
+    if (rows.length === 1) {
+      const usuario = rows[0];
+      res.json(usuario);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener el usuario: ' + error);
+    res.status(500).json({ error: 'Error al obtener el usuario' });
+  }
+});
 
 // Obtener un usuario por correo electrónico 
 app.get("/api/obtenerUsuario", async (req, res) => {
@@ -266,19 +276,6 @@ app.get("/api/obtenerUsuario", async (req, res) => {
   } catch (error) {
     console.error("Error al obtener el usuario por correo:", error);
     res.status(500).json({ error: "Error al obtener el usuario por correo" });
-  }
-});
-
-
-    if (rows.length === 1) {
-      const usuario = rows[0];
-      res.json(usuario);
-    } else {
-      res.status(404).json({ error: 'Usuario no encontrado' });
-    }
-  } catch (error) {
-    console.error('Error al obtener el usuario: ' + error);
-    res.status(500).json({ error: 'Error al obtener el usuario' });
   }
 });
 
