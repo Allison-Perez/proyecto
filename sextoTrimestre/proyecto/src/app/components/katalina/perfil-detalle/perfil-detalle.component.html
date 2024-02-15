@@ -32,25 +32,25 @@
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
                 </li>
               </div>
-            </div> 
+            </div>
         </ul>
   </div>
 </nav>
 <div class="perfil-detalle">
-  <h1 class="display-6">Tu Perfil</h1>
+  <h1 class="display-6"> </h1>
     <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
   <div class="container">
     <div id="perfil" class="information">
-      <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
-      <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
-      <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
-      <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
+      <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primerNombre }}</span></p>
+      <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundoNombre }}</span></p>
+      <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primerApellido }}</span></p>
+      <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
       <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
     </div>
       <button class="boton" (click)="editarInformacion()">Editar</button>
       <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
       <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
-        <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">            
+        <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
   </div>
 </div>

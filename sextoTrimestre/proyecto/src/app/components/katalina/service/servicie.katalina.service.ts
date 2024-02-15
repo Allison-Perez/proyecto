@@ -11,11 +11,11 @@ export class ServiceService {
 
   apiUrl = 'http://localhost:3000';
 
-    // VER ACTIVIDADES 
+    // VER ACTIVIDADES
     getActivities(): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUrl}/api/actividad/list`);
     }
-      
+
     updateActivity(activityId: string, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.apiUrl}/update/${activityId}`, updatedData);
   }
@@ -45,16 +45,18 @@ export class ServiceService {
   updateHorario(horarioId: string, updatedData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update/${horarioId}`, updatedData);
   }
-  
+
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
-    const endpoint = '/cambiar-contrasena'; 
+    const endpoint = '/cambiar-contrasena';
     const url = `${this.apiUrl}${endpoint}`;
     const body = { contrasenaAntigua, contrasenaNueva };
 
     return this.http.post<any>(url, body);
   }
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    // const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
+    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
+
     return this.http.get(url);
   }
 
