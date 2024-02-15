@@ -10,13 +10,12 @@ export class BlogService {
 
   constructor(private http: HttpClient) { }
 
-  crearBlog(blogData: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers: headers });
+  crearBlog(blogData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData);
   }
 
-  getBlogsPorFicha(idFicha: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
+  getBlogsPorFicha(idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
   }
 
   editarBlog(idBlog: number, blogData: any): Observable<any> {

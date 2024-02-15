@@ -444,16 +444,33 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
 
 //MARLON
 
+// Configuración de multer para manejar archivos adjuntos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); 
+  }
+});
+const upload = multer({ storage: storage })
+
 //BLOG
 
-//Creación de un nuevo blog
-
-app.post("/crearBlog", async (req, res) => {
+// Ruta para crear un nuevo blog
+app.post("/crearBlog", upload.single('image'), async (req, res) => {
   try {
-    const { titulo, urlImagen, comentario, fecha, idUsuario, idFicha } = req.body;
+    const { titulo, comentario, fecha, idUsuario, idFicha } = req.body;
+    let urlImagen = ''; 
 
-    if (titulo && urlImagen && comentario && fecha && idUsuario && idFicha) {
-      const connection = await mysql.createConnection(dbConfig);
+    if (req.file) { 
+      urlImagen = req.file.path; 
+    } else {
+      urlImagen = '/uploads/predeterminada.png'; 
+    }
+
+    if (titulo && comentario && fecha && idUsuario && idFicha) {
+      const connection = await createConnection();
 
       const sql = `INSERT INTO blog (nombre, urlImagen, comentario, fecha, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?)`;
@@ -471,12 +488,11 @@ app.post("/crearBlog", async (req, res) => {
   }
 });
 
-//Obtener blogs por ficha
-
+// Ruta para obtener blogs por ficha
 app.get("/blogsPorFicha/:idFicha", async (req, res) => {
   try {
     const { idFicha } = req.params;
-    const connection = await mysql.createConnection(dbConfig);
+    const connection = await createConnection();
 
     const sql = `SELECT * FROM blog WHERE idFicha = ?`;
     const [rows] = await connection.execute(sql, [idFicha]);

@@ -47,7 +47,6 @@ export class AuthService {
 
   // Método para obtener la información del usuario
   getUserInfo(): any {
-    // Implementa la lógica para obtener la información del usuario, si es necesario
     return {};
   }
 }

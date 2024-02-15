@@ -8,11 +8,12 @@ import { AuthService } from '../../allison/service/auth.service';
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
+
 export class BlogComponent implements OnInit {
   newsList: any[] = [];
-  newBlog: any = { titulo: '', urlImagen: '', comentario: '' };
-  editingBlog: any | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
+  newBlog: any = { titulo: '', comentario: '' };
+  imageFile: File | null = null;
+  editingBlog: any = null;
 
   constructor(private blogService: BlogService, private authService: AuthService) { }
 
@@ -21,7 +22,8 @@ export class BlogComponent implements OnInit {
   }
 
   loadBlogs() {
-    const idFicha = 1; 
+    // Modificar para obtener blogs según la ficha del usuario actual
+    const idFicha = 1; // Cambiar esto para obtener la ficha del usuario actual
     this.blogService.getBlogsPorFicha(idFicha).subscribe(
       data => {
         this.newsList = data;
@@ -33,21 +35,26 @@ export class BlogComponent implements OnInit {
   }
 
   crearBlog() {
-    if (this.newBlog.titulo && this.newBlog.urlImagen && this.newBlog.comentario) {
-      const nuevoBlog = {
-        titulo: this.newBlog.titulo,
-        urlImagen: this.newBlog.urlImagen,
-        comentario: this.newBlog.comentario,
-        fecha: new Date().toISOString(), // Convertir la fecha a un formato compatible con el backend
-        idUsuario: this.authService.getIdUsuarioActual(), // Obtener el ID del usuario autenticado desde el servicio AuthService
-        idFicha: 1 // ID de la ficha relacionada con el blog
-      };
+    if (this.newBlog.titulo && this.newBlog.comentario) {
+      const formData = new FormData();
+      formData.append('titulo', this.newBlog.titulo);
+      formData.append('comentario', this.newBlog.comentario);
+      
+      // Verificar que this.imageFile no sea null antes de agregarlo al FormData
+      if (this.imageFile) {
+        formData.append('image', this.imageFile);
+      }
   
-      this.blogService.crearBlog(nuevoBlog).subscribe(
+      // Modificar para enviar la fecha actual, ID de usuario y ID de ficha
+      formData.append('fecha', new Date().toISOString());
+      formData.append('idUsuario', '2'); // Cambiar esto para obtener el ID del usuario actual
+      formData.append('idFicha', '1'); // Cambiar esto para obtener el ID de la ficha del usuario actual
+  
+      this.blogService.crearBlog(formData).subscribe(
         (response) => {
           console.log('Blog creado exitosamente:', response);
-          this.loadBlogs(); // Actualiza la lista de blogs después de crear uno nuevo
-          this.resetNewBlogForm(); // Restablece el formulario para un nuevo blog
+          this.loadBlogs(); 
+          this.resetNewBlogForm(); 
         },
         (error) => {
           console.error('Error al crear el blog:', error);
@@ -58,45 +65,29 @@ export class BlogComponent implements OnInit {
     }
   }
   
+
   resetNewBlogForm() {
-    this.newBlog = { titulo: '', urlImagen: '', comentario: '' };
-    this.imagePreview = null;
+    this.newBlog = { titulo: '', comentario: '' };
+    this.imageFile = null;
+  }
+
+  onFileSelected(event: any) {
+    this.imageFile = event.target.files[0];
   }
 
   editBlog(blog: any) {
-    this.editingBlog = { ...blog };
+    this.editingBlog = blog;
+  }
+
+  deleteBlog(blogId: number) {
+    // Lógica para eliminar un blog
+  }
+
+  updateBlog() {
+    // Lógica para actualizar un blog
   }
 
   cancelEdit() {
     this.editingBlog = null;
-  }
-
-  updateBlog() {
-    if (this.editingBlog) {
-      this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog)
-        .subscribe(() => {
-          this.loadBlogs();
-          this.editingBlog = null;
-        });
-    }
-  }
-
-  deleteBlog(blogId: number) {
-    this.blogService.eliminarBlog(blogId)
-      .subscribe(() => {
-        this.newsList = this.newsList.filter(blog => blog.identificador !== blogId);
-      });
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-        this.newBlog.urlImagen = reader.result as string; // Asigna la URL de la imagen seleccionada al campo urlImagen
-      };
-      reader.readAsDataURL(file);
-    }
   }
 }
