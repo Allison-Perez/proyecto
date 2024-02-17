@@ -11,7 +11,7 @@ import { AuthService } from '../../allison/service/auth.service';
 })
 export class BlogComponent implements OnInit {
   newsList: any[] = [];
-  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null }; // Agregar imagenOpcional
+  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null };
   imageFile: File | null = null;
   editingBlog: any = null;
 
@@ -25,11 +25,11 @@ export class BlogComponent implements OnInit {
   if (url) {
     return 'assets/' + url.replace(/\\/g, '/');
   }
-  return 'assets/uploads/predeterminada.png'; // Ruta de la imagen predeterminada
+  return 'assets/uploads/predeterminada.png'; 
 }
 
   loadBlogs() {
-    const idFicha = 1; // Cambiar esto para obtener la ficha del usuario actual
+    const idFicha = 1; 
     this.blogService.getBlogsPorFicha(idFicha).subscribe(
       data => {
         this.newsList = data;
@@ -46,15 +46,14 @@ export class BlogComponent implements OnInit {
       formData.append('titulo', this.newBlog.titulo);
       formData.append('comentario', this.newBlog.comentario);
       
-      // Verificar que this.imageFile no sea null antes de agregarlo al FormData
+      
       if (this.imageFile) {
         formData.append('imagenOpcional', this.imageFile);
       }
   
-      // Modificar para enviar la fecha actual, ID de usuario y ID de ficha
       formData.append('fecha', new Date().toISOString());
-      formData.append('idUsuario', '2'); // Cambiar esto para obtener el ID del usuario actual
-      formData.append('idFicha', '1'); // Cambiar esto para obtener el ID de la ficha del usuario actual
+      formData.append('idUsuario', '2');
+      formData.append('idFicha', '1'); 
   
       this.blogService.crearBlog(formData).subscribe(
         (response) => {
@@ -73,7 +72,7 @@ export class BlogComponent implements OnInit {
   
 
   resetNewBlogForm() {
-    this.newBlog = { titulo: '', comentario: '', imagenOpcional: null }; // Resetear imagenOpcional
+    this.newBlog = { titulo: '', comentario: '', imagenOpcional: null };
     this.imageFile = null;
   }
 
@@ -86,11 +85,11 @@ export class BlogComponent implements OnInit {
   }
 
   deleteBlog(blogId: number) {
-    // Lógica para eliminar un blog
+    
   }
 
   updateBlog() {
-    // Lógica para actualizar un blog
+   
   }
 
   cancelEdit() {

@@ -14,28 +14,25 @@ export class AuthService {
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  // Método para realizar la autenticación
+  
   login(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 
-  // Método para verificar si el usuario está autenticado
+  
   isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
 
-  // Método para obtener el rol del usuario
   getUserRole(): number {
     return this._userRole;
   }
 
-  // Método para establecer el estado de autenticación y el rol
   setAuthenticationStatus(status: boolean, role: number): void {
     this._isAuthenticated = status;
     this._userRole = role;
   }
 
-  // Método para obtener el ID del usuario actual
   getIdUsuarioActual(): string | null {
     const token = localStorage.getItem('token');
     if (token) {
@@ -45,7 +42,6 @@ export class AuthService {
     return null;
   }
 
-  // Método para obtener la información del usuario
   getUserInfo(): any {
     return {};
   }

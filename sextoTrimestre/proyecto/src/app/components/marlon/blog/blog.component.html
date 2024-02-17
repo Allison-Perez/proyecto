@@ -24,7 +24,6 @@
             </div>
         </div>
     </header>
-    <!-- blog.component.html -->
 <div class="container">
   <h2>Nuevo Blog</h2>
   <form (ngSubmit)="crearBlog()" #blogForm="ngForm">
@@ -42,14 +41,12 @@
     </div>
     <button type="submit" class="btn btn-primary">Crear Blog</button>
   </form>
-
   <hr>
-
   <h2>Lista de Blogs</h2>
   <div *ngIf="newsList.length > 0; else noBlogs">
     <div class="card mb-3" *ngFor="let blog of newsList">
       <div class="card-body">
-        <h5 class="card-title">{{ blog.nombre }}</h5> <!-- Usar la propiedad correcta para el título -->
+        <h5 class="card-title">{{ blog.nombre }}</h5> 
         <p class="card-text">{{ blog.comentario }}</p>
         <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
         <button class="btn btn-link" (click)="editBlog(blog)">Editar</button>

@@ -447,10 +447,10 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
 // Configuración de multer para manejar archivos adjuntos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Ruta donde se guardarán los archivos
+    cb(null, 'uploads/'); 
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Nombre original del archivo
+    cb(null, file.originalname); 
   }
 });
 
