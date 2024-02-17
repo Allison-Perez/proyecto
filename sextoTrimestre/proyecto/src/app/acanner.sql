@@ -130,6 +130,7 @@ create table asistencia (
     identificador INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE NOT NULL,
     status varchar (30) not null,
+    fallaJustificada varchar (30) null,
     idAprendiz INT NOT NULL,
     idFicha INT NOT NULL,
     idInstructor INT NOT NULL,
