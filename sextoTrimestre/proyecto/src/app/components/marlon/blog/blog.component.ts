@@ -1,3 +1,4 @@
+// blog.component.ts
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BlogService } from '../services/blog.service';
@@ -8,10 +9,9 @@ import { AuthService } from '../../allison/service/auth.service';
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
-
 export class BlogComponent implements OnInit {
   newsList: any[] = [];
-  newBlog: any = { titulo: '', comentario: '' };
+  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null }; // Agregar imagenOpcional
   imageFile: File | null = null;
   editingBlog: any = null;
 
@@ -21,8 +21,14 @@ export class BlogComponent implements OnInit {
     this.loadBlogs();
   }
 
+  transformUrl(url: string): string {
+  if (url) {
+    return 'assets/' + url.replace(/\\/g, '/');
+  }
+  return 'assets/uploads/predeterminada.png'; // Ruta de la imagen predeterminada
+}
+
   loadBlogs() {
-    // Modificar para obtener blogs según la ficha del usuario actual
     const idFicha = 1; // Cambiar esto para obtener la ficha del usuario actual
     this.blogService.getBlogsPorFicha(idFicha).subscribe(
       data => {
@@ -42,7 +48,7 @@ export class BlogComponent implements OnInit {
       
       // Verificar que this.imageFile no sea null antes de agregarlo al FormData
       if (this.imageFile) {
-        formData.append('image', this.imageFile);
+        formData.append('imagenOpcional', this.imageFile);
       }
   
       // Modificar para enviar la fecha actual, ID de usuario y ID de ficha
@@ -67,7 +73,7 @@ export class BlogComponent implements OnInit {
   
 
   resetNewBlogForm() {
-    this.newBlog = { titulo: '', comentario: '' };
+    this.newBlog = { titulo: '', comentario: '', imagenOpcional: null }; // Resetear imagenOpcional
     this.imageFile = null;
   }
 

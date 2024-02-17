@@ -447,20 +447,21 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
 // Configuración de multer para manejar archivos adjuntos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/'); // Ruta donde se guardarán los archivos
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); 
+    cb(null, file.originalname); // Nombre original del archivo
   }
 });
+
 const upload = multer({ storage: storage })
 
 //BLOG
 
 // Ruta para crear un nuevo blog
-app.post("/crearBlog", upload.single('image'), async (req, res) => {
+app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
-    const { titulo, comentario, fecha, idUsuario, idFicha } = req.body;
+    const { titulo, comentario, idUsuario, idFicha } = req.body;
     let urlImagen = ''; 
 
     if (req.file) { 
@@ -469,13 +470,14 @@ app.post("/crearBlog", upload.single('image'), async (req, res) => {
       urlImagen = '/uploads/predeterminada.png'; 
     }
 
-    if (titulo && comentario && fecha && idUsuario && idFicha) {
-      const connection = await createConnection();
+    if (titulo && comentario && idUsuario && idFicha) {
+      const connection = await mysql.createConnection(dbConfig);
+      const fechaPublicacion = new Date().toISOString();
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, comentario, fecha, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idUsuario, idFicha]);
+      await connection.execute(sql, [titulo, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: "Blog creado exitosamente" });
@@ -492,7 +494,7 @@ app.post("/crearBlog", upload.single('image'), async (req, res) => {
 app.get("/blogsPorFicha/:idFicha", async (req, res) => {
   try {
     const { idFicha } = req.params;
-    const connection = await createConnection();
+    const connection = await mysql.createConnection(dbConfig);
 
     const sql = `SELECT * FROM blog WHERE idFicha = ?`;
     const [rows] = await connection.execute(sql, [idFicha]);
@@ -505,16 +507,16 @@ app.get("/blogsPorFicha/:idFicha", async (req, res) => {
   }
 });
 
-//Editar y eliminar un blog específico
 
+//Editar un blog específico
 app.put("/editarBlog/:idBlog", async (req, res) => {
   try {
     const { idBlog } = req.params;
-    const { titulo, urlImagen, comentario, fecha } = req.body;
+    const { titulo, imagenOpcional, comentario } = req.body;
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `UPDATE blog SET nombre = ?, urlImagen = ?, comentario = ?, fecha = ? WHERE identificador = ?`;
-    await connection.execute(sql, [titulo, urlImagen, comentario, fecha, idBlog]);
+    const sql = `UPDATE blog SET nombre = ?, imagenOpcional = ?, comentario = ? WHERE identificador = ?`;
+    await connection.execute(sql, [titulo, imagenOpcional, comentario, idBlog]);
 
     connection.end();
     res.status(200).json({ message: "Blog actualizado exitosamente" });
@@ -523,6 +525,7 @@ app.put("/editarBlog/:idBlog", async (req, res) => {
     res.status(500).json({ error: "Error al editar el blog" });
   }
 });
+
 
 app.delete("/eliminarBlog/:idBlog", async (req, res) => {
   try {
