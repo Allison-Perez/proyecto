@@ -1,28 +1,50 @@
-.nombre{
-    font-weight: bold;
-}
-.nav-img{
-    width: 50px;
-}
-.subtitulo{
-    color: #0a7775;
-    font-weight: bold;
-    text-align: center; 
-}
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 3px 5px rgba(99, 98, 98, 0.1);
-    max-width: 400px;
-    width: 80%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+.subtitulo{
+  color: #0a7775;
+  text-align: center;
+  font-weight: bolder;
+  font-family: "Outfit", sans-serif;
+  font-size: 50px;
+  font-style: normal;
+}
+
+
+.titulo {
+  color: #0a7775;
+  text-align: center;
+  font-weight: bolder;
+  font-family: "Outfit", sans-serif;
+  font-size: 25px;
+  font-style: normal;
+}
+
+.instagram-div {
+  margin-left: 30px;
+  max-width: 400px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.instagram-div button {
+  background-color: #0a7775; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.instagram-div p {
+  font-size: 16px;
+  color: #262626;
+}
 
 /* Estilos Nav */
 nav{

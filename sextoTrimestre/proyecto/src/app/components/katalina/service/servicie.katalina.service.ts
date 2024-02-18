@@ -30,13 +30,10 @@ export class ServiceService {
   }
 
   // VER BLOG
-  getNews(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/blog/list`);
+  getBlogsPorFicha(idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
   }
 
-  updateNews(newsId: string, updatedData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${newsId}`, updatedData);
-  }
 
    // VER HORARIOS
   getHorario(): Observable<any[]> {
