@@ -22,10 +22,10 @@
 }
 .sidebar {
   margin-top: 20px;
-  width: 250px; /* Puedes ajustar el ancho según tus necesidades */
-  background-color: #f8f8f8; /* Color de fondo de la barra lateral */
+  width: 230px; /* Puedes ajustar el ancho según tus necesidades */
+  background-color: #f8f8f8; /* f8f8f8 Color de fondo de la barra lateral */
   position: fixed;
-  top: 70px; /* Ajusta según la altura de tu barra horizontal */
+  top: 50px; /* Ajusta según la altura de tu barra horizontal */
   left: -250px;
   height: 100vh;
   transition: left 0.3s ease;
@@ -98,28 +98,30 @@ a {
   cursor: pointer;
 }
 
-/* sidebar.component.scss */
-
-// .profile-menu {
-//   position: absolute;
-//   top: 100%; /* Coloca el menú justo debajo del icono */
-//   left: 0;
-//   background-color: red; /* Ajusta el color de fondo según tus necesidades */
-//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añade sombra al menú */
-//   z-index: 1; /* Asegura que el menú esté sobre otros elementos si es necesario */
-//   visibility: hidden; /* Inicialmente oculta el menú */
-//   opacity: 0; /* Agrega transparencia para animación si es necesario */
-//   transition: visibility 0.3s, opacity 0.3s; /* Agrega transición para una animación suave */
-// }
-
-// .iconPerfil:hover .profile-menu {
-//   visibility: visible; /* Muestra el menú al pasar el ratón sobre el icono */
-//   opacity: 1; /* Hace el menú completamente visible */
-// }
-
 .profile-menu{
-  position: fixed;
+  position: absolute;
   right: 0;
-  margin-right: 15px;
-  background-color: gray;
+  margin-right: px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px;
+}
+
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Agrega transición de color al pasar el ratón sobre las opciones */
+}
+
+.profile-menu li:hover {
+  background-color: #f0f0f0; /* Cambia el color de fondo al pasar el ratón sobre las opciones */
+  border-radius: 3px;
 }
