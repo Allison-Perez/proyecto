@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", 
   database: "acanner",
 };
 
@@ -349,6 +349,9 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
     res.status(500).json({ error: "Error al cambiar la contraseña" });
   }
 });
+
+
+
 
 // ADMIN LISTA USUARIOS
 

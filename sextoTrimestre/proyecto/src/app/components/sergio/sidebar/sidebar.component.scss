@@ -1,25 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-.sidebar {
-  width: 200px;
+.top-bar {
   background-color: #088a88;
-  padding: 5px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  overflow-y: auto;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
 
+.menu-icon, .close-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.top-bar .menu-icon{
+  width: 30px;
+  color: #f8f8f8;
+  font-size: 28px;
+}
+.sidebar {
+  margin-top: 20px;
+  width: 250px; /* Puedes ajustar el ancho según tus necesidades */
+  background-color: #f8f8f8; /* Color de fondo de la barra lateral */
+  position: fixed;
+  top: 70px; /* Ajusta según la altura de tu barra horizontal */
+  left: -250px;
+  height: 100vh;
+  transition: left 0.3s ease;
 }
 
 .sidebar ul {
-  margin: 10px;
-  margin-top: 30px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.sidebar ul li {
-  margin-bottom: 25px;
+.sidebar li {
+  padding: 10px;
+}
+
+.show-sidebar {
+  left: 0;
 }
 
 .sidebar ul li a span.material-symbols-outlined {
@@ -27,7 +50,7 @@
   margin-right: 10px;
 }
 .sidebar ul li a {
-  color: #ffffff;
+  color: #333;
   font-weight: normal;
 }
 
@@ -56,3 +79,43 @@ a {
   color: #333;
   font-weight: bold;
 }
+
+.logo-img {
+  width: 50px; /* Ajusta según tus necesidades */
+  height: auto; /* Mantener la proporción original de la imagen */
+}
+
+.logo-container {
+  margin-right: 87%; /* Ajusta según tus necesidades para el espaciado entre el menú y el logo */
+}
+
+.iconPerfil {
+  background-color: white; /* Fondo blanco */
+  height: 40px;
+  width: 45px;
+  margin-right: 10px;
+  border-radius: 50%; /* Usar 50% para lograr la forma circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* sidebar.component.scss */
+
+.profile-menu {
+  position: absolute;
+  top: 100%; /* Coloca el menú justo debajo del icono */
+  left: 0;
+  background-color: red; /* Ajusta el color de fondo según tus necesidades */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añade sombra al menú */
+  z-index: 1; /* Asegura que el menú esté sobre otros elementos si es necesario */
+  visibility: hidden; /* Inicialmente oculta el menú */
+  opacity: 0; /* Agrega transparencia para animación si es necesario */
+  transition: visibility 0.3s, opacity 0.3s; /* Agrega transición para una animación suave */
+}
+
+.iconPerfil:hover .profile-menu {
+  visibility: visible; /* Muestra el menú al pasar el ratón sobre el icono */
+  opacity: 1; /* Hace el menú completamente visible */
+}
+

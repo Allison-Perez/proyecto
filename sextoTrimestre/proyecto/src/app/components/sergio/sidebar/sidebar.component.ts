@@ -11,53 +11,52 @@ export class SidebarComponent {
   mostrarMenu: boolean = false;
   opcionSeleccionada: string = '';
   opcionesMenu: string[] = ['Promedio de Instructores', 'Promedio de Estudiantes', 'Otros'];
+  mostrarSidebar: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
     // Constructor correctamente estructurado
   }
 
+  // Función para mostrar/ocultar el menú de perfil
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+
+  // Función para redirigir a una ruta específica desde el menú de perfil
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+
+  // Función para mostrar/ocultar el menú principal
   toggleMenu() {
     this.mostrarMenu = !this.mostrarMenu;
   }
 
+  // Función para seleccionar una opción del menú principal
   seleccionarOpcion(opcion: string) {
     this.opcionSeleccionada = opcion;
 
+    // Ejemplo: redirigir a una ruta específica basada en la opción seleccionada
     if (opcion === 'Promedio de Instructores') {
       this.router.navigate(['/estadisticas-instructores']);
     }
+    // Agrega más condiciones según sea necesario
   }
 
+  // Función para cerrar sesión
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  // Función para mostrar/ocultar la barra lateral
+  toggleSidebar() {
+    this.mostrarSidebar = !this.mostrarSidebar;
+    console.log("menu");
+  }
 }
-
-
-
-
-// import { Component } from '@angular/core';
-// import { AuthService } from '../service/auth.service';
-// import { Router } from '@angular/router';
-
-
-// @Component({
-//   selector: 'app-ver-estadisticas',
-//   templateUrl: './ver-estadisticas.component.html',
-//   styleUrls: ['./ver-estadisticas.component.scss']
-// })
-// export class VerEstadisticasComponent {
-
-//   constructor(private authService: AuthService, private router: Router,) {
-//     // Constructor correctamente estructurado
-//   }
-//   logout() {
-//     this.authService.logout();
-//     // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-//     // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
-//     this.router.navigate(['/login']);
-//   }
-
-// }
-
