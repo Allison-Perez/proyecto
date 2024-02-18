@@ -113,18 +113,18 @@ CREATE TABLE guias (
 	FOREIGN KEY (idFicha) REFERENCES ficha(identificador)
 );
 
- CREATE TABLE blog (
-    identificador INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(45) NOT NULL,
-    urlImagen VARCHAR(200),
-    imagenOpcional VARCHAR(200),
-    comentario VARCHAR(200),
-    fechaPublicacion DATE,
-    idUsuario INT NOT NULL,
-    idFicha INT NOT NULL,
-    FOREIGN KEY (idUsuario) REFERENCES usuario(identificador),
-    FOREIGN KEY (idFicha) REFERENCES ficha(identificador)
-);
+  CREATE TABLE blog (
+      identificador INT AUTO_INCREMENT PRIMARY KEY,
+      nombre VARCHAR(45) NOT NULL,
+      urlImagen VARCHAR(200),
+      imagenOpcional VARCHAR(200),
+      comentario VARCHAR(200),
+      fechaPublicacion DATE,
+      idUsuario INT NOT NULL,
+      idFicha INT NOT NULL,
+      FOREIGN KEY (idUsuario) REFERENCES usuario(identificador),
+      FOREIGN KEY (idFicha) REFERENCES ficha(identificador)
+  );
 
 create table asistencia (
     identificador INT AUTO_INCREMENT PRIMARY KEY,
