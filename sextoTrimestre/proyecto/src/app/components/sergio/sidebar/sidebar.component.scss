@@ -18,7 +18,7 @@
 .top-bar .menu-icon{
   width: 30px;
   color: #f8f8f8;
-  font-size: 28px;
+  font-size: 30px;
 }
 .sidebar {
   margin-top: 20px;
@@ -72,6 +72,7 @@ ul {
 
 li {
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 a {
@@ -85,10 +86,6 @@ a {
   height: auto; /* Mantener la proporción original de la imagen */
 }
 
-.logo-container {
-  margin-right: 87%; /* Ajusta según tus necesidades para el espaciado entre el menú y el logo */
-}
-
 .iconPerfil {
   background-color: white; /* Fondo blanco */
   height: 40px;
@@ -98,24 +95,31 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 /* sidebar.component.scss */
 
-.profile-menu {
-  position: absolute;
-  top: 100%; /* Coloca el menú justo debajo del icono */
-  left: 0;
-  background-color: red; /* Ajusta el color de fondo según tus necesidades */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añade sombra al menú */
-  z-index: 1; /* Asegura que el menú esté sobre otros elementos si es necesario */
-  visibility: hidden; /* Inicialmente oculta el menú */
-  opacity: 0; /* Agrega transparencia para animación si es necesario */
-  transition: visibility 0.3s, opacity 0.3s; /* Agrega transición para una animación suave */
-}
+// .profile-menu {
+//   position: absolute;
+//   top: 100%; /* Coloca el menú justo debajo del icono */
+//   left: 0;
+//   background-color: red; /* Ajusta el color de fondo según tus necesidades */
+//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añade sombra al menú */
+//   z-index: 1; /* Asegura que el menú esté sobre otros elementos si es necesario */
+//   visibility: hidden; /* Inicialmente oculta el menú */
+//   opacity: 0; /* Agrega transparencia para animación si es necesario */
+//   transition: visibility 0.3s, opacity 0.3s; /* Agrega transición para una animación suave */
+// }
 
-.iconPerfil:hover .profile-menu {
-  visibility: visible; /* Muestra el menú al pasar el ratón sobre el icono */
-  opacity: 1; /* Hace el menú completamente visible */
-}
+// .iconPerfil:hover .profile-menu {
+//   visibility: visible; /* Muestra el menú al pasar el ratón sobre el icono */
+//   opacity: 1; /* Hace el menú completamente visible */
+// }
 
+.profile-menu{
+  position: fixed;
+  right: 0;
+  margin-right: 15px;
+  background-color: gray;
+}

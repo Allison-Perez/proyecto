@@ -11,23 +11,27 @@
   }
   </style>
 <div class="top-bar">
-  <span class="material-symbols-outlined menu-icon" (click)="toggleSidebar()">
-    {{ mostrarSidebar ? 'close' : 'menu' }}
-  </span>
-  <div class="logo-container">
-    <img src="assets/imagenes/logo-en-blanco.png" alt="Logo" class="logo-img">
+  <div style="display: flex; width: 100px; justify-content: space-between; align-items: center;">
+    <span class="material-symbols-outlined menu-icon" (click)="toggleSidebar()">
+      {{ mostrarSidebar ? 'close' : 'menu' }}
+    </span>
+    <div class="logo-container">
+      <img src="assets/imagenes/logo-en-blanco.png" alt="Logo" class="logo-img">
+    </div>
   </div>
-<div class="iconPerfil" (click)="toggleProfileMenu()">
-  <span class="material-symbols-outlined">account_circle</span>
-  <ul *ngIf="mostrarMenuPerfil" class="profile-menu">
+
+  <div class="iconPerfil" (click)="toggleProfileMenu()">
+    <span class="material-symbols-outlined">account_circle</span>
+  </div>
+</div>
+
+<div *ngIf="mostrarMenuPerfil" class="profile-menu">
+  <ul>
     <li (click)="redirectTo('/admin-perfil')">Perfil</li>
     <li (click)="redirectTo('/edit-perfil')">Editar Perfil</li>
     <li (click)="redirectTo('/update-password')">Cambiar Contraseña</li>
     <li (click)="logout()">Cerrar Sesión</li>
   </ul>
-</div>
-
-
 </div>
 
 <div class="sidebar" [ngClass]="{'show-sidebar': mostrarSidebar}">
