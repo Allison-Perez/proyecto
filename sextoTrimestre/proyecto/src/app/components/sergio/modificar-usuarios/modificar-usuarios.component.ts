@@ -14,6 +14,10 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   editingUserId: number | null = null;
   editForm: FormGroup;
+  filtroFicha: number | null = null;
+  filtroNombre: string | null = null;
+  filtroDocumento: number | null = null;
+
 
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
@@ -26,7 +30,16 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
     });
   }
 
+  aplicarFiltros() {
+    this.usuarios = this.usuarios.filter((usuario) => {
+      // Verificar si el usuario cumple con los filtros
+      const cumpleFiltroFicha = !this.filtroFicha || usuario.numeroFicha === this.filtroFicha;
+      const cumpleFiltroNombre = !this.filtroNombre || usuario.primerNombre.includes(this.filtroNombre);
+      const cumpleFiltroDocumento = !this.filtroDocumento || usuario.documento === this.filtroDocumento;
 
+      return cumpleFiltroFicha && cumpleFiltroNombre && cumpleFiltroDocumento;
+    });
+  }
 
   ngOnInit(): void {
     this.usuarioService
@@ -41,6 +54,7 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
 
           this.usuarios = data;
           console.log(this.usuarios);
+          this.aplicarFiltros();
         },
         (error) => {
           console.error('Error al cargar usuarios:', error);

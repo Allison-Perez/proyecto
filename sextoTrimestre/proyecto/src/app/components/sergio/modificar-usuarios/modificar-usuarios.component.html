@@ -1,5 +1,17 @@
 <app-nav></app-nav>
 
+<label for="filtroFicha">Filtrar por Ficha:</label>
+<input type="number" id="filtroFicha" [(ngModel)]="filtroFicha">
+
+<label for="filtroNombre">Filtrar por Nombre:</label>
+<input type="text" id="filtroNombre" [(ngModel)]="filtroNombre">
+
+<label for="filtroDocumento">Filtrar por Documento:</label>
+<input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento">
+
+<!-- Agrega el botón de aplicación de filtro -->
+<button (click)="aplicarFiltros()">Aplicar Filtros</button>
+
 <table>
   <thead>
     <tr>
