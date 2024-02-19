@@ -39,10 +39,16 @@
         </ul>
   </div>
 </nav>
-  <h2 class="subtitulo mt-5">Noticias</h2>
-  <div class="instagram-div">
-    <!-- Contenido de tu div -->
-    <img src="assets/imagenes/imagen2.png" alt="Descripción de la imagen">
-    <p>Buen diaaaaa</p>
+
+<h2 class="subtitulo mt-5">Noticias</h2>
+
+<div class="noticias-container">
+  <div *ngFor="let blog of newsList" class="instagram-div">
+    <h1 class="titulo">{{ blog.nombre }}</h1>
+    <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
+    <p class="card-text">{{ blog.comentario }}</p>
   </div>
+</div>
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

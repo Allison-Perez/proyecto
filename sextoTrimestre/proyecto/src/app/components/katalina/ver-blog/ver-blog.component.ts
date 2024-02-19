@@ -8,9 +8,10 @@ import { ServiceService } from '../service/servicie.katalina.service';
 })
 export class VerBlogComponent {
   newsList: any[] = [];
-  newNews: any = { titulo: '', contenido: '' };
-  editingNews: any | null = null;
+  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null };
+  imageFile: File | null = null;
   isMenuOpen: boolean = false;
+  
   constructor(private ServiceService: ServiceService) { }
 
   toggleMenu() {
@@ -19,24 +20,27 @@ export class VerBlogComponent {
   }  
   
   ngOnInit() {
-    this.loadNews();
+    this.loadBlogs();
   }
 
-  loadNews() {
-    this.ServiceService.getNews().subscribe(data => {
-      console.log('Datos de noticias:', data);
-      if (data.length > 0) {
-        console.log('Primer objeto:', data[0]);
-      }
+  transformUrl(url: string): string {
+    if (url) {
+      return 'assets/' + url.replace(/\\/g, '/');
+    }
+    return 'assets/uploads/predeterminada.png'; 
+  }
   
-      this.newsList = data;
-    });
+  loadBlogs() {
+    const idFicha = 1; 
+    this.ServiceService.getBlogsPorFicha(idFicha).subscribe(
+      data => {
+        this.newsList = data;
+      },
+      error => {
+        console.error('Error al cargar los blogs:', error);
+      }
+    );
   }
-  updateNews() {
-    this.ServiceService.updateNews(this.editingNews.id_noticias, this.editingNews).subscribe(() => {
-      this.loadNews();
-      this.editingNews = null;
-    });
-  }
+ 
 
 }
