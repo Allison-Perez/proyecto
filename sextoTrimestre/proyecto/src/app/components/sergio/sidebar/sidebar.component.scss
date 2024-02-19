@@ -18,15 +18,15 @@
 .top-bar .menu-icon{
   width: 30px;
   color: #f8f8f8;
-  font-size: 28px;
+  font-size: 30px;
 }
 .sidebar {
   margin-top: 20px;
-  width: 250px; /* Puedes ajustar el ancho según tus necesidades */
-  background-color: #f8f8f8; /* Color de fondo de la barra lateral */
+  width: 230px; /* Puedes ajustar el ancho según tus necesidades */
+  background-color: #f8f8f8; /* f8f8f8 Color de fondo de la barra lateral */
   position: fixed;
-  top: 70px; /* Ajusta según la altura de tu barra horizontal */
-  left: -250px;
+  top: 50px; /* Ajusta según la altura de tu barra horizontal */
+  left: -230px;
   height: 100vh;
   transition: left 0.3s ease;
 }
@@ -72,6 +72,7 @@ ul {
 
 li {
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 a {
@@ -85,10 +86,6 @@ a {
   height: auto; /* Mantener la proporción original de la imagen */
 }
 
-.logo-container {
-  margin-right: 87%; /* Ajusta según tus necesidades para el espaciado entre el menú y el logo */
-}
-
 .iconPerfil {
   background-color: white; /* Fondo blanco */
   height: 40px;
@@ -98,24 +95,147 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
-/* sidebar.component.scss */
-
-.profile-menu {
+.profile-menu{
   position: absolute;
-  top: 100%; /* Coloca el menú justo debajo del icono */
-  left: 0;
-  background-color: red; /* Ajusta el color de fondo según tus necesidades */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añade sombra al menú */
-  z-index: 1; /* Asegura que el menú esté sobre otros elementos si es necesario */
-  visibility: hidden; /* Inicialmente oculta el menú */
-  opacity: 0; /* Agrega transparencia para animación si es necesario */
-  transition: visibility 0.3s, opacity 0.3s; /* Agrega transición para una animación suave */
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px;
 }
 
-.iconPerfil:hover .profile-menu {
-  visibility: visible; /* Muestra el menú al pasar el ratón sobre el icono */
-  opacity: 1; /* Hace el menú completamente visible */
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+.profile-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Agrega transición de color al pasar el ratón sobre las opciones */
+}
+
+.profile-menu li:hover {
+  background-color: #f0f0f0; /* Cambia el color de fondo al pasar el ratón sobre las opciones */
+}
+
+
+@media (max-width: 500px) {
+
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 25;
+    color: #088a88;
+  }
+
+  .sidebar {
+    margin-top: 20px;
+    width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+    background-color: transparent; /* f8f8f8 Color de fondo de la barra lateral */
+    position: absolute;
+    top: 50px; /* Ajusta según la altura de tu barra horizontal */
+    left: -150px;
+    height: 100vh;
+    transition: left 0.3s ease;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  h2 {
+    font-size: 24px; /* Tamaño de fuente más pequeño */
+    margin-bottom: 30px; /* Ajusta según tus necesidades */
+    color: #088a88;
+  }
+  .sidebar {
+    background-color: transparent; /* Sin color de fondo */
+  }
+
+  .sidebar ul li a {
+    color: #088a88; /* Color del texto en los enlaces */
+  }
+
+  .sidebar .menu-icon {
+    color: #088a88; /* Color del icono del menú */
+  }
+
+  .profile-menu {
+    background-color: transparent; /* Sin color de fondo en el menú de perfil */
+  }
+
+  .profile-menu li {
+    color: #088a88; /* Color del texto en el menú de perfil */
+  }
+
+}
+
+@media (max-width: 1200px) {
+
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 25;
+    color: #088a88;
+  }
+
+  .sidebar {
+    margin-top: 20px;
+    width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+    background-color: #f8f8f8; /* f8f8f8 Color de fondo de la barra lateral */
+    position: absolute;
+    top: 50px; /* Ajusta según la altura de tu barra horizontal */
+    left: -150px;
+    height: 100vh;
+    transition: left 0.3s ease;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  h2 {
+    font-size: 24px; /* Tamaño de fuente más pequeño */
+    margin-bottom: 30px; /* Ajusta según tus necesidades */
+    color: #088a88;
+  }
+  .sidebar {
+    background-color: #f8f8f8; /* Sin color de fondo */
+  }
+
+  .sidebar ul li a {
+    color: #088a88; /* Color del texto en los enlaces */
+  }
+
+  .sidebar .menu-icon {
+    color: #088a88; /* Color del icono del menú */
+  }
+
+  .profile-menu {
+    background-color: transparent; /* Sin color de fondo en el menú de perfil */
+  }
+
+  .profile-menu li {
+    color: #088a88; /* Color del texto en el menú de perfil */
+  }
+
+}

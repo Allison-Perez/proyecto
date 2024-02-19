@@ -38,14 +38,14 @@ body {
 }
 
 .container-user {
-  width: 100%;
+  width: 90%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .photo {
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   text-align: center;
   margin-right: 20px;
   border: 1px solid #ccc;
@@ -87,7 +87,7 @@ body {
 }
 
 
-@media (max-width: 991px) {
+@media (max-width: 700px) {
   .btn-primary {
     margin-right: 20px; /* Vuelve a agregar margen derecho entre los botones */
     margin-top: 10px; /* Elimina el margen inferior entre los botones */
@@ -95,7 +95,7 @@ body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .container-user {
     flex-direction: column; /* Cambia la dirección de los elementos en resoluciones pequeñas */
     align-items: center;
