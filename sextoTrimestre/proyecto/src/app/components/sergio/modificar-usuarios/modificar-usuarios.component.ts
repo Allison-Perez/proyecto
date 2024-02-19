@@ -11,12 +11,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ModificarUsuariosComponent implements OnInit, OnDestroy {
   usuarios: any[] = [];
+  originalUsuarios: any[] = [];
   private unsubscribe$ = new Subject<void>();
   editingUserId: number | null = null;
   editForm: FormGroup;
   filtroFicha: number | null = null;
   filtroNombre: string | null = null;
   filtroDocumento: number | null = null;
+  listaFichas: number[] = [2558104, 1800002, 11231236, 2634256, 2789008];
+
+
 
 
   constructor(private usuarioService: UsuarioService, private fb: FormBuilder) {
@@ -31,15 +35,39 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
   }
 
   aplicarFiltros() {
-    this.usuarios = this.usuarios.filter((usuario) => {
-      // Verificar si el usuario cumple con los filtros
-      const cumpleFiltroFicha = !this.filtroFicha || usuario.numeroFicha === this.filtroFicha;
+    let usuariosFiltrados = this.originalUsuarios.slice();
+
+    // Convierte el filtroFicha a número o deja como null si no es un número
+    const filtroFichaNumero = Number(this.filtroFicha) || null;
+    console.log('Valor de filtroFichaNumero:', filtroFichaNumero);
+
+    // Filtra la lista según los criterios de filtro
+    usuariosFiltrados = usuariosFiltrados.filter((usuario) => {
+      const cumpleFiltroFicha = filtroFichaNumero === null || usuario.numeroFicha === filtroFichaNumero;
       const cumpleFiltroNombre = !this.filtroNombre || usuario.primerNombre.includes(this.filtroNombre);
       const cumpleFiltroDocumento = !this.filtroDocumento || usuario.documento === this.filtroDocumento;
 
       return cumpleFiltroFicha && cumpleFiltroNombre && cumpleFiltroDocumento;
     });
+
+    // Actualiza la lista de usuarios con la lista filtrada
+    this.usuarios = usuariosFiltrados;
+
+    console.log('Usuarios después de aplicar filtros:', this.usuarios);
   }
+
+
+
+
+  limpiarFiltros() {
+    // Restablecer la lista original y los valores de los filtros
+    this.usuarios = this.originalUsuarios.slice();
+    this.filtroFicha = null;
+    this.filtroNombre = null;
+    this.filtroDocumento = null;
+  }
+
+
 
   ngOnInit(): void {
     this.usuarioService
@@ -47,6 +75,10 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (data) => {
+
+          this.originalUsuarios = data.slice(); // Guardar la lista original
+          this.usuarios = data;
+
           const miArreglo = data
           miArreglo.map((usuario) => {
             usuario['editar'] = false

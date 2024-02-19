@@ -1,3 +1,50 @@
+.filtro-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.filtro-container label {
+  font-size: 13px;
+  color: #4d4d4d;
+}
+
+.filtro-container input,
+.filtro-container select {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #57a7a5;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 15px;
+  outline: none;
+}
+
+.filtro-container select option {
+  font-size: 14px;
+}
+
+.filtro-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filtro-buttons button {
+  background-color: #57a7a5;
+  color: white;
+  padding: 9px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-buttons button:hover {
+  background-color: #4d8a83;
+}
+
 table {
   width: 90%;
   margin: 30px auto;
@@ -6,6 +53,7 @@ table {
 
 thead {
   background-color: #57a7a5;
+  color: white;
 }
 
 th, td {
@@ -15,41 +63,44 @@ th, td {
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #eee;
+  background-color: #f2f2f2;
 }
 
-th{
+th {
   text-align: center;
   color: white;
 }
 
 td {
-  color: black;
+  color: #333;
 }
 
-td.edit-mode {
-  width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+td.edit-mode, td.view-mode {
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-
-/* Establecer un ancho fijo para las celdas en modo de visualización */
-td.view-mode {
-  width: 100px; /* Puedes ajustar el ancho según tus necesidades */
-}
-
 .table_true {
   max-width: 500px;
-}
-
-.table_true {
-  overflow: hidden; /* Para truncar el contenido si es necesario */
+  overflow: hidden;
   white-space: nowrap;
-  text-align: left;/* Para que el texto no se divida en varias líneas */
+  text-align: left;
 }
 
 .table_true input {
   width: 90%;
   margin: auto;
-  box-sizing: border-box; /* Para incluir el padding y el borde en el ancho total */
+  box-sizing: border-box;
 }
 
+td i {
+  font-size: 20px; /* Ajusta el tamaño según tus preferencias */
+  margin-right: 10px; /* Agrega un poco de espacio entre los íconos */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Agrega una transición de color al pasar el ratón */
+}
 
+td i:hover {
+  color: #57a7a5; /* Cambia el color al pasar el ratón */
+}

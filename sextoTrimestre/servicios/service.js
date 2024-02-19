@@ -385,55 +385,77 @@ app.get("/api/usuarios", async (req, res) => {
 
 // ADMIN MODIFICA USUARIOS
 
-// app.post('/api/modificar-usuarios', async (req, res) => {
-//   try {
-//     console.log('Entro a la ruta de modificación de usuarios');
+app.post('/api/modificar-usuarios', async (req, res) => {
+  try {
+    // Asegúrate de que req.body y req.body.email estén definidos
+    if (!req.body || !req.body.email) {
+      return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
+    }
 
-//     // Asegúrate de que req.body y req.body.email estén definidos
-//     if (!req.body || !req.body.email) {
-//       return res.status(400).json({ error: 'Correo electrónico no proporcionado en la solicitud' });
-//     }
+    const connection = await mysql.createConnection(dbConfig);
+    const userEmail = req.body.email;
+    const userData = req.body.updatedUser;
 
-//     const connection = await mysql.createConnection(dbConfig);
-//     const userEmail = req.body.email;
-//     const userData = req.body.updatedUser;
+    console.log('Datos del usuario a actualizar:', userData);
 
-//     console.log('Datos del usuario a actualizar:', userData);
+    // Verificar si el usuario existe
+    const [userIdResult] = await connection.execute('SELECT identificador FROM usuario WHERE correo = ?', [userEmail]);
 
-//     const [userExists] = await connection.execute('SELECT * FROM usuario WHERE correo = ?', [userEmail]);
+    if (userIdResult.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
 
-//     if (userExists.length === 0) {
-//       return res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
+    const userId = userIdResult[0].identificador;
 
-//     const updateSql = `
-//       UPDATE usuario
-//       SET
-//         primer_nombre = ?,
-//         primer_apellido = ?,
-//         ficha = ?,
-//         rol = ?
-//       WHERE correo = ?`;
+    const [fichaExists] = await connection.execute('SELECT * FROM ficha WHERE identificador = ?', [userData.numeroFicha]);
 
-//     const values = [
-//       userData.primer_nombre,
-//       userData.primer_apellido,
-//       userData.ficha,
-//       userData.rol,
-//       userEmail
-//     ];
+    if (fichaExists.length === 0) {
+      return res.status(404).json({ error: 'Ficha no encontrada' });
+    }
 
-//     console.log('Consulta SQL:', updateSql);
-//     console.log('Valores:', values);
+    const updateSql = `
+      UPDATE usuario
+      SET
+        primerNombre = ?,
+        primerApellido = ?,
+        idRol = ?
+      WHERE correo = ?`;
 
-//     await connection.execute(updateSql, values);
-//     connection.end();
-//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar el usuario:', error);
-//     res.status(500).json({ error: 'Error interno en el servidor' });
-//   }
-// });
+    const values = [
+      userData.primerNombre,
+      userData.primerApellido,
+      userData.rol,
+      userEmail
+    ];
+
+    const updateFichaSql = `
+    UPDATE usuarioFicha
+    SET idFicha = ?
+    WHERE idUsuario = ?`;
+  
+  const fichaValues = [
+    userData.numeroFicha,
+    userId
+  ];
+
+    console.log('Consulta SQL (Usuario):', updateSql);
+    console.log('Valores (Usuario):', values);
+
+    console.log('Consulta SQL (Ficha):', updateFichaSql);
+    console.log('Valores (Ficha):', fichaValues);
+
+    await connection.execute(updateSql, values);
+    await connection.execute(updateFichaSql, fichaValues);
+    
+    connection.end();
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar el usuario:', error);
+    res.status(500).json({ error: 'Error interno en el servidor' });
+  }
+});
+
+
 
 
 // LISTADO DE INSTRUCTORES EN ADMIN

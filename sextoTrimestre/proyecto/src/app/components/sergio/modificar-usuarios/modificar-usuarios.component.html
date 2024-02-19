@@ -1,17 +1,23 @@
-<app-nav></app-nav>
+<app-sidebar></app-sidebar>
 
-<label for="filtroFicha">Filtrar por Ficha:</label>
-<input type="number" id="filtroFicha" [(ngModel)]="filtroFicha">
+<div class="filtro-container">
+  <label for="filtroFicha">Filtrar por Ficha:</label>
+<select id="filtroFicha" [(ngModel)]="filtroFicha">
+  <option value="" disabled selected>Seleccione una ficha</option>
+  <option *ngFor="let ficha of listaFichas" [value]="ficha">{{ ficha }}</option>
+</select>
 
-<label for="filtroNombre">Filtrar por Nombre:</label>
-<input type="text" id="filtroNombre" [(ngModel)]="filtroNombre">
+  <label for="filtroNombre">Filtrar por Nombre:</label>
+  <input type="text" id="filtroNombre" [(ngModel)]="filtroNombre">
 
-<label for="filtroDocumento">Filtrar por Documento:</label>
-<input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento">
+  <label for="filtroDocumento">Filtrar por Documento:</label>
+  <input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento">
 
-<!-- Agrega el botón de aplicación de filtro -->
-<button (click)="aplicarFiltros()">Aplicar Filtros</button>
-
+  <div class="filtro-buttons">
+    <button (click)="aplicarFiltros()">Aplicar Filtros</button>
+    <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+  </div>
+</div>
 <table>
   <thead>
     <tr>
