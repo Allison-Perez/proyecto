@@ -105,13 +105,11 @@ app.post("/login", async (req, res) => {
 
     const usuario = rows[0];
 
-
     const match = await bcrypt.compare(password, usuario.password);
     if (!match) {
       return res.status(401).json({ message: "Correo o contraseña incorrectos" });
     }
 
-    // Obtener información adicional del usuario, como nombre, apellido, etc.
     const userInfo = {
       idUsuario: usuario.identificador,
       primerNombre: usuario.primerNombre,
@@ -121,10 +119,13 @@ app.post("/login", async (req, res) => {
       correo: usuario.correo,
     };
 
+    // Obtener las fichas asociadas al usuario
+    const [fichas] = await connection.execute("SELECT idFicha FROM usuarioFicha WHERE idUsuario = ?", [usuario.identificador]);
+    const fichasUsuario = fichas.map(ficha => ficha.idFicha);
 
     // Cerrar la conexión y enviar la respuesta
     connection.end();
-    res.status(200).json({ message: "Inicio de sesión exitoso",idRol: usuario.idRol, userInfo: userInfo });
+    res.status(200).json({ message: "Inicio de sesión exitoso", idRol: usuario.idRol, userInfo: userInfo, fichas: fichasUsuario });
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);
     res.status(500).json({ error: "Error en el inicio de sesión" });

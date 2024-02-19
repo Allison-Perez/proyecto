@@ -11,11 +11,14 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private _isAuthenticated = false;
   private _userRole: number = 0;
+  private _userFichas: number[] = [];
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   
   login(data: any): Observable<any> {
+  localStorage.setItem('token', data.token);
+
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 
@@ -28,9 +31,14 @@ export class AuthService {
     return this._userRole;
   }
 
-  setAuthenticationStatus(status: boolean, role: number): void {
+  getUserFichas(): number[] {
+    return this._userFichas;
+  }
+
+  setAuthenticationStatus(status: boolean, role: number, fichas: number[]): void {
     this._isAuthenticated = status;
     this._userRole = role;
+    this._userFichas = fichas;
   }
 
   getIdUsuarioActual(): string | null {
@@ -43,6 +51,17 @@ export class AuthService {
   }
 
   getUserInfo(): any {
-    return {};
+    const token = localStorage.getItem('token');
+    console.log('Token en getUserInfo:', token);
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log('Decoded Token:', decodedToken);
+      return {
+        idUsuario: decodedToken.idUsuario,
+        idFicha: decodedToken.idFicha
+      };
+    }
+    return null;
   }
+  
 }

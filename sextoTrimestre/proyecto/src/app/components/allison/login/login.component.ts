@@ -42,7 +42,8 @@ export class LoginComponent {
           localStorage.setItem('user_email', JSON.stringify(email));
 
           const userRole = response.idRol;
-          this.authService.setAuthenticationStatus(true, userRole);
+          const userFichas = response.fichas;
+          this.authService.setAuthenticationStatus(true, userRole, userFichas);
           this.redirectToRoleView(userRole);
         }
       });
