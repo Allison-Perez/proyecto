@@ -46,7 +46,7 @@
   <div *ngFor="let blog of newsList" class="instagram-div">
     <h1 class="titulo">{{ blog.nombre }}</h1>
     <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
-    <p class="card-text">{{ blog.comentario }}</p>
+    <p class="card-text"><strong>Descripcion:</strong> {{ blog.comentario }}</p>
   </div>
 </div>
 

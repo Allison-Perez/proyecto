@@ -127,10 +127,6 @@ nav{
 button {
   color: #fff;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
 .dropdown-content { 
   display: none;
@@ -140,6 +136,7 @@ button {
   border-radius: 10px; /* Añadido para esquinas redondas */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {
