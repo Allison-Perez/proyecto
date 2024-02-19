@@ -50,7 +50,29 @@
   object-fit: cover;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+  .container-vista {
+    margin-left: 0; /* Elimina el margen izquierdo */
+  }
+
+  .photo {
+    width: 100%; /* Haz que la imagen ocupe el ancho completo */
+    max-width: 275px; /* Establece un ancho máximo si es necesario */
+    margin-top: 15px; /* Agrega un espacio entre la descripción y la imagen */
+  }
+
+  .contenedor {
+    flex-direction: column; /* Cambia la dirección del contenedor a columna */
+    align-items: center; /* Centra los elementos en el eje transversal */
+    height: auto; /* Establece la altura automática */
+  }
+
+  .descripción {
+    margin-right: 0; /* Elimina el margen derecho */
+  }
+}
+
+@media (max-width: 500px) {
   .container-vista {
     margin-left: 0; /* Elimina el margen izquierdo */
   }

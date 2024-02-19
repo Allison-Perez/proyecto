@@ -5,27 +5,6 @@ body {
   height: 100vh;
 }
 
-.navbar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav .nav-item {
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-.nav-link {
-  color: #088a88;
-}
-
 .nav-item:last-child .btn-primary {
   cursor: pointer;
 }
@@ -39,8 +18,14 @@ body {
 
 .container-user {
   width: 90%;
+  padding: 20px;
   display: flex;
   justify-content: space-evenly;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+  color: #088a88;
 }
 
 .photo {
@@ -48,7 +33,7 @@ body {
   height: 300px;
   text-align: center;
   margin-right: 20px;
-  border: 1px solid #ccc;
+  border: 2px solid #088a88;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -62,6 +47,7 @@ body {
 
 .bold-p {
   font-weight: bold;
+  font-size: 17px;
 }
 
 .bold-p span {
@@ -76,6 +62,7 @@ body {
   padding: 10px 20px;
   cursor: pointer;
   margin-right: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
