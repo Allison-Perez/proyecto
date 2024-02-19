@@ -1,3 +1,10 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 85vh;
+  overflow: hidden;
+}
 a {
   text-decoration: none;
 }
@@ -10,7 +17,6 @@ input{
   border: 1px solid #57a7a5;
   width: 40%;
   margin: 30px auto;
-  overflow: hidden;
   border-radius: 10px;
 }
 
