@@ -14,12 +14,14 @@ export class BlogService {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   crearBlog(blogData: FormData): Observable<any> {
-    const usuario = this.authService.getUserInfo(); 
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const usuario = this.authService.getUserInfo();
     if (usuario) {
-      blogData.append('idUsuario', usuario.idUsuario); 
+      blogData.append('idUsuario', usuario.idUsuario);
       blogData.append('idFicha', usuario.idFicha);
     }
-    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData);
+    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers });
   }
 
   getBlogsPorFicha(idFicha: number): Observable<any[]> {
@@ -28,7 +30,7 @@ export class BlogService {
 
   editarBlog(idBlog: number, blogData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<any>(`${this.apiUrl}/editarBlog/${idBlog}`, blogData, { headers: headers });
+    return this.http.put<any>(`${this.apiUrl}/editarBlog/${idBlog}`, blogData, { headers });
   }
 
   eliminarBlog(idBlog: number): Observable<any> {
