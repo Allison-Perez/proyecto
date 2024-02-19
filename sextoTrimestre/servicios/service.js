@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", 
   database: "acanner",
 };
 
@@ -352,21 +352,36 @@ app.post("/api/cambiar-contrasena", async (req, res) => {
 });
 
 
-
-
 // ADMIN LISTA USUARIOS
 
-// app.get("/api/usuarios", async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-//     const [rows] = await connection.execute("SELECT * FROM usuario");
-//     connection.end();
-//     res.status(200).json(rows);
-//   } catch (error) {
-//     console.error("Error al obtener usuarios:", error);
-//     res.status(500).json({ error: "Error al obtener usuarios" });
-//   }
-// });
+app.get("/api/usuarios", async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(`
+      SELECT
+        u.documento,
+        u.primerNombre,
+        u.primerApellido,
+        f.numeroFicha,
+        u.correo,
+        r.nombre as rol
+      FROM
+        usuario u
+      JOIN
+        usuarioFicha uf ON u.identificador = uf.idUsuario
+      JOIN
+        ficha f ON uf.idFicha = f.identificador
+      JOIN
+        rol r ON u.idRol = r.identificador
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener usuarios:", error);
+    res.status(500).json({ error: "Error al obtener usuarios" });
+  }
+});
 
 // ADMIN MODIFICA USUARIOS
 

@@ -20,9 +20,9 @@ export class ModificarUsuariosComponent implements OnInit, OnDestroy {
       documento: [''],
       primerNombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
-      ficha: [''],
+      numeroFicha: [''],
       correo: ['', [Validators.required, Validators.email]],
-      idRol: ['', [Validators.required]]
+      rol: ['', [Validators.required]]
     });
   }
 

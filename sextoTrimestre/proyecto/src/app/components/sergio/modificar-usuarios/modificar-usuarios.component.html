@@ -18,9 +18,9 @@
       <td *ngIf="usuario.editar === false">{{ usuario.documento }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primerNombre }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.primerApellido }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.ficha }}</td>
+      <td *ngIf="usuario.editar === false">{{ usuario.numeroFicha  }}</td>
       <td *ngIf="usuario.editar === false">{{ usuario.correo }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.idRol }}</td>
+      <td *ngIf="usuario.editar === false">{{ usuario.rol  }}</td>
       <td *ngIf="usuario.editar === false" (click)="editUser(i)">
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvF0zFKBDEUh/HfnkALEWy19gI2Xkg7rdZGRAu19EaCN7ASbK0EtxeUB1PEcTLJTHbZtEm+7+X/XhY2vBYb5msV3OAb17lCWwQPuOjAl3gckswV7OEV+wn0Crd9yRzBLr5whGccdNAl7loFZ4hKT/COQ7x08TRHFHlH7rE+cIo37GDV2uRo4n0PEpJjfI6Nek0P0spT1hPOS/+oJGiCh3xMkINHMyOyqpUTrAWee8Ha4DnBz8DbJ8WS3h+KqC+YDa95QRO8NEVVU1I6VPoHpfvF/a0IhqaoWGly4E/RNVM0Bf6vr1uJaGrFo+d/AQouJhks7bRaAAAAAElFTkSuQmCC"/>
       </td>
@@ -29,7 +29,7 @@
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primerNombre" formControlName="primerNombre"></td>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido" formControlName="primerApellido"></td>
       <td class="table_true" *ngIf="usuario.editar === true">
-        <select name="ficha" id="ficha" formControlName="ficha">
+        <select name="numeroFicha" id="numeroFicha" formControlName="numeroFicha">
               <option value="1">2558104</option>
               <option value="2">1800002</option>
               <option value="3">1231236</option>
@@ -38,7 +38,7 @@
         </select>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="email" [value]="usuario.correo"></td>
       <td class="table_true" *ngIf="usuario.editar  === true">
-        <select name="rol_options" id="rol_options" formControlName="idRol">
+        <select name="rol_options" id="rol_options" formControlName="rol">
           <option value="1">Instructor</option>
           <option value="2">Aprendiz</option>
           <option value="3">Admin</option>
