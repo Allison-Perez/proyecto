@@ -1,11 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(#D1D5D5, #0b4f6c);
+  background: radial-gradient(circle at top left, #f7f7f7, #008a88);
 }
 
+.titulo {
+  color: #0d5755;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.0;
+  font-size: 40px;
+  font-style: normal;
+  font-family: "Outfit", sans-serif;
+}
+.descripcion {
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  width: 570px; 
+}
+/* Estilos Nav */
+
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: white;
+}
+.nav-link:hover{
+  color: rgb(255, 255, 255);
+}
+.nombre{
+  padding: 10px;
+  color:  #008a88;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 601px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: block;
+    margin-right: 20px;
+  }
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-menu .nav-item {
+    margin: 0px 0;
+  }
+
+  .show-menu{
+    display: block;
+  }
+}
 .degradado {
   position: absolute;
   top: 0;

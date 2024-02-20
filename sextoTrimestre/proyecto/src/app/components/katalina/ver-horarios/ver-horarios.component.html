@@ -15,9 +15,6 @@
               <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
             </li>
             <li class="nav-item">
-              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-            </li>
-            <li class="nav-item">
               <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
             </li>
             <li class="nav-item">
@@ -25,7 +22,7 @@
             </li>
             <div class="dropdown">
               <button class="dropdown-button">
-                <span class="material-symbols-outlined">more_horiz</span>
+                <span class="material-symbols-outlined">person</span>
               </button>
               <div class="dropdown-content">
                 <li class="nav-item">
@@ -40,16 +37,12 @@
   </div>
 </nav>
   <h2 class="subtitulo mt-5">Horarios</h2>
-  <div class="container">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let horario of horarioList">
-        <h4>{{ horario.nombreArchivo }}</h4>
-        <p>{{ horario.comentario }}</p>
-        <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-      </li>
-    </ul>
+  <div class="instagram-div">
+    <img class="image" src="assets/imagenes/Horario.png" alt="Portada">
+        <div class="name">Horario Trimestre 7</div>
+        <button class="button">Ver Horario</button>
+        <p class="description">Descripción del usuario...</p>
   </div>
-  
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
