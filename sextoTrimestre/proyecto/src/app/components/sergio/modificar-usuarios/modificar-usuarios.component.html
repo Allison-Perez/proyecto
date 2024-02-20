@@ -45,18 +45,18 @@
 
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.documento" disabled></td>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primerNombre" formControlName="primerNombre"></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido" formControlName="primerApellido"></td>
+      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primerApellido" formControlName="primerApellido"></td>
       <td class="table_true" *ngIf="usuario.editar === true">
-        <select name="numeroFicha" id="numeroFicha" formControlName="numeroFicha">
+        <select name="numeroFicha" id="numeroFicha" formControlName="numeroFicha" [value]="getIdFicha(usuario.numeroFicha)">
               <option value="1">2558104</option>
               <option value="2">1800002</option>
-              <option value="3">1231236</option>
+              <option value="3">11231236</option>
               <option value="4">2634256</option>
               <option value="5">2789008</option>
         </select>
       <td class="table_true" *ngIf="usuario.editar === true"><input type="email" [value]="usuario.correo"></td>
       <td class="table_true" *ngIf="usuario.editar  === true">
-        <select name="rol_options" id="rol_options" formControlName="rol">
+        <select name="rol_options" id="rol_options" formControlName="rol" [value]="getIdRol(usuario.rol)">
           <option value="1">Instructor</option>
           <option value="2">Aprendiz</option>
           <option value="3">Admin</option>

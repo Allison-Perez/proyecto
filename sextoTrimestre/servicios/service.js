@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", 
   database: "acanner",
 };
 
@@ -359,6 +359,7 @@ app.get("/api/usuarios", async (req, res) => {
     const connection = await mysql.createConnection(dbConfig);
     const [rows] = await connection.execute(`
       SELECT
+        u.identificador,
         u.documento,
         u.primerNombre,
         u.primerApellido,
@@ -456,31 +457,45 @@ app.post('/api/modificar-usuarios', async (req, res) => {
 });
 
 
-
-
 // LISTADO DE INSTRUCTORES EN ADMIN
 
-// app.get('/api/staticsInstructores', async (req, res) => {
-//   const sql = `SELECT id_usuario, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, ficha, correo FROM usuario WHERE rol = 1`;
+app.get('/api/staticsInstructores', async (req, res) => {
+  const sql = `
+  SELECT
+  u.documento,
+  u.primerNombre,
+  u.segundoNombre,
+  u.primerApellido,
+  u.segundoApellido,
+  u.fechaNacimiento,
+  f.numeroFicha,
+  u.correo
+FROM
+  usuario u
+  JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
+  JOIN ficha f ON uf.idFicha = f.identificador
+  JOIN rol r ON u.idRol = r.identificador
+WHERE
+  u.idRol = 1;`
 
-// try {
-//   const connection = await mysql.createConnection(dbConfig);
+  try {
+    const connection = await mysql.createConnection(dbConfig);
 
-//   const [rows] = await connection.execute(sql);
+    const [rows] = await connection.execute(sql);
 
-//   await connection.end();
+    await connection.end();
 
-//   if (rows.length > 0) {
-//     res.json(rows);
-//   } else {
-//     res.status(404).json({ error: 'Usuarios no encontrados' });
-//   }
-// } catch (error) {
-//   console.error('Error al obtener los usuarios: ' + error);
-//   res.status(500).json({ error: 'Error al obtener los usuarios' });
-// }
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: 'Usuarios no encontrados' });
+    }
+  } catch (error) {
+    console.error('Error al obtener los usuarios: ' + error);
+    res.status(500).json({ error: 'Error al obtener los usuarios' });
+  }
+});
 
-// });
 
 
 //MARLON
