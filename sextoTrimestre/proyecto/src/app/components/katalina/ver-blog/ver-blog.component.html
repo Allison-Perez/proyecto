@@ -12,9 +12,6 @@
             <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
           </li>
             <li class="nav-item">
-              <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
-            </li>
-            <li class="nav-item">
               <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
             </li>
             <li class="nav-item">
@@ -25,7 +22,7 @@
             </li>
             <div class="dropdown">
               <button class="dropdown-button">
-                <span class="material-symbols-outlined">more_horiz</span>
+                <span class="material-symbols-outlined">person</span>
               </button>
               <div class="dropdown-content">
                 <li class="nav-item">
@@ -46,7 +43,7 @@
   <div *ngFor="let blog of newsList" class="instagram-div">
     <h1 class="titulo">{{ blog.nombre }}</h1>
     <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
-    <p class="card-text"><strong>Descripcion:</strong> {{ blog.comentario }}</p>
+    <p class="card-text"><strong>Descripción:</strong> {{ blog.comentario }}</p>
   </div>
 </div>
 

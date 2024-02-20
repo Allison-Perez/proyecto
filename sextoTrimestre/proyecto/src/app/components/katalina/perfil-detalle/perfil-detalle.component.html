@@ -22,35 +22,39 @@
             </li>
             <div class="dropdown">
               <button class="dropdown-button">
-                <span class="material-symbols-outlined">more_horiz</span>
+                <span class="material-symbols-outlined">person</span>
               </button>
               <div class="dropdown-content">
                 <li class="nav-item">
-                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                  <a routerLink="/index.katalina" class="nav-link otro ">Inicio</a>
                 </li>
                 <li class="nav-item">
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
             </div>
         </ul>
   </div>
 </nav>
+<h1 class="titulo">Tu perfil</h1>
 <div class="perfil-detalle">
-  <h1 class="display-6"> </h1>
-    <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
   <div class="container">
+    <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
     <div id="perfil" class="information">
       <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primerNombre }}</span></p>
       <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundoNombre }}</span></p>
       <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primerApellido }}</span></p>
       <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
-      <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
     </div>
-      <button class="boton" (click)="editarInformacion()">Editar</button>
-      <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
-      <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
-        <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
+      <div class="botones">
+        <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
+          <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
+        <button class="boton" (click)="editarInformacion()">Editar</button>
+        <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
+      </div>
   </div>
 </div>

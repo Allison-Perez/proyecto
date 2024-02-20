@@ -23,7 +23,6 @@ export class PerfilDetalleComponent implements OnInit {
       segundoNombre: '',
       primerApellido: '',
       segundoApellido: '',
-      ficha: '',
       correo: '',
     }
   }
