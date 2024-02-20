@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const multer = require('multer');
 const cors = require('cors');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 const { log } = require("console");
 const app = express();
@@ -123,14 +124,18 @@ app.post("/login", async (req, res) => {
     const [fichas] = await connection.execute("SELECT idFicha FROM usuarioFicha WHERE idUsuario = ?", [usuario.identificador]);
     const fichasUsuario = fichas.map(ficha => ficha.idFicha);
 
-    // Cerrar la conexión y enviar la respuesta
+    // Generar el token
+    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: usuario.idFicha }, 'acanner', { expiresIn: '1h' });
+
+    // Cerrar la conexión y enviar la respuesta con el token
     connection.end();
-    res.status(200).json({ message: "Inicio de sesión exitoso", idRol: usuario.idRol, userInfo: userInfo, fichas: fichasUsuario });
+    res.status(200).json({ message: "Inicio de sesión exitoso", idRol: usuario.idRol, userInfo: userInfo, fichas: fichasUsuario, token: token });
   } catch (error) {
     console.error("Error en el inicio de sesión:", error);
     res.status(500).json({ error: "Error en el inicio de sesión" });
   }
 });
+
 
 // RECUPERAR CORREO (VERIFICANDO SI EXISTE)
 
@@ -496,6 +501,13 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage })
+
+// Ruta para manejar la carga de archivos
+app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
+  // Procesar la solicitud aquí
+  res.send('Archivo subido exitosamente');
+});
+
 
 //BLOG
 

@@ -12,17 +12,14 @@ export class AuthService {
   private _isAuthenticated = false;
   private _userRole: number = 0;
   private _userFichas: number[] = [];
+  private _userInfo: any = {};
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  
   login(data: any): Observable<any> {
-  localStorage.setItem('token', data.token);
-
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 
-  
   isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
@@ -35,9 +32,10 @@ export class AuthService {
     return this._userFichas;
   }
 
-  setAuthenticationStatus(status: boolean, role: number, fichas: number[]): void {
+  setAuthenticationStatus(status: boolean, role: number, fichas: number[], userInfo: any): void {
     this._isAuthenticated = status;
     this._userRole = role;
+    this._userInfo = userInfo;
     this._userFichas = fichas;
   }
 
@@ -52,16 +50,20 @@ export class AuthService {
 
   getUserInfo(): any {
     const token = localStorage.getItem('token');
-    console.log('Token en getUserInfo:', token);
     if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log('Decoded Token:', decodedToken);
-      return {
-        idUsuario: decodedToken.idUsuario,
-        idFicha: decodedToken.idFicha
-      };
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        return {
+          idUsuario: decodedToken.idUsuario,
+          idFicha: decodedToken.idFicha
+        };
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return null;
+      }
+    } else {
+      console.error('Token no encontrado en el almacenamiento local');
+      return null;
     }
-    return null;
   }
-  
 }
