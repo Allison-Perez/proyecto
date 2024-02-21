@@ -44,7 +44,11 @@
   font-size: 15px;
   color: #262626;
 }
-
+.date{
+  font-weight: bolder;
+  margin-top: auto;
+  text-align: right;
+}
 .noticias-container {
   display: flex;
   flex-wrap: wrap;
