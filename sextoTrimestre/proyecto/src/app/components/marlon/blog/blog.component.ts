@@ -24,11 +24,11 @@ export class BlogComponent implements OnInit {
     if (url) {
       return 'assets/' + url.replace(/\\/g, '/');
     }
-    return 'assets/uploads/Blog.png'; 
+    return 'assets/uploads/Blog.png';
   }
 
   loadBlogs() {
-    const fichas = this.authService.getUserFichas(); 
+    const fichas = this.authService.getUserFichas();
     if (fichas && fichas.length > 0) {
       this.newsList = [];
       fichas.forEach(ficha => {
@@ -98,7 +98,7 @@ export class BlogComponent implements OnInit {
       }
     );
   }
-  
+
 
   updateBlog() {
     if (this.editingBlog) {
@@ -106,7 +106,7 @@ export class BlogComponent implements OnInit {
         () => {
           console.log('Blog actualizado correctamente');
           this.loadBlogs(); // Aquí puedes optar por no cargar todos los blogs nuevamente si solo necesitas actualizar el que se editó
-          this.cancelEdit(); 
+          this.cancelEdit();
         },
         (error) => {
           console.error('Error al actualizar el blog:', error);
@@ -114,13 +114,13 @@ export class BlogComponent implements OnInit {
       );
     }
   }
-  
+
 
 
   cancelEdit() {
     this.editingBlog = null;
   }
-  
+
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
