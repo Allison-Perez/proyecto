@@ -16,11 +16,6 @@ export class BlogService {
   crearBlog(blogData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const usuario = this.authService.getUserInfo();
-    if (usuario) {
-      blogData.append('idUsuario', usuario.idUsuario);
-      blogData.append('idFicha', usuario.idFicha);
-    }
     return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers });
   }
 

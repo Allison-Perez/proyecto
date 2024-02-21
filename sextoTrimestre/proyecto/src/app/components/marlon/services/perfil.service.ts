@@ -13,7 +13,7 @@ export class ServiceService {
   apiUrl = 'http://localhost:3000';
 
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
     return this.http.get(url);
   }
 

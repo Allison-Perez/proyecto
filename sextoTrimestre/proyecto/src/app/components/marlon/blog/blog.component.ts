@@ -49,13 +49,9 @@ export class BlogComponent implements OnInit {
     const formData = new FormData();
     formData.append('titulo', this.newBlog.titulo);
     formData.append('comentario', this.newBlog.comentario);
-
     if (this.imageFile) {
-      formData.append('imagenOpcional', this.imageFile);
+      formData.append('imagenOpcional', this.imageFile, this.imageFile.name);
     }
-
-    formData.append('fecha', new Date().toISOString());
-
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       formData.append('idUsuario', userInfo.idUsuario);
@@ -64,7 +60,6 @@ export class BlogComponent implements OnInit {
       console.error('No se pudo obtener la información del usuario del token JWT');
       return;
     }
-
     this.blogService.crearBlog(formData).subscribe(
       (response) => {
         console.log('Blog creado exitosamente:', response);

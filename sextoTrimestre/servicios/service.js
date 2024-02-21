@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", 
+  password: "", //111019As 
   database: "acanner",
 };
 
@@ -515,7 +515,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage })
+const upload = multer({ dest: 'uploads/' });
 
 // Ruta para manejar la carga de archivos
 app.post('/upload', upload.single('imagenOpcional'), function (req, res) {

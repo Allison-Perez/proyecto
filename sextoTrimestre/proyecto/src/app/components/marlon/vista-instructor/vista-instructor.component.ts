@@ -29,12 +29,16 @@ export class VistaInstructorComponent implements OnInit {
 
   ngOnInit() {
     // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
-    const correo: any = localStorage.getItem('user_email');
+    const correo: string | null = localStorage.getItem('user_email');
 
-    // Llama al servicio para obtener la información del usuario
-    this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
-      this.userData = data;
-    });
+    if (correo) {
+      // Llama al servicio para obtener la información del usuario
+      this.service.getUserInfoByEmail(correo).subscribe(data => {
+        this.userData = data;
+      });
+    } else {
+      console.error('No se pudo obtener el correo del usuario.');
+    }
   }
 
   toggleDropdown() {
