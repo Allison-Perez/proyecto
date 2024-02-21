@@ -75,7 +75,7 @@ export class BlogComponent implements OnInit {
   }
 
   resetNewBlogForm() {
-    this.newBlog = { titulo: '', comentario: '', imagenOpcional: null };
+    this.newBlog = { nombre: '', comentario: '', imagenOpcional: null };
     this.imageFile = null;
   }
 
@@ -105,7 +105,7 @@ export class BlogComponent implements OnInit {
       this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog).subscribe(
         () => {
           console.log('Blog actualizado correctamente');
-          this.loadBlogs(); // Aquí puedes optar por no cargar todos los blogs nuevamente si solo necesitas actualizar el que se editó
+          this.loadBlogs();
           this.cancelEdit();
         },
         (error) => {
