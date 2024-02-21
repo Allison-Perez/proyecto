@@ -11,7 +11,6 @@
   font-style: normal;
 }
 
-/*Perfil*/
 .perfil-detalle {
   margin-left: 350px;
   margin-top: 50px;
@@ -51,16 +50,16 @@ span {
 .boton {
     margin: 10px;
     background-color: #088a88;
-    color: #fff; 
-    padding: 10px 20px; 
+    color: #fff;
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  
+
   .boton:hover {
-    background-color: #0f9b98; 
+    background-color: #0f9b98;
   }
 
 /* Estilos Nav */
@@ -162,7 +161,7 @@ button {
   color: #fff;
 }
 
-.dropdown-content { 
+.dropdown-content {
   display: none;
   margin-top: 06px;
   position: absolute;
@@ -175,7 +174,7 @@ button {
 
 .dropdown:hover .dropdown-content {
   display: block;
-  left: -110px; 
+  left: -110px;
 }
 
 .dropdown-button {

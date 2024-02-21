@@ -36,11 +36,13 @@ export class LoginComponent {
           return of(null);
         })
       ).subscribe(response => {
-        if (response && response.token) { 
+        if (response && response.token) {
+          const email = this.loginForm.value.correo;
           localStorage.setItem('token', response.token);
+          localStorage.setItem('user_email', JSON.stringify(email));
           const userRole = response.idRol;
           const userFichas = response.fichas;
-          const userInfo = response.userInfo; 
+          const userInfo = response.userInfo;
           this.authService.setAuthenticationStatus(true, userRole, userFichas, userInfo);
           this.redirectToRoleView(userRole);
         } else {

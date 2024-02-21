@@ -47,7 +47,7 @@ export class PerfilComponent implements OnInit {
   }
 
   editarInformacion() {
-    this.router.navigate(['/edit-perfilA']);
+    this.router.navigate(['/editar-perfil']);
   }
 
   editarPassword() {
