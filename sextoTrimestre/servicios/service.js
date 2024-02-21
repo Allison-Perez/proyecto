@@ -502,8 +502,56 @@ WHERE
 });
 
 
-
 //MARLON
+
+// FUNCIÓN PARA REALIZAR UN INSERT A LA TABLA DETALLE USUARIO SOLO SI EL USUARIO NO EXISTE
+
+async function insertarDetalleUsuarioPredeterminado(correo) {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    // Verifica si el usuario tiene el rol 1
+    const esInstructorQuery = `
+      SELECT idRol FROM usuario
+      WHERE correo = ?`;
+
+    const [esInstructorResult] = await connection.execute(esInstructorQuery, [correo]);
+
+    if (esInstructorResult[0].idRol === 1) {
+      // Verifica si ya existe un registro en detalleusuario para este usuario
+      const existeRegistroQuery = `
+        SELECT COUNT(*) AS count
+        FROM detalleusuario
+        WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
+
+      const [existeRegistroResult] = await connection.execute(existeRegistroQuery, [correo]);
+
+      if (existeRegistroResult[0].count === 0) {
+        // Inserta en detalleusuario con datos predeterminados
+        const insertDetalleUsuarioQuery = `
+          INSERT INTO detalleusuario (fechaIngreso, celular, informacionAcademica, informacionAdicional, idUsuario)
+          VALUES (?, ?, ?, ?, (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1))`;
+
+        const fechaIngresoPredeterminada = '2022-01-01';
+        const celularPredeterminado = '123456789';
+        const informacionAcademicaPredeterminada = 'Sin información académica';
+        const informacionAdicionalPredeterminada = 'Sin información adicional';
+
+        await connection.execute(insertDetalleUsuarioQuery, [
+          fechaIngresoPredeterminada,
+          celularPredeterminado,
+          informacionAcademicaPredeterminada,
+          informacionAdicionalPredeterminada,
+          correo
+        ]);
+      }
+    }
+
+    connection.end();
+  } catch (error) {
+    console.error("Error al insertar en detalleusuario con datos predeterminados:", error);
+  }
+}
 
 // OBTENER INFORMACIÓN DEL PERFIL
 
@@ -511,6 +559,7 @@ app.get("/api/obtenerInstructor", async (req, res) => {
   try {
 
     const { correo } = req.query;
+    await insertarDetalleUsuarioPredeterminado(correo);
     const connection = await mysql.createConnection(dbConfig);
 
     const sql = `
@@ -538,50 +587,17 @@ app.get("/api/obtenerInstructor", async (req, res) => {
 
 // EDITAR LA INFORMACIÓN DEL INSTRUCTOR
 
-// app.post('/api/actualizarInstructor', async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-//     const { correo } = req.query;
-//     const userData = req.body;
-
-//     if (!userData.primerNombre || !userData.primerApellido || !userData.primerApellido || !userData.Fe ) {
-//       return res.status(400).json({ error: 'Campos obligatorios faltantes' });
-//     }
-
-//     const updateSql = `
-//       UPDATE usuario
-//       SET
-//         primerNombre = ?,
-//         segundoNombre = ?,
-//         primerApellido = ?,
-//         segundoApellido = ?
-
-//       WHERE correo = ?`; 
-//     const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
-//     const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
-
-//     await connection.execute(updateSql, values);
-
-
-//     connection.end();
-//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar la información del usuario:', error);
-//     res.status(500).json({ error: 'Error al actualizar la información del usuario' });
-//   }
-// });
-
 app.put("/api/actualizarInstructor", async (req, res) => {
   let connection;
   try {
     const { correo } = req.query;
     const userData = req.body;
 
-    // Verifica que los campos obligatorios estén presentes en el cuerpo de la solicitud
-    if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido || !userData.segundoApellido) {
+    console.log("entra")
+
+    if (!userData.primerNombre || !userData.primerApellido || !userData.fechaIngreso || !userData.celular ) {
       return res.status(400).json({ error: 'Todos los campos obligatorios son necesarios' });
     }
-
     connection = await mysql.createConnection(dbConfig);
 
     // Actualiza la información en la tabla 'usuario'
@@ -592,34 +608,42 @@ app.put("/api/actualizarInstructor", async (req, res) => {
         segundoNombre = ?,
         primerApellido = ?,
         segundoApellido = ?
-      WHERE correo = ? AND idRol = 1`;
+      WHERE correo = ?`;
 
     const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
     const usuarioValues = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
 
-    // Ejecuta la actualización en la tabla 'usuario'
     const [usuarioResult] = await connection.execute(updateUsuarioSql, usuarioValues);
 
-    // Verifica si se afectaron filas en la tabla 'usuario'
     if (usuarioResult.affectedRows === 0) {
       return res.status(404).json({ error: "Usuario no encontrado o no es un instructor" });
     }
 
-    // Actualiza la información en la tabla 'detalleUsuario'
-    const updateDetalleUsuarioSql = `
-      UPDATE detalleUsuario
+    const detailUser = `
+    SELECT identificador FROM detalleusuario
+    WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`
+    const dataDatailUser = [correo]
+
+    const resultDetailUser = await connection.execute(detailUser, dataDatailUser)
+
+    if (resultDetailUser) {
+      console.log("entra a actualizar")
+      // Actualiza la información en la tabla 'detalleUsuario'
+      const updateDetalleUsuarioSql = `
+      UPDATE detalleusuario
       SET
         fechaIngreso = ?,
         celular = ?,
-        informacionAcademica = COALESCE(?, informacionAcademica),
-        informacionAdicional = COALESCE(?, informacionAdicional)
+        informacionAcademica = ?,
+        informacionAdicional = ?
       WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
+    
+      const { fechaIngreso, celular, informacionAcademica, informacionAdicional } = userData; 
+      const detalleUsuarioValues = [fechaIngreso, celular, informacionAcademica, informacionAdicional, correo];
 
-    const { fechaIngreso, celular, informacionAcademica, informacionAdicional } = userData;
-    const detalleUsuarioValues = [fechaIngreso, celular, informacionAcademica, informacionAdicional, correo];
-
-    // Ejecuta la actualización en la tabla 'detalleUsuario'
-    await connection.execute(updateDetalleUsuarioSql, detalleUsuarioValues);
+      // Ejecuta la actualización en la tabla 'detalleUsuario'
+      await connection.execute(updateDetalleUsuarioSql, detalleUsuarioValues);
+    }
 
     // Si llega aquí, las actualizaciones fueron exitosas
     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
@@ -676,6 +700,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 
       await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
       connection.end();
+      
 
       res.status(201).json({ message: "Blog creado exitosamente" });
     } else {

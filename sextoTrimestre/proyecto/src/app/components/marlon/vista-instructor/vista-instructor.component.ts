@@ -12,6 +12,7 @@ export class VistaInstructorComponent implements OnInit {
   @ViewChild('optionsDropdown') optionsDropdown!: ElementRef;
   userData: any;
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -27,10 +28,6 @@ export class VistaInstructorComponent implements OnInit {
       correo: '',
     };
   }
-  toggleMenu() {
-    console.log('Función toggleMenu() llamada.');
-    this.isMenuOpen = !this.isMenuOpen;
-  }
 
   ngOnInit() {
     const userEmail: string | null = this.authService.getUserEmail();
@@ -44,6 +41,22 @@ export class VistaInstructorComponent implements OnInit {
     }
   }
   
+
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
 
   toggleDropdown() {
     const dropdownMenu = this.optionsDropdown.nativeElement.nextElementSibling;

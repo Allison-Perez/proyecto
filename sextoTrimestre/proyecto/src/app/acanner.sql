@@ -71,7 +71,7 @@ CREATE TABLE usuario (
 CREATE TABLE detalleUsuario (
     identificador INT AUTO_INCREMENT PRIMARY KEY,
     fechaIngreso DATE NOT NULL,
-    celular INT NOT NULL,
+    celular BIGINT(10) NOT NULL,
     informacionAcademica VARCHAR(500),
     informacionAdicional VARCHAR(500),
     idUsuario INT NOT NULL,

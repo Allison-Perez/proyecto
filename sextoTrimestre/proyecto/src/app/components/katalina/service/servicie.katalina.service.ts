@@ -50,6 +50,8 @@ export class ServiceService {
 
     return this.http.post<any>(url, body);
   }
+
+
   getUserInfoByEmail(email: string): Observable<any> {
     // const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
     const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
@@ -74,6 +76,7 @@ export class ServiceService {
 
     return this.http.post(url, userData);
   }
+  
   actualizarFotoPerfil(usuarioId: number, nuevaFotoUrl: string): Observable<any> {
     const url = `${this.apiUrl}/${usuarioId}/foto-perfil`;
     return this.http.put(url, { fotoPerfil: nuevaFotoUrl });

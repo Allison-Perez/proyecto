@@ -21,15 +21,18 @@
               <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
             </li>
             <div class="dropdown">
-              <button class="dropdown-button">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
-              <div class="dropdown-content">
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
                   <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
                 </li>
                 <li class="nav-item">
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
             </div> 
@@ -42,7 +45,7 @@
 <div class="noticias-container">
   <div *ngFor="let blog of newsList" class="instagram-div">
     <h1 class="titulo">{{ blog.nombre }}</h1>
-    <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
+    <img src="assets/imagenes/Blog.png" class="card-img-top" alt="Imagen Opcional">
     <p class="card-text"><strong>Descripción:</strong> {{ blog.comentario }}</p>
   </div>
 </div>

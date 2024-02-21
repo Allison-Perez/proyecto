@@ -4,6 +4,8 @@ import { EditarPerfilService } from '../services/editar-perfil.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-editar-perfil',
@@ -16,19 +18,37 @@ export class EditarPerfilComponent implements OnInit {
   userData: any;
 
   constructor(private fb: FormBuilder, private service: EditarPerfilService, private router: Router, private authService: AuthService) {
-    this.form = this.fb.group({
-      primerNombre: ['', Validators.required],
-      segundoNombre: [''],
-      primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
-      correo: ['']
-    });
-  }
+      this.form = this.fb.group({
+        primerNombre: ['', Validators.required],
+        segundoNombre: [''],
+        primerApellido: ['', Validators.required],
+        segundoApellido: ['', Validators.required],
+        correo: [''],
+        fechaIngreso: ['', [Validators.required, this.fechaInferiorHoyValidator]],
+        celular : ['', Validators.required],
+        informacionAcademica:[''],
+        informacionAdicional :[''],
+      });
+    }
+
+    fechaInferiorHoyValidator(control: AbstractControl): { [key: string]: boolean } | null {
+      const selectedDate = new Date(control.value);
+      const hoy = new Date();
+
+      if (selectedDate > hoy) {
+        return { 'fechaInferiorHoy': true };
+      }
+
+      return null;
+    }
 
   ngOnInit() {
-    // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
+    console.log("correo del individuo");
     let correo:any = localStorage.getItem('user_email');
     correo = correo.replace(/^"(.*)"$/, '$1');
+    console.log(correo);
+
+
 
     if (correo) {
       // Llama a tu servicio para obtener la información del usuario por correo

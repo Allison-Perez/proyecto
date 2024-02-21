@@ -1,14 +1,6 @@
-// Define styles for the ".nombre" class
-.nombre {
-    font-weight: bold;
-  }
-  
-  // Define styles for the ".nav-img" class
-  .nav-img{
-    width: 50px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 
-  // Define styles for the ".container" class
   .container {
     background-color: #fff;
     padding: 30px;
@@ -23,7 +15,6 @@
     text-align: center;
   }
   
-  // Define styles for the "button" element
   button {
     background-color: #088a88;
     color: #fff; /* Color del texto */
@@ -35,99 +26,133 @@
     margin: 10px;
   }
   
-  // Define styles for the "button" element when hovering
   button:hover {
     background-color: #159997; /* Nuevo color al pasar el mouse sobre el botón */
   }
   
-  // Define styles for the "h4" element
   h4 {
+    font-size: 15px;
     font-weight: bold;
-    flex-grow: 15;
     text-align: center;
     color: #088a88;
   }
 
-   /* Estilos para el menú hamburguesa */
-  
-   .nav ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
+/* Estilos Nav */
+nav{
+  background-color: #008a88;
+}
+
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(14, 13, 13);
+}
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 700px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
   }
-  
-  .nav .nav-item {
-    cursor: pointer;
-    margin-bottom: 5px;
-  }
-  
-  .nav-link {
-    color: #070707;
-  }
-  .nombre{
-    color: black;
-    font-weight: bold;
-  }
-  
-  .nav-item:last-child .btn-primary {
-    cursor: pointer;
-  }
-  
-  
-  .menu-icon {
-    cursor: pointer;
+
+  .nav {
     display: none;
   }
-  
-  .menu-icon .bar {
-    width: 20px;
-    height: 3px;
-    background-color: #088a88;
-    margin: 6px 0;
-  }
-  
-  /* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
-  .show-menu .menu-icon {
+
+  .menu-icon {
+    cursor: pointer;
     display: block;
+    margin-right: 20px;
   }
-  
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
   .show-menu .nav {
     display: flex;
     flex-direction: column;
   }
-  
+
   .show-menu .nav-item {
-    margin: 10px 0;
+    margin: 0px 0;
   }
-  
-  /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
-  @media (max-width: 601px) {
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-    }
-  
-    .nav {
-      display: none;
-    }
-  
-    .menu-icon {
-      cursor: pointer;
-      display: block;
-      margin-right: 20px;
-    }
-  
-    /* Estilos para mostrar el menú en pantallas pequeñas */
-    .show-menu .nav {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    .show-menu .nav-item {
-      margin: 10px 0;
-    }
-  
-    .show-menu{
-      display: block;
-    }
+
+  .show-menu{
+    display: block;
   }
+}
+
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+
+.dropdown-content { 
+  margin-top: 5px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
