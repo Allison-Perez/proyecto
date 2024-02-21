@@ -21,10 +21,10 @@
               <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
             </li>
             <div class="dropdown">
-              <button class="dropdown-button">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
-              <div class="dropdown-content">
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
                   <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
                 </li>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class IndexKatalinaComponent {
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(private authService: AuthService, private router: Router,) {
     // Constructor correctamente estructurado
@@ -18,7 +19,16 @@ export class IndexKatalinaComponent {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
   }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
   logout() {
     this.authService.logout();
     // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.

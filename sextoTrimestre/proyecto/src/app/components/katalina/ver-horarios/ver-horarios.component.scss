@@ -70,7 +70,7 @@ nav{
 }
 
 .nav-link:hover{
-  color: rgb(12, 12, 12);
+  color: rgb(14, 13, 13);
 }
 .nombre{
   padding: 10px;
@@ -106,7 +106,7 @@ nav{
 }
 
 /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
-@media (max-width: 601px) {
+@media (max-width: 700px) {
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -137,7 +137,6 @@ nav{
   }
 }
 
-
 /* Estilo del dropdown */
 .otro {
   color: #008a88;
@@ -145,24 +144,17 @@ nav{
 button {
   color: #fff;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
 .dropdown-content { 
-  display: none;
-  margin-top: 06px;
+  margin-top: 7px;
   position: absolute;
-  min-width: 160px;
-  border-radius: 10px; /* Añadido para esquinas redondas */
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-  left: -110px; 
+  border-radius: 10px; 
+  padding: 10px;
 }
 
 .dropdown-button {
@@ -180,6 +172,6 @@ button {
 }
 
 .dropdown-item:hover {
-  background-color: #0f0f0f;
+  background-color: #070707;
 }
 
