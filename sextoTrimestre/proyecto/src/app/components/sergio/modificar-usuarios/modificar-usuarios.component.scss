@@ -49,6 +49,7 @@ table {
   width: 90%;
   margin: 30px auto;
   border-collapse: collapse;
+  overflow-x: auto;
 }
 
 thead {
@@ -103,4 +104,39 @@ td i {
 
 td i:hover {
   color: #57a7a5; /* Cambia el color al pasar el ratón */
+}
+
+@media only screen and (max-width: 965px) {
+  .filtro-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-container input,
+  .filtro-container select {
+    width: 40%;
+    margin: 5px 0;
+    box-sizing: border-box;
+  }
+
+  .filtro-buttons {
+    margin-top: 5px;
+    flex-direction: row; /* Mantiene los botones en línea horizontal */
+    justify-content: center; /* Centra los botones horizontalmente */
+  }
+
+  .filtro-buttons button {
+    padding: 5px 10px; /* Ajusta el tamaño de los botones */
+    font-size: 12px; /* Ajusta el tamaño de la fuente de los botones */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+  }
+
+  table {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  th, td {
+    white-space: nowrap; /* Evita el colapso del texto en celdas pequeñas */
+  }
 }

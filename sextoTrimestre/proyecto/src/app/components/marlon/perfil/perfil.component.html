@@ -47,14 +47,19 @@
         <h1 class="display-4">Tu Perfil </h1>
         <div class="container">
           <div class="container-user">
-              <img src="assets/imagenes/perfil_sena.png" alt="Imagen" class="card-img-top small-centered">  
+              <img src="assets/imagenes/perfil_sena.png" alt="Imagen" class="card-img-top small-centered">
         <div id="perfil" class="information">
-          <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
-          <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
-          <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
-          <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
-          <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
+          <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primerNombre }}</span></p>
+          <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundoNombre }}</span></p>
+          <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primerApellido }}</span></p>
+          <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
+          <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
           <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
+          <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso }}</span></p>
+          <p class="font-weight-bold">Número de Celular: <span id="celular">{{ userData.celular }}</span></p>
+          <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
+          <p class="font-weight-bold">Información Adicional: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>
+
         </div>
         <button class="button1" (click)="editarInformacion()">Editar</button>
         <button class="button2" [routerLink]="['/cambiar-contrasena']">Cambiar contraseña</button>

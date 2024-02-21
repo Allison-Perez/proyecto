@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As 
+  password: "111019As",
   database: "acanner",
 };
 
@@ -504,6 +504,135 @@ WHERE
 
 
 //MARLON
+
+// OBTENER INFORMACIÓN DEL PERFIL
+
+app.get("/api/obtenerInstructor", async (req, res) => {
+  try {
+
+    const { correo } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+    SELECT u.*, d.fechaIngreso, d.celular, d.informacionAcademica, d.informacionAdicional, f.numeroFicha
+    FROM usuario u
+    LEFT JOIN detalleUsuario d ON u.identificador = d.idUsuario
+    LEFT JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
+    JOIN ficha f ON uf.idFicha = f.identificador
+    JOIN rol r ON u.idRol = r.identificador
+    WHERE u.idRol = 1 AND u.correo = ?`;
+
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+    if (rows.length > 0) {
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(404).json({ error: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al obtener el usuario por correo:", error);
+    res.status(500).json({ error: "Error al obtener el usuario por correo" });
+  }
+});
+
+// EDITAR LA INFORMACIÓN DEL INSTRUCTOR
+
+// app.post('/api/actualizarInstructor', async (req, res) => {
+//   try {
+//     const connection = await mysql.createConnection(dbConfig);
+//     const { correo } = req.query;
+//     const userData = req.body;
+
+//     if (!userData.primerNombre || !userData.primerApellido || !userData.primerApellido || !userData.Fe ) {
+//       return res.status(400).json({ error: 'Campos obligatorios faltantes' });
+//     }
+
+//     const updateSql = `
+//       UPDATE usuario
+//       SET
+//         primerNombre = ?,
+//         segundoNombre = ?,
+//         primerApellido = ?,
+//         segundoApellido = ?
+
+//       WHERE correo = ?`; 
+//     const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
+//     const values = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+
+//     await connection.execute(updateSql, values);
+
+
+//     connection.end();
+//     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+//   } catch (error) {
+//     console.error('Error al actualizar la información del usuario:', error);
+//     res.status(500).json({ error: 'Error al actualizar la información del usuario' });
+//   }
+// });
+
+app.put("/api/actualizarInstructor", async (req, res) => {
+  let connection;
+  try {
+    const { correo } = req.query;
+    const userData = req.body;
+
+    // Verifica que los campos obligatorios estén presentes en el cuerpo de la solicitud
+    if (!userData.primerNombre || !userData.segundoNombre || !userData.primerApellido || !userData.segundoApellido) {
+      return res.status(400).json({ error: 'Todos los campos obligatorios son necesarios' });
+    }
+
+    connection = await mysql.createConnection(dbConfig);
+
+    // Actualiza la información en la tabla 'usuario'
+    const updateUsuarioSql = `
+      UPDATE usuario
+      SET
+        primerNombre = ?,
+        segundoNombre = ?,
+        primerApellido = ?,
+        segundoApellido = ?
+      WHERE correo = ? AND idRol = 1`;
+
+    const { primerNombre, segundoNombre, primerApellido, segundoApellido } = userData;
+    const usuarioValues = [primerNombre, segundoNombre, primerApellido, segundoApellido, correo];
+
+    // Ejecuta la actualización en la tabla 'usuario'
+    const [usuarioResult] = await connection.execute(updateUsuarioSql, usuarioValues);
+
+    // Verifica si se afectaron filas en la tabla 'usuario'
+    if (usuarioResult.affectedRows === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado o no es un instructor" });
+    }
+
+    // Actualiza la información en la tabla 'detalleUsuario'
+    const updateDetalleUsuarioSql = `
+      UPDATE detalleUsuario
+      SET
+        fechaIngreso = ?,
+        celular = ?,
+        informacionAcademica = COALESCE(?, informacionAcademica),
+        informacionAdicional = COALESCE(?, informacionAdicional)
+      WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
+
+    const { fechaIngreso, celular, informacionAcademica, informacionAdicional } = userData;
+    const detalleUsuarioValues = [fechaIngreso, celular, informacionAcademica, informacionAdicional, correo];
+
+    // Ejecuta la actualización en la tabla 'detalleUsuario'
+    await connection.execute(updateDetalleUsuarioSql, detalleUsuarioValues);
+
+    // Si llega aquí, las actualizaciones fueron exitosas
+    res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
+  } catch (error) {
+    console.error("Error al editar la información del instructor:", error);
+    res.status(500).json({ error: "Error al editar la información del instructor" });
+  } finally {
+    if (connection) {
+      connection.end();
+    }
+  }
+});
+
 
 // Configuración de multer para manejar archivos adjuntos
 const storage = multer.diskStorage({

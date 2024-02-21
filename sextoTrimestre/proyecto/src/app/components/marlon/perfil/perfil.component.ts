@@ -18,12 +18,16 @@ export class PerfilComponent implements OnInit {
     private authService: AuthService
   ) {
     this.userData = {
-      primer_nombre: '',
-      segundo_nombre: '',
-      primer_apellido: '',
-      segundo_apellido: '',
-      ficha: '',
+      primerNombre: '',
+      segundoNombre: '',
+      primerApellido: '',
+      segundoApellido: '',
+      numeroFicha: '',
       correo: '',
+      fechaIngreso: '',
+      celular: '',
+      informacionAcademica: '',
+      informacionAdicional: '',
     };
   }
 
