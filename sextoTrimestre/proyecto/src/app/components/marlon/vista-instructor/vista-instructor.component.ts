@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class VistaInstructorComponent implements OnInit {
   @ViewChild('optionsDropdown') optionsDropdown!: ElementRef;
   userData: any;
+  isMenuOpen: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -25,6 +26,10 @@ export class VistaInstructorComponent implements OnInit {
       ficha: '',
       correo: '',
     };
+  }
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   ngOnInit() {
