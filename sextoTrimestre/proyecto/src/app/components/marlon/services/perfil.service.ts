@@ -19,7 +19,9 @@ export class ServiceService {
 
   updateUserInfoByEmail(email: string, userData: any): Observable<any> {
     const url = `${this.apiUrl}/api/actualizarInstructor?correo=${email}`;
-    return this.http.post(url, userData);
+    console.log('URL de actualización:', url);
+    console.log('Datos a enviar al servidor:', userData);
+    return this.http.put(url, userData);
   }
 
   updatePassword(email: string, passwordAnterior: string, passwordNueva: string): Observable<any> {

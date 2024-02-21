@@ -63,6 +63,33 @@
             <input type="text" id="segundoApellido" formControlName="segundoApellido" class="form-control">
         </div>
 
+        <!-- TABLA DETALLE USUARIO -->
+
+        <div class="form-group">
+          <label for="fechaIngreso">Fecha de Ingreso:</label>
+          <input type="date" id="fechaIngreso" formControlName="fechaIngreso" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="celular">Número de Celular:</label>
+        <input type="text" id="celular" formControlName="celular" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="informacionAcademica">Información Académica:</label>
+      <input type="text" id="informacionAcademica" formControlName="informacionAcademica" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="informacionAdicional">información Adicional:</label>
+    <input type="text" id="informacionAdicional" formControlName="informacionAdicional" class="form-control">
+</div>
+
+<div class="error-message" *ngIf="form?.get('fechaIngreso')?.hasError('fechaInferiorHoy')">
+  La fecha de ingreso no puede ser posterior a hoy.
+</div>
+
+
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </form>
 </div>
