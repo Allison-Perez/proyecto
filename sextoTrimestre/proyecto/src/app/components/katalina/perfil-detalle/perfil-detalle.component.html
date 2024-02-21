@@ -21,12 +21,12 @@
               <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
             </li>
             <div class="dropdown">
-              <button class="dropdown-button">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
-              <div class="dropdown-content">
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
-                  <a routerLink="/index.katalina" class="nav-link otro ">Inicio</a>
+                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
                 </li>
                 <li class="nav-item">
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
@@ -35,7 +35,7 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div>
+            </div> 
         </ul>
   </div>
 </nav>

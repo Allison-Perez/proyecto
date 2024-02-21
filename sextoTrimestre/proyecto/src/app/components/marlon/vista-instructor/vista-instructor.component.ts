@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ServiceService } from '../services/perfil.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../allison/service/auth.service';
 
 @Component({
   selector: 'app-vista-instructor',
@@ -11,6 +11,8 @@ import { AuthService } from '../services/auth.service';
 export class VistaInstructorComponent implements OnInit {
   @ViewChild('optionsDropdown') optionsDropdown!: ElementRef;
   userData: any;
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -28,17 +30,32 @@ export class VistaInstructorComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
-    const correo: string | null = localStorage.getItem('user_email');
-
-    if (correo) {
-      // Llama al servicio para obtener la información del usuario
-      this.service.getUserInfoByEmail(correo).subscribe(data => {
+    const userEmail: string | null = this.authService.getUserEmail();
+  
+    if (userEmail) {
+      this.service.getUserInfoByEmail(userEmail).subscribe(data => {
         this.userData = data;
       });
     } else {
       console.error('No se pudo obtener el correo del usuario.');
     }
+  }
+  
+
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
   }
 
   toggleDropdown() {

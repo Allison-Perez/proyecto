@@ -1,43 +1,171 @@
-.list-group-item {
-    margin-bottom: 20px;
-    padding: 20px;
-    text-align: center;
-}
-
-
-.btn-primary {
-    margin: 10px;
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+/* Estilos Nav */
+nav{
     background-color: #008a88;
-    border-color: #008a88;
-}
+  }
+  
+  /* Estilos para el menú hamburguesa */
+  .nav .nav-item {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .nav-link {
+    color: white;
+  }
+  
+  .nav-link:hover{
+    color: rgb(255, 255, 255);
+  }
+  .nombre{
+    padding: 10px;
+    color: white;
+    font-size: 25px;
+    font-family: 'Lobster',sans-serif;
+  }
+  
+  .menu-icon {
+    cursor: pointer;
+    display: none;
+  }
+  
+  .menu-icon .bar {
+    width: 20px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+  }
+  
+  /* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+  .show-menu .menu-icon {
+    display: block;
+  }
+  
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .show-menu .nav-item {
+    margin: 10px 0;
+  }
+  
+  /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+  @media (max-width: 700px) {
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .nav {
+      display: none;
+    }
+  
+    .menu-icon {
+      cursor: pointer;
+      display: block;
+      margin-right: 20px;
+    }
+  
+    /* Estilos para mostrar el menú en pantallas pequeñas */
+    .show-menu .nav {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .show-menu .nav-item {
+      margin: 0px 0;
+    }
+  
+    .show-menu{
+      display: block;
+    }
+  }
+  
+  /* Estilo del dropdown */
+  .otro {
+    color: #008a88;
+  }
+  button {
+    color: #fff;
+  }
+
+  .dropdown-content { 
+    display: none;
+    margin-top: 06px;
+    position: absolute;
+    min-width: 160px;
+    border-radius: 10px; /* Añadido para esquinas redondas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    cursor: pointer;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    left: -110px; 
+  }
+  
+  .dropdown-button {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #008a88;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #0f0f0f;
+  }
 
 
-.btn-success, .btn-secondary {
-    margin: 10px;
-    background-color: #008a88;
-    border-color: #008a88;
-}
-
-/* Estilos personalizados */
-.titulo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-.subtitulo {
-    font-size: 20px;
-    font-weight: bold;
+/*Crear Blog*/
+.container {
     margin-top: 40px;
-    margin-bottom: 20px;
-}
-.blog-form {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-.blog-image {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
+    box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1); 
+    padding: 20px; 
+    background-color: #ffffff; 
+    border-radius: 10px; 
+    width: 700px;
+  }
+ 
+  .subir{
+    margin-top: 20px;
+  }
+
+  h2 {
+    color: #008a88;
+    font-size: 30px;
+    font-weight: bold; 
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  .btn-primary {
+    margin-top: 10px;
+    background-color: #008a88; /* Color del botón */
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #008a88; /* Color al pasar el ratón sobre el botón */
+  }
+  
+  .mostrar{
+    margin-top: 30px;
+    margin-left: 50px;
+  }
+
+
+
+
+

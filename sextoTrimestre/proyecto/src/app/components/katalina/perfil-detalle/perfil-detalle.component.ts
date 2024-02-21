@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service/servicie.katalina.service';
-import { Router } from '@angular/router'; // Agrega esta importación
+import { Router } from '@angular/router'; 
 import { AuthService } from '../service/auth.service';
-import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute para obtener parámetros de la URL
+import { ActivatedRoute } from '@angular/router'; 
 
 @Component({
   selector: 'app-perfil-detalle',
@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router'; // Importa ActivatedRoute para
 export class PerfilDetalleComponent implements OnInit {
   userData: any;
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -30,6 +31,16 @@ export class PerfilDetalleComponent implements OnInit {
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
   }
   ngOnInit() {
     // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación

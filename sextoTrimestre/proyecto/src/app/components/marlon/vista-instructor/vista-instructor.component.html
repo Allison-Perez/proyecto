@@ -1,85 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCANER</title>
-    <link rel="icon" type="icon" href="../../assets/imagenes/LOGO ACANNER SIN FONDO.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="vista-instructor.component.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
-<header class="navbar navbar-expand-lg navbar-light" style="background-color: #088a88;">
-    <div class="container">
-        <a class="navbar-brand" routerLink="/vista-instructor">
-            Acanner
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/notificaciones">
-                        <i class="bi bi-bell"></i> 
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/blog">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/actividad">Actividades</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/asistencia">Asistencia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/horario">Horario</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </a>
-                    <ul class="submenu"> 
-                        <li><a class="color" routerLink="/perfil">Perfil</a></li>
-                        <li><a class="color" routerLink="/estadisticas">Estadísticas</a></li>
-                        <li><a (click)="logout()">Cerrar Sesión</a></li>
-                    </ul>
-                </li>                
-            </ul>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="nav-link nombre" >Acanner</a>
+        <div class="menu-icon" (click)="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
         </div>
-    </div>
-</header>
-    <!-- Contenido de la sección de bienvenida -->
-<!-- Contenido de la sección de bienvenida -->
-<div class="container text-center welcome-container">
-    <div class="welcome-content">
-        <div class="text-content">
-            <h1 class="titulo mt-5">¡Bienvenido, Instructor!</h1>
-            <h3 class="subtitulo">Formación ADSO</h3>
-            <div class="descripcion mt-4">
-                <p>Bienvenido a ACANNER, una plataforma que te facilitará el manejo del tiempo, brindándote una mejor organización en tus actividades. Estamos vinculados con el SENA (SERVICIO NACIONAL DE APRENDIZAJE).</p>
-            </div>
-        </div>
-        <div class="image-container mt-4">
-            <img src="../../assets/imagenes/instructor_b.png" alt="Imagen de referencia" width="300" height="300">
-        </div>
-    </div>
-</div>
-
-
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-dfMOjQaDuBlqVuL2yGEG6xB4MAHg6ZScQqLQ+KH6qlw1xljDIQ6FAVfHS8ubAj4g"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+            <li class="nav-item">
+              <a routerLink="/blog" class="nav-link" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/horario" class="nav-link">Horarios</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/actividad" class="nav-link">Actividades</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/asistencia" class="nav-link">Asistencias</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
+                <span class="material-symbols-outlined">person</span>
+              </button>
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+                <li class="nav-item">
+                  <a routerLink="/perfil" class="nav-link otro " aria-current="page">Ver Perfil</a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                </li>
+              </div>
+            </div> 
+        </ul>
+  </div>
+</nav>
+<h1 class="titulo">Bienvenido instructor</h1>
+<h4 class="sub-titulo">Formacion ADSO</h4>
+  <div class="descripción">
+    <p>¡Explora el mundo del aprendizaje con nuestros talentosos guías en ACANNER! Nuestros instructores son expertos apasionados comprometidos a enriquecer tu experiencia de aprendizaje. Con su dedicación y conocimientos especializados, te guiarán a través de cada módulo de curso, 
+        asegurándose de que alcances tus metas de manera efectiva. </p>
+  </div>
+  <div class="imagen">
+    <img class="imagen img-fluid" src="assets/imagenes/Instructor.jpg" alt="Instructor">
+  </div>

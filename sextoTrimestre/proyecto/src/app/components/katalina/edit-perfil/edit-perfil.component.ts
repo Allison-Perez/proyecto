@@ -13,6 +13,7 @@ export class EditPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
   constructor(private fb: FormBuilder, private service: ServiceService, private router: Router, private authService: AuthService) {
     this.form = this.fb.group({
@@ -67,5 +68,21 @@ export class EditPerfilComponent implements OnInit {
         alert('Hubo un error al guardar los cambios');
       }
     });
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
   }
 }

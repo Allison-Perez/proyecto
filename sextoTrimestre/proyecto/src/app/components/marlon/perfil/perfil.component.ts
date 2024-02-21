@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/perfil.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../allison/service/auth.service';
 
 @Component({
   selector: 'app-perfil',
@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 
 export class PerfilComponent implements OnInit {
   userData: any;
+  isMenuOpen: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -31,6 +32,10 @@ export class PerfilComponent implements OnInit {
     };
   }
 
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   ngOnInit() {
     // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
     const correo: any = localStorage.getItem('user_email');
@@ -42,11 +47,34 @@ export class PerfilComponent implements OnInit {
   }
 
   editarInformacion() {
-    this.router.navigate(['/editar-perfil']);
+    this.router.navigate(['/edit-perfilA']);
   }
 
   editarPassword() {
-    this.router.navigate(['/update-password']);
+    this.router.navigate(['/edit-password']);
+  }
+  usuario = {
+    fotoPerfil: 'assets/fotos_perfil/sena.png',  // Inicializa con un valor vacío o con la URL predeterminada si lo deseas
+    // ... otras propiedades del usuario ...
+  };
+
+
+  abrirSelectorDeImagen() {
+    const inputFile = document.getElementById('inputFile');
+    inputFile?.click();
+  }
+  onImagenSeleccionada(event: any) {
+    const nuevaImagen = event.target.files[0];
+
+    // Lógica para subir la nueva imagen al servidor o almacenamiento en la nube.
+    // Supongamos que la subida de la imagen es exitosa y obtienes la nueva URL.
+
+    // Simulando la obtención de la nueva URL después de subir la imagen con éxito.
+    const nuevaUrl = 'assets/fotos_perfil/nueva-imagen.jpeg';
+
+    // Asigna la nueva URL directamente a la propiedad fotoPerfil del objeto usuario
+    this.usuario.fotoPerfil = nuevaUrl;
+
   }
 
   logout() {

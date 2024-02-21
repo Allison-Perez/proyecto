@@ -13,9 +13,9 @@ export class BlogComponent implements OnInit {
   newBlog: any = { titulo: '', comentario: '', imagenOpcional: null };
   imageFile: File | null = null;
   editingBlog: any = null;
+  isMenuOpen: boolean = false;
 
   constructor(private blogService: BlogService, private authService: AuthService) { }
-
   ngOnInit() {
     this.loadBlogs();
   }
@@ -114,5 +114,10 @@ export class BlogComponent implements OnInit {
 
   cancelEdit() {
     this.editingBlog = null;
+  }
+  
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
