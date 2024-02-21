@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../services/perfil.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../allison/service/auth.service';
 
 @Component({
   selector: 'app-perfil',

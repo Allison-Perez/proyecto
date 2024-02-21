@@ -13,6 +13,8 @@ export class AuthService {
   private _userRole: number = 0;
   private _userFichas: number[] = [];
   private _userInfo: any = {};
+  private isAuthenticatedd: boolean = false;
+  private userInfo: any = null;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
@@ -65,5 +67,23 @@ export class AuthService {
       console.error('Token no encontrado en el almacenamiento local');
       return null;
     }
+  }
+  getUserEmail(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.correo; // Suponiendo que el correo electrónico está almacenado en el token
+    }
+    return null;
+  }
+  
+
+  logout() {
+    // Implementa la lógica de cierre de sesión aquí y establece this.isAuthenticated en false.
+    this.isAuthenticatedd = false;
+    this.userInfo = null;
+
+    // Elimina el correo electrónico del usuario del almacenamiento local al cerrar sesión.
+    localStorage.removeItem('user_email');
   }
 }

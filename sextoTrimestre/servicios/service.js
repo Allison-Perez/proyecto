@@ -125,7 +125,7 @@ app.post("/login", async (req, res) => {
     const fichasUsuario = fichas.map(ficha => ficha.idFicha);
 
     // Generar el token
-    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: usuario.idFicha }, 'acanner', { expiresIn: '1h' });
+    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: usuario.idFicha, correo: usuario.correo }, 'acanner', { expiresIn: '1h' });
 
     // Cerrar la conexión y enviar la respuesta con el token
     connection.end();
