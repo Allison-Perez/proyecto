@@ -28,6 +28,8 @@ export class BlogComponent implements OnInit {
   }
 
   loadBlogs() {
+    console.log('Cargando Blogs');
+
     const fichas = this.authService.getUserFichas();
     if (fichas && fichas.length > 0) {
       this.newsList = [];
@@ -47,6 +49,7 @@ export class BlogComponent implements OnInit {
   }
 
   crearBlog() {
+    console.log('Entra');
     const formData = new FormData();
     formData.append('nombre', this.newBlog.nombre);
     formData.append('comentario', this.newBlog.comentario);
@@ -72,9 +75,12 @@ export class BlogComponent implements OnInit {
         console.error('Error al crear el blog:', error);
       }
     );
+    console.log('Exiting crearBlog()');
   }
 
   resetNewBlogForm() {
+    console.log('resetea blog');
+
     this.newBlog = { nombre: '', comentario: '', imagenOpcional: null };
     this.imageFile = null;
   }

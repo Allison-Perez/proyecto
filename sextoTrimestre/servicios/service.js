@@ -693,7 +693,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
-      const fechaPublicacion = new Date().toISOString();
+      formData.append('fechaPublicacion', new Date().toISOString());
 
       const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
