@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -734,11 +734,11 @@ app.get("/blogsPorFicha/:idFicha", async (req, res) => {
 app.put("/editarBlog/:idBlog", async (req, res) => {
   try {
     const { idBlog } = req.params;
-    const { titulo, imagenOpcional, comentario } = req.body;
+    const { nombre, imagenOpcional, comentario } = req.body;
     const connection = await mysql.createConnection(dbConfig);
 
     const sql = `UPDATE blog SET nombre = ?, imagenOpcional = ?, comentario = ? WHERE identificador = ?`;
-    await connection.execute(sql, [titulo, imagenOpcional, comentario, idBlog]);
+    await connection.execute(sql, [nombre, imagenOpcional, comentario, idBlog]);
 
     connection.end();
     res.status(200).json({ message: "Blog actualizado exitosamente" });
