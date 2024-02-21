@@ -24,7 +24,7 @@ export class BlogComponent implements OnInit {
     if (url) {
       return 'assets/' + url.replace(/\\/g, '/');
     }
-    return 'assets/uploads/predeterminada.png'; 
+    return 'assets/uploads/Blog.png'; 
   }
 
   loadBlogs() {

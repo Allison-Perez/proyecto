@@ -688,7 +688,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
     if (req.file) { 
       urlImagen = req.file.path; 
     } else {
-      urlImagen = '/uploads/predeterminada.png'; 
+      urlImagen = '/uploads/Blog.png'; 
     }
 
     if (nombre && comentario && idUsuario && idFicha) {
