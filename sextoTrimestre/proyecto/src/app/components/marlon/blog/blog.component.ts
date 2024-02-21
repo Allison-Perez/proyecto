@@ -30,6 +30,7 @@ export class BlogComponent implements OnInit {
   loadBlogs() {
     const fichas = this.authService.getUserFichas(); 
     if (fichas && fichas.length > 0) {
+      this.newsList = [];
       fichas.forEach(ficha => {
         this.blogService.getBlogsPorFicha(ficha).subscribe(
           data => {
@@ -47,7 +48,7 @@ export class BlogComponent implements OnInit {
 
   crearBlog() {
     const formData = new FormData();
-    formData.append('titulo', this.newBlog.titulo);
+    formData.append('nombre', this.newBlog.nombre);
     formData.append('comentario', this.newBlog.comentario);
     if (this.imageFile) {
       formData.append('imagenOpcional', this.imageFile, this.imageFile.name);
@@ -63,6 +64,7 @@ export class BlogComponent implements OnInit {
     this.blogService.crearBlog(formData).subscribe(
       (response) => {
         console.log('Blog creado exitosamente:', response);
+        this.newsList.unshift(response);
         this.loadBlogs();
         this.resetNewBlogForm();
       },
@@ -89,21 +91,22 @@ export class BlogComponent implements OnInit {
     this.blogService.eliminarBlog(blogId).subscribe(
       () => {
         console.log('Blog eliminado correctamente');
-        this.loadBlogs();
+        this.newsList = this.newsList.filter(blog => blog.identificador !== blogId);
       },
       (error) => {
         console.error('Error al eliminar el blog:', error);
       }
     );
   }
+  
 
   updateBlog() {
     if (this.editingBlog) {
-      this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog).subscribe( // Cambio de 'id' a 'identificador'
+      this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog).subscribe(
         () => {
           console.log('Blog actualizado correctamente');
-          this.loadBlogs();
-          this.cancelEdit();
+          this.loadBlogs(); // Aquí puedes optar por no cargar todos los blogs nuevamente si solo necesitas actualizar el que se editó
+          this.cancelEdit(); 
         },
         (error) => {
           console.error('Error al actualizar el blog:', error);
@@ -111,6 +114,8 @@ export class BlogComponent implements OnInit {
       );
     }
   }
+  
+
 
   cancelEdit() {
     this.editingBlog = null;

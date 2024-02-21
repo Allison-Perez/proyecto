@@ -125,7 +125,7 @@ app.post("/login", async (req, res) => {
     const fichasUsuario = fichas.map(ficha => ficha.idFicha);
 
     // Generar el token
-    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: usuario.idFicha, correo: usuario.correo }, 'acanner', { expiresIn: '1h' });
+    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: fichasUsuario[0], correo: usuario.correo }, 'acanner', { expiresIn: '1h' });
 
     // Cerrar la conexión y enviar la respuesta con el token
     connection.end();
@@ -637,14 +637,14 @@ app.put("/api/actualizarInstructor", async (req, res) => {
 // Configuración de multer para manejar archivos adjuntos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
+    cb(null, 'assets/uploads/'); // Cambia la carpeta de destino a "assets/uploads"
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); 
   }
 });
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: storage });
 
 // Ruta para manejar la carga de archivos
 app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
@@ -658,7 +658,7 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 // Ruta para crear un nuevo blog
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
-    const { titulo, comentario, idUsuario, idFicha } = req.body;
+    const { nombre, comentario, idUsuario, idFicha } = req.body;
     let urlImagen = ''; 
 
     if (req.file) { 
@@ -667,14 +667,14 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
       urlImagen = '/uploads/predeterminada.png'; 
     }
 
-    if (titulo && comentario && idUsuario && idFicha) {
+    if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
       const fechaPublicacion = new Date().toISOString();
 
       const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [titulo, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: "Blog creado exitosamente" });
@@ -724,21 +724,27 @@ app.put("/editarBlog/:idBlog", async (req, res) => {
 });
 
 
-app.delete("/eliminarBlog/:idBlog", async (req, res) => {
+app.delete("/eliminarBlog/:id", async (req, res) => {
   try {
-    const { idBlog } = req.params;
+    const { id } = req.params;
     const connection = await mysql.createConnection(dbConfig);
-
-    const sql = `DELETE FROM blog WHERE identificador = ?`;
-    await connection.execute(sql, [idBlog]);
+    
+    const sql = "DELETE FROM blog WHERE identificador = ?";
+    const [result] = await connection.execute(sql, [id]);
 
     connection.end();
-    res.status(200).json({ message: "Blog eliminado exitosamente" });
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: "Blog eliminado correctamente" });
+    } else {
+      res.status(404).json({ error: "Blog no encontrado" });
+    }
   } catch (error) {
     console.error("Error al eliminar el blog:", error);
     res.status(500).json({ error: "Error al eliminar el blog" });
   }
 });
+
 
 //Ruta para crear un blog
 

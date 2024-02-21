@@ -41,29 +41,48 @@
   <form (ngSubmit)="crearBlog()" #blogForm="ngForm">
     <div class="form-group">
       <label for="titulo">Título:</label>
-      <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="newBlog.titulo" required>
+      <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="newBlog.nombre" required>
     </div>
     <div class="form-group">
       <label for="comentario">Comentario:</label>
       <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="newBlog.comentario" required></textarea>
     </div>
     <div class="form-group">
-      <label class="subir" for="imagen">Imagen Opcional:</label>
-      <input type="file" class="form-control-file" id="imagen" name="imagenOpcional" (change)="onFileSelected($event)" accept="image/*">
     </div>
     <button type="submit" class="btn btn-primary">Crear Blog</button>
   </form>
 </div>
 <div class="mostrar">
-  <h2 >Lista de Blogs</h2>
+  <h2>Lista de Blogs</h2>
   <div *ngIf="newsList.length > 0; else noBlogs">
-    <div class="card mb-3" *ngFor="let blog of newsList">
-      <div class="card-body">
-        <h5 class="card-title">{{ blog.nombre }}</h5> 
-        <p class="card-text">{{ blog.comentario }}</p>
-        <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
-        <button class="btn btn-link" (click)="editBlog(blog)">Editar</button>
-        <button class="btn btn-link" (click)="deleteBlog(blog.id)">Eliminar</button>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let blog of newsList">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="card-title">{{ blog.nombre }}</h3>
+            <p class="card-text">{{ blog.comentario }}</p>
+            <p class="card-date">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
+            <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
+            <div class="d-flex justify-content-between align-items-center">
+              <button class="btn btn-link" (click)="editBlog(blog)">Editar</button>
+              <button class="btn btn-link" (click)="deleteBlog(blog.identificador)">Eliminar</button>
+            </div>
+            <div *ngIf="editingBlog && editingBlog.identificador === blog.identificador">
+              <form (ngSubmit)="updateBlog()" #editBlogForm="ngForm">
+                <div class="form-group">
+                  <label for="titulo">Título:</label>
+                  <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="editingBlog.titulo" required>
+                </div>
+                <div class="form-group">
+                  <label for="comentario">Comentario:</label>
+                  <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="editingBlog.comentario" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar Blog</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -71,4 +90,3 @@
     <p>No hay blogs disponibles.</p>
   </ng-template>
 </div>
-
