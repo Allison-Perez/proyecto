@@ -44,7 +44,7 @@ export class BlogComponent implements OnInit {
         );
       });
     } else {
-      console.error('El usuario no tiene fichas asociadas');
+      console.log('El usuario no tiene fichas asociadas');
     }
   }
 
