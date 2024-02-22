@@ -680,37 +680,6 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 //BLOG
 
 // Ruta para crear un nuevo blog
-// app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
-//   try {
-//     const { nombre, comentario, idUsuario, idFicha } = req.body;
-//     let urlImagen = ''; 
-
-//     if (req.file) { 
-//       urlImagen = req.file.path; 
-//     } else {
-//       urlImagen = '/uploads/Blog.png'; 
-//     }
-
-//     if (nombre && comentario && idUsuario && idFicha) {
-//       const connection = await mysql.createConnection(dbConfig);
-//       formData.append('fechaPublicacion', new Date().toISOString());
-
-//       const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
-//                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
-
-//       await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
-//       connection.end();
-      
-
-//       res.status(201).json({ message: "Blog creado exitosamente" });
-//     } else {
-//       res.status(400).json({ error: "Faltan campos obligatorios para crear el blog" });
-//     }
-//   } catch (error) {
-//     console.error("Error al crear el blog:", error);
-//     res.status(500).json({ error: "Error al crear el blog" });
-//   }
-// });
 
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
@@ -726,16 +695,12 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
 
-      // Define formData here
-      const formData = new FormData();
-      formData.append('fechaPublicacion', new Date().toISOString());
+      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
-
-      await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlImagen, null, comentario, idUsuario, idFicha]);
       connection.end();
-      
+
       res.status(201).json({ message: "Blog creado exitosamente" });
     } else {
       res.status(400).json({ error: "Faltan campos obligatorios para crear el blog" });
@@ -747,7 +712,8 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 });
 
 
-// Ruta para obtener blogs por ficha
+
+
 app.get("/blogsPorFicha/:idFicha", async (req, res) => {
   try {
     const { idFicha } = req.params;
