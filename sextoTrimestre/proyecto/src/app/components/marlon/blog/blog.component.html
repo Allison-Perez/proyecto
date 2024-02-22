@@ -60,13 +60,13 @@
         <div class="card mb-3">
           <div class="card-body">
             <h3 class="card-title">{{ blog.nombre }}</h3>
+            <img [src]="transformUrl(blog.urlImagen)" class="card-img-top mx-auto d-block" alt="Imagen Opcional"> <!-- Agregamos las clases mx-auto d-block para centrar la imagen -->
             <p class="card-text">{{ blog.comentario }}</p>
             <p class="card-date">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
-            <img [src]="transformUrl(blog.urlImagen)" class="card-img-top" alt="Imagen Opcional">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="button-container">
               <button class="btn btn-link" (click)="editBlog(blog)">Editar</button>
               <button class="btn btn-link" (click)="deleteBlog(blog.identificador)">Eliminar</button>
-            </div>
+            </div>                       
             <div *ngIf="editingBlog && editingBlog.identificador === blog.identificador">
               <form (ngSubmit)="updateBlog()" #editBlogForm="ngForm">
                 <div class="form-group">
