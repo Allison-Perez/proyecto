@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HorarioService } from '../services/horarios.service';
-import { NgForm } from '@angular/forms'; 
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../allison/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-horarios',
@@ -12,9 +14,31 @@ export class HorariosComponent implements OnInit {
   newHorario: any = { nombreArchivo: '', comentario: '' };
   editingHorario: any | null = null;
   selectedFile: File | null = null;
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false
 
-  constructor(private horarioService: HorarioService) {}
+  constructor(private horarioService: HorarioService, private router: Router, private authService: AuthService) {}
+  
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
   ngOnInit() {
     this.loadHorario();
   }

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivityService } from '../services/actividad.service';
-import { NgForm } from '@angular/forms'; 
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../allison/service/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-actividad',
@@ -12,9 +15,31 @@ export class ActividadComponent implements OnInit {
   newActivity: any = { nombreArchivo: '', comentario: '' };
   editingActivity: any | null = null;
   selectedFile: File | null = null;
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false
 
-  constructor(private actividadService: ActivityService) {}
+  constructor(private actividadService: ActivityService,private router: Router, private authService: AuthService) {}
 
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
   ngOnInit() {
     this.loadActivities();
   }
