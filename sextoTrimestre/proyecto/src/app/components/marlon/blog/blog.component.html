@@ -9,27 +9,30 @@
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
             <li class="nav-item">
-              <a routerLink="/blog" class="nav-link" aria-current="page">Blog</a>
+              <a routerLink="/vista-instructor" class="nav-link" aria-current="page">Inicio</a>
             </li>
             <li class="nav-item">
-              <a routerLink="/horarios" class="nav-link">Horarios</a>
+              <a routerLink="/horario" class="nav-link">Horarios</a>
             </li>
             <li class="nav-item">
-              <a routerLink="/actvidades" class="nav-link">Actividades</a>
+              <a routerLink="/actividad" class="nav-link">Actividades</a>
             </li>
             <li class="nav-item">
-              <a routerLink="/asistencias" class="nav-link">Asistencias</a>
+              <a routerLink="/asistencia" class="nav-link">Asistencias</a>
             </li>
             <div class="dropdown">
-              <button class="dropdown-button">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
-              <div class="dropdown-content">
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
                   <a routerLink="/perfil" class="nav-link otro " aria-current="page">Ver Perfil</a>
                 </li>
                 <li class="nav-item">
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
             </div> 
