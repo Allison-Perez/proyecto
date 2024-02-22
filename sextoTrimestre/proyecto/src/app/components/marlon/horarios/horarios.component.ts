@@ -49,14 +49,14 @@ export class HorariosComponent implements OnInit {
       console.log('Por favor, completa todos los campos.');
     }
   }
-  
+
   private createFormData(): FormData | null {
     const userInfo = this.authService.getUserInfo();
     if (!userInfo) {
       console.error('No se pudo obtener la información del usuario');
       return null;
     }
-    
+
     const formData = new FormData();
     formData.append('nombre', this.newHorario.nombre);
     formData.append('comentario', this.newHorario.comentario);
@@ -67,7 +67,7 @@ export class HorariosComponent implements OnInit {
     formData.append('idFicha', userInfo.idFicha);
     return formData;
   }
-  
+
 
   private resetForm(form: NgForm) {
     form.resetForm();
@@ -82,7 +82,7 @@ export class HorariosComponent implements OnInit {
   deleteHorario(horarioId: string) {
     // Implementa la lógica para eliminar un horario si es necesario
   }
-  
+
   descargarArchivo(archivoUrl: string) {
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');

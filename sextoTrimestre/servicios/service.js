@@ -714,11 +714,14 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
+      const fechaPublicacion = new Date().toISOString()
+      const fechaFormateada = fechaPublicacion.replace('T', ' ').substring(0, 19);
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlImagen, null, comentario, idUsuario, idFicha]);
+      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+      await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaFormateada, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: "Blog creado exitosamente" });
