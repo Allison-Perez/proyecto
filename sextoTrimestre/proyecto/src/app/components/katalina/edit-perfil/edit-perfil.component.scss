@@ -27,11 +27,12 @@
   }
   
   button:hover {
+    margin-top: 10px;
     background-color: #159997; /* Nuevo color al pasar el mouse sobre el botón */
   }
   
   h4 {
-    font-size: 15px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
     color: #088a88;
@@ -155,4 +156,21 @@ button {
 
 .dropdown-item:hover {
   background-color: #070707;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .container {
+      padding: 15px;
+      max-width: 100%;
+  }
+
+  button {
+      padding: 8px 15px;
+  }
+
+  h4 {
+      font-size: 24px;
+  }
 }

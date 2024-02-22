@@ -175,3 +175,24 @@ button {
   background-color: #070707;
 }
 
+@media (max-width: 600px) {
+  .instagram-div {
+    margin-left: 10%;
+    max-width: 80%;
+    height: 80%;
+  }
+  .image {
+    width: 80%;
+    height: 70%;
+    border-radius: 10%;
+    margin-bottom: 20%;
+  }
+  .name {
+    margin-top: -15%;
+    font-weight: bold;
+  }
+    
+  .description {
+    margin-top: 10%;
+  }
+}
