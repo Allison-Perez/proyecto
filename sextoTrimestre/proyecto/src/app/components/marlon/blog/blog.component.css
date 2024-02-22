@@ -159,10 +159,7 @@ button {
     margin-top: 30px;
     margin-left: 50px;
   }
-  .card-img-top {
-    max-width: 200px; 
-    height: auto; 
-  }
+  
   .blogs-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
@@ -198,7 +195,10 @@ button {
 
 
 .btn-link {
-  color: #000; 
+  border: none;
+  border-radius: 5px;
+  color: #f5f5f5; 
+  background-color: #005b59;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease; 
@@ -285,4 +285,19 @@ textarea {
 
 .btn-primary:hover {
   background-color: #005b59;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; 
+}
+
+.button-container button {
+  margin: 0 5px; 
+}
+
+.card-img-top {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto; 
 }

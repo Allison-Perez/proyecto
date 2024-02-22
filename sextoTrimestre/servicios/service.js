@@ -464,7 +464,7 @@ app.post('/api/modificar-usuarios', async (req, res) => {
 
 // LISTADO DE INSTRUCTORES EN ADMIN
 
-app.get('/api/staticsInstructores', async (req, res) => {
+app.get('/api/staticsinstructores', async (req, res) => {
   const sql = `
   SELECT
   u.documento,
@@ -474,15 +474,15 @@ app.get('/api/staticsInstructores', async (req, res) => {
   u.segundoApellido,
   u.fechaNacimiento,
   f.numeroFicha,
-  u.correo
+  u.correo,
+  du.celular,
+  du.fechaIngreso
 FROM
   usuario u
-  JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
-  JOIN ficha f ON uf.idFicha = f.identificador
-  JOIN rol r ON u.idRol = r.identificador
-WHERE
-  u.idRol = 1;`
-
+JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
+JOIN ficha f ON uf.idFicha = f.identificador
+JOIN detalleusuario du ON u.identificador = du.idUsuario;
+`
   try {
     const connection = await mysql.createConnection(dbConfig);
 
@@ -563,14 +563,23 @@ app.get("/api/obtenerInstructor", async (req, res) => {
     const connection = await mysql.createConnection(dbConfig);
 
     const sql = `
-    SELECT u.*, d.fechaIngreso, d.celular, d.informacionAcademica, d.informacionAdicional, f.numeroFicha
-    FROM usuario u
-    LEFT JOIN detalleUsuario d ON u.identificador = d.idUsuario
-    LEFT JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
-    JOIN ficha f ON uf.idFicha = f.identificador
-    JOIN rol r ON u.idRol = r.identificador
-    WHERE u.idRol = 1 AND u.correo = ?`;
-
+      SELECT
+        u.documento,
+        u.primerNombre,
+        u.segundoNombre,
+        u.primerApellido,
+        u.segundoApellido,
+        u.fechaNacimiento,
+        f.numeroFicha,
+        u.correo,
+        du.celular,
+        du.fechaIngreso
+      FROM
+        usuario u
+        JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
+        JOIN ficha f ON uf.idFicha = f.identificador
+        JOIN detalleusuario du ON u.identificador = du.idUsuario
+    `;
     const [rows] = await connection.execute(sql, [correo]);
 
     connection.end();
@@ -694,11 +703,12 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
+      const fechaPublicacion = new Date().toISOString();
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlImagen, null, comentario, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: "Blog creado exitosamente" });
@@ -710,8 +720,6 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
     res.status(500).json({ error: "Error al crear el blog" });
   }
 });
-
-
 
 
 app.get("/blogsPorFicha/:idFicha", async (req, res) => {
