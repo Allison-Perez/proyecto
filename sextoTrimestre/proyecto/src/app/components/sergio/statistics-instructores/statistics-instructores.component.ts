@@ -30,16 +30,18 @@ export class StatisticsInstructoresComponent implements OnInit {
     );
   }
 
-  applyFilters(): void {
-    console.log('Ficha seleccionada:', this.selectednumeroFicha);
+  // applyFilters(): void {
+  //   console.log('Ficha seleccionada:', this.selectednumeroFicha);
 
-    this.filteredInstructores = this.instructores.filter((instructor) => {
-      return (
-        (!this.selectednumeroFicha || instructor.numeroFicha.toString() === this.selectednumeroFicha.toString())
-      );
-    });
+  //   this.filteredInstructores = this.instructores.filter((instructor) => {
+  //     const selectedFichaString = this.selectednumeroFicha.toString();
+  //     return (
+  //       !selectedFichaString || instructor.numeroFicha.toString() === selectedFichaString
+  //     );
+  //   });
 
-    console.log('Instructores filtrados:', this.filteredInstructores);
-  }
+
+  //   console.log('Instructores filtrados:', this.filteredInstructores);
+  // }
 
 }

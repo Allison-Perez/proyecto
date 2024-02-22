@@ -389,6 +389,60 @@ app.get("/api/usuarios", async (req, res) => {
   }
 });
 
+// FUNCIÓN PARA REALIZAR UN INSERT A LA TABLA DETALLE USUARIO SOLO SI EL USUARIO NO EXISTE
+
+async function insertarDetalleUsuarioPredeterminado(correo) {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const esInstructorQuery = `
+      SELECT idRol FROM usuario
+      WHERE correo = ?`;
+
+    const [esInstructorResult] = await connection.execute(esInstructorQuery, [correo]);
+
+    if (esInstructorResult[0].idRol === 1) {
+      const existeRegistroQuery = `
+        SELECT COUNT(*) AS count
+        FROM detalleusuario
+        WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
+
+      const [existeRegistroResult] = await connection.execute(existeRegistroQuery, [correo]);
+
+      if (existeRegistroResult[0].count === 0) {
+        // Inserta en detalleusuario con datos predeterminados
+        const insertDetalleUsuarioQuery = `
+          INSERT INTO detalleusuario (fechaIngreso, celular, informacionAcademica, informacionAdicional, idUsuario)
+          VALUES (?, ?, ?, ?, (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1))`;
+
+        const fechaIngresoPredeterminada = '2022-01-01';
+        const celularPredeterminado = '123456789';
+        const informacionAcademicaPredeterminada = 'Sin información académica';
+        const informacionAdicionalPredeterminada = 'Sin información adicional';
+
+        await connection.execute(insertDetalleUsuarioQuery, [
+          fechaIngresoPredeterminada,
+          celularPredeterminado,
+          informacionAcademicaPredeterminada,
+          informacionAdicionalPredeterminada,
+          correo
+        ]);
+      }
+    }
+    else{
+      const eliminarDetalleUsuarioQuery = `
+        DELETE FROM detalleusuario
+        WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ?)`;
+
+      await connection.execute(eliminarDetalleUsuarioQuery, [correo]);
+    }
+
+    connection.end();
+  } catch (error) {
+    console.error("Error al insertar en detalleusuario con datos predeterminados:", error);
+  }
+}
+
 // ADMIN MODIFICA USUARIOS
 
 app.post('/api/modificar-usuarios', async (req, res) => {
@@ -452,6 +506,10 @@ app.post('/api/modificar-usuarios', async (req, res) => {
 
     await connection.execute(updateSql, values);
     await connection.execute(updateFichaSql, fichaValues);
+
+    // INSERTA A LA TABLA DETALLE USUARIO
+
+    await insertarDetalleUsuarioPredeterminado(userEmail);
     
     connection.end();
     res.status(200).json({ message: 'Los cambios se guardaron correctamente' });
@@ -504,54 +562,7 @@ JOIN detalleusuario du ON u.identificador = du.idUsuario;
 
 //MARLON
 
-// FUNCIÓN PARA REALIZAR UN INSERT A LA TABLA DETALLE USUARIO SOLO SI EL USUARIO NO EXISTE
 
-async function insertarDetalleUsuarioPredeterminado(correo) {
-  try {
-    const connection = await mysql.createConnection(dbConfig);
-
-    // Verifica si el usuario tiene el rol 1
-    const esInstructorQuery = `
-      SELECT idRol FROM usuario
-      WHERE correo = ?`;
-
-    const [esInstructorResult] = await connection.execute(esInstructorQuery, [correo]);
-
-    if (esInstructorResult[0].idRol === 1) {
-      // Verifica si ya existe un registro en detalleusuario para este usuario
-      const existeRegistroQuery = `
-        SELECT COUNT(*) AS count
-        FROM detalleusuario
-        WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
-
-      const [existeRegistroResult] = await connection.execute(existeRegistroQuery, [correo]);
-
-      if (existeRegistroResult[0].count === 0) {
-        // Inserta en detalleusuario con datos predeterminados
-        const insertDetalleUsuarioQuery = `
-          INSERT INTO detalleusuario (fechaIngreso, celular, informacionAcademica, informacionAdicional, idUsuario)
-          VALUES (?, ?, ?, ?, (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1))`;
-
-        const fechaIngresoPredeterminada = '2022-01-01';
-        const celularPredeterminado = '123456789';
-        const informacionAcademicaPredeterminada = 'Sin información académica';
-        const informacionAdicionalPredeterminada = 'Sin información adicional';
-
-        await connection.execute(insertDetalleUsuarioQuery, [
-          fechaIngresoPredeterminada,
-          celularPredeterminado,
-          informacionAcademicaPredeterminada,
-          informacionAdicionalPredeterminada,
-          correo
-        ]);
-      }
-    }
-
-    connection.end();
-  } catch (error) {
-    console.error("Error al insertar en detalleusuario con datos predeterminados:", error);
-  }
-}
 
 // OBTENER INFORMACIÓN DEL PERFIL
 
@@ -559,7 +570,6 @@ app.get("/api/obtenerInstructor", async (req, res) => {
   try {
 
     const { correo } = req.query;
-    await insertarDetalleUsuarioPredeterminado(correo);
     const connection = await mysql.createConnection(dbConfig);
 
     const sql = `
@@ -579,6 +589,7 @@ app.get("/api/obtenerInstructor", async (req, res) => {
         JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
         JOIN ficha f ON uf.idFicha = f.identificador
         JOIN detalleusuario du ON u.identificador = du.idUsuario
+        WHERE u.idRol = 1 AND u.correo = ?
     `;
     const [rows] = await connection.execute(sql, [correo]);
 
@@ -703,12 +714,11 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
-      const fechaPublicacion = new Date().toISOString();
 
-      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
-                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlImagen, null, comentario, fechaPublicacion, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlImagen, null, comentario, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: "Blog creado exitosamente" });
