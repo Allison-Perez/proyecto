@@ -10,52 +10,70 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./edit-password.component.scss'],
 })
 export class EditPasswordComponent {
-  cambiarContrasenaForm: FormGroup;
+  form: FormGroup;
   mensaje: string = '';
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
+
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private service: ServiceService,
     private authService: AuthService,
     private router: Router
   ) {
-    this.cambiarContrasenaForm = this.formBuilder.group({
-      contrasenaAntigua: ['', Validators.required],
-      contrasenaNueva: ['', [Validators.required, Validators.minLength(8)]],
-      confirmarContrasena: ['', Validators.required], // Fixed typo here
+    this.form = this.fb.group({
+      passwordAnterior: ['', Validators.required],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(8)]],
+      confirmarPassword: ['', Validators.required]
     });
   }
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
   cambiarContrasena() {
-    const contrasenaAntigua = this.cambiarContrasenaForm.value.contrasenaAntigua;
-    const contrasenaNueva = this.cambiarContrasenaForm.value.contrasenaNueva;
-    const confirmarContrasena = this.cambiarContrasenaForm.value.confirmarContrasena;
+    const passwordAnterior = this.form.value.passwordAnterior;
+    const nuevaPassword = this.form.value.nuevaPassword;
+    const confirmarPassword = this.form.value.confirmarPassword;
 
-    if (this.cambiarContrasenaForm.invalid) {
+    if (this.form.invalid) {
       alert('Por favor, completa todos los campos obligatorios.');
       return;
     }
 
-    if (contrasenaNueva !== confirmarContrasena) {
+    if (nuevaPassword !== confirmarPassword) {
       alert('Las contraseñas no coinciden.');
       return;
     }
 
     const email = this.authService.getUserEmail();
 
-    this.service.updatePassword(email, contrasenaAntigua, contrasenaNueva).subscribe(
+    this.service.updatePassword(email, passwordAnterior, nuevaPassword).subscribe(
       (response: any) => {
         console.log('Respuesta del servidor:', response);
-        this.router.navigate(['/admin-perfil']);
+        this.router.navigate(['/perfil']);
       },
       (error: any) => {
         alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');
       }
     );
   }
-  toggleMenu() {
-    console.log('Función toggleMenu() llamada.');
-    this.isMenuOpen = !this.isMenuOpen;
-  }
 }
+

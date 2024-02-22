@@ -65,10 +65,10 @@ CREATE TABLE usuario (
     fotoPerfil varchar (200) not null,
     FOREIGN KEY (idRol) REFERENCES rol(identificador),
     FOREIGN KEY (idPregunta) REFERENCES preguntaSeguridad(identificador)
-   
+
 );
 
-CREATE TABLE detalleUsuario (
+CREATE TABLE detalleusuario (
     identificador INT AUTO_INCREMENT PRIMARY KEY,
     fechaIngreso DATE NOT NULL,
     celular BIGINT(10) NOT NULL,

@@ -9,24 +9,24 @@
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
             <li class="nav-item">
-              <a routerLink="/blog" class="nav-link" aria-current="page">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/horario" class="nav-link">Horarios</a>
+              <a routerLink="/horario" class="nav-link" aria-current="page">Horario</a>
             </li>
             <li class="nav-item">
               <a routerLink="/actividad" class="nav-link">Actividades</a>
             </li>
             <li class="nav-item">
+              <a routerLink="/blog" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item">
               <a routerLink="/asistencia" class="nav-link">Asistencias</a>
             </li>
             <div class="dropdown">
-              <button class="dropdown-button">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
-              <div class="dropdown-content">
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
-                  <a routerLink="/vista-instructor" class="nav-link otro ">Inicio</a>
+                  <a routerLink="/vista-instructor" class="nav-link otro " aria-current="page">Inicio</a>
                 </li>
                 <li class="nav-item">
                   <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
@@ -35,10 +35,10 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div>
+            </div> 
         </ul>
   </div>
-</nav>
+</nav> 
 <h1 class="titulo">Tu perfil</h1>
 <div class="perfil-detalle">
   <div class="container">
@@ -59,7 +59,7 @@
             <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
               <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
             <button class="boton" (click)="editarInformacion()">Editar</button>
-            <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
+            <button  class="boton" [routerLink]="['/cambiar-contrasena']">Cambiar contraseña</button>
           </div>
       </div>
     </div>

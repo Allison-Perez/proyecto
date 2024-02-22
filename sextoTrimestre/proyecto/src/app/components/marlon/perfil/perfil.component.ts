@@ -12,6 +12,7 @@ import { AuthService } from '../../allison/service/auth.service';
 export class PerfilComponent implements OnInit {
   userData: any;
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false
 
   constructor(
     private service: ServiceService,
@@ -36,6 +37,17 @@ export class PerfilComponent implements OnInit {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
   }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+
   ngOnInit() {
     // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
     const correo: any = localStorage.getItem('user_email');

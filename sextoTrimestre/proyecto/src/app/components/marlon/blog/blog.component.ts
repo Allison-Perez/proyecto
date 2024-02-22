@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BlogService } from '../services/blog.service';
 import { AuthService } from '../../allison/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
@@ -14,8 +15,9 @@ export class BlogComponent implements OnInit {
   imageFile: File | null = null;
   editingBlog: any = null;
   isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
-  constructor(private blogService: BlogService, private authService: AuthService) { }
+  constructor(private blogService: BlogService, private router: Router, private authService: AuthService) { }
   ngOnInit() {
     this.loadBlogs();
   }
@@ -27,6 +29,23 @@ export class BlogComponent implements OnInit {
     return 'assets/uploads/Blog.png';
   }
 
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
+  
   loadBlogs() {
     console.log('Cargando Blogs');
 
@@ -131,8 +150,6 @@ export class BlogComponent implements OnInit {
       );
     }
   }
-
-
 
   cancelEdit() {
     this.editingBlog = null;
