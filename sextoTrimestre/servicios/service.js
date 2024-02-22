@@ -668,7 +668,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 
 // Ruta para manejar la carga de archivos
 app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
@@ -772,98 +772,88 @@ app.delete("/eliminarBlog/:id", async (req, res) => {
   }
 });
 
+// HORARIOS
 
-//Ruta para crear un blog
+// Ruta para obtener horarios
+app.get('/api/horarios', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.query('SELECT * FROM horario');
+    connection.end();
+    res.json(rows);
+  } catch (error) {
+    console.error('Error al obtener horarios:', error);
+    res.status(500).json({ error: 'Error al obtener horarios' });
+  }
+});
 
-// app.post('/api/blog/create', async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig); // Crear una nueva conexión
+// Ruta para crear un nuevo horario
+app.post('/api/crearHorario', upload.single('archivo'), async (req, res) => {
+  try {
+    const { nombre, comentario, idUsuario, idFicha } = req.body;
+    let urlArchivo = '';
 
-//     const { titulo, contenido } = req.body;
-//     const insertQuery = 'INSERT INTO noticias (titulo, contenido) VALUES (?, ?)';
+    if (req.file) {
+      urlArchivo = req.file.filename;
+    } else {
+      return res.status(400).json({ error: 'El archivo es obligatorio' });
+    }
 
-//     await connection.execute(insertQuery, [titulo, contenido]); // Usar la conexión para realizar la consulta
+    if (nombre && comentario && idUsuario && idFicha) {
+      const connection = await mysql.createConnection(dbConfig);
+      const fecha = new Date().toISOString();
 
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: 'Noticia creada exitosamente' });
-//   } catch (error) {
-//     console.error('Error al insertar la noticia en la base de datos:', error);
-//     res.status(500).json({ error: 'No se pudo crear la noticia' });
-//   }
-// });
+      const sql = `INSERT INTO horario (nombre, urlArchivo, comentario, fecha, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?)`;
 
-//Ruta para actualizar una noticia por su ID
+      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, idUsuario, idFicha]);
+      connection.end();
 
-// app.put('/api/blog/update/:id_noticias', async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig); 
+      res.status(201).json({ message: 'Horario creado exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para crear el horario' });
+    }
+  } catch (error) {
+    console.error('Error al crear el horario:', error);
+    res.status(500).json({ error: 'Error al crear el horario' });
+  }
+});
 
-//     const { titulo, contenido } = req.body;
-//     const { id_noticias } = req.params;
-//     const updateQuery = 'UPDATE noticias SET titulo = ?, contenido = ? WHERE id_noticias = ?';
+// Ruta para actualizar un horario existente
+app.put('/api/editarHorario/:identificador', async (req, res) => {
+  try {
+    const { nombre, comentario } = req.body;
+    const { identificador } = req.params;
 
-//     await connection.execute(updateQuery, [titulo, contenido, id_noticias]); 
+    if (nombre && comentario) {
+      const connection = await mysql.createConnection(dbConfig);
+      const sql = 'UPDATE horario SET nombre = ?, comentario = ? WHERE identificador = ?';
+      await connection.execute(sql, [nombre, comentario, identificador]);
+      connection.end();
+      res.json({ message: 'Horario actualizado exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para actualizar el horario' });
+    }
+  } catch (error) {
+    console.error('Error al actualizar el horario:', error);
+    res.status(500).json({ error: 'Error al actualizar el horario' });
+  }
+});
 
-    
-//     connection.end();
-//     res.status(200).json({ message: 'Noticia actualizada exitosamente' });
-//   } catch (error) {
-//     console.error('Error al actualizar la noticia en la base de datos:', error);
-//     res.status(500).json({ error: 'No se pudo actualizar la noticia' });
-//   }
-// });
-
-// Ruta para eliminar una noticia por su ID
-
-// app.delete('/api/blog/delete/:id_noticias', async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-
-//     const { id_noticias } = req.params;
-//     const deleteQuery = 'DELETE FROM noticias WHERE id_noticias = ?';
-
-//     await connection.execute(deleteQuery, [id_noticias]); // Usar la conexión para realizar la consulta
-
-//     // Cerrar la conexión y enviar la respuesta
-//     connection.end();
-//     res.status(200).json({ message: 'Noticia eliminada exitosamente', id_noticias });
-//   } catch (error) {
-//     console.error('Error al eliminar la noticia de la base de datos:', error);
-//     res.status(500).json({ error: 'No se pudo eliminar la noticia' });
-//   }
-// });
-
-// Ruta para obtener la lista de blogs
-
-// app.get('/api/blog/list', async (req, res) => {
-//   try {
-//     const connection = await mysql.createConnection(dbConfig);
-//     const selectQuery = 'SELECT * FROM noticias';
-
-//     const [results] = await connection.execute(selectQuery);
-
-//     connection.end();
-//     res.status(200).json(results);
-//   } catch (error) {
-//     console.error('Error al obtener la lista de noticias:', error);
-//     res.status(500).json({ error: 'No se pudo obtener la lista de noticias' });
-//   }
-// });
-
-// Subir Archivos
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + path.extname(file.originalname));
-//   },
-// });
-
-// app.use('/uploads', express.static('uploads'));
-// const upload = multer({ storage });
+// Ruta para eliminar un horario por su ID
+app.delete('/api/eliminarHorario/:identificador', async (req, res) => {
+  try {
+    const { identificador } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = 'DELETE FROM horario WHERE identificador = ?';
+    await connection.execute(sql, [identificador]);
+    connection.end();
+    res.json({ message: 'Horario eliminado exitosamente' });
+  } catch (error) {
+    console.error('Error al eliminar el horario:', error);
+    res.status(500).json({ error: 'Error al eliminar el horario' });
+  }
+});
 
 // ACTIVIDAD
 
