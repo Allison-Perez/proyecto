@@ -11,17 +11,15 @@ export class HorarioService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getHorarios(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/horarios`);
+  getHorarios(idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/obtenerHorarios/${idFicha}`);
   }
 
-  crearHorario(formData: FormData, file: File): Observable<any> {
+  crearHorario(formData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    
-    formData.append('archivo', file); 
-    
-    return this.http.post<any>(`${this.apiUrl}/api/crearHorario`, formData, { headers });
+
+    return this.http.post<any>(`${this.apiUrl}/crearHorario`, formData, { headers });
   }
 
   editarHorario(idHorario: number, horarioData: any): Observable<any> {

@@ -734,7 +734,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   }
 });
 
-
+//Ruta para traer noticias segun la ficha
 app.get("/blogsPorFicha/:idFicha", async (req, res) => {
   try {
     const { idFicha } = req.params;
@@ -770,7 +770,7 @@ app.put("/editarBlog/:idBlog", async (req, res) => {
   }
 });
 
-
+//Eliminar noticia segun el id
 app.delete("/eliminarBlog/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -795,12 +795,16 @@ app.delete("/eliminarBlog/:id", async (req, res) => {
 // HORARIOS
 
 // Ruta para obtener horarios
-app.get('/api/horarios', async (req, res) => {
+app.get('/obtenerHorarios/:idFicha', async (req, res) => {
   try {
+    const { idFicha } = req.params;
     const connection = await mysql.createConnection(dbConfig);
-    const [rows] = await connection.query('SELECT * FROM horario');
+
+    const sql = `SELECT * FROM horario WHERE idFicha = ?`;
+    const [rows] = await connection.execute(sql, [idFicha]);
+
     connection.end();
-    res.json(rows);
+    res.status(200).json(rows);
   } catch (error) {
     console.error('Error al obtener horarios:', error);
     res.status(500).json({ error: 'Error al obtener horarios' });
@@ -808,7 +812,7 @@ app.get('/api/horarios', async (req, res) => {
 });
 
 // Ruta para crear un nuevo horario
-app.post('/api/crearHorario', upload.single('archivo'), async (req, res) => {
+app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
     let urlArchivo = '';
@@ -840,7 +844,7 @@ app.post('/api/crearHorario', upload.single('archivo'), async (req, res) => {
 });
 
 // Ruta para actualizar un horario existente
-app.put('/api/editarHorario/:identificador', async (req, res) => {
+app.put('/editarHorario/:identificador', async (req, res) => {
   try {
     const { nombre, comentario } = req.body;
     const { identificador } = req.params;
@@ -861,7 +865,7 @@ app.put('/api/editarHorario/:identificador', async (req, res) => {
 });
 
 // Ruta para eliminar un horario por su ID
-app.delete('/api/eliminarHorario/:identificador', async (req, res) => {
+app.delete('/eliminarHorario/:identificador', async (req, res) => {
   try {
     const { identificador } = req.params;
     const connection = await mysql.createConnection(dbConfig);

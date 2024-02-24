@@ -5,7 +5,7 @@ import { VistaInstructorComponent } from './vista-instructor/vista-instructor.co
 import { BlogComponent } from './blog/blog.component';
 import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { ActividadComponent } from './actividad/actividad.component';
-// import { HorariosComponent } from './horarios/horarios.component';
+import { HorariosComponent } from './horarios/horarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormsModule } from '@angular/forms';
 import { ActivityService } from './services/actividad.service';
@@ -19,7 +19,7 @@ import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.co
     BlogComponent,
     AsistenciaComponent,
     ActividadComponent,
-    // HorariosComponent,
+    HorariosComponent,
     PerfilComponent,
     EditarPerfilComponent,
     CambiarPasswordComponent,

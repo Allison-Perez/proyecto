@@ -1,160 +1,59 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-nav{
-  background-color: #008a88;
+.subtitulo{
+  color: #0a7775;
+  text-align: center;
+  font-weight: bolder;
+  font-family: "Outfit", sans-serif;
+  font-size: 50px;
+  font-style: normal;
 }
 
-
-.nav .nav-item {
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.nav-link {
-  color: white;
-}
-
-.nav-link:hover{
-  color: rgb(14, 13, 13);
-}
-
-.nombre{
-  padding: 10px;
-  color: white;
-  font-size: 25px;
-  font-family: 'Lobster',sans-serif;
-}
-
-.menu-icon {
-  cursor: pointer;
-  display: none;
-}
-
-.menu-icon .bar {
-  width: 20px;
-  height: 3px;
-  background-color: white;
-  margin: 6px 0;
-}
-
-.show-menu .menu-icon {
-  display: block;
-}
-
-.show-menu .nav {
-  display: flex;
+/* Container */
+.instagram-div {
+  margin-left: 30px;
+  max-width: 350px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
   flex-direction: column;
 }
 
-.show-menu .nav-item {
-  margin: 10px 0;
-}
-
-@media (max-width: 700px) {
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .nav {
-    display: none;
-  }
-
-  .menu-icon {
-    cursor: pointer;
-    display: block;
-    margin-right: 20px;
-  }
-
-  .show-menu .nav {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .show-menu .nav-item {
-    margin: 0px 0;
-  }
-
-  .show-menu{
-    display: block;
-  }
-}
-
-.otro {
-  color: #008a88;
-}
-button {
-  color: #fff;
-}
-
-.dropdown-content {
-  margin-top: 7px;
-  position: absolute;
-  right: 0;
-  margin-right: 5px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.image {
+  width: 100%;
+  height: auto;
   border-radius: 10px;
-  padding: 10px;
+  margin-bottom: 20px;
 }
 
-.dropdown-button {
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #008a88;
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.dropdown-item {
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  color: #333;
+.button {
+  background-color: #0a7775;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.dropdown-item:hover {
-  background-color: #070707;
+.description {
+  font-size: 16px;
+  color: #262626;
+  margin-top: 10px;
 }
 
-.container {
-    margin-top: 40px;
-    box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    width: 700px;
-  }
 
-  .subir{
-    margin-top: 20px;
-  }
-  .titulo{
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold
-  }
-  .subtitulo {
-    margin-top: 40px;
-    margin-left: 50px;
-    margin-right: 50px;
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  label {
-    font-weight: bold;
-  }
-
-  .boton{
-    background-color: #008a88;
-    color: white;
-  } */
-
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 /* Estilos Nav */
 nav{
   background-color: #008a88;
@@ -173,7 +72,6 @@ nav{
 .nav-link:hover{
   color: rgb(14, 13, 13);
 }
-
 .nombre{
   padding: 10px;
   color: white;
@@ -247,7 +145,7 @@ button {
   color: #fff;
 }
 
-.dropdown-content {
+.dropdown-content { 
   margin-top: 7px;
   position: absolute;
   right: 0;
@@ -255,7 +153,7 @@ button {
   background-color: #fff; /* Color de fondo */
   border: 1px solid #ccc; /* Borde del menú */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: 10px; 
   padding: 10px;
 }
 
@@ -277,37 +175,24 @@ button {
   background-color: #070707;
 }
 
-.container {
-    margin-top: 40px;
-    box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    width: 700px;
+@media (max-width: 600px) {
+  .instagram-div {
+    margin-left: 10%;
+    max-width: 80%;
+    height: 80%;
   }
-
-  .subir{
-    margin-top: 20px;
+  .image {
+    width: 80%;
+    height: 70%;
+    border-radius: 10%;
+    margin-bottom: 20%;
   }
-  .titulo{
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold
-  }
-  .subtitulo {
-    margin-top: 40px;
-    margin-left: 50px;
-    margin-right: 50px;
-    color: #008a88;
-    font-size: 30px;
+  .name {
+    margin-top: -15%;
     font-weight: bold;
   }
-
-  label {
-    font-weight: bold;
+    
+  .description {
+    margin-top: 10%;
   }
-
-  .boton{
-    background-color: #008a88;
-    color: white;
-  }
+}

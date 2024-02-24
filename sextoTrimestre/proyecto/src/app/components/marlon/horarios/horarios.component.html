@@ -1,79 +1,93 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <title>Actividad</title>
-</head>
-<body>
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" routerLink="/vista-instructor">
-                <img src="../../assets/imagenes/LOGO SIN FONDO.png" alt="Logo de la página" width="51" height="50">
-                A C A N N E R
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-
-                </ul>
-            </div>
-        </div>
-    </header>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <h3 class="titulo">Crear Horario</h3>
-        <form (ngSubmit)="createHorario(form)" #form="ngForm">
-          <div class="form-group">
-            <label for="nombreArchivo">Horario de la ficha:</label>
-            <input [(ngModel)]="newHorario.nombreArchivo" name="nombreArchivo" class="form-control" required>
-            <div *ngIf="form.controls['nombreArchivo'].invalid && (form.controls['nombreArchivo'].dirty || form.controls['nombreArchivo'].touched)" class="text-danger">Diligenciar todos los campos</div>
-          </div>
-          <div class="form-group">
-            <label for="archivo">Subir archivo:</label>
-            <input type="file" (change)="handleFileInput($event)" name="archivo" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="comentario">Comentario:</label>
-            <textarea [(ngModel)]="newHorario.comentario" name="comentario" class="form-control" required></textarea>
-          </div>
-          <br>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
-        <h2 class="subtitulo mt-5">Horarios</h2>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let horario of horarioList">
-            <ng-container *ngIf="!editingHorario || horario.id !== editingHorario.id; else editTemplate">
-              <h4>{{ horario.nombreArchivo }}</h4>
-              <p>{{ horario.comentario }}</p>
-              <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-              <button (click)="editHorario(horario)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteHorario(horario.id_horario)" class="btn btn-danger">Eliminar</button>
-            </ng-container>
-            <ng-template #editTemplate>
-              <div class="form-group">
-                <input [(ngModel)]="editingHorario.nombreArchivo" name="nombreArchivo" class="form-control" />
-              </div>
-              <div class="form-group">
-                <textarea [(ngModel)]="editingHorario.comentario" name="comentario" class="form-control"></textarea>
-              </div>
-              <button (click)="updateHorario()" class="btn btn-success">Guardar</button>
-              <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
-            </ng-template>
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="nav-link nombre" >Acanner</a>
+    <div class="menu-icon" (click)="toggleProfileMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <ul [ngClass]="{'nav': true, 'show-menu': mostrarMenuPerfil}">
+      <li class="nav-item">
+        <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+      </li>
+      <div class="dropdown">
+        <button class="dropdown-button" (click)="toggleProfileMenu()">
+          <span class="material-symbols-outlined">person</span>
+        </button>
+        <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+          <li class="nav-item">
+            <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
           </li>
-        </ul>
+          <li class="nav-item">
+            <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+          </li>
+        </div>
+      </div> 
+    </ul>
+  </div>
+</nav>
+
+<h2 class="subtitulo mt-5">Horarios</h2>
+
+<form (submit)="crearHorario()" enctype="multipart/form-data">
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre" [(ngModel)]="newHorario.nombre" required>
+  
+  <label for="comentario">Comentario:</label>
+  <textarea id="comentario" name="comentario" [(ngModel)]="newHorario.comentario" required></textarea>
+  
+  <label for="archivo">Archivo:</label>
+  <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" required>
+
+  <button type="submit">Crear Horario</button>
+</form>
+
+<div class="mostrar">
+  <h2>Lista de Horarios</h2>
+  <div *ngIf="newsList.length > 0; else noHorarios">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let horario of newsList">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="card-title">{{ horario.nombre }}</h3>
+            <p class="card-text">{{ horario.comentario }}</p>
+            <button class="btn btn-primary" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
+            <div class="button-container">
+              <button class="btn btn-link" (click)="editarHorario(horario)">Editar</button>
+              <button class="btn btn-link" (click)="eliminarHorario(horario.identificador)">Eliminar</button>
+            </div>                       
+            <div *ngIf="editingHorario && editingHorario.identificador === horario.identificador">
+              <form (ngSubmit)="guardarEdicion()" #editHorarioForm="ngForm">
+                <div class="form-group">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="editingHorario.nombre" required>
+                </div>
+                <div class="form-group">
+                  <label for="comentario">Comentario:</label>
+                  <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="editingHorario.comentario" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html> -->
-
-<h1>no funcionamos</h1>
+  <ng-template #noHorarios>
+    <p>No hay horarios disponibles.</p>
+  </ng-template>
+</div>

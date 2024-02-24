@@ -4,7 +4,7 @@ import { VistaInstructorComponent } from './vista-instructor/vista-instructor.co
 import { BlogComponent } from './blog/blog.component';
 import { AsistenciaComponent } from './asistencia/asistencia.component';
 import { ActividadComponent } from './actividad/actividad.component';
-// import { HorariosComponent } from './horarios/horarios.component';
+import { HorariosComponent } from './horarios/horarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'blog', component: BlogComponent },
   { path: 'actividad', component: ActividadComponent },
   { path: 'asistencia', component: AsistenciaComponent },
-  // { path: 'horario', component: HorariosComponent },
+  { path: 'horario', component: HorariosComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'editar-perfil', component: EditarPerfilComponent },
   { path: 'cambiar-contrasena', component: CambiarPasswordComponent },
