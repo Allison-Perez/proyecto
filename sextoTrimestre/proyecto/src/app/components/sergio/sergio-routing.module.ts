@@ -10,6 +10,8 @@ import { RegistrosAdminComponent } from './registros-admin/registros-admin.compo
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
 import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { FichasInstructoresComponent } from './fichas-instructores/fichas-instructores.component';
+
 const routes: Routes = [
   { path: '', component: IndexComponent },
   {path: 'vista-admin', component: VistaAdminComponent},
@@ -20,7 +22,8 @@ const routes: Routes = [
   { path: 'registros-admin', component: RegistrosAdminComponent },
   {path: 'modificar-usuarios', component: ModificarUsuariosComponent},
   {path: 'estadisticas-instructores', component: StatisticsInstructoresComponent},
-  {path: 'sidebar', component: SidebarComponent}
+  {path: 'sidebar', component: SidebarComponent},
+  {path: 'fichas-instructores', component: FichasInstructoresComponent}
 ];
 
 @NgModule({

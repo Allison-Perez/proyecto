@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
 import { NgChartsModule } from 'ng2-charts';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import {FichasInstructoresComponent} from './fichas-instructores/fichas-instructores.component';
+
 @NgModule({
   declarations: [
     IndexComponent,
@@ -26,6 +28,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ModificarUsuariosComponent,
     SidebarComponent,
     StatisticsInstructoresComponent,
+    FichasInstructoresComponent
   ],
 
   imports: [
@@ -33,8 +36,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     CommonModule,
     NgChartsModule,
     SergioRoutingModule,
-    FormsModule, // Importa FormsModule aquí
-    ReactiveFormsModule, // Importa ReactiveFormsModule aquí
+    FormsModule,
+    ReactiveFormsModule,
+
   ]
 })
 export class SergioModule { }

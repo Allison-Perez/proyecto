@@ -44,7 +44,7 @@ export class SidebarComponent {
     // Ejemplo: redirigir a una ruta específica basada en la opción seleccionada
     if (opcion === 'Listado Instructores') {
       this.router.navigate(['/estadisticas-instructores']);
-    }else if (opcion === 'Promedio Instructores') {
+    }else if (opcion === 'Promedio de Instructores') {
       this.router.navigate(['/fichas-instructores']);
     }
   }
