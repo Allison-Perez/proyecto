@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   mostrarMenu: boolean = false;
   opcionSeleccionada: string = '';
-  opcionesMenu: string[] = ['Promedio de Instructores', 'Promedio de Estudiantes', 'Otros'];
+  opcionesMenu: string[] = ['Listado Instructores','Promedio de Instructores', 'Promedio de Estudiantes', 'Otros'];
   mostrarSidebar: boolean = false;
   mostrarMenuPerfil: boolean = false;
 
@@ -42,10 +42,11 @@ export class SidebarComponent {
     this.opcionSeleccionada = opcion;
 
     // Ejemplo: redirigir a una ruta específica basada en la opción seleccionada
-    if (opcion === 'Promedio de Instructores') {
+    if (opcion === 'Listado Instructores') {
       this.router.navigate(['/estadisticas-instructores']);
+    }else if (opcion === 'Promedio Instructores') {
+      this.router.navigate(['/fichas-instructores']);
     }
-    // Agrega más condiciones según sea necesario
   }
 
   // Función para cerrar sesión
