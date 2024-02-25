@@ -2,13 +2,9 @@ a {
   text-decoration: none;
 }
 
-// body {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100vh;
-//   background: linear-gradient(#d1d5d5, #0b4f6c);
-// }
+.form-control::placeholder {
+  font-weight: bold;
+}
 
 body {
   display: flex;
@@ -72,11 +68,12 @@ input{
 }
 
 ::-webkit-input-placeholder {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 select {
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 15px;
   color: #757575;
 }
 
@@ -86,7 +83,8 @@ select {
 }
 
 .birth_date {
-  font-size: 15px;
+  font-weight: bold;
+  font-size: 14px;
   width: 50%;
   color: #757575;
 }
