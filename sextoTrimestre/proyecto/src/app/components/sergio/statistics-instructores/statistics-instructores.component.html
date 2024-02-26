@@ -1,26 +1,25 @@
 <app-sidebar></app-sidebar>
 <div class="container">
-
   <div class="statistics-container">
     <h2>Estadísticas de Instructores</h2>
+    <div class="filtro-container">
+      <label for="filtroFicha">Filtrar por Ficha:</label>
+    <select id="filtroFicha" [(ngModel)]="filtroFicha">
+      <option value="" disabled selected>Seleccione una ficha</option>
+      <option *ngFor="let ficha of listaFichas" [value]="ficha">{{ ficha }}</option>
+    </select>
 
-    <!-- <form (ngSubmit)="applyFilters()" #filtroForm="ngForm">
-      <div class="filters">
-        <label>Filtrar por Ficha:</label>
-        <select [(ngModel)]="selectednumeroFicha" name="selectednumeroFicha" ngModel>
-          <option value="">Todos</option>
-          <option value="1">2558104</option>
-          <option value="2">1800002</option>
-          <option value="3">1231236</option>
-          <option value="4">2634256</option>
-          <option value="5">2789008</option>
+      <label for="filtroNombre">Filtrar por Nombre:</label>
+      <input type="text" id="filtroNombre" [(ngModel)]="filtroNombre">
 
-        </select>
+      <label for="filtroDocumento">Filtrar por Documento:</label>
+      <input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento">
 
-        <button type="submit">Aplicar Filtros</button>
+      <div class="filtro-buttons">
+        <button (click)="aplicarFiltros()">Aplicar Filtros</button>
+        <button (click)="limpiarFiltros()">Limpiar Filtros</button>
       </div>
-    </form> -->
-
+    </div>
     <table class="custom-table">
       <thead>
         <tr>
