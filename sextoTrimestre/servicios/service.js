@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -920,7 +920,86 @@ app.delete('/eliminarHorario/:identificador', async (req, res) => {
 
 // ACTIVIDAD
 
-// Ruta para crear una actividad
+// Ruta para crear una nueva actividad
+app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
+  try {
+    const { nombreArchivo, comentario, fechaInicio, fechaFinal, idUsuario, idFicha } = req.body;
+    let urlArchivo = '';
+
+    if (req.file) {
+      urlArchivo = req.file.filename;
+    } else {
+      return res.status(400).json({ error: 'El archivo es obligatorio' });
+    }
+
+    urlArchivo = '/uploads/' + req.file.filename;
+
+    if (nombreArchivo && comentario && fechaInicio && fechaFinal && idUsuario && idFicha) {
+      const connection = await mysql.createConnection(dbConfig);
+      const sql = `INSERT INTO guias (nombre, urlImagen, comentario, fechaInicio, fechaFinal, idUsuario, idFicha)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      await connection.execute(sql, [nombreArchivo, urlArchivo, comentario, fechaInicio, fechaFinal, idUsuario, idFicha]);
+      connection.end();
+      res.status(201).json({ message: 'Actividad creada exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para crear la actividad' });
+    }
+  } catch (error) {
+    console.error('Error al crear la actividad:', error);
+    res.status(500).json({ error: 'Error al crear la actividad' });
+  }
+})
+
+// Ruta para obtener todas las actividades
+app.get('/listarActividades', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = 'SELECT * FROM guias';
+    const [rows] = await connection.execute(sql);
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener las actividades:', error);
+    res.status(500).json({ error: 'Error al obtener las actividades' });
+  }
+});
+
+// Ruta para editar una actividad específica
+app.put('/editarActividad/:idActividad', async (req, res) => {
+  try {
+    const { nombreArchivo, comentario, fechaInicio, fechaFinal } = req.body;
+    const { idActividad } = req.params;
+
+    if (nombreArchivo && comentario && fechaInicio && fechaFinal) {
+      const connection = await mysql.createConnection(dbConfig);
+      const sql = 'UPDATE guias SET nombre = ?, comentario = ?, fechaInicio = ?, fechaFinal = ? WHERE identificador = ?';
+      await connection.execute(sql, [nombreArchivo, comentario, fechaInicio, fechaFinal, idActividad]);
+      connection.end();
+      res.json({ message: 'Actividad actualizada exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para actualizar la actividad' });
+    }
+  } catch (error) {
+    console.error('Error al actualizar la actividad:', error);
+    res.status(500).json({ error: 'Error al actualizar la actividad' });
+  }
+});
+
+// Ruta para eliminar una actividad por su ID
+app.delete('/eliminarActividad/:idActividad', async (req, res) => {
+  try {
+    const { idActividad } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = 'DELETE FROM guias WHERE identificador = ?';
+    await connection.execute(sql, [idActividad]);
+    connection.end();
+    res.json({ message: 'Actividad eliminada exitosamente' });
+  } catch (error) {
+    console.error('Error al eliminar la actividad:', error);
+    res.status(500).json({ error: 'Error al eliminar la actividad' });
+  }
+});
+
 
 // app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => {
 //   try {

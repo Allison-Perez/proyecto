@@ -110,10 +110,10 @@ CREATE TABLE guias (
     idUsuario INT NOT NULL,
     idFicha INT NOT NULL,
     FOREIGN KEY (idUsuario) REFERENCES usuario(identificador),
-	FOREIGN KEY (idFicha) REFERENCES ficha(identificador)
+    FOREIGN KEY (idFicha) REFERENCES ficha(identificador)
 );
 
-  CREATE TABLE blog (
+CREATE TABLE blog (
       identificador INT AUTO_INCREMENT PRIMARY KEY,
       nombre VARCHAR(45) NOT NULL,
       urlImagen VARCHAR(200),

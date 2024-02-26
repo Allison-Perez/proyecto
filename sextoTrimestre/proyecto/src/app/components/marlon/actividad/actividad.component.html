@@ -39,47 +39,56 @@
         </ul>
   </div>
 </nav> 
-    <div class="container">
-      <h2 class="titulo">Crear Actividad</h2>
-        <form (ngSubmit)="createActivity(form)" #form="ngForm">
-          <div class="form-group">
-            <label for="nombreArchivo">Nombre del archivo:</label>
-            <input [(ngModel)]="newActivity.nombreArchivo" name="nombreArchivo" class="form-control" required>
-            <div *ngIf="form.controls['nombreArchivo'].invalid && (form.controls['nombreArchivo'].dirty || form.controls['nombreArchivo'].touched)" class="text-danger">Diligenciar todos los campos</div>
-          </div>
-          <div class="form-group">
-            <label for="archivo">Subir archivo:</label>
-            <input type="file" (change)="handleFileInput($event)" name="archivo" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="comentario">Comentario:</label>
-            <textarea [(ngModel)]="newActivity.comentario" name="comentario" class="form-control" required></textarea>
-          </div>
-          <br>
-          <button type="submit" class="btn btn-primary boton">Guardar</button>
-        </form>
-      </div>
+<div class="container">
+  <h2 class="subtitulo mt-5">Crear Actividad</h2>
+  <form (submit)="createActivity(activityForm)" enctype="multipart/form-data" #activityForm="ngForm">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" [(ngModel)]="newActivity.nombre" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="comentario">Comentario:</label>
+      <textarea id="comentario" name="comentario" [(ngModel)]="newActivity.comentario" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="fechaInicio">Fecha de Inicio:</label>
+      <input type="date" id="fechaInicio" name="fechaInicio" [(ngModel)]="newActivity.fechaInicio" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="fechaFin">Fecha de Fin:</label>
+      <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="newActivity.fechaFin" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="archivo">Archivo:</label>
+      <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Actividad</button>
+  </form>
 
-        <h2 class="subtitulo">Lista Actividades</h2>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let activity of activityList">
-            <ng-container *ngIf="!editingActivity || activity.id !== editingActivity.id; else editTemplate">
-              <h4>{{ activity.nombreArchivo }}</h4>
-              <p>{{ activity.comentario }}</p>
-              <a (click)="descargarArchivo(activity.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-              <button (click)="editActivity(activity)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteActivity(activity.id_guia)" class="btn btn-danger">Eliminar</button>
-            </ng-container>
-            <ng-template #editTemplate>
-              <div class="form-group">
-                <input [(ngModel)]="editingActivity.nombreArchivo" name="nombreArchivo" class="form-control" />
-              </div>
-              <div class="form-group">
-                <textarea [(ngModel)]="editingActivity.comentario" name="comentario" class="form-control"></textarea>
-              </div>
-              <button (click)="updateActivity()" class="btn btn-success">Guardar</button>
-              <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
-            </ng-template>
-          </li>
-        </ul>
- 
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <h2 class="subtitulo mt-5">Lista Actividades</h2>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let activity of activityList">
+      <ng-container *ngIf="!editingActivity || activity.id !== editingActivity.id; else editTemplate">
+        <h4>{{ activity.nombreArchivo }}</h4>
+        <p>{{ activity.comentario }}</p>
+        <a (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" class="btn btn-primary-ver-archivo">Ver archivo</a>
+        <button (click)="editActivity(activity)" class="btn btn-primary">Editar</button>
+        <button (click)="deleteActivity(activity.idActividad)" class="btn btn-danger">Eliminar</button>
+      </ng-container>
+      <ng-template #editTemplate>
+        <div class="form-group">
+          <input [(ngModel)]="editingActivity.nombreArchivo" name="nombreArchivo" class="form-control" />
+        </div>
+        <div class="form-group">
+          <textarea [(ngModel)]="editingActivity.comentario" name="comentario" class="form-control"></textarea>
+        </div>
+        <button (click)="updateActivity()" class="btn btn-success">Guardar</button>
+        <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
+      </ng-template>
+    </li>
+  </ul>
+</div>
