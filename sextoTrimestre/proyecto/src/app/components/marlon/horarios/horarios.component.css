@@ -150,8 +150,8 @@ button {
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff; /* Color de fondo */
-  border: 1px solid #ccc; /* Borde del menú */
+  background-color: #fff;
+  border: 1px solid #ccc; 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px; 
   padding: 10px;
@@ -195,4 +195,229 @@ button {
   .description {
     margin-top: 10%;
   }
+}
+
+
+.subir{
+  margin-top: 20px;
+}
+
+h2 {
+  color: #008a88;
+  font-size: 30px;
+  font-weight: bold; 
+}
+
+label {
+  font-weight: bold;
+}
+
+.btn-primary {
+  margin-top: 10px;
+  background-color: #008a88;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #008a88; 
+}
+
+.mostrar{
+  margin-top: 30px;
+  margin-left: 50px;
+}
+.btn-link {
+  border: none;
+  border-radius: 5px;
+  color: #f5f5f5; 
+  background-color: #005b59;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease; 
+}
+
+.btn-link:hover {
+  color: #333; 
+}
+
+.btn-primary,
+.btn-secondary {
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff; 
+  background-color:#005b59; 
+  border: none;
+  border-radius: 5px; 
+  padding: 0.5rem 1rem;
+  margin-right: 5px;
+  transition: background-color 0.3s ease; 
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  background-color: #005b59; 
+}
+
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.btn-cancelar {
+  color:#f5f5f5; 
+  background-color: #850606; 
+  border: none;
+  border-radius: 5px; 
+  padding: 0.5rem 1rem; 
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease; 
+}
+
+.btn-cancelar:hover {
+  background-color:#850606; 
+}
+.card-date {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #252525; 
+}
+.container {
+  margin-top: 40px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 700px;
+}
+
+.form-group {
+  margin-bottom: 13px; 
+}
+
+label {
+  font-weight: bold;
+  display: block; 
+}
+
+input[type="text"],
+textarea {
+  width: 90%; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  margin-top: 10px;
+  background-color: #005b59;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #005b59;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; 
+}
+
+.button-container button {
+  margin: 0 5px; 
+}
+
+.card-img-top {
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto; 
+}
+
+/* Agregar color de fondo y estilos para el botón de crear horario */
+.btn-primary.crear-horario {
+  
+  background-color:#005b59; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-primary.crear-horario:hover {
+  background-color: #005b59; 
+}
+
+/* Estilos para el botón de ver archivo */
+.btn-primary.ver-archivo {
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #005b59; 
+  border: none;
+  border-radius: 5px;
+  color: #f5f5f5;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-primary.ver-archivo:hover {
+  background-color:#005b59;
+}
+
+/* Estilos para el formulario en la sección de crear horario */
+.container {
+  margin-top: 40px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 700px;
+}
+
+.container label {
+  font-weight: bold;
+  display: block;
+}
+
+.container input[type="text"],
+.container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.container input[type="file"] {
+  margin-bottom: 20px;
+}
+
+/* Alinear botones de editar, eliminar y ver archivo */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; 
+}
+
+.button-container button {
+  margin: 0 5px; 
+}
+
+
+/* Reducir tamaño de imagen de horario */
+.image {
+  width: 50%;
+  max-height: 200px; 
+  border-radius: 10px;
+  margin-bottom: 10px;
 }

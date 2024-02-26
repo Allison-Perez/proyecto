@@ -68,7 +68,7 @@
             <p class="card-date">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
             <div class="button-container">
               <button class="btn btn-link" (click)="editBlog(blog)">Editar</button>
-              <button class="btn btn-link" (click)="deleteBlog(blog.identificador)">Eliminar</button>
+              <button class="btn-cancelar" (click)="deleteBlog(blog.identificador)">Eliminar</button>
             </div>                       
             <div *ngIf="editingBlog && editingBlog.identificador === blog.identificador">
               <form (ngSubmit)="updateBlog()" #editBlogForm="ngForm">
@@ -81,7 +81,7 @@
                   <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="editingBlog.comentario" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar Blog</button>
-                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancelar</button>
+                <button type="button" class="btn-cancelar" (click)="cancelEdit()">Cancelar</button>
               </form>
             </div>
           </div>

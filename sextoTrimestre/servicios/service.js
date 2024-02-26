@@ -681,14 +681,17 @@ app.put("/api/actualizarInstructor", async (req, res) => {
 // Configuración de multer para manejar archivos adjuntos
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'assets/uploads/'); // Cambia la carpeta de destino a "assets/uploads"
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); 
+    const extname = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + Date.now() + extname);
   }
 });
 
-const upload = multer({ dest: 'uploads/' });
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+const upload = multer({ storage: storage }); 
 
 // Ruta para manejar la carga de archivos
 app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
@@ -822,6 +825,8 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
     } else {
       return res.status(400).json({ error: 'El archivo es obligatorio' });
     }
+
+    urlArchivo = '/uploads/' + req.file.filename;
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);

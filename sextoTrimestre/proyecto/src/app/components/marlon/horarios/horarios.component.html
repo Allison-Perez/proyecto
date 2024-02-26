@@ -8,16 +8,16 @@
     </div>
     <ul [ngClass]="{'nav': true, 'show-menu': mostrarMenuPerfil}">
       <li class="nav-item">
-        <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
+        <a routerLink="/vista-instructor" class="nav-link">Inicio</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
+        <a routerLink="/blog" class="nav-link" aria-current="page">Blog</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+        <a routerLink="/actvidad" class="nav-link">Actividades</a>
       </li>
       <li class="nav-item">
-        <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+        <a routerLink="/asistencia" class="nav-link">Asistencias</a>
       </li>
       <div class="dropdown">
         <button class="dropdown-button" (click)="toggleProfileMenu()">
@@ -25,7 +25,7 @@
         </button>
         <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
           <li class="nav-item">
-            <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
+            <a routerLink="/perfil" class="nav-link otro " aria-current="page">Ver Perfil</a>
           </li>
           <li class="nav-item">
             <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
@@ -38,22 +38,18 @@
     </ul>
   </div>
 </nav>
-
-<h2 class="subtitulo mt-5">Horarios</h2>
-
-<form (submit)="crearHorario()" enctype="multipart/form-data">
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" name="nombre" [(ngModel)]="newHorario.nombre" required>
-  
-  <label for="comentario">Comentario:</label>
-  <textarea id="comentario" name="comentario" [(ngModel)]="newHorario.comentario" required></textarea>
-  
-  <label for="archivo">Archivo:</label>
-  <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" required>
-
-  <button type="submit">Crear Horario</button>
-</form>
-
+<div class="container">
+  <h2 class="subtitulo mt-5">Crear Horarios</h2>
+  <form (submit)="crearHorario()" enctype="multipart/form-data">
+    <label for="nombre">Titulo:</label>
+    <input type="text" id="nombre" name="nombre" [(ngModel)]="newHorario.nombre" required>
+    <label for="comentario">Comentario:</label>
+    <textarea id="comentario" name="comentario" [(ngModel)]="newHorario.comentario" required></textarea>
+    <label for="archivo">Archivo:</label>
+    <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" required><br>
+    <button type="submit" class="btn btn-primary">Subir Horario</button>
+  </form>  
+</div>
 <div class="mostrar">
   <h2>Lista de Horarios</h2>
   <div *ngIf="newsList.length > 0; else noHorarios">
@@ -62,16 +58,17 @@
         <div class="card mb-3">
           <div class="card-body">
             <h3 class="card-title">{{ horario.nombre }}</h3>
+            <img class="image" src="assets/imagenes/Horario.png" alt="Portada">
             <p class="card-text">{{ horario.comentario }}</p>
-            <button class="btn btn-primary" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
             <div class="button-container">
+              <button class="btn btn-primary" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
               <button class="btn btn-link" (click)="editarHorario(horario)">Editar</button>
-              <button class="btn btn-link" (click)="eliminarHorario(horario.identificador)">Eliminar</button>
-            </div>                       
+              <button class="btn-cancelar" (click)="eliminarHorario(horario.identificador)">Eliminar</button>
+            </div><br>                    
             <div *ngIf="editingHorario && editingHorario.identificador === horario.identificador">
               <form (ngSubmit)="guardarEdicion()" #editHorarioForm="ngForm">
                 <div class="form-group">
-                  <label for="nombre">Nombre:</label>
+                  <label for="nombre">Titulo:</label>
                   <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="editingHorario.nombre" required>
                 </div>
                 <div class="form-group">
@@ -79,7 +76,7 @@
                   <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="editingHorario.comentario" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+                <button type="button" class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
               </form>
             </div>
           </div>
