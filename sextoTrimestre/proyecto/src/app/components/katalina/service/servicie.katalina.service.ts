@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceService {
-
+  private _userFichas: number[] = [];
+  
   constructor(private http: HttpClient) {}
-
-  apiUrl = 'http://localhost:3000';
+    private apiUrl = 'http://localhost:3000';
 
     // VER ACTIVIDADES
     getActivities(): Observable<any[]> {
@@ -33,14 +33,15 @@ export class ServiceService {
   getBlogsPorFicha(idFicha: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
   }
-
-
    // VER HORARIOS
-  getHorario(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/horario/list`);
+   getHorarios(idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/obtenerHorarios/${idFicha}`);
   }
-  updateHorario(horarioId: string, updatedData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${horarioId}`, updatedData);
+
+
+
+  getUserFichas(): number[] {
+    return this._userFichas;
   }
 
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {

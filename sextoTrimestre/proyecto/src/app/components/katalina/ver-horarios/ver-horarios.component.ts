@@ -10,15 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-horarios.component.scss']
 })
 export class VerHorariosComponent {
-  horarioList: any[] = [];
-  newHorario: any = { nombreArchivo: '', comentario: '' };
-  editingHorario: any | null = null;
-  selectedFile: File | null = null;
+  newsList: any[] = []; 
+  imageFile: File | null = null;
+  newHorario: any = { nombre: '', comentario: '' };
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
 
-  constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
+  constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
+  ngOnInit() {
+    this.loadHorario();
+  }
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
@@ -41,47 +43,29 @@ export class VerHorariosComponent {
     // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
+ 
   loadHorario() {
-    this.ServiceService .getHorario().subscribe((data) => {
-      this.horarioList = data;
-    });
-  }
-
-  handleFileInput(event: any) {
-    this.selectedFile = event.target.files[0];
+    this.newsList = []; // Limpia la lista antes de cargar los horarios
+  
+    const idFicha = 1;
+  
+    this.ServiceService.getHorarios(idFicha).subscribe(
+      data => {
+        this.newsList = data;
+      },
+      error => {
+        console.error('Error al cargar los horarios:', error);
+      }
+    );
   }
   
-  updateHorario() {
-    if (this.editingHorario) {
-      const formData = new FormData();
-      formData.append('nombreArchivo', this.editingHorario.nombreArchivo);
-      formData.append('comentario', this.editingHorario.comentario);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
-      }
-
-      this.ServiceService .updateHorario(this.editingHorario.id, formData).subscribe(
-        () => {
-          this.loadHorario();
-          this.editingHorario = null;
-          this.selectedFile = null;
-        },
-        (error) => {
-          console.error('Error al actualizar horario:', error);
-
-        }
-      );
-    }
-  }
-
-
-
-  descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
+  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
+    link.download = nombreArchivo; 
+    document.body.appendChild(link);
     link.click();
-  }
+}
 }
