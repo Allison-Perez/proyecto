@@ -43,5 +43,10 @@ export class ServiceService {
     return this.http.get<any[]>(url);
   }
 
+  getFichasInstructores(): Observable<any[]> {
+    const url = `${this.apiUrl}/api/fichasInstructores`;
+    return this.http.get<any[]>(url);
+  }
+
 
 }
