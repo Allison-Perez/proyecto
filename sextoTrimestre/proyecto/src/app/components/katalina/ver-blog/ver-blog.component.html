@@ -44,7 +44,7 @@
 
 <div class="noticias-container">
   <div *ngFor="let blog of newsList" class="instagram-div">
-    <p class="date">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
+    <p class="date" style="font-size: 12px;">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
     <h1 class="titulo">{{ blog.nombre }}</h1>
     <img src="assets/imagenes/Blog.png" class="card-img-top" alt="Imagen Opcional">
     <p class="card-text"><strong>Descripción:</strong> {{ blog.comentario }}</p>

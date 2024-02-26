@@ -44,7 +44,7 @@
 
 <div class="noticias-container">
   <div *ngFor="let horario of newsList" class="instagram-div">
-    <p class="date">{{ horario.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
+    <p class="date" style="font-size: 12px;">{{ horario.fecha | date:'dd/MM/yyyy'}}</p>
     <h3 class="titulo">{{ horario.nombre }}</h3>
     <img src="assets/imagenes/Horario.png" class="card-img-top" alt="Imagen Opcional">
     <p class="card-text"><strong>Descripción:</strong>{{ horario.comentario }}</p>
