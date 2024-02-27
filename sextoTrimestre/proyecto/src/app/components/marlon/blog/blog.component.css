@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+
 /* Estilos Nav */
-nav{
+nav {
   background-color: #008a88;
 }
 
@@ -15,14 +16,15 @@ nav{
   color: white;
 }
 
-.nav-link:hover{
+.nav-link:hover {
   color: rgb(14, 13, 13);
 }
-.nombre{
+
+.nombre {
   padding: 10px;
   color: white;
   font-size: 25px;
-  font-family: 'Lobster',sans-serif;
+  font-family: 'Lobster', sans-serif;
 }
 
 .menu-icon {
@@ -78,7 +80,7 @@ nav{
     margin: 0px 0;
   }
 
-  .show-menu{
+  .show-menu {
     display: block;
   }
 }
@@ -87,27 +89,28 @@ nav{
 .otro {
   color: #008a88;
 }
+
 button {
   color: #fff;
 }
 
-.dropdown-content { 
+.dropdown-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff; /* Color de fondo */
-  border: 1px solid #ccc; /* Borde del menú */
+  background-color: #fff; 
+  border: 1px solid #ccc; 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
 }
 
 .dropdown-button {
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #008a88;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #008a88;
 }
 
 .dropdown-item {
@@ -121,153 +124,19 @@ button {
   background-color: #070707;
 }
 
-/*Crear Blog*/
-  .subir{
-    margin-top: 20px;
-  }
-
-  h2 {
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold; 
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  .btn-primary {
-    margin-top: 10px;
-    background-color: #008a88;
-    border: none;
-  }
-  
-  .btn-primary:hover {
-    background-color: #008a88; 
-  }
-  
-  .mostrar{
-    margin-top: 30px;
-    margin-left: 50px;
-  }
-  
-  .blogs-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-    gap: 18px; 
-  }
-  
-  .card {
-    border: 2px solid #ccc; 
-    border-radius: 10px; 
-  }
-  .card-title{
-    color: #0f0f0f;
-  }
-  .card-buttons {
-    display: flex;
-    justify-content: space-between; 
-    margin-top: 10px; 
-  }
-  
-  .card-buttons button {
-    padding: 0; 
-    margin: 0; 
-    color: #008a88; 
-  }
-  
-  .card-buttons button:hover {
-    color: #005c5a; 
-  }
-
-.card-title, .card-text {
-  color: black;
+/* Crear Blog */
+.subir {
+  margin-top: 20px;
 }
 
-
-.btn-link {
-  border: none;
-  border-radius: 5px;
-  color: #f5f5f5; 
-  background-color: #005b59;
-  text-decoration: none;
+h2 {
+  color: #008a88;
+  font-size: 30px;
   font-weight: bold;
-  transition: color 0.3s ease; 
-}
-
-.btn-link:hover {
-  color: #333; 
-}
-
-.btn-primary,
-.btn-secondary {
-  color: #fff; 
-  background-color: #008a88; 
-  border: none;
-  border-radius: 5px; 
-  padding: 0.5rem 1rem;
-  margin-right: 5px;
-  transition: background-color 0.3s ease; 
-}
-
-.btn-primary:hover,
-.btn-secondary:hover {
-  background-color: #005b59; 
-}
-
-
-.form-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-.btn-cancelar {
-  color:#f5f5f5; 
-  background-color: #850606; 
-  border: none;
-  border-radius: 5px; 
-  padding: 0.5rem 1rem; 
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease; 
-}
-
-.btn-cancelar:hover {
-  background-color:#850606; 
-}
-.card-date {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 12px;
-  color: #252525; 
-}
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 700px;
-}
-
-.form-group {
-  margin-bottom: 13px; 
 }
 
 label {
   font-weight: bold;
-  display: block; 
-}
-
-input[type="text"],
-textarea {
-  width: 90%; 
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
 }
 
 .btn-primary {
@@ -280,17 +149,138 @@ textarea {
   background-color: #005b59;
 }
 
+.mostrar {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+.blogs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+
+.card-title {
+  color: #0f0f0f;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.card-buttons button {
+  padding: 0;
+  margin: 0;
+  color: #008a88;
+}
+
+.card-buttons button:hover {
+  color: #005c5a;
+}
+
+.card-title,
+.card-text {
+  color: black;
+}
+
+.btn-link {
+  border: none;
+  border-radius: 5px;
+  color: #f5f5f5;
+  background-color: #005b59;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.btn-link:hover {
+  color: #333;
+}
+
+.btn-primary,
+.btn-secondary {
+  color: #fff;
+  background-color: #008a88;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  background-color: #005b59;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cancelar {
+  color: #f5f5f5;
+  background-color: #850606;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #850606;
+}
+
+.card-date {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #252525;
+}
+
+.container {
+  margin-top: 40px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 700px;
+}
+
+.form-group {
+  margin-bottom: 13px;
+}
+
+input[type="text"],
+textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 .button-container {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .button-container button {
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 .card-img-top {
   max-width: 200px;
   height: auto;
-  margin: 0 auto; 
+  margin: 0 auto;
 }

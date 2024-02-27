@@ -103,7 +103,7 @@ export class HorariosComponent implements OnInit {
   }
 
   editarHorario(horario: any) {
-    this.editingHorario = { ...horario }; // Copia profunda del horario para editar
+    this.editingHorario = { ...horario };
   }
   
   guardarEdicion() {

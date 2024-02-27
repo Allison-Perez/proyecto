@@ -923,7 +923,7 @@ app.delete('/eliminarHorario/:identificador', async (req, res) => {
 // Ruta para crear una nueva actividad
 app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
   try {
-    const { nombreArchivo, comentario, fechaInicio, fechaFinal, idUsuario, idFicha } = req.body;
+    const { nombre, comentario, fechaInicio, fechaFinal, idUsuario, idFicha } = req.body;
     let urlArchivo = '';
 
     if (req.file) {
@@ -934,11 +934,11 @@ app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
 
     urlArchivo = '/uploads/' + req.file.filename;
 
-    if (nombreArchivo && comentario && fechaInicio && fechaFinal && idUsuario && idFicha) {
+    if (nombre && comentario && fechaInicio && fechaFinal && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
       const sql = `INSERT INTO guias (nombre, urlImagen, comentario, fechaInicio, fechaFinal, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
-      await connection.execute(sql, [nombreArchivo, urlArchivo, comentario, fechaInicio, fechaFinal, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlArchivo, comentario, fechaInicio, fechaFinal, idUsuario, idFicha]);
       connection.end();
       res.status(201).json({ message: 'Actividad creada exitosamente' });
     } else {
@@ -951,11 +951,13 @@ app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
 })
 
 // Ruta para obtener todas las actividades
-app.get('/listarActividades', async (req, res) => {
+app.get('/listarActividades/:idFicha', async (req, res) => {
   try {
+    const { idFicha } = req.params;
     const connection = await mysql.createConnection(dbConfig);
-    const sql = 'SELECT * FROM guias';
-    const [rows] = await connection.execute(sql);
+
+    const sql = 'SELECT * FROM guias WHERE idFicha = ?';
+    const [rows] = await connection.execute(sql, [idFicha]);
     connection.end();
     res.status(200).json(rows);
   } catch (error) {
@@ -965,15 +967,15 @@ app.get('/listarActividades', async (req, res) => {
 });
 
 // Ruta para editar una actividad específica
-app.put('/editarActividad/:idActividad', async (req, res) => {
+app.put('/editarActividad/:identificador', async (req, res) => {
   try {
-    const { nombreArchivo, comentario, fechaInicio, fechaFinal } = req.body;
-    const { idActividad } = req.params;
+    const { nombre, comentario, fechaInicio, fechaFinal } = req.body;
+    const { identificador } = req.params;
 
-    if (nombreArchivo && comentario && fechaInicio && fechaFinal) {
+    if (nombre && comentario && fechaInicio && fechaFinal) {
       const connection = await mysql.createConnection(dbConfig);
       const sql = 'UPDATE guias SET nombre = ?, comentario = ?, fechaInicio = ?, fechaFinal = ? WHERE identificador = ?';
-      await connection.execute(sql, [nombreArchivo, comentario, fechaInicio, fechaFinal, idActividad]);
+      await connection.execute(sql, [nombre, comentario, fechaInicio, fechaFinal, identificador]);
       connection.end();
       res.json({ message: 'Actividad actualizada exitosamente' });
     } else {
@@ -986,12 +988,12 @@ app.put('/editarActividad/:idActividad', async (req, res) => {
 });
 
 // Ruta para eliminar una actividad por su ID
-app.delete('/eliminarActividad/:idActividad', async (req, res) => {
+app.delete('/eliminarActividad/:identificador', async (req, res) => {
   try {
-    const { idActividad } = req.params;
+    const { identificador } = req.params;
     const connection = await mysql.createConnection(dbConfig);
     const sql = 'DELETE FROM guias WHERE identificador = ?';
-    await connection.execute(sql, [idActividad]);
+    await connection.execute(sql, [identificador]);
     connection.end();
     res.json({ message: 'Actividad eliminada exitosamente' });
   } catch (error) {

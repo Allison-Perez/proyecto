@@ -57,6 +57,7 @@
       <div class="col-md-4" *ngFor="let horario of newsList">
         <div class="card mb-3">
           <div class="card-body">
+            <p class="date" style="font-size: 12px;">{{ horario.fecha | date:'dd/MM/yyyy'}}</p>
             <h3 class="card-title">{{ horario.nombre }}</h3>
             <img class="image" src="assets/imagenes/Horario.png" alt="Portada">
             <p class="card-text">{{ horario.comentario }}</p>

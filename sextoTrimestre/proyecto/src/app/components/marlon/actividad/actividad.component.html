@@ -55,8 +55,8 @@
       <input type="date" id="fechaInicio" name="fechaInicio" [(ngModel)]="newActivity.fechaInicio" class="form-control" required>
     </div>
     <div class="form-group">
-      <label for="fechaFin">Fecha de Fin:</label>
-      <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="newActivity.fechaFin" class="form-control" required>
+      <label for="fechaFinal">Fecha de Fin:</label>
+      <input type="date" id="fechaFinal" name="fechaFinal" [(ngModel)]="newActivity.fechaFinal" class="form-control" required>
     </div>
     <div class="form-group">
       <label for="archivo">Archivo:</label>
@@ -72,23 +72,35 @@
   <h2 class="subtitulo mt-5">Lista Actividades</h2>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let activity of activityList">
-      <ng-container *ngIf="!editingActivity || activity.id !== editingActivity.id; else editTemplate">
-        <h4>{{ activity.nombreArchivo }}</h4>
+      <ng-container *ngIf="!editingActivity || activity.identificador !== editingActivity.identificador; else editTemplate">
+        <h4>{{ activity.nombre }}</h4>
         <p>{{ activity.comentario }}</p>
+        <p><strong>Fecha de Inicio:</strong> {{ formatDate(activity.fechaInicio) }}</p>
+        <p><strong>Fecha de Fin:</strong> {{ formatDate(activity.fechaFinal) }}</p>      
         <a (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" class="btn btn-primary-ver-archivo">Ver archivo</a>
         <button (click)="editActivity(activity)" class="btn btn-primary">Editar</button>
-        <button (click)="deleteActivity(activity.idActividad)" class="btn btn-danger">Eliminar</button>
+        <button (click)="deleteActivity(activity.identificador)" class="btn btn-danger">Eliminar</button>
       </ng-container>
       <ng-template #editTemplate>
         <div class="form-group">
-          <input [(ngModel)]="editingActivity.nombreArchivo" name="nombreArchivo" class="form-control" />
+          <input [(ngModel)]="editingActivity.nombre" name="nombre" class="form-control" />
         </div>
         <div class="form-group">
           <textarea [(ngModel)]="editingActivity.comentario" name="comentario" class="form-control"></textarea>
         </div>
-        <button (click)="updateActivity()" class="btn btn-success">Guardar</button>
+        <div class="form-group">
+          <label for="fechaInicioEdit">Fecha de Inicio:</label>
+          <input type="date" id="fechaInicioEdit" name="fechaInicioEdit" [(ngModel)]="editingActivity.fechaInicio" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="fechaFinalEdit">Fecha de Fin:</label>
+          <input type="date" id="fechaFinalEdit" name="fechaFinalEdit" [(ngModel)]="editingActivity.fechaFinal" class="form-control" required>
+        </div>
+        <button (click)="updateActivity(editingActivity.identificador)" class="btn btn-success">Guardar</button>
         <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
       </ng-template>
     </li>
   </ul>
+  
+
 </div>

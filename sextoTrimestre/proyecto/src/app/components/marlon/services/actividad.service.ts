@@ -11,8 +11,8 @@ export class ActivityService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getActivities(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/listarActividades`);
+  getActivities(idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listarActividades/${idFicha}`);
   }
 
   createActivity(formData: FormData): Observable<any> {
@@ -25,7 +25,7 @@ export class ActivityService {
   updateActivity(idActividad: number, formData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+  
     return this.http.put<any>(`${this.apiUrl}/editarActividad/${idActividad}`, formData, { headers });
   }
 

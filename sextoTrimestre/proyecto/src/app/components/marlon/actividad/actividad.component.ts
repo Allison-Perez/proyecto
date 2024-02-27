@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivityService } from '../services/actividad.service';
 import { AuthService } from '../../allison/service/auth.service';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-actividad',
@@ -43,30 +44,46 @@ export class ActividadComponent implements OnInit {
   }
 
   loadActivities() {
-    this.actividadService.getActivities().subscribe(
-      (data) => {
-        this.activityList = data;
-      },
-      (error) => {
-        console.error('Error al cargar las actividades:', error);
-        this.errorMessage = 'Error al cargar las actividades.';
-      }
-    );
+    const fichas = this.authService.getUserFichas();
+    if (fichas && fichas.length > 0) {
+      this.activityList = [];
+      fichas.forEach(idFicha => {
+        this.actividadService.getActivities(idFicha).subscribe(
+          data => {
+            this.activityList.push(...data);
+          },
+          error => {
+            console.error('Error al cargar los horarios:', error);
+          }
+        );
+      });
+    } else {
+      console.log('El usuario no tiene fichas asociadas');
+    }
   }
 
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${day}/${month}/${year}`;
+  }
+  
+
   createActivity(form: NgForm) {
     if (form.valid && this.selectedFile) {
       const formData = new FormData();
-      formData.append('nombreArchivo', this.newActivity.nombre);
+      formData.append('nombre', this.newActivity.nombre);
       formData.append('comentario', this.newActivity.comentario);
       formData.append('fechaInicio', this.newActivity.fechaInicio);
-      formData.append('fechaFinal', this.newActivity.fechaFin);
+      formData.append('fechaFinal', this.newActivity.fechaFinal);
       formData.append('archivo', this.selectedFile);
-
+  
       const userInfo = this.authService.getUserInfo();
       if (userInfo) {
         formData.append('idUsuario', userInfo.idUsuario);
@@ -75,7 +92,7 @@ export class ActividadComponent implements OnInit {
         this.errorMessage = 'No se pudo obtener la información del usuario del token JWT';
         return;
       }
-
+  
       this.actividadService.createActivity(formData).subscribe(
         () => {
           this.loadActivities();
@@ -91,8 +108,9 @@ export class ActividadComponent implements OnInit {
     }
   }
 
+
   resetNewActivityForm() {
-    this.newActivity = { nombre: '', comentario: '', fechaInicio: '', fechaFin: '' };
+    this.newActivity = { nombre: '', comentario: '', fechaInicio: '', fechaFinal: '' };
     this.selectedFile = null;
   }
 
@@ -104,18 +122,17 @@ export class ActividadComponent implements OnInit {
     this.editingActivity = null;
   }
 
-  updateActivity() {
+  updateActivity(idActividad: string) {
     if (this.editingActivity) {
       const formData = new FormData();
-      formData.append('nombreArchivo', this.editingActivity.nombre);
+      formData.append('nombre', this.editingActivity.nombre);
       formData.append('comentario', this.editingActivity.comentario);
-      formData.append('fechaInicio', this.editingActivity.fechaInicio);
-      formData.append('fechaFinal', this.editingActivity.fechaFin);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
-      }
-
-      this.actividadService.updateActivity(this.editingActivity.id, formData).subscribe(
+      formData.append('fechaInicio', formatDate(this.editingActivity.fechaInicio, 'yyyy-MM-dd', 'en-US'));
+      formData.append('fechaFinal', formatDate(this.editingActivity.fechaFinal, 'yyyy-MM-dd', 'en-US'));
+  
+      const idNumber: number = parseInt(idActividad, 10);
+  
+      this.actividadService.updateActivity(idNumber, formData).subscribe(
         () => {
           this.loadActivities();
           this.cancelEdit();
