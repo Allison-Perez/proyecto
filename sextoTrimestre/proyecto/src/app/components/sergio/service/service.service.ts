@@ -43,10 +43,28 @@ export class ServiceService {
     return this.http.get<any[]>(url);
   }
 
+// DONA DE FICHAS Y CANTIDAD DE INSTRUCTORES
+
   getFichasInstructores(): Observable<any[]> {
     const url = `${this.apiUrl}/api/fichasInstructores`;
     return this.http.get<any[]>(url);
   }
 
+  // ASIGNA FICHAS
+
+   getFichas(): Observable<any[]> {
+    const url = `${this.apiUrl}/api/fichas`;
+    return this.http.get<any[]>(url);
+  }
+
+  getInstructores(): Observable<any[]> {
+    const url = `${this.apiUrl}/api/instructores`;
+    return this.http.get<any[]>(url);
+  }
+
+  agregarFicha(formData: any): Observable<any> {
+    const url = `${this.apiUrl}/api/asignar-ficha`;
+    return this.http.post<any>(url, formData);
+  }
 
 }

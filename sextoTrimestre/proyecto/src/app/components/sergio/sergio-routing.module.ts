@@ -11,6 +11,7 @@ import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuar
 import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FichasInstructoresComponent } from './fichas-instructores/fichas-instructores.component';
+import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'modificar-usuarios', component: ModificarUsuariosComponent},
   {path: 'estadisticas-instructores', component: StatisticsInstructoresComponent},
   {path: 'sidebar', component: SidebarComponent},
-  {path: 'fichas-instructores', component: FichasInstructoresComponent}
+  {path: 'fichas-instructores', component: FichasInstructoresComponent},
+  {path: 'asignar-fichas', component: AsignarFichaComponent}
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {FichasInstructoresComponent} from './fichas-instructores/fichas-instructores.component';
 import { NgApexchartsModule } from "ng-apexcharts";
+import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { NgApexchartsModule } from "ng-apexcharts";
     ModificarUsuariosComponent,
     SidebarComponent,
     StatisticsInstructoresComponent,
-    FichasInstructoresComponent
+    FichasInstructoresComponent,
+    AsignarFichaComponent,
   ],
 
   imports: [

@@ -1,0 +1,26 @@
+<p>asignar-ficha works!</p>
+
+<p>Asignar Ficha</p>
+
+<div *ngIf="instructores && fichas">
+  <div>
+    <label for="instructorSelect">Selecciona un instructor:</label>
+    <select id="instructorSelect" [(ngModel)]="selectedInstructor">
+      <option *ngFor="let instructor of instructores" [value]="instructor.identificador">
+        {{ instructor.primerNombre }} {{ instructor.primerApellido }}
+      </option>
+    </select>
+  </div>
+
+  <div>
+    <label for="fichaSelect">Selecciona una ficha:</label>
+    <select id="fichaSelect" [(ngModel)]="selectedFicha">
+      <option *ngFor="let ficha of fichas" [value]="ficha.identificador">
+        {{ ficha.numeroFicha }}
+      </option>
+    </select>
+  </div>
+
+  <button (click)="agregarFicha()" [disabled]="!selectedInstructor || !selectedFicha">Agregar Ficha</button>
+
+</div>
