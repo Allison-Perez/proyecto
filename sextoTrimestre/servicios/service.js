@@ -559,11 +559,68 @@ JOIN detalleusuario du ON u.identificador = du.idUsuario;
   }
 });
 
+// ADMIN ASIGNA FICHAS
+
+app.get('/api/fichas', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM ficha');
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener la lista de fichas:', error);
+    res.status(500).json({ error: 'Error al obtener la lista de fichas' });
+  }
+});
+
+
+app.get('/api/instructores', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT identificador, primerNombre, primerApellido FROM usuario WHERE idRol = 1');
+    connection.end();
+    res.json(rows);
+  } catch (error) {
+    console.error('Error al obtener la lista de instructores:', error);
+    res.status(500).json({ error: 'Error al obtener la lista de instructores' });
+  }
+});
+
+
+// Agregar ficha a un instructor
+app.post('/api/asignar-ficha', async (req, res) => {
+  try {
+    const { idUsuario, idFicha } = req.body;
+    console.log(idUsuario, idFicha );
+    if (!idUsuario || !idFicha) {
+      return res.status(400).json({ error: 'Se requieren idUsuario e idFicha' });
+    }
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [existingRecord] = await connection.execute(
+      'SELECT * FROM usuarioFicha WHERE idUsuario = ? AND idFicha = ?',
+      [idUsuario, idFicha]
+    );
+
+    if (existingRecord.length > 0) {
+      return res.status(400).json({ error: 'Ya existe un registro para este usuario y ficha' });
+    }
+
+    const result = await connection.execute('INSERT INTO usuarioFicha (idUsuario, idFicha) VALUES (?, ?)', [idUsuario, idFicha]);
+    connection.end();
+
+    res.status(200).json({ message: 'Ficha asignada correctamente' });
+
+  } catch (error) {
+    console.error('Error al asignar la ficha al usuario:', error);
+    res.status(500).json({ error: 'Error al asignar la ficha al usuario' });
+  }
+});
+
+
 // DONA INSTRUCTORES FICHAS
 
 app.get('/api/fichasInstructores', async (req, res) => {
-
-  console.log("entro");
   const sql = `
     SELECT
       f.numeroFicha,

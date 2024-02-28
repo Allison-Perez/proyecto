@@ -1,0 +1,83 @@
+body {
+  font-family: 'Lobster', cursive;
+  background-color: #f8f8f8;
+}
+
+.content {
+  margin-left: 0%;
+  margin-top: 5%;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #088a88;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #088a88;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #088a88;
+  outline: none;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.custom-select:hover, .custom-select:focus {
+  border-color: #45a2a1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.custom-button {
+  background-color: #088a88;
+  color: #fff;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.5s ease, transform 0.5s ease;
+}
+
+.custom-button:hover {
+  background-color: #45a2a1;
+  transform: scale(1.05);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.custom-alert {
+  background-color: #4caf50; /* Color de fondo verde */
+  color: #fff; /* Texto en color blanco */
+  padding: 20px; /* Espaciado interno */
+  margin: auto; /* Margen automático para centrar */
+  max-width: 600px; /* Ancho máximo del mensaje */
+  border-radius: 8px; /* Bordes redondeados */
+  text-align: center; /* Alineación del texto */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  transition: opacity 0.5s ease; /* Transición de opacidad */
+  font-size: 18px; /* Tamaño del texto */
+  position: fixed; /* Fijar la posición */
+  bottom: 5px; /* Alinear la parte inferior */
+  left: 50%; /* Alinear la izquierda al 50% de la pantalla */
+  transform: translateX(-50%); /* Centrar horizontalmente */
+}
+
+.custom-alert:hover {
+  opacity: 0.9; /* Opacidad reducida al pasar el ratón sobre el mensaje */
+}
+
+

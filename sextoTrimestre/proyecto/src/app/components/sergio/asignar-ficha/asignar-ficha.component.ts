@@ -12,6 +12,7 @@ export class AsignarFichaComponent {
   fichas: any[]= [];
   selectedInstructor: number | null = null;
   selectedFicha: number | null = null;
+  asignacionExitosa: boolean = false;
 
 
   constructor(private serviceService: ServiceService) {
@@ -41,6 +42,7 @@ export class AsignarFichaComponent {
   }
 
   agregarFicha(): void {
+    console.log('Entrando a agregarFicha');
     if (this.selectedInstructor && this.selectedFicha) {
       const formData = {
         idUsuario: Number(this.selectedInstructor),
@@ -48,11 +50,25 @@ export class AsignarFichaComponent {
       };
 
       this.serviceService.agregarFicha(formData).subscribe(
-        () => {
+        (response: any) => {
           console.log('Ficha agregada correctamente');
-          // Puedes recargar la lista de instructores o hacer algo más después de agregar la ficha
-        },
+          console.log('Response:', response);
+
+          if (response.message === 'Ficha asignada correctamente') {
+            // Se puede agregar lógica adicional aquí si es necesario
+            this.asignacionExitosa = true;
+            // setTimeout(() => {
+            //   this.asignacionExitosa = false;
+            // }, 3000);
+        }else{
+          console.error('Error inesperado al agregar la ficha al instructor');
+
+        }
+      },
         (error) => {
+
+          console.error('Error al agregar la ficha al instructor', error);
+
 
           if (error.error && error.error.error === 'Ya existe un registro para este usuario y ficha') {
             // Muestra una alerta al usuario indicando que ya existe el registro
