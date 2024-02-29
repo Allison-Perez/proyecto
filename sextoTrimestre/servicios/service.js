@@ -93,7 +93,6 @@ app.post("/registro", async (req, res) => {
 });
 
 // LOGEO
-
 app.post("/login", async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -124,8 +123,8 @@ app.post("/login", async (req, res) => {
     const [fichas] = await connection.execute("SELECT idFicha FROM usuarioFicha WHERE idUsuario = ?", [usuario.identificador]);
     const fichasUsuario = fichas.map(ficha => ficha.idFicha);
 
-    // Generar el token
-    const token = jwt.sign({ idUsuario: usuario.identificador, idFicha: fichasUsuario[0], correo: usuario.correo }, 'acanner', { expiresIn: '1h' });
+    // Generar el token con todas las fichas asignadas
+    const token = jwt.sign({ idUsuario: usuario.identificador, fichas: fichasUsuario, correo: usuario.correo }, 'acanner', { expiresIn: '1h' });
 
     // Cerrar la conexión y enviar la respuesta con el token
     connection.end();
@@ -135,7 +134,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Error en el inicio de sesión" });
   }
 });
-
 
 // RECUPERAR CORREO (VERIFICANDO SI EXISTE)
 
