@@ -652,6 +652,35 @@ app.get('/api/fichasInstructores', async (req, res) => {
 });
 
 
+// ESTADISTICAS ANTIGUEDAD
+
+app.get('/api/antiguedadInstructores', async (req, res) => {
+  const sql = `
+    SELECT U.identificador AS ID_Instructor, U.primerNombre, U.primerApellido,
+             DATEDIFF(CURDATE(), DU.fechaIngreso) AS Antiguedad_Dias
+    FROM usuario U
+    JOIN detalleusuario DU ON U.identificador = DU.idUsuario
+    WHERE U.idRol = 1
+    ORDER BY Antiguedad_Dias DESC;
+  `;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(sql);
+
+    await connection.end();
+
+    if (rows.length > 0) {
+      res.json({ rows });
+    } else {
+      res.status(404).json({ error: 'Datos de instructores no encontrados' });
+    }
+  } catch (error) {
+    console.error('Error al obtener datos de instructores: ' + error);
+    res.status(500).json({ error: 'Error al obtener datos de instructores' });
+  }
+});
 
 
 //MARLON
@@ -707,8 +736,6 @@ app.put("/api/actualizarInstructor", async (req, res) => {
     const { correo } = req.query;
     const userData = req.body;
 
-    console.log("entra")
-
     if (!userData.primerNombre || !userData.primerApellido || !userData.fechaIngreso || !userData.celular ) {
       return res.status(400).json({ error: 'Todos los campos obligatorios son necesarios' });
     }
@@ -742,7 +769,12 @@ app.put("/api/actualizarInstructor", async (req, res) => {
 
     if (resultDetailUser) {
       console.log("entra a actualizar")
-      // Actualiza la información en la tabla 'detalleUsuario'
+
+      const fechaIngreso = new Date(userData.fechaIngreso);
+      const fechaIngresoFormateada = fechaIngreso.toISOString().split('T')[0];
+      
+
+
       const updateDetalleUsuarioSql = `
       UPDATE detalleusuario
       SET
@@ -752,8 +784,11 @@ app.put("/api/actualizarInstructor", async (req, res) => {
         informacionAdicional = ?
       WHERE idUsuario = (SELECT identificador FROM usuario WHERE correo = ? AND idRol = 1)`;
     
-      const { fechaIngreso, celular, informacionAcademica, informacionAdicional } = userData; 
-      const detalleUsuarioValues = [fechaIngreso, celular, informacionAcademica, informacionAdicional, correo];
+      const {celular, informacionAcademica, informacionAdicional } = userData; 
+      const detalleUsuarioValues = [fechaIngresoFormateada, celular, informacionAcademica, informacionAdicional, correo];
+
+
+console.log(fechaIngresoFormateada);
 
       // Ejecuta la actualización en la tabla 'detalleUsuario'
       await connection.execute(updateDetalleUsuarioSql, detalleUsuarioValues);

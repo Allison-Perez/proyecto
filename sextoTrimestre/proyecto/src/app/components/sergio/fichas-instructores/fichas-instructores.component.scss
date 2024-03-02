@@ -2,9 +2,30 @@
 
 body {
   font-family: Roboto, sans-serif;
+  margin: 0;
 }
 
-#chart {
-  max-width: 650px;
-  margin: 35px auto;
+.chart-container {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+}
+
+.graficoUno,
+.graficoDos {
+  text-align: center;
+  width: 45%;
+}
+
+.chart {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.chart h2 {
+  margin-bottom: 15px;
 }

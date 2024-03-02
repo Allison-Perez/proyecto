@@ -67,4 +67,12 @@ export class ServiceService {
     return this.http.post<any>(url, formData);
   }
 
+
+  // PETICION DE ANTIGUEDAD
+
+  obtenerDatosInstructores(): Observable<any> {
+    const url = `${this.apiUrl}/api/antiguedadInstructores`;
+    return this.http.get<any>(url);
+  }
+
 }

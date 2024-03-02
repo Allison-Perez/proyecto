@@ -22,7 +22,7 @@ export class EditarPerfilComponent implements OnInit {
         primerNombre: ['', Validators.required],
         segundoNombre: [''],
         primerApellido: ['', Validators.required],
-        segundoApellido: ['', Validators.required],
+        segundoApellido: [''],
         correo: [''],
         fechaIngreso: ['', [Validators.required, this.fechaInferiorHoyValidator]],
         celular : ['', Validators.required],
