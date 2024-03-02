@@ -15,6 +15,7 @@ body {
 
 .graficoUno,
 .graficoDos {
+  z-index: -1;
   text-align: center;
   width: 45%;
 }
@@ -28,4 +29,15 @@ body {
 
 .chart h2 {
   margin-bottom: 15px;
+  font-size: 1.5em; /* Tamaño del texto del título */
+  color: #088a88; /* Color del texto del título */
+}
+
+/* Añadir un poco de espacio alrededor del texto para un aspecto más limpio */
+.chart h2:before, .chart h2:after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 0; /* Espacio alrededor del separador */
 }
