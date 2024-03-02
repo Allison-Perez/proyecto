@@ -559,6 +559,8 @@ JOIN detalleusuario du ON u.identificador = du.idUsuario;
 
 // ADMIN ASIGNA FICHAS
 
+// Lista las fichas
+
 app.get('/api/fichas', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -571,6 +573,7 @@ app.get('/api/fichas', async (req, res) => {
   }
 });
 
+// Lista a los instructores
 
 app.get('/api/instructores', async (req, res) => {
   try {
@@ -647,6 +650,8 @@ app.get('/api/fichasInstructores', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener datos de instructores' });
   }
 });
+
+
 
 
 //MARLON
