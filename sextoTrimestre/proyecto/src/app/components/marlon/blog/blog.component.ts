@@ -66,44 +66,48 @@ export class BlogComponent implements OnInit {
 
   crearBlog() {
     console.log('Entrando a crearBlog()');
-
+  
+    // Verificar si existen fichas asociadas al usuario
+    const fichas = this.authService.getUserFichas();
+    if (!fichas || fichas.length === 0) {
+      console.error('El usuario no tiene fichas asociadas');
+      return;
+    }
+  
+    // Construir el objeto blog a enviar al servidor
     const formData = new FormData();
-
     formData.append('nombre', this.newBlog.nombre);
     formData.append('comentario', this.newBlog.comentario);
     if (this.imageFile) {
       formData.append('imagenOpcional', this.imageFile, this.imageFile.name);
     }
-
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       formData.append('idUsuario', userInfo.idUsuario);
-      formData.append('idFicha', userInfo.idFicha);
+      fichas.forEach(ficha => {
+        formData.append('idFichas[]', ficha.toString()); 
+      });
     } else {
       console.error('No se pudo obtener la información del usuario del token JWT');
       return;
     }
-
     formData.append('fechaPublicacion', new Date().toISOString());
-
+  
 
     this.blogService.crearBlog(formData).subscribe(
       (response) => {
-
         console.log('Blog creado exitosamente:', response);
-
         this.newsList.unshift(response);
-
         this.loadBlogs();
-
         this.resetNewBlogForm();
       },
       (error) => {
         console.error('Error al crear el blog:', error);
       }
     );
+  
     console.log('Exiting crearBlog()');
-  }
+  }  
 
   resetNewBlogForm() {
     console.log('resetea blog');
