@@ -20,7 +20,7 @@ export class EditPerfilComponent implements OnInit {
       primerNombre: ['', Validators.required],
       segundoNombre: [''],
       primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
+      segundoApellido: [''],
       correo: ['']
     });
   }
