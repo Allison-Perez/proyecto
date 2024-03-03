@@ -54,30 +54,80 @@ h1{
   font-weight: normal;
 }
 
-.btn-primary {
-  background-color: #57a7a5;
-  color: #fff;
+// .btn-primary {
+//   background-color: #57a7a5;
+//   color: #fff;
+//   border: none;
+//   border-radius: 4px;
+//   padding: 10px 20px;
+//   cursor: pointer;
+//   margin-right: 20px;
+//   transition: background-color 0.3s ease;
+// }
+
+// .btn-primary:hover {
+//   background-color: #088a88;
+// }
+
+// .container .btn-primary:active {
+//   background-color: #088a88;
+// }
+
+
+.botones{
+  display: flex;
+}
+
+.Btn {
+  margin: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 180px;
+  height: 45px;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
+  padding: 0px 20px;
+  background-color: #57a7a5;
+  color: white;
+  font-weight: 500;
   cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #088a88;
+  transition-duration: .3s;
+}
+
+.svg {
+  width: 14px;
+  position: absolute;
+  right: 0;
   margin-right: 20px;
-  transition: background-color 0.3s ease;
+  fill: white;
+  transition-duration: .3s;
 }
 
-.btn-primary:hover {
-  background-color: #088a88;
+.Btn:hover {
+  color: transparent;
 }
 
-.container .btn-primary:active {
-  background-color: #088a88;
+.Btn:hover svg {
+  right: 43%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: .3s;
+}
+
+.Btn:active {
+  transform: translate(3px , 3px);
+  transition-duration: .3s;
+  box-shadow: 2px 2px 0px rgb(140, 32, 212);
 }
 
 
 @media (max-width: 700px) {
-  .btn-primary {
-    margin-right: 20px; /* Vuelve a agregar margen derecho entre los botones */
-    margin-top: 10px; /* Elimina el margen inferior entre los botones */
+  .botones{
+    flex-direction: column;
   }
 }
 
