@@ -1,8 +1,3 @@
-body {
-  font-family: 'Lobster', cursive;
-  background-color: #f8f8f8;
-}
-
 .content {
   margin-left: 0%;
   margin-top: 5%;
@@ -42,22 +37,46 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.custom-button {
+.boton {
   background-color: #088a88;
-  color: #fff;
-  padding: 15px 30px;
-  font-size: 18px;
+  padding: 1em 2em;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.5s ease, transform 0.5s ease;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
 }
 
-.custom-button:hover {
-  background-color: #45a2a1;
-  transform: scale(1.05);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+.boton:hover {
+  color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
 }
+
+.boton::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.boton:hover::before {
+  width: 150%;
+}
+
+
 
 .alert-container {
   position: absolute;
