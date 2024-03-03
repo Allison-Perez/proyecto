@@ -1,9 +1,15 @@
-
+h2{
+  color: #088a88;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
 .filtro-container {
+  margin: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  max-width: 1000px;
+  width: 90%;
 }
 
 .filtro-container label {
@@ -46,24 +52,15 @@
 }
 
 .container {
-  display: flex;
-  height: 100vh;
-  justify-content: right;
-  margin: 0 auto;
   max-width: 100%;
   overflow: hidden;
 
 }
 
 .statistics-container {
-  overflow: hidden;
-  margin-left: 110px; /* Ajusta según sea necesario para alinear con la barra lateral */
-  flex-grow: 1; /* Ocupa todo el espacio restante */
+  overflow-x: auto;
+  flex-grow: 1;
   padding: 30px;
-}
-
-h2 {
-  color: #333; /* Color de texto principal */
 }
 
 .filters {
@@ -128,29 +125,42 @@ td {
 }
 
 td:hover {
-  background-color: #e0f7fa; /* Cambia el color de fondo en el hover */
+  background-color: #e0f7fa;
   color: #333;
 }
 
-/* Establecer un ancho fijo para las celdas en modo de edición */
 td.edit-mode {
-  width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+  width: 150px;
 }
 
-/* Establecer un ancho fijo para las celdas en modo de visualización */
 td.view-mode {
-  width: 100px; /* Puedes ajustar el ancho según tus necesidades */
+  width: 100px;
 }
 
 .table_true {
   max-width: 500px;
-  overflow: hidden; /* Para truncar el contenido si es necesario */
+  overflow: hidden;
   white-space: nowrap;
-  text-align: left; /* Para que el texto no se divida en varias líneas */
+  text-align: left;
 }
 
 .table_true input {
   width: 90%;
   margin: auto;
-  box-sizing: border-box; /* Para incluir el padding y el borde en el ancho total */
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 1015px) {
+  .filtro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80%;
+  }
+  .filtro-buttons{
+    margin-top: 10px;
+  }
+  h2{
+    font-size: 20px;
+  }
 }
