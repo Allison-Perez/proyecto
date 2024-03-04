@@ -683,6 +683,40 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 });
 
 
+// DONA APRENDICES
+
+app.get('/api/fichasAprendices', async (req, res) => {
+  console.log('Entra mi perro');
+  const sql = `
+    SELECT
+      f.numeroFicha,
+      COUNT(u.idRol) as totalAprendices,
+      COUNT(u.idRol) / (SELECT COUNT(*) FROM usuario WHERE idRol = 2) * 100 as porcentajeAprendices
+    FROM
+      usuario u
+    JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
+    JOIN ficha f ON uf.idFicha = f.identificador
+    WHERE u.idRol = 2
+    GROUP BY f.numeroFicha;
+  `;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(sql);
+    await connection.end();
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: 'Datos de instructores no encontrados' });
+    }
+  } catch (error) {
+    console.error('Error al obtener datos de instructores: ' + error);
+    res.status(500).json({ error: 'Error al obtener datos de instructores' });
+  }
+});
+
+
 //MARLON
 
 
