@@ -75,4 +75,13 @@ export class ServiceService {
     return this.http.get<any>(url);
   }
 
+// DONA DE FICHAS Y CANTIDAD DE APRENDICES
+
+getFichasAprendices(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/fichasAprendices`;
+  return this.http.get<any[]>(url);
+}
+
+
+
 }

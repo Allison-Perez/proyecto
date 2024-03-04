@@ -46,8 +46,10 @@ export class SidebarComponent {
       this.router.navigate(['/estadisticas-instructores']);
     }else if (opcion === 'Promedio de Instructores') {
       this.router.navigate(['/fichas-instructores']);
-    }
+    }else if (opcion === 'Promedio de Estudiantes') {
+      this.router.navigate(['/fichas-aprendices']);
   }
+}
 
   // Función para cerrar sesión
   logout() {
