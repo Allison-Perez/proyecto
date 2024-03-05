@@ -9,6 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   private isAuthenticated: boolean = false;
   private _userFichas: number[] = [];
+  private idFicha!: number; 
 
   constructor(private jwtHelper: JwtHelperService) { }
 
@@ -38,22 +39,11 @@ export class AuthService {
  getUserFichas(): number[] {
     return this._userFichas;
   }
+  // setIdFicha(idFicha: number): void {
+  //   this.idFicha = idFicha;
+  // }
 
-  getUserInfo(): any {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decodedToken = this.jwtHelper.decodeToken(token);
-        return {
-          idFicha: decodedToken.idFicha,
-        };
-      } catch (error) {
-        console.error('Error al decodificar el token:', error);
-        return null;
-      }
-    } else {
-      console.error('Token no encontrado en el almacenamiento local');
-      return null;
-    }
-  }
+  // getIdFicha(): number {
+  //   return this.idFicha;
+  // }
 }

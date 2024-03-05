@@ -16,10 +16,6 @@ export class VerBlogComponent implements OnInit {
 
   constructor(private authService: AuthService, private serviceService: ServiceService, private router: Router) { }
 
-  ngOnInit() {
-    this.loadBlogs();
-  }
-
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
@@ -41,17 +37,27 @@ export class VerBlogComponent implements OnInit {
   }
 
 
+  ngOnInit(): void {
+    this.loadBlogs();
+  }
+
   loadBlogs() {
-    const idFicha = this.authService.getUserInfo()?.idFicha;
+    const idFicha = 1;
   
     if (idFicha !== undefined) {
       this.serviceService.getblogsFicha(idFicha).subscribe(
-        data => this.newsList = data,
+        data => {
+          console.log('Blogs loaded successfully:', data);
+          this.newsList = data;
+        },
         error => console.error('Error al cargar los blogs:', error)
       );
     } else {
       console.error('IdFicha no válida.');
     }
   }
+  
+  
+}
     
-}  
+ 

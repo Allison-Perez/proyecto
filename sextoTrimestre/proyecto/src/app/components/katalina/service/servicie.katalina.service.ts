@@ -15,10 +15,10 @@ export class ServiceService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   // VER BLOG
-  getblogsFicha(idFicha: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/blogsFicha/${idFicha}`);
-  }
-
+    getblogsFicha(idFicha: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/blogsFicha/${idFicha}`);
+    }
+ 
 
   
   // Cambiar y Actualizar Contraseña
