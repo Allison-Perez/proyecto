@@ -22,7 +22,7 @@ body {
 .graficoTres,
 .graficoCuatro {
   text-align: center;
-  width: 50%;
+  width: 48%;
 }
 
 .chart {
@@ -38,19 +38,23 @@ body {
   color: #088a88;
 }
 
-/* Añadir un poco de espacio alrededor del texto para un aspecto más limpio */
 .titulos::after {
   content: "";
   display: block;
   height: 1px;
   background-color: #ddd;
-  margin: 8px 0; /* Espacio alrededor del separador */
+  margin: 8px 0;
 }
 
 @media (max-width: 1200px) {
   .graficoUno,
   .graficoDos {
-    width: 60%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+    width: 60%;
+  }
+  .graficoTres,
+.graficoCuatro {
+  text-align: center;
+  width: 58%;
   }
 }
 
@@ -58,8 +62,14 @@ body {
 @media (max-width: 1000px) {
   .graficoUno,
   .graficoDos {
-    width: 75%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+    width: 75%;
     margin: 0 auto;
+  }
+  .graficoTres,
+  .graficoCuatro {
+    margin: 0 auto;
+    text-align: center;
+    width: 68%;
   }
 
   .chart-container {
@@ -80,6 +90,12 @@ body {
     width: 85%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
     margin: 0 auto;
   }
+  .graficoTres,
+  .graficoCuatro {
+    margin: 0 auto;
+    text-align: center;
+    width: 78%;
+  }
 
   .chart-container {
     justify-content: center;
@@ -99,6 +115,13 @@ body {
     margin: 0 auto;
   }
 
+  .graficoTres,
+  .graficoCuatro {
+    margin: 0 auto;
+    text-align: center;
+    width: 88%;
+  }
+
   .chart-container {
     justify-content: center;
     flex-direction: column; /* Apilar los gráficos en pantallas más pequeñas */
@@ -116,6 +139,12 @@ body {
     width: 100%; /* Ocupar el 90% del ancho en pantallas más pequeñas */
     margin: 0 auto; /* Centrar */
   }
+  .graficoTres,
+  .graficoCuatro {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+  }
 
   .chart-container {
     justify-content: center;
@@ -128,9 +157,17 @@ body {
 }
 
 @media (min-width: 1800px) {
-  .graficoUno,
   .graficoDos {
-    width: 38%; /* Limitar el ancho al 30% después de 1600px */
+    width: 45%; /* Limitar el ancho al 30% después de 1600px */
+  }
+  .graficoUno{
+    width: 38%;
+  }
+  .graficoTres{
+    width: 38%;
+  }
+  .graficoCuatro{
+    width: 38%;
   }
   .chart-container {
     margin-top: 5%;
