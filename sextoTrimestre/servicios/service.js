@@ -683,10 +683,39 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 });
 
 
+// ESTADISTICAS CANTIDAD DE BLOGS
+
+app.get("/api/blogsPorInstructor", async (req, res) => {
+  console.log('entra mi gato');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        u.identificador AS idInstructor,
+        u.primerNombre AS nombreInstructor,
+        COUNT(b.identificador) AS cantidadBlogsSubidos
+      FROM
+        usuario u
+      JOIN
+        blog b ON u.identificador = b.idUsuario
+      WHERE
+        u.idRol = 1
+      GROUP BY
+        u.identificador, u.primerNombre
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la cantidad de blogs por instructor:", error);
+    res.status(500).json({ error: "Error al obtener la cantidad de blogs por instructor" });
+  }
+});
+
 // DONA APRENDICES
 
 app.get('/api/fichasAprendices', async (req, res) => {
-  console.log('Entra mi perro');
   const sql = `
     SELECT
       f.numeroFicha,
@@ -713,6 +742,35 @@ app.get('/api/fichasAprendices', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener datos de instructores: ' + error);
     res.status(500).json({ error: 'Error al obtener datos de instructores' });
+  }
+});
+
+// ESTADISTICAS EDADES
+
+app.get("/api/promedioEdades", async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        CASE
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 14 AND 18 THEN '14-18'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 18 AND 25 THEN '18-25'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 26 AND 35 THEN '26-35'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 36 AND 45 THEN '36-45'
+          ELSE '46+'
+        END as rango_edad,
+        COUNT(*) as cantidad
+      FROM usuario u
+      WHERE u.idRol = 2
+      GROUP BY rango_edad
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la distribución de edades:", error);
+    res.status(500).json({ error: "Error al obtener la distribución de edades" });
   }
 });
 
@@ -1025,33 +1083,35 @@ app.get('/obtenerFichas/:idUsuario', async (req, res) => {
   }
 });
 
+
 // Ruta para crear un nuevo horario
 app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   try {
-    const { nombre, comentario, idFicha } = req.body;
+    const { nombre, comentario, idFicha, idUsuario } = req.body;
     let urlArchivo = '';
 
     if (req.file) {
-      urlArchivo = req.file.filename;
+      urlArchivo = '/uploads/' + req.file.filename;
     } else {
       return res.status(400).json({ error: 'El archivo es obligatorio' });
     }
 
-    urlArchivo = '/uploads/' + req.file.filename;
+    const connection = await mysql.createConnection(dbConfig);
+    const [fichaExists] = await connection.execute("SELECT COUNT(*) AS count FROM ficha WHERE identificador = ?", [idFicha]);
+    connection.end();
 
-    if (nombre && comentario && idFicha) {
-      const userInfo = getUserInfoFromRequest(req);
-      if (!userInfo) {
-        return res.status(401).json({ error: 'No se pudo obtener la información del usuario' });
-      }
+    if (fichaExists[0].count === 0) {
+      return res.status(400).json({ error: "La ficha seleccionada no es válida" });
+    }
 
+    if (nombre && comentario && idFicha && idUsuario) {
       const connection = await mysql.createConnection(dbConfig);
       const fecha = new Date().toISOString();
 
       const sql = `INSERT INTO horario (nombre, urlArchivo, comentario, fecha, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, userInfo.idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: 'Horario creado exitosamente' });
@@ -1063,6 +1123,7 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
     res.status(500).json({ error: 'Error al crear el horario' });
   }
 });
+
 
 // Ruta para actualizar un horario existente
 app.put('/editarHorario/:identificador', async (req, res) => {

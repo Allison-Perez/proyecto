@@ -67,7 +67,6 @@ export class ServiceService {
     return this.http.post<any>(url, formData);
   }
 
-
   // PETICION DE ANTIGUEDAD
 
   obtenerDatosInstructores(): Observable<any> {
@@ -75,13 +74,25 @@ export class ServiceService {
     return this.http.get<any>(url);
   }
 
+// ESTADISTICAS BLOGS
+
+getBlogsPorInstructor(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/blogsPorInstructor`;
+  return this.http.get<any[]>(url);
+}
+
 // DONA DE FICHAS Y CANTIDAD DE APRENDICES
 
 getFichasAprendices(): Observable<any[]> {
   const url = `${this.apiUrl}/api/fichasAprendices`;
   return this.http.get<any[]>(url);
 }
+// PROMEDIO EDADES APRENDICES
 
+getDistribucionEdades(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/promedioEdades`;
+  return this.http.get<any[]>(url);
+}
 
 
 }
