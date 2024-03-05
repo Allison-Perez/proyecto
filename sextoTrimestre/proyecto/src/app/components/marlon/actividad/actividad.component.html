@@ -38,10 +38,15 @@
             </div> 
         </ul>
   </div>
-</nav> 
-<div class="container">
+</nav><br> 
+<div class="container"><br>
+<div class="crear-actividad">
   <h2 class="subtitulo mt-5">Crear Actividad</h2>
   <form (submit)="createActivity(activityForm)" enctype="multipart/form-data" #activityForm="ngForm">
+    <label for="fichaSelect">Seleccionar ficha:</label><br>
+    <select [(ngModel)]="selectedFicha" name="selectedFicha" (change)="loadActivities()">
+      <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
+    </select>    
     <div class="form-group">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" [(ngModel)]="newActivity.nombre" class="form-control" required>
@@ -61,46 +66,59 @@
     <div class="form-group">
       <label for="archivo">Archivo:</label>
       <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Crear Actividad</button>
+    </div>    
+    <button type="submit" class="btn btn-crear-actividad">Crear Actividad</button>
   </form>
-
+</div>
   <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
     {{ errorMessage }}
   </div>
-
-  <h2 class="subtitulo mt-5">Lista Actividades</h2>
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let activity of activityList">
-      <ng-container *ngIf="!editingActivity || activity.identificador !== editingActivity.identificador; else editTemplate">
-        <h4>{{ activity.nombre }}</h4>
-        <p>{{ activity.comentario }}</p>
-        <p><strong>Fecha de Inicio:</strong> {{ formatDate(activity.fechaInicio) }}</p>
-        <p><strong>Fecha de Fin:</strong> {{ formatDate(activity.fechaFinal) }}</p>      
-        <a (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-        <button (click)="editActivity(activity)" class="btn btn-primary">Editar</button>
-        <button (click)="deleteActivity(activity.identificador)" class="btn btn-danger">Eliminar</button>
-      </ng-container>
-      <ng-template #editTemplate>
-        <div class="form-group">
-          <input [(ngModel)]="editingActivity.nombre" name="nombre" class="form-control" />
+  <div class="lista-actividades">
+    <h2 class="subtitulo mt-5">Lista de Actividades</h2>
+    <div *ngIf="activityList.length > 0; else noActivities">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let activity of activityList">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h3 class="card-title">{{ activity.nombre }}</h3>
+              <img class="image" src="assets/imagenes/guia.png" alt="Portada">
+              <p class="card-text">{{ activity.comentario }}</p>
+              <p><strong>Fecha de Inicio:</strong> {{ formatDate(activity.fechaInicio) }}</p>
+              <p><strong>Fecha de Fin:</strong> {{ formatDate(activity.fechaFinal) }}</p>
+              <div class="button-container">
+              <a (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" type="submit" class="btn btn-primary ver-archivo">Ver archivo</a>
+              <button (click)="editActivity(activity)" class="btn btn-primary editar">Editar</button>
+              <button (click)="deleteActivity(activity.identificador)" class="btn btn-danger eliminar">Eliminar</button>
+            </div><br>
+              <div *ngIf="editingActivity && editingActivity.identificador === activity.identificador">
+                <form (submit)="updateActivity(editingActivity.identificador)" #editActivityForm="ngForm">
+                  <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" [(ngModel)]="editingActivity.nombre" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="comentario">Comentario:</label>
+                    <textarea id="comentario" name="comentario" [(ngModel)]="editingActivity.comentario" class="form-control" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="fechaInicioEdit">Fecha de Inicio:</label>
+                    <input type="date" id="fechaInicioEdit" name="fechaInicioEdit" [(ngModel)]="editingActivity.fechaInicio" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="fechaFinalEdit">Fecha de Fin:</label>
+                    <input type="date" id="fechaFinalEdit" name="fechaFinalEdit" [(ngModel)]="editingActivity.fechaFinal" class="form-control" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                  <button type="button" (click)="cancelEdit()" class="btn btn-danger">Cancelar</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <textarea [(ngModel)]="editingActivity.comentario" name="comentario" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="fechaInicioEdit">Fecha de Inicio:</label>
-          <input type="date" id="fechaInicioEdit" name="fechaInicioEdit" [(ngModel)]="editingActivity.fechaInicio" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="fechaFinalEdit">Fecha de Fin:</label>
-          <input type="date" id="fechaFinalEdit" name="fechaFinalEdit" [(ngModel)]="editingActivity.fechaFinal" class="form-control" required>
-        </div>
-        <button (click)="updateActivity(editingActivity.identificador)" class="btn btn-success">Guardar</button>
-        <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
-      </ng-template>
-    </li>
-  </ul>
+      </div>
+    </div>
+    <ng-template #noActivities>
+      <p>No hay actividades disponibles.</p>
+    </ng-template>
+  </div>
   
-
-</div>

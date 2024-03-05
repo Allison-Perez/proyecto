@@ -79,6 +79,7 @@ export class HorariosComponent implements OnInit {
       }
     );
   }
+  
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }

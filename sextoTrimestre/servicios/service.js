@@ -1165,12 +1165,18 @@ app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
     let urlArchivo = '';
 
     if (req.file) {
-      urlArchivo = req.file.filename;
+      urlArchivo = '/uploads/' + req.file.filename;
     } else {
       return res.status(400).json({ error: 'El archivo es obligatorio' });
     }
 
-    urlArchivo = '/uploads/' + req.file.filename;
+    const connection = await mysql.createConnection(dbConfig);
+    const [fichaExists] = await connection.execute("SELECT COUNT(*) AS count FROM ficha WHERE identificador = ?", [idFicha]);
+    connection.end();
+
+    if (fichaExists[0].count === 0) {
+      return res.status(400).json({ error: "La ficha seleccionada no es válida" });
+    }
 
     if (nombre && comentario && fechaInicio && fechaFinal && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
@@ -1189,13 +1195,13 @@ app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
 })
 
 // Ruta para obtener todas las actividades
-app.get('/listarActividades/:idFicha', async (req, res) => {
+app.get('/listarActividades/:idUsuario', async (req, res) => {
   try {
-    const { idFicha } = req.params;
+    const { idUsuario } = req.params;
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = 'SELECT * FROM guias WHERE idFicha = ?';
-    const [rows] = await connection.execute(sql, [idFicha]);
+    const sql = 'SELECT * FROM guias WHERE idUsuario = ?';
+    const [rows] = await connection.execute(sql, [idUsuario]);
     connection.end();
     res.status(200).json(rows);
   } catch (error) {
