@@ -41,6 +41,12 @@
 <div class="container">
   <h2 class="subtitulo mt-5">Crear Horarios</h2>
   <form (submit)="crearHorario()" enctype="multipart/form-data">
+    <div>
+      <label for="fichaSelect">Seleccionar ficha:</label>
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" (change)="loadHorario()" name="fichaSelect">
+        <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
+      </select>
+    </div>
     <label for="nombre">Titulo:</label>
     <input type="text" id="nombre" name="nombre" [(ngModel)]="newHorario.nombre" required>
     <label for="comentario">Comentario:</label>
@@ -50,6 +56,7 @@
     <button type="submit" class="btn btn-primary">Subir Horario</button>
   </form>  
 </div>
+
 <div class="mostrar">
   <h2>Lista de Horarios</h2>
   <div *ngIf="newsList.length > 0; else noHorarios">

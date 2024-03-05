@@ -11,8 +11,14 @@ export class HorarioService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getHorarios(idFicha: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/obtenerHorarios/${idFicha}`);
+  getFichasUsuario(): Observable<any[]> {
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    return this.http.get<any[]>(`${this.apiUrl}/fichasPorUsuario/${idUsuario}`);
+  }
+
+  getHorarios(): Observable<any> {
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    return this.http.get(`${this.apiUrl}/obtenerHorarios/${idUsuario}`);
   }
 
   crearHorario(formData: FormData): Observable<any> {

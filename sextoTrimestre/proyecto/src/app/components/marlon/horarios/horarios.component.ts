@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./horarios.component.css']
 })
 export class HorariosComponent implements OnInit {
+  fichas: any[] = [];
   newsList: any[] = [];
+  selectedFicha: number | undefined;
   newHorario: any = { nombre: '', comentario: '' };
   selectedFile: File | null = null;
   isMenuOpen: boolean = false;
@@ -18,8 +20,11 @@ export class HorariosComponent implements OnInit {
   editingHorario: any = null;
 
   constructor(private horarioService: HorarioService, private router: Router, private authService: AuthService) { }
+
   ngOnInit() {
     this.loadHorario();
+    this.loadFichas();
+    this.getFichasUsuario()
   }
 
   toggleProfileMenu() {
@@ -38,25 +43,42 @@ export class HorariosComponent implements OnInit {
   }
 
   loadHorario() {
-    const fichas = this.authService.getUserFichas();
-    if (fichas && fichas.length > 0) {
-      this.newsList = [];
-      fichas.forEach(idFicha => {
-        this.horarioService.getHorarios(idFicha).subscribe(
-          data => {
-            this.newsList.push(...data);
-          },
-          error => {
-            console.error('Error al cargar los horarios:', error);
-          }
-        );
-      });
-    } else {
-      console.log('El usuario no tiene fichas asociadas');
-    }
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    this.horarioService.getHorarios().subscribe(
+      data => {
+        this.newsList = data;
+      },
+      error => {
+        console.error('Error al cargar los horarios:', error);
+      }
+    );    
   }
-  
 
+  getFichasUsuario(): void {
+    this.horarioService.getFichasUsuario().subscribe(
+      (data: any[]) => {
+        this.fichas = data;
+      },
+      error => {
+        console.error('Error al cargar las fichas del usuario:', error);
+      }
+    );
+  }
+
+  loadFichas() {
+    this.horarioService.getFichasUsuario().subscribe(
+      data => {
+        this.fichas = data;
+        if (this.fichas.length > 0) {
+          this.selectedFicha = this.fichas[0].identificador;
+          this.loadHorario();
+        }
+      },
+      error => {
+        console.error('Error al cargar las fichas:', error);
+      }
+    );
+  }
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
@@ -76,7 +98,12 @@ export class HorariosComponent implements OnInit {
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       formData.append('idUsuario', userInfo.idUsuario);
-      formData.append('idFicha', userInfo.idFicha);
+      if (this.selectedFicha !== undefined) {
+        formData.append('idFicha', this.selectedFicha.toString()); 
+      } else {
+        console.error('No se ha seleccionado una ficha');
+        return;
+      }
     } else {
       console.error('No se pudo obtener la información del usuario del token JWT');
       return;
@@ -100,12 +127,13 @@ export class HorariosComponent implements OnInit {
   resetNewHorarioForm() {
     this.newHorario = { nombre: '', comentario: '' };
     this.selectedFile = null;
+    this.selectedFicha = 0;
   }
 
   editarHorario(horario: any) {
     this.editingHorario = { ...horario };
   }
-  
+
   guardarEdicion() {
     this.horarioService.editarHorario(this.editingHorario.identificador, this.editingHorario).subscribe(
       (response) => {
@@ -118,7 +146,7 @@ export class HorariosComponent implements OnInit {
       }
     );
   }
-  
+
   cancelarEdicion() {
     this.editingHorario = null;
   }
@@ -135,16 +163,13 @@ export class HorariosComponent implements OnInit {
     );
   }
 
-
   descargarArchivo(archivoUrl: string, nombreArchivo: string) {
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
-    link.download = nombreArchivo; 
+    link.download = nombreArchivo;
     document.body.appendChild(link);
     link.click();
-}
-
-
+  }
 }

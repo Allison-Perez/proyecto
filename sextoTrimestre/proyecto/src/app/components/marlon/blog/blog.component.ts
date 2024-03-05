@@ -65,7 +65,6 @@ export class BlogComponent implements OnInit {
   }  
   
   loadBlogs() {
-    console.log('Cargando todos los blogs');
     const idUsuario = this.authService.getUserInfo().idUsuario;
     this.blogService.getBlogsPorUsuario(idUsuario).subscribe(
       data => {

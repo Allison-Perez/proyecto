@@ -986,15 +986,15 @@ app.delete("/eliminarBlog/:id", async (req, res) => {
 
 // HORARIOS
 
-// Ruta para obtener horarios
-app.get('/obtenerHorarios/:idFicha', async (req, res) => {
+// Ruta para obtener horarios filtrados por identificador
+app.get('/obtenerHorarios/:idUsuario', async (req, res) => {
   try {
-    const { idFicha } = req.params;
+    const { idUsuario } = req.params;
     const connection = await mysql.createConnection(dbConfig);
-
-    const sql = `SELECT * FROM horario WHERE idFicha = ?`;
-    const [rows] = await connection.execute(sql, [idFicha]);
-
+    
+    const sql = `SELECT * FROM horario WHERE idUsuario = ?`;
+    const [rows] = await connection.execute(sql, [idUsuario]);
+    
     connection.end();
     res.status(200).json(rows);
   } catch (error) {
@@ -1003,10 +1003,27 @@ app.get('/obtenerHorarios/:idFicha', async (req, res) => {
   }
 });
 
+// Ruta para obtener las fichas de un usuario
+app.get('/obtenerFichas/:idUsuario', async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT identificador, numeroFicha FROM ficha WHERE idUsuario = ?`;
+    const [rows] = await connection.execute(sql, [idUsuario]);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener las fichas:', error);
+    res.status(500).json({ error: 'Error al obtener las fichas' });
+  }
+});
+
 // Ruta para crear un nuevo horario
 app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   try {
-    const { nombre, comentario, idUsuario, idFicha } = req.body;
+    const { nombre, comentario, idFicha } = req.body;
     let urlArchivo = '';
 
     if (req.file) {
@@ -1017,14 +1034,19 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
 
     urlArchivo = '/uploads/' + req.file.filename;
 
-    if (nombre && comentario && idUsuario && idFicha) {
+    if (nombre && comentario && idFicha) {
+      const userInfo = getUserInfoFromRequest(req);
+      if (!userInfo) {
+        return res.status(401).json({ error: 'No se pudo obtener la información del usuario' });
+      }
+
       const connection = await mysql.createConnection(dbConfig);
       const fecha = new Date().toISOString();
 
       const sql = `INSERT INTO horario (nombre, urlArchivo, comentario, fecha, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, userInfo.idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: 'Horario creado exitosamente' });
