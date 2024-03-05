@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -683,6 +683,36 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 });
 
 
+// ESTADISTICAS CANTIDAD DE BLOGS
+
+app.get("/api/blogsPorInstructor", async (req, res) => {
+  console.log('entra mi gato');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        u.identificador AS idInstructor,
+        u.primerNombre AS nombreInstructor,
+        COUNT(b.identificador) AS cantidadBlogsSubidos
+      FROM
+        usuario u
+      JOIN
+        blog b ON u.identificador = b.idUsuario
+      WHERE
+        u.idRol = 1
+      GROUP BY
+        u.identificador, u.primerNombre
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la cantidad de blogs por instructor:", error);
+    res.status(500).json({ error: "Error al obtener la cantidad de blogs por instructor" });
+  }
+});
+
 // DONA APRENDICES
 
 app.get('/api/fichasAprendices', async (req, res) => {
@@ -715,12 +745,9 @@ app.get('/api/fichasAprendices', async (req, res) => {
   }
 });
 
-
 // ESTADISTICAS EDADES
 
-
 app.get("/api/promedioEdades", async (req, res) => {
-  console.log('Entra a grafico');
   try {
     const connection = await mysql.createConnection(dbConfig);
 
@@ -951,6 +978,11 @@ app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
     res.status(500).json({ error: "Error al obtener los blogs por usuario" });
   }
 });
+
+
+
+
+
 
 // Ruta para obtener las fichas asociadas al usuario
 app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
@@ -1218,6 +1250,27 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la actividad' });
   }
 });
+
+
+
+
+// ver blog por ficha
+app.get("/blogsFicha/:idFicha", async (req, res) => {
+  try {
+    const { idFicha } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
+    const [rows] = await connection.execute(sql, [idFicha]);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener los blogs por ficha:", error);
+    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+  }
+});
+
 
 
 // app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => {

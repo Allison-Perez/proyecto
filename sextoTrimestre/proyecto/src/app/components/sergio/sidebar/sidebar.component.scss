@@ -31,7 +31,7 @@
   left: -230px;
   height: 120vh;
   transition: left 0.3s ease;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .sidebar ul {
@@ -110,6 +110,7 @@ a {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
   border-radius: 4px; /* Bordes redondeados */
   padding: 10px;
+  z-index: 10000;
 }
 
 .profile-menu ul {

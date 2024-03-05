@@ -67,13 +67,19 @@ export class ServiceService {
     return this.http.post<any>(url, formData);
   }
 
-
   // PETICION DE ANTIGUEDAD
 
   obtenerDatosInstructores(): Observable<any> {
     const url = `${this.apiUrl}/api/antiguedadInstructores`;
     return this.http.get<any>(url);
   }
+
+// ESTADISTICAS BLOGS
+
+getBlogsPorInstructor(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/blogsPorInstructor`;
+  return this.http.get<any[]>(url);
+}
 
 // DONA DE FICHAS Y CANTIDAD DE APRENDICES
 

@@ -18,9 +18,9 @@ export class VerHorariosComponent {
 
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
-  ngOnInit() {
-    this.loadHorario();
-  }
+  // ngOnInit() {
+  //   this.loadHorario();
+  // }
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
@@ -44,28 +44,28 @@ export class VerHorariosComponent {
     this.router.navigate(['/login']);
   }
  
-  loadHorario() {
-    this.newsList = []; // Limpia la lista antes de cargar los horarios
+//   loadHorario() {
+//     this.newsList = []; // Limpia la lista antes de cargar los horarios
   
-    const idFicha = 1;
+//     const idFicha = 1;
   
-    this.ServiceService.getHorarios(idFicha).subscribe(
-      data => {
-        this.newsList = data;
-      },
-      error => {
-        console.error('Error al cargar los horarios:', error);
-      }
-    );
-  }
+//     this.ServiceService.getHorarios(idFicha).subscribe(
+//       data => {
+//         this.newsList = data;
+//       },
+//       error => {
+//         console.error('Error al cargar los horarios:', error);
+//       }
+//     );
+//   }
   
-  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
-    const url = `http://localhost:3000${archivoUrl}`;
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.download = nombreArchivo; 
-    document.body.appendChild(link);
-    link.click();
-}
+//   descargarArchivo(archivoUrl: string, nombreArchivo: string) {
+//     const url = `http://localhost:3000${archivoUrl}`;
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.target = '_blank';
+//     link.download = nombreArchivo; 
+//     document.body.appendChild(link);
+//     link.click();
+// }
 }
