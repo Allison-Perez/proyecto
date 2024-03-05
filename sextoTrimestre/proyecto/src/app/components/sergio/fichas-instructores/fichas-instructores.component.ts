@@ -67,6 +67,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
     });
   }
 
+
   inicializarGraficoBarra() {
     if (this.datosInstructores) {
       const nombresInstructores = this.datosInstructores.map(
@@ -76,6 +77,17 @@ export class FichasInstructoresComponent implements AfterViewInit {
       const antiguedadDias = this.datosInstructores.map(
         (instructor: Instructor) => instructor.Antiguedad_Dias
       );
+
+      const colors = ['#8DCDDB', '#b8cabe', '#F0B66B', '#b88f93', '#e0d1ed'];
+
+      const data = antiguedadDias.map((value: number, index: number) => ({
+        x: nombresInstructores[index],
+        y: value,
+        fill: colors[index % colors.length],
+      }));
+
+
+      console.log(data);
 
       const options = {
         chart: {
@@ -93,7 +105,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
         series: [
           {
             name: 'Antigüedad (días)',
-            data: antiguedadDias,
+            data: data,
           },
         ],
         xaxis: {
@@ -105,9 +117,14 @@ export class FichasInstructoresComponent implements AfterViewInit {
         document.querySelector('#bar-chart'),
         options
       );
-      chart.render();
-    } else {
-      console.error('Los datos de instructores son undefined.');
+
+      chart.render().then(() => {
+        chart.updateOptions({
+          colors: colors,
+        });
+      });
     }
   }
+
+
 }
