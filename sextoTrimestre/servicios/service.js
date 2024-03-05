@@ -1008,11 +1008,6 @@ app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
   }
 });
 
-
-
-
-
-
 // Ruta para obtener las fichas asociadas al usuario
 app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   try {
@@ -1283,7 +1278,7 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
 
 
 
-// ver blog por ficha
+// ver blog por ficha K
 app.get("/blogsFicha/:idFicha", async (req, res) => {
   try {
     const { idFicha } = req.params;
@@ -1293,6 +1288,7 @@ app.get("/blogsFicha/:idFicha", async (req, res) => {
     const [rows] = await connection.execute(sql, [idFicha]);
 
     connection.end();
+    console.log('Blogs retrieved successfully:', rows);
     res.status(200).json(rows);
   } catch (error) {
     console.error("Error al obtener los blogs por ficha:", error);
@@ -1300,6 +1296,22 @@ app.get("/blogsFicha/:idFicha", async (req, res) => {
   }
 });
 
+// app.get("/horarioFicha/:idFicha", async (req, res) => {
+//   try {
+//     const { idFicha } = req.params;
+//     const connection = await mysql.createConnection(dbConfig);
+
+//     const sql = `SELECT * FROM horario WHERE idFicha = ?`;
+//     const [rows] = await connection.execute(sql, [idFicha]);
+
+//     connection.end();
+//     console.log('Blogs retrieved successfully:', rows);
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error("Error al obtener los horarios por ficha:", error);
+//     res.status(500).json({ error: "Error al obtener los horarios por ficha" });
+//   }
+// });
 
 
 // app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => {
