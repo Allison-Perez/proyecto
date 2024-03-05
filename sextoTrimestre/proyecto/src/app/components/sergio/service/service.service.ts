@@ -81,7 +81,12 @@ getFichasAprendices(): Observable<any[]> {
   const url = `${this.apiUrl}/api/fichasAprendices`;
   return this.http.get<any[]>(url);
 }
+// PROMEDIO EDADES APRENDICES
 
+getDistribucionEdades(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/promedioEdades`;
+  return this.http.get<any[]>(url);
+}
 
 
 }

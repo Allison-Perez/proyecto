@@ -52,7 +52,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
             breakpoint: 480,
             options: {
               chart: {
-                width: 200,
+                width: 190,
               },
               legend: {
                 position: 'bottom',
@@ -78,7 +78,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
         (instructor: Instructor) => instructor.Antiguedad_Dias
       );
 
-      const colors = ['#8DCDDB', '#b8cabe', '#F0B66B', '#b88f93', '#e0d1ed'];
+      const colors = ['#6da67a'];
 
       const data = antiguedadDias.map((value: number, index: number) => ({
         x: nombresInstructores[index],
@@ -92,7 +92,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
       const options = {
         chart: {
           type: 'bar',
-          height: 180,
+          height: 220,
         },
         plotOptions: {
           bar: {

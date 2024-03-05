@@ -686,7 +686,6 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 // DONA APRENDICES
 
 app.get('/api/fichasAprendices', async (req, res) => {
-  console.log('Entra mi perro');
   const sql = `
     SELECT
       f.numeroFicha,
@@ -713,6 +712,38 @@ app.get('/api/fichasAprendices', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener datos de instructores: ' + error);
     res.status(500).json({ error: 'Error al obtener datos de instructores' });
+  }
+});
+
+
+// ESTADISTICAS EDADES
+
+
+app.get("/api/promedioEdades", async (req, res) => {
+  console.log('Entra a grafico');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        CASE
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 14 AND 18 THEN '14-18'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 18 AND 25 THEN '18-25'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 26 AND 35 THEN '26-35'
+          WHEN YEAR(CURDATE()) - YEAR(u.fechaNacimiento) BETWEEN 36 AND 45 THEN '36-45'
+          ELSE '46+'
+        END as rango_edad,
+        COUNT(*) as cantidad
+      FROM usuario u
+      WHERE u.idRol = 2
+      GROUP BY rango_edad
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la distribución de edades:", error);
+    res.status(500).json({ error: "Error al obtener la distribución de edades" });
   }
 });
 
