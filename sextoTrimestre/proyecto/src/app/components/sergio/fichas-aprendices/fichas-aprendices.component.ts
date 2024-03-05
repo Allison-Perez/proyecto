@@ -57,7 +57,7 @@ export class FichasAprendicesComponent implements AfterViewInit {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '15%',
+          columnWidth: '18%',
           endingShape: 'rounded'
         },
       },
