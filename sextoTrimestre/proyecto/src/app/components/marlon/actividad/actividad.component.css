@@ -1,5 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.subtitulo{
+  color: #0a7775;
+  text-align: center;
+  font-weight: bolder;
+  font-family: "Outfit", sans-serif;
+  font-size: 50px;
+  font-style: normal;
+}
+
+/* Container */
+.instagram-div {
+  margin-left: 30px;
+  max-width: 350px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  flex-direction: column;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.button {
+  background-color: #0a7775;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.description {
+  font-size: 16px;
+  color: #262626;
+  margin-top: 10px;
+}
+
+
 /* Estilos Nav */
 nav{
   background-color: #008a88;
@@ -18,7 +72,6 @@ nav{
 .nav-link:hover{
   color: rgb(14, 13, 13);
 }
-
 .nombre{
   padding: 10px;
   color: white;
@@ -52,38 +105,6 @@ nav{
   margin: 10px 0;
 }
 
-/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
-@media (max-width: 700px) {
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .nav {
-    display: none;
-  }
-
-  .menu-icon {
-    cursor: pointer;
-    display: block;
-    margin-right: 20px;
-  }
-
-  /* Estilos para mostrar el menú en pantallas pequeñas */
-  .show-menu .nav {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .show-menu .nav-item {
-    margin: 0px 0;
-  }
-
-  .show-menu{
-    display: block;
-  }
-}
-
 /* Estilo del dropdown */
 .otro {
   color: #008a88;
@@ -97,8 +118,8 @@ button {
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff; /* Color de fondo */
-  border: 1px solid #ccc; /* Borde del menú */
+  background-color: #fff;
+  border: 1px solid #ccc; 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px; 
   padding: 10px;
@@ -122,40 +143,382 @@ button {
   background-color: #070707;
 }
 
-
-/*Crear Actividad*/
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1); 
-  padding: 20px; 
-  background-color: #ffffff; 
-  border-radius: 10px; 
-  width: 700px;
+@media (max-width: 600px) {
+  .instagram-div {
+    margin-left: 10%;
+    max-width: 80%;
+    height: 80%;
+  }
+  .image {
+    width: 80%;
+    height: 70%;
+    border-radius: 10%;
+    margin-bottom: 20%;
+  }
+  .name {
+    margin-top: -15%;
+    font-weight: bold;
+  }
+    
+  .description {
+    margin-top: 10%;
+  }
 }
 
-.subir{
-  margin-top: 20px;
-}
-.titulo{
-  color: #008a88;
-  font-size: 30px;
-  font-weight: bold
-}
-.subtitulo {
-  margin-top: 40px;
-  margin-left: 50px;
-  margin-right: 50px;
-  color: #008a88;
-  font-size: 30px;
-  font-weight: bold; 
-}
-
-label {
+.crear-actividad {
+  margin-top: 20px; 
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 60%; 
+  margin: auto;
   font-weight: bold;
 }
 
-.boton{
+.lista-actividades {
+  margin-top: 20px; 
+}
+
+.lista-actividades h2 {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.lista-actividades .card {
+  margin-bottom: 20px;
+}
+
+.lista-actividades .card-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.lista-actividades .card-text {
+  font-size: 16px;
+}
+
+.lista-actividades .btn {
+  margin-right: 10px;
+}
+
+.lista-actividades .form-group {
+  margin-bottom: 15px;
+}
+
+.lista-actividades input[type="text"],
+.lista-actividades textarea,
+.lista-actividades input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.lista-actividades .btn-primary {
   background-color: #008a88;
   color: white;
 }
 
+.lista-actividades .btn-primary:hover {
+  background-color: #007570;
+}
+
+.lista-actividades .btn-secondary {
+  background-color: #ccc;
+  color: black;
+}
+
+.lista-actividades .btn-secondary:hover {
+  background-color: #b3b3b3;
+}
+
+.lista-actividades .btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.lista-actividades .btn-success:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 600px) {
+  .lista-actividades .card {
+    width: 100%;
+  }
+}
+
+
+
+/* Estilos para la barra de navegación */
+.navbar {
+  background-color: #008a88;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .nombre {
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster', sans-serif;
+  padding: 10px;
+}
+
+.navbar .menu-icon {
+  display: none;
+}
+
+.navbar .menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+.navbar .show-menu .menu-icon {
+  display: block;
+}
+
+.navbar .show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar .nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.navbar .nav .nav-link {
+  color: white;
+}
+
+.navbar .nav .nav-link:hover {
+  color: rgb(14, 13, 13);
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (700px o menos) */
+@media (max-width: 700px) {
+  .navbar .menu-icon {
+    cursor: pointer;
+    display: block;
+    margin-right: 20px;
+  }
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
+  .navbar .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar .show-menu .nav .nav-item {
+    margin: 0px 0;
+  }
+
+  .navbar .show-menu {
+    display: block;
+  }
+}
+
+/* Estilos para el dropdown */
+.dropdown-content { 
+  margin-top: 7px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff;
+  border: 1px solid #ccc; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
+
+/* Botón "Ver Archivo" */
+.btn-primary.ver-archivo {
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #005b59;
+  border: none;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 8px 16px;
+}
+
+.btn-primary.ver-archivo:hover {
+  background-color:#005b59;
+}
+
+/* Botón "Guardar Cambios" */
+.btn-primary {
+  background-color: #005b59;
+  border: none;
+  border-radius: 5px;
+  color: white;  
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.btn-primary:hover {
+  background-color: #008a88;
+}
+
+/* Botón "Cancelar" */
+.btn-cancelar {
+  color: #f5f5f5; 
+  background-color: #850606; 
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background-color: #850606; 
+}
+
+.image {
+  max-width: 150px; 
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px; 
+}
+
+/* Estilos para todos los botones */
+.btn {
+  padding: 8px 16px; 
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn:hover {
+  opacity: 0.8; 
+}
+
+/* Botón "Crear Actividad" */
+.btn-crear-actividad {
+  background-color: #005b59; 
+  border: none;
+  color: white;
+  margin-top: 30px;
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-primary.ver-archivo {
+  background-color: #005b59;
+}
+
+.btn-primary.ver-archivo:hover {
+  background-color: #005b59;
+}
+
+.btn-primary {
+  background-color: #008a88;
+}
+
+.btn-primary:hover {
+  background-color: #007570;
+}
+
+.btn-danger {
+  background-color: #850606;
+}
+
+.btn-danger:hover {
+  background-color: #850606;
+}
+
+
+/* Ajuste del fondo de los botones */
+.lista-actividades .button-container .btn {
+  flex: 1;
+}
+
+/* Botón "Crear Actividad" */
+.btn-crear-actividad {
+  background-color: #005b59; 
+  border: none;
+  color: white;
+  margin-top: 30px;
+  padding: 6px 12px; /* Reducir el padding horizontal */
+  font-size: 16px; /* Reducir el tamaño de la letra */
+}
+
+/* Botón "Editar" y "Eliminar" */
+.btn-primary.editar,
+.btn-primary.eliminar {
+  text-decoration: none;
+  font-weight: bold;
+  background-color: #005b59; 
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 15px; 
+  cursor: pointer;
+  padding: 6px 10px; 
+  margin-top: 10px;
+  width: auto; 
+}
+
+/* Botón "Ver Archivo", "Guardar Cambios" y "Cancelar" */
+.btn-primary.ver-archivo,
+.btn-primary,
+.btn-cancelar {
+  background-color: #008a88; 
+  border: none;
+  border-radius: 5px;
+  color: white;  
+  font-size: 15px; 
+  cursor: pointer;
+  padding: 6px 10px; 
+  margin-top: 10px;
+}
+
+/* Botón "Eliminar" */
+.btn-danger {
+  background-color: #850606;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px; 
+  cursor: pointer;
+  padding: 6px 10px; 
+  margin-top: 10px;
+}

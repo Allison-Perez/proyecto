@@ -18,10 +18,13 @@ export class ActividadComponent implements OnInit {
   mostrarMenuPerfil: boolean = false;
   editingActivity: any | null = null;
   errorMessage: string = '';
+  fichas: any[] = [];
+  selectedFicha: number | undefined;
 
   constructor(private actividadService: ActivityService, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
+    this.loadFichas();
     this.loadActivities();
   }
 
@@ -44,26 +47,45 @@ export class ActividadComponent implements OnInit {
   }
 
   loadActivities() {
-    const fichas = this.authService.getUserFichas();
-    if (fichas && fichas.length > 0) {
-      this.activityList = [];
-      fichas.forEach(idFicha => {
-        this.actividadService.getActivities(idFicha).subscribe(
-          data => {
-            this.activityList.push(...data);
-          },
-          error => {
-            console.error('Error al cargar los horarios:', error);
-          }
-        );
-      });
-    } else {
-      console.log('El usuario no tiene fichas asociadas');
-    }
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    this.actividadService.getActivities().subscribe(
+      data => {
+        this.activityList = data;
+      },
+      error => {
+        console.error('Error al cargar los horarios:', error);
+      }
+    );    
   }
 
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
+  }
+
+  getFichasUsuario(): void {
+    this.actividadService.getFichasUsuario().subscribe(
+      (data: any[]) => {
+        this.fichas = data;
+      },
+      error => {
+        console.error('Error al cargar las fichas del usuario:', error);
+      }
+    );
+  }
+
+  loadFichas() {
+    this.actividadService.getFichasUsuario().subscribe(
+      data => {
+        this.fichas = data;
+        if (this.fichas.length > 0) {
+          this.selectedFicha = this.fichas[0].identificador;
+          this.loadActivities();
+        }
+      },
+      error => {
+        console.error('Error al cargar las fichas:', error);
+      }
+    );
   }
 
   formatDate(dateString: string): string {
@@ -85,13 +107,18 @@ export class ActividadComponent implements OnInit {
       formData.append('archivo', this.selectedFile);
   
       const userInfo = this.authService.getUserInfo();
-      if (userInfo) {
-        formData.append('idUsuario', userInfo.idUsuario);
-        formData.append('idFicha', userInfo.idFicha);
+    if (userInfo) {
+      formData.append('idUsuario', userInfo.idUsuario);
+      if (this.selectedFicha !== undefined) {
+        formData.append('idFicha', this.selectedFicha.toString()); 
       } else {
-        this.errorMessage = 'No se pudo obtener la información del usuario del token JWT';
+        console.error('No se ha seleccionado una ficha');
         return;
       }
+    } else {
+      console.error('No se pudo obtener la información del usuario del token JWT');
+      return;
+    }
   
       this.actividadService.createActivity(formData).subscribe(
         () => {
@@ -124,15 +151,9 @@ export class ActividadComponent implements OnInit {
 
   updateActivity(idActividad: string) {
     if (this.editingActivity) {
-      const formData = new FormData();
-      formData.append('nombre', this.editingActivity.nombre);
-      formData.append('comentario', this.editingActivity.comentario);
-      formData.append('fechaInicio', formatDate(this.editingActivity.fechaInicio, 'yyyy-MM-dd', 'en-US'));
-      formData.append('fechaFinal', formatDate(this.editingActivity.fechaFinal, 'yyyy-MM-dd', 'en-US'));
-  
       const idNumber: number = parseInt(idActividad, 10);
   
-      this.actividadService.updateActivity(idNumber, formData).subscribe(
+      this.actividadService.updateActivity(idNumber, this.editingActivity).subscribe(
         () => {
           this.loadActivities();
           this.cancelEdit();
@@ -144,6 +165,7 @@ export class ActividadComponent implements OnInit {
       );
     }
   }
+  
 
   deleteActivity(activityId: string) {
     const idNumber: number = parseInt(activityId, 10);
@@ -162,7 +184,7 @@ export class ActividadComponent implements OnInit {
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
-    link.download = nombreArchivo; 
+    link.download = nombreArchivo;
     document.body.appendChild(link);
     link.click();
   }
