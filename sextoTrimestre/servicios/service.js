@@ -1051,33 +1051,35 @@ app.get('/obtenerFichas/:idUsuario', async (req, res) => {
   }
 });
 
+
 // Ruta para crear un nuevo horario
 app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   try {
-    const { nombre, comentario, idFicha } = req.body;
+    const { nombre, comentario, idFicha, idUsuario } = req.body;
     let urlArchivo = '';
 
     if (req.file) {
-      urlArchivo = req.file.filename;
+      urlArchivo = '/uploads/' + req.file.filename;
     } else {
       return res.status(400).json({ error: 'El archivo es obligatorio' });
     }
 
-    urlArchivo = '/uploads/' + req.file.filename;
+    const connection = await mysql.createConnection(dbConfig);
+    const [fichaExists] = await connection.execute("SELECT COUNT(*) AS count FROM ficha WHERE identificador = ?", [idFicha]);
+    connection.end();
 
-    if (nombre && comentario && idFicha) {
-      const userInfo = getUserInfoFromRequest(req);
-      if (!userInfo) {
-        return res.status(401).json({ error: 'No se pudo obtener la información del usuario' });
-      }
+    if (fichaExists[0].count === 0) {
+      return res.status(400).json({ error: "La ficha seleccionada no es válida" });
+    }
 
+    if (nombre && comentario && idFicha && idUsuario) {
       const connection = await mysql.createConnection(dbConfig);
       const fecha = new Date().toISOString();
 
       const sql = `INSERT INTO horario (nombre, urlArchivo, comentario, fecha, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?)`;
 
-      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, userInfo.idUsuario, idFicha]);
+      await connection.execute(sql, [nombre, urlArchivo, comentario, fecha, idUsuario, idFicha]);
       connection.end();
 
       res.status(201).json({ message: 'Horario creado exitosamente' });
@@ -1089,6 +1091,7 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
     res.status(500).json({ error: 'Error al crear el horario' });
   }
 });
+
 
 // Ruta para actualizar un horario existente
 app.put('/editarHorario/:identificador', async (req, res) => {
