@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   mostrarMenu: boolean = false;
   opcionSeleccionada: string = '';
-  opcionesMenu: string[] = ['Listado Instructores','Promedio de Instructores', 'Promedio de Estudiantes', 'Otros'];
+  opcionesMenu: string[] = ['Listado Instructores','Promedio de Instructores', 'Promedio de aprendices', 'Otros'];
   mostrarSidebar: boolean = false;
   mostrarMenuPerfil: boolean = false;
 
@@ -46,7 +46,7 @@ export class SidebarComponent {
       this.router.navigate(['/estadisticas-instructores']);
     }else if (opcion === 'Promedio de Instructores') {
       this.router.navigate(['/fichas-instructores']);
-    }else if (opcion === 'Promedio de Estudiantes') {
+    }else if (opcion === 'Promedio de aprendices') {
       this.router.navigate(['/fichas-aprendices']);
   }
 }
