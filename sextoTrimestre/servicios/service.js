@@ -683,6 +683,36 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 });
 
 
+// ESTADISTICAS CANTIDAD DE BLOGS
+
+app.get("/api/blogsPorInstructor", async (req, res) => {
+  console.log('entra mi gato');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        u.identificador AS idInstructor,
+        u.primerNombre AS nombreInstructor,
+        COUNT(b.identificador) AS cantidadBlogsSubidos
+      FROM
+        usuario u
+      JOIN
+        blog b ON u.identificador = b.idUsuario
+      WHERE
+        u.idRol = 1
+      GROUP BY
+        u.identificador, u.primerNombre
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la cantidad de blogs por instructor:", error);
+    res.status(500).json({ error: "Error al obtener la cantidad de blogs por instructor" });
+  }
+});
+
 // DONA APRENDICES
 
 app.get('/api/fichasAprendices', async (req, res) => {
@@ -715,12 +745,9 @@ app.get('/api/fichasAprendices', async (req, res) => {
   }
 });
 
-
 // ESTADISTICAS EDADES
 
-
 app.get("/api/promedioEdades", async (req, res) => {
-  console.log('Entra a grafico');
   try {
     const connection = await mysql.createConnection(dbConfig);
 

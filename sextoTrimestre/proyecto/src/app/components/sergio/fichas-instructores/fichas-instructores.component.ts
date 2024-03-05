@@ -24,13 +24,14 @@ export class FichasInstructoresComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.inicializarGraficoDonut();
+    this.obtenerYRenderizarBlogsPorInstructorChart();
+
   }
 
   obtenerDatos() {
     this.ServiceService.obtenerDatosInstructores().subscribe(
       (data: any) => {
         this.datosInstructores = data.rows;
-        console.log('Datos de instructores:', this.datosInstructores);
         this.inicializarGraficoBarra();
       },
       (error) => {
@@ -86,9 +87,6 @@ export class FichasInstructoresComponent implements AfterViewInit {
         fill: colors[index % colors.length],
       }));
 
-
-      console.log(data);
-
       const options = {
         chart: {
           type: 'bar',
@@ -125,6 +123,77 @@ export class FichasInstructoresComponent implements AfterViewInit {
       });
     }
   }
+
+
+  obtenerYRenderizarBlogsPorInstructorChart() {
+    this.ServiceService.getBlogsPorInstructor().subscribe(data => {
+      const options = {
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: '10%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        colors: ['#308189'],
+        series: [{
+          name: 'Cantidad de Blogs',
+          data: data.map(item => item.cantidadBlogsSubidos)
+        }],
+        xaxis: {
+          categories: data.map(item => item.nombreInstructor),
+          labels: {
+            style: {
+              fontSize: '12px',
+              color: '#000000'
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Cantidad de Blogs Subidos',
+            style: {
+              fontSize: '16px',
+              color: '#088a88',
+            }
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val: any) {
+              return val + ' Blogs';
+            }
+          }
+        },
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                height: 300,
+              }
+            }
+          }
+        ]
+      };
+
+      const chart3 = new ApexCharts(document.querySelector("#blogsPorInstructorChart"), options);
+      chart3.render();
+    });
+  }
+
 
 
 }
