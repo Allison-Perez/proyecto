@@ -68,7 +68,7 @@ export class EditPasswordComponent {
     this.service.updatePassword(email, passwordAnterior, nuevaPassword).subscribe(
       (response: any) => {
         console.log('Respuesta del servidor:', response);
-        this.router.navigate(['/perfil']);
+        this.router.navigate(['/perfil-detalle']);
       },
       (error: any) => {
         alert('Hubo un error al cambiar la contraseña. Por favor, inténtalo de nuevo.');

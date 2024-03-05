@@ -8,22 +8,16 @@
           <div class="bar"></div>
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
-            <li class="nav-item">
-              <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-            </li>
             <div class="dropdown">
               <button class="dropdown-button" (click)="toggleProfileMenu()">
                 <span class="material-symbols-outlined">person</span>
               </button>
               <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
                 <li class="nav-item">
-                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
+                  <a routerLink="/indexKatalina" class="nav-link otro ">Inicio</a>
                 </li>
                 <li class="nav-item">
-                  <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
@@ -40,29 +34,23 @@
       <label for="primerNombre">Primer Nombre:</label>
       <input type="text" id="primerNombre" formControlName="primerNombre" class="form-control">
     </div>
-
     <div class="form-group">
       <label for="segundoNombre">Segundo Nombre:</label>
       <input type="text" id="segundoNombre" formControlName="segundoNombre" class="form-control">
     </div>
-
     <div class="form-group">
       <label for="primerApellido">Primer Apellido:</label>
       <input type="text" id="primerApellido" formControlName="primerApellido" class="form-control">
     </div>
-
     <div class="form-group">
       <label for="segundoApellido">Segundo Apellido:</label>
       <input type="text" id="segundoApellido" formControlName="segundoApellido" class="form-control">
     </div>
-
     <div class="form-group">
       <label for="correo">Correo:</label>
       <input type="text" id="correo" formControlName="correo" class="form-control" [disabled]="true">
     </div>
-
-    
-
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </form>
 </div>
+<img class="imagen" src="assets/imagenes/editp.jpg" alt="Cambio Contraseña">
