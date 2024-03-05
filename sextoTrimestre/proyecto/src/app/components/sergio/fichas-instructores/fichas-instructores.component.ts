@@ -25,6 +25,7 @@ export class FichasInstructoresComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.inicializarGraficoDonut();
     this.obtenerYRenderizarBlogsPorInstructorChart();
+    this.obtenerYRenderizarGuiasPorInstructorChart();
 
   }
 
@@ -194,6 +195,79 @@ export class FichasInstructoresComponent implements AfterViewInit {
     });
   }
 
+  obtenerYRenderizarGuiasPorInstructorChart() {
+    this.ServiceService.getGuiasPorInstructor().subscribe(data => {
+      const options = {
+        chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false
+          }
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: '5%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        colors: ['#f36f42'], // Puedes ajustar el color según tu preferencia
+        series: [{
+          name: 'Cantidad de Guías',
+          data: data.map(item => item.cantidadGuiasSubidas)
+        }],
+        xaxis: {
+          categories: data.map(item => item.nombreInstructor),
+          labels: {
+            style: {
+              fontSize: '12px',
+              color: '#000000'
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: 'Cantidad de Guías Subidas',
+            style: {
+              fontSize: '16px',
+              color: '#f36f42', // Puedes ajustar el color según tu preferencia
+            }
+          },
+          labels: {
+            formatter: function (val: any) {
+              return Math.floor(val); // Redondear hacia abajo para quitar el decimal
+            }
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val: any) {
+              return Math.floor(val) + ' Guías'; // Redondear hacia abajo para quitar el decimal
+            }
+          }
+        },
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              chart: {
+                height: 300,
+              }
+            }
+          }
+        ]
+      };
+
+      const chart4 = new ApexCharts(document.querySelector("#guiasPorInstructorChart"), options);
+      chart4.render();
+    });
+  }
 
 
 }

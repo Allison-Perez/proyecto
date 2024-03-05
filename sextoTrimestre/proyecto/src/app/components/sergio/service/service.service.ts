@@ -81,6 +81,14 @@ getBlogsPorInstructor(): Observable<any[]> {
   return this.http.get<any[]>(url);
 }
 
+// ESTADISTICAS GUIAS
+
+getGuiasPorInstructor(): Observable<any[]> {
+  const url = `${this.apiUrl}/api/guiasPorInstructor`;
+  return this.http.get<any[]>(url);
+}
+
+
 // DONA DE FICHAS Y CANTIDAD DE APRENDICES
 
 getFichasAprendices(): Observable<any[]> {

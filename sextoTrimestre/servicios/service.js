@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", 
   database: "acanner",
 };
 
@@ -686,7 +686,6 @@ app.get('/api/antiguedadInstructores', async (req, res) => {
 // ESTADISTICAS CANTIDAD DE BLOGS
 
 app.get("/api/blogsPorInstructor", async (req, res) => {
-  console.log('entra mi gato');
   try {
     const connection = await mysql.createConnection(dbConfig);
 
@@ -699,6 +698,36 @@ app.get("/api/blogsPorInstructor", async (req, res) => {
         usuario u
       JOIN
         blog b ON u.identificador = b.idUsuario
+      WHERE
+        u.idRol = 1
+      GROUP BY
+        u.identificador, u.primerNombre
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener la cantidad de blogs por instructor:", error);
+    res.status(500).json({ error: "Error al obtener la cantidad de blogs por instructor" });
+  }
+});
+
+// ESTADISTICAS POR GUIAS
+
+app.get("/api/guiasPorInstructor", async (req, res) => {
+  console.log('entra AL NUEVO GRAFICO');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+      u.identificador AS idInstructor,
+      u.primerNombre AS nombreInstructor,
+      COUNT(g.identificador) AS cantidadGuiasSubidas
+      FROM
+        usuario u
+      JOIN
+        guias g ON u.identificador = g.idUsuario
       WHERE
         u.idRol = 1
       GROUP BY
