@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service/servicie.katalina.service';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
@@ -8,22 +8,21 @@ import { Router } from '@angular/router';
   templateUrl: './ver-blog.component.html',
   styleUrls: ['./ver-blog.component.scss']
 })
-export class VerBlogComponent {
+export class VerBlogComponent implements OnInit {
   newsList: any[] = [];
-  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null };
-  imageFile: File | null = null;
-  isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
+  isMenuOpen: boolean = false;
+
 
   constructor(private authService: AuthService, private serviceService: ServiceService, private router: Router) { }
+
+  ngOnInit() {
+    this.loadBlogs();
+  }
 
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  ngOnInit() {
-    this.loadBlogs();
   }
 
   toggleProfileMenu() {
@@ -33,26 +32,26 @@ export class VerBlogComponent {
 
   redirectTo(route: string) {
     this.router.navigate([route]);
-    // Cierra el menú después de redirigir
-    this.mostrarMenuPerfil = false;
-  }
-
-  loadBlogs() {
-    const idFicha = 1;
-    this.serviceService.getBlogsPorFicha(idFicha).subscribe(
-      data => {
-        this.newsList = data;
-      },
-      error => {
-        console.error('Error al cargar los blogs:', error);
-      }
-    );
+    this.mostrarMenuPerfil = false; // Cierra el menú después de redirigir
   }
 
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
-}
+
+
+  loadBlogs() {
+    const idFicha = this.authService.getUserInfo()?.idFicha;
+  
+    if (idFicha !== undefined) {
+      this.serviceService.getblogsFicha(idFicha).subscribe(
+        data => this.newsList = data,
+        error => console.error('Error al cargar los blogs:', error)
+      );
+    } else {
+      console.error('IdFicha no válida.');
+    }
+  }
+    
+}  

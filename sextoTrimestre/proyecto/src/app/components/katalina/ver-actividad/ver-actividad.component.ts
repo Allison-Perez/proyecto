@@ -42,51 +42,51 @@ export class VerActividadComponent {
     this.router.navigate(['/login']);
   }
 
-  ngOnInit() {
-    this.loadActivities();
-  }
+  // ngOnInit() {
+  //   this.loadActivities();
+  // }
 
-  loadActivities() {
-    this.ServiceService.getActivities().subscribe((data) => {
-      this.activityList = data;
-    });
-  }
+  // loadActivities() {
+  //   this.ServiceService.getActivities().subscribe((data) => {
+  //     this.activityList = data;
+  //   });
+  // }
 
-  handleFileInput(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
+  // handleFileInput(event: any) {
+  //   this.selectedFile = event.target.files[0];
+  // }
 
-  updateActivity() {
-    if (this.editingActivity) {
-      const formData = new FormData();
-      formData.append('nombreArchivo', this.editingActivity.nombreArchivo);
-      formData.append('comentario', this.editingActivity.comentario);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
-      }
+  // updateActivity() {
+  //   if (this.editingActivity) {
+  //     const formData = new FormData();
+  //     formData.append('nombreArchivo', this.editingActivity.nombreArchivo);
+  //     formData.append('comentario', this.editingActivity.comentario);
+  //     if (this.selectedFile) {
+  //       formData.append('archivo', this.selectedFile);
+  //     }
 
-      this.ServiceService.updateActivity(this.editingActivity.id, formData).subscribe(
-        () => {
-          this.loadActivities();
-          this.editingActivity = null;
-          this.selectedFile = null;
-        },
-        (error) => {
-          console.error('Error al actualizar actividad:', error);
+  //     this.ServiceService.updateActivity(this.editingActivity.id, formData).subscribe(
+  //       () => {
+  //         this.loadActivities();
+  //         this.editingActivity = null;
+  //         this.selectedFile = null;
+  //       },
+  //       (error) => {
+  //         console.error('Error al actualizar actividad:', error);
 
-        }
-      );
-    }
-  }
+  //       }
+  //     );
+  //   }
+  // }
 
-  descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
-    const url = `http://localhost:3000${archivoUrl}`;
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.click();
-  }
+  // descargarArchivo(archivoUrl: string) {
+  //   // Construye la URL del servidor para descargar el archivo
+  //   const url = `http://localhost:3000${archivoUrl}`;
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.target = '_blank';
+  //   link.click();
+  // }
 
 }
 

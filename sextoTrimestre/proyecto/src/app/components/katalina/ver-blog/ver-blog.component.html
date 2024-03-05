@@ -1,42 +1,42 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <nav class="navbar">
   <div class="container-fluid">
-    <a class="nav-link nombre" >Acanner</a>
-        <div class="menu-icon" (click)="toggleMenu()">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
-        </div>
-        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+    <a class="nav-link nombre">Acanner</a>
+    <div class="menu-icon" (click)="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+      <li class="nav-item">
+        <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+      </li>
+      <div class="dropdown">
+        <button class="dropdown-button" (click)="toggleProfileMenu()">
+          <span class="material-symbols-outlined">person</span>
+        </button>
+        <div class="dropdown-content" *ngIf="mostrarMenuPerfil">
           <li class="nav-item">
-            <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
+            <a routerLink="/perfil-detalle" class="nav-link otro" aria-current="page">Ver Perfil</a>
           </li>
-            <li class="nav-item">
-              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
-            </li>
-            <div class="dropdown">
-              <button class="dropdown-button" (click)="toggleProfileMenu()">
-                <span class="material-symbols-outlined">person</span>
-              </button>
-              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
-                <li class="nav-item">
-                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
-                </li>
-                <li class="nav-item">
-                  <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
-                </li>
-              </div>
-            </div> 
-        </ul>
+          <li class="nav-item">
+            <a routerLink="/estadisticas" class="nav-link otro">Estadísticas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+          </li>
+        </div>
+      </div>
+    </ul>
   </div>
 </nav>
 
@@ -46,9 +46,7 @@
   <div *ngFor="let blog of newsList" class="instagram-div">
     <p class="date" style="font-size: 12px;">{{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
     <h1 class="titulo">{{ blog.nombre }}</h1>
-    <img src="assets/imagenes/Blog.png" class="card-img-top" alt="Imagen Opcional">
+    <img src="assets/imagenes/Blog.png" class="card-img-top" alt="imagen">
     <p class="card-text"><strong>Descripción:</strong> {{ blog.comentario }}</p>
   </div>
 </div>
-
-

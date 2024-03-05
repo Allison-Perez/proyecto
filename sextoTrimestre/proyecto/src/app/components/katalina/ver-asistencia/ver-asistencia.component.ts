@@ -39,46 +39,46 @@ export class VerAsistenciaComponent {
     this.router.navigate(['/login']);
   }
 
-  ngOnInit() {
-    this.loadAsistencia();
-  }
+  // ngOnInit() {
+  //   this.loadAsistencia();
+  // }
 
-  loadAsistencia() {
-    this.ServiceService.getAsistencia().subscribe((data) => {
-      this.asistenciaList = data;
-    });
-  }
+  // loadAsistencia() {
+  //   this.ServiceService.getAsistencia().subscribe((data) => {
+  //     this.asistenciaList = data;
+  //   });
+  // }
 
-  updateAsistencia() {
-    if (this.editingAsistencia) {
-      const formData = new FormData();
-      formData.append('nombreArchivo', this.editingAsistencia.nombreArchivo);
-      formData.append('comentario', this.editingAsistencia.comentario);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
-      }
+  // updateAsistencia() {
+  //   if (this.editingAsistencia) {
+  //     const formData = new FormData();
+  //     formData.append('nombreArchivo', this.editingAsistencia.nombreArchivo);
+  //     formData.append('comentario', this.editingAsistencia.comentario);
+  //     if (this.selectedFile) {
+  //       formData.append('archivo', this.selectedFile);
+  //     }
 
-      this.ServiceService.updateAsistencia(this.editingAsistencia.id, formData).subscribe(
-        () => {
-          this.loadAsistencia();
-          this.editingAsistencia = null;
-          this.selectedFile = null;
-        },
-        (error) => {
-          console.error('Error al actualizar asistencia:', error);
+  //     this.ServiceService.updateAsistencia(this.editingAsistencia.id, formData).subscribe(
+  //       () => {
+  //         this.loadAsistencia();
+  //         this.editingAsistencia = null;
+  //         this.selectedFile = null;
+  //       },
+  //       (error) => {
+  //         console.error('Error al actualizar asistencia:', error);
 
-        }
-      );
-    }
-  }
+  //       }
+  //     );
+  //   }
+  // }
 
 
-  descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
-    const url = `http://localhost:3000${archivoUrl}`;
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.click();
-  }
+  // descargarArchivo(archivoUrl: string) {
+  //   // Construye la URL del servidor para descargar el archivo
+  //   const url = `http://localhost:3000${archivoUrl}`;
+  //   const link = document.createElement('a');
+  //   link.href = url;
+  //   link.target = '_blank';
+  //   link.click();
+  // }
 }

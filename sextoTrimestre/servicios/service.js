@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -921,6 +921,11 @@ app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
   }
 });
 
+
+
+
+
+
 // Ruta para obtener las fichas asociadas al usuario
 app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   try {
@@ -1178,6 +1183,27 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar la actividad' });
   }
 });
+
+
+
+
+// ver blog por ficha
+app.get("/blogsFicha/:idFicha", async (req, res) => {
+  try {
+    const { idFicha } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
+    const [rows] = await connection.execute(sql, [idFicha]);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener los blogs por ficha:", error);
+    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+  }
+});
+
 
 
 // app.post('/api/actividad/create', upload.single('archivo'), async (req, res) => {
