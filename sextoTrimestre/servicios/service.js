@@ -719,8 +719,6 @@ app.get('/api/fichasAprendices', async (req, res) => {
 
 //MARLON
 
-
-
 // OBTENER INFORMACIÓN DEL PERFIL
 
 app.get("/api/obtenerInstructor", async (req, res) => {
@@ -866,23 +864,29 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 //BLOG
 
 // Ruta para crear un nuevo blog
-
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
     let urlImagen = ''; 
 
     if (req.file) { 
-      urlImagen = req.file.path; 
+      urlImagen = 'http://localhost:3000/' + req.file.path; 
     } else {
-      urlImagen = '/uploads/Blog.png'; 
+      urlImagen = 'http://localhost:3000/uploads/Blog.png'; 
+    }
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [fichaExists] = await connection.execute("SELECT COUNT(*) AS count FROM ficha WHERE identificador = ?", [idFicha]);
+    connection.end();
+
+    if (fichaExists[0].count === 0) {
+      return res.status(400).json({ error: "La ficha seleccionada no es válida" });
     }
 
     if (nombre && comentario && idUsuario && idFicha) {
       const connection = await mysql.createConnection(dbConfig);
       const fechaPublicacion = new Date().toISOString()
       const fechaFormateada = fechaPublicacion.replace('T', ' ').substring(0, 19);
-
 
       const sql = `INSERT INTO blog (nombre, urlImagen, imagenOpcional, comentario, fechaPublicacion, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?, ?)`;
@@ -900,20 +904,42 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   }
 });
 
-//Ruta para traer noticias segun la ficha
-app.get("/blogsPorFicha/:idFicha", async (req, res) => {
+// Ruta para traer todos los blogs asociados al usuario
+app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
   try {
-    const { idFicha } = req.params;
+    const { idUsuario } = req.params;
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
-    const [rows] = await connection.execute(sql, [idFicha]);
+    const sql = `SELECT * FROM blog WHERE idUsuario = ?`;
+    const [rows] = await connection.execute(sql, [idUsuario]);
 
     connection.end();
     res.status(200).json(rows);
   } catch (error) {
-    console.error("Error al obtener los blogs por ficha:", error);
-    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+    console.error("Error al obtener los blogs por usuario:", error);
+    res.status(500).json({ error: "Error al obtener los blogs por usuario" });
+  }
+});
+
+// Ruta para obtener las fichas asociadas al usuario
+app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+      SELECT f.identificador, f.numeroFicha 
+      FROM ficha f 
+      INNER JOIN usuarioFicha uf ON f.identificador = uf.idFicha 
+      WHERE uf.idUsuario = ?
+    `;
+    const [rows] = await connection.execute(sql, [idUsuario]);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener las fichas por usuario:", error);
+    res.status(500).json({ error: "Error al obtener las fichas por usuario" });
   }
 });
 

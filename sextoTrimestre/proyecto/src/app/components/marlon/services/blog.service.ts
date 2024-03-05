@@ -19,8 +19,13 @@ export class BlogService {
     return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers });
   }
 
-  getBlogsPorFicha(idFicha: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/blogsPorFicha/${idFicha}`);
+  getFichasUsuario(): Observable<any[]> {
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    return this.http.get<any[]>(`${this.apiUrl}/fichasPorUsuario/${idUsuario}`);
+  }
+
+  getBlogsPorUsuario(idUsuario: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/blogsPorUsuario/${idUsuario}`);
   }
 
   editarBlog(idBlog: number, blogData: any): Observable<any> {

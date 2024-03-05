@@ -125,24 +125,44 @@ button {
 }
 
 /* Crear Blog */
-.subir {
-  margin-top: 20px;
+.container {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
 }
 
 h2 {
   color: #008a88;
   font-size: 30px;
   font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
 }
 
 label {
   font-weight: bold;
 }
 
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 .btn-primary {
-  margin-top: 10px;
   background-color: #008a88;
   border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-primary:hover {

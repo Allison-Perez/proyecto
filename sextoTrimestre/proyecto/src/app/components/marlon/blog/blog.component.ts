@@ -11,14 +11,20 @@ import { Router } from '@angular/router';
 })
 export class BlogComponent implements OnInit {
   newsList: any[] = [];
-  newBlog: any = { titulo: '', comentario: '', imagenOpcional: null };
+  newBlog: any = { nombre: '', comentario: '', imagenOpcional: null };
   imageFile: File | null = null;
   editingBlog: any = null;
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
+  userFichas: any[] = [];
+  fichas: any[] = [];
+  selectedFicha: any;
 
   constructor(private blogService: BlogService, private router: Router, private authService: AuthService) { }
+  
   ngOnInit() {
+    this.userFichas = this.authService.getUserFichas();
+    this.getFichasUsuario();
     this.loadBlogs();
   }
 
@@ -42,39 +48,43 @@ export class BlogComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  getFichasUsuario(): void {
+    this.blogService.getFichasUsuario().subscribe(
+      (data: any[]) => {
+        this.fichas = data;
+      },
+      error => {
+        console.error('Error al cargar las fichas del usuario:', error);
+      }
+    );
+  }
+
+  onSelectFicha(event: any): void {
+    this.selectedFicha = event.target.value;
+  }  
   
   loadBlogs() {
-    console.log('Cargando Blogs');
-
-    const fichas = this.authService.getUserFichas();
-    if (fichas && fichas.length > 0) {
-      this.newsList = [];
-      fichas.forEach(ficha => {
-        this.blogService.getBlogsPorFicha(ficha).subscribe(
-          data => {
-            this.newsList.push(...data);
-          },
-          error => {
-            console.error('Error al cargar los blogs:', error);
-          }
-        );
-      });
-    } else {
-      console.log('El usuario no tiene fichas asociadas');
-    }
+    console.log('Cargando todos los blogs');
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    this.blogService.getBlogsPorUsuario(idUsuario).subscribe(
+      data => {
+        this.newsList = data;
+      },
+      error => {
+        console.error('Error al cargar los blogs:', error);
+      }
+    );
   }
 
   crearBlog() {
-    console.log('Entrando a crearBlog()');
-  
-    // Verificar si existen fichas asociadas al usuario
-    const fichas = this.authService.getUserFichas();
-    if (!fichas || fichas.length === 0) {
-      console.error('El usuario no tiene fichas asociadas');
+    if (!this.selectedFicha) {
+      console.error('No se ha seleccionado ninguna ficha');
       return;
     }
-  
-    // Construir el objeto blog a enviar al servidor
+    
+    const idFichaSeleccionada = this.selectedFicha;
+
     const formData = new FormData();
     formData.append('nombre', this.newBlog.nombre);
     formData.append('comentario', this.newBlog.comentario);
@@ -83,17 +93,15 @@ export class BlogComponent implements OnInit {
     }
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
-      formData.append('idUsuario', userInfo.idUsuario);
-      fichas.forEach(ficha => {
-        formData.append('idFichas[]', ficha.toString()); 
-      });
+      formData.append('idUsuario', userInfo.idUsuario.toString());
+      formData.append('idFicha', idFichaSeleccionada.toString()); 
+
     } else {
       console.error('No se pudo obtener la información del usuario del token JWT');
       return;
     }
     formData.append('fechaPublicacion', new Date().toISOString());
   
-
     this.blogService.crearBlog(formData).subscribe(
       (response) => {
         console.log('Blog creado exitosamente:', response);
@@ -105,9 +113,9 @@ export class BlogComponent implements OnInit {
         console.error('Error al crear el blog:', error);
       }
     );
+  }
   
-    console.log('Exiting crearBlog()');
-  }  
+   
 
   resetNewBlogForm() {
     console.log('resetea blog');
@@ -161,3 +169,4 @@ export class BlogComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 }
+

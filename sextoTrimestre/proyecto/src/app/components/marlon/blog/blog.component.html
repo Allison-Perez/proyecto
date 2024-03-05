@@ -40,21 +40,26 @@
   </div>
 </nav> 
 <div class="container">
-  <h2>Nuevo Blog</h2>
+  <h2>Crear Blog</h2>
   <form (ngSubmit)="crearBlog()" #blogForm="ngForm">
+    <div>
+      <label for="fichaSelect">Seleccionar ficha*:</label>
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" (change)="onSelectFicha($event)" name="fichaSelect">
+        <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
+      </select>
+    </div><br>  
     <div class="form-group">
-      <label for="titulo">Título:</label>
+      <label for="titulo">Título*:</label>
       <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="newBlog.nombre" required>
     </div>
     <div class="form-group">
-      <label for="comentario">Comentario:</label>
+      <label for="comentario">Comentario*:</label>
       <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="newBlog.comentario" required></textarea>
-    </div>
-    <div class="form-group">
     </div>
     <button type="submit" class="btn btn-primary">Crear Blog</button>
   </form>
 </div>
+
 <div class="mostrar">
   <h2>Lista de Blogs</h2>
   <div *ngIf="newsList.length > 0; else noBlogs">
