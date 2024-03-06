@@ -204,7 +204,7 @@ button {
 
 h2 {
   color: #008a88;
-  font-size: 30px;
+  font-size: 27px;
   font-weight: bold; 
 }
 
@@ -382,6 +382,10 @@ textarea {
   background-color: #ffffff;
   border-radius: 10px;
   width: 700px;
+}
+
+.container h2{
+  font-size: 27px;
 }
 
 .container label {
