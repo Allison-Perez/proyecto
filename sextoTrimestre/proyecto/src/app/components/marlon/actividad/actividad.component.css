@@ -176,13 +176,17 @@ button {
   font-weight: bold;
 }
 
+.crear-actividad h2{
+  font-size: 27px;
+}
+
 .lista-actividades {
   margin-top: 20px; 
 }
 
 .lista-actividades h2 {
   font-size: 30px;
-  text-align: center;
+  text-align:left;
   margin-bottom: 20px;
 }
 
