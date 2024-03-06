@@ -18,9 +18,8 @@ import {FichasInstructoresComponent} from './fichas-instructores/fichas-instruct
 import { NgApexchartsModule } from "ng-apexcharts";
 import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
 import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices.component';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { BrowserModule } from '@angular/platform-browser';
-import { GraficosInstructorBGComponent } from './graficos-instructor-bg/graficos-instructor-bg.component';
+
+
 
 
 @NgModule({
@@ -38,7 +37,6 @@ import { GraficosInstructorBGComponent } from './graficos-instructor-bg/graficos
     FichasInstructoresComponent,
     AsignarFichaComponent,
     FichasAprendicesComponent,
-    GraficosInstructorBGComponent
   ],
 
   imports: [
@@ -49,8 +47,6 @@ import { GraficosInstructorBGComponent } from './graficos-instructor-bg/graficos
     SergioRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxDatatableModule,
-    BrowserModule,
 
   ]
 })
