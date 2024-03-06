@@ -219,7 +219,8 @@ label {
 }
 
 .btn-primary:hover {
-  background-color: #008a88; 
+  background-color: #005b59;
+  color: #000000;
 }
 
 .mostrar{

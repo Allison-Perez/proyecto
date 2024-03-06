@@ -173,6 +173,7 @@ textarea {
   margin-top: 30px;
   margin-left: 50px;
 }
+link
 
 .blogs-container {
   display: grid;
@@ -202,7 +203,8 @@ textarea {
 }
 
 .card-buttons button:hover {
-  color: #005c5a;
+  background-color: #005b59;
+  color: #000000;
 }
 
 .card-title,
@@ -221,7 +223,8 @@ textarea {
 }
 
 .btn-link:hover {
-  color: #333;
+  background-color: #005b59;
+  color: #000000;
 }
 
 .btn-primary,
@@ -238,6 +241,7 @@ textarea {
 .btn-primary:hover,
 .btn-secondary:hover {
   background-color: #005b59;
+  color: #000000;
 }
 
 .form-group {
@@ -258,6 +262,7 @@ textarea {
 
 .btn-cancelar:hover {
   background-color: #850606;
+  color:#000000;
 }
 
 .card-date {

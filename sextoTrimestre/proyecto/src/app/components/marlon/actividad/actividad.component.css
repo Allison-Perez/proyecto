@@ -219,21 +219,24 @@ button {
 }
 
 .lista-actividades .btn-primary {
-  background-color: #008a88;
-  color: white;
+  color: #f5f5f5;
+  background-color: #005b59;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .lista-actividades .btn-primary:hover {
-  background-color: #007570;
+  background-color: #005b59;
+  color: #070707;
 }
 
 .lista-actividades .btn-secondary {
-  background-color: #ccc;
+  background-color: #005b59;
   color: black;
 }
 
 .lista-actividades .btn-secondary:hover {
-  background-color: #b3b3b3;
+  background-color: #005b59;
 }
 
 .lista-actividades .btn-success {
@@ -242,7 +245,7 @@ button {
 }
 
 .lista-actividades .btn-success:hover {
-  background-color: #218838;
+  background-color: #005b59;
 }
 
 @media (max-width: 600px) {
@@ -422,9 +425,6 @@ button {
   margin-right: 10px;
 }
 
-.btn:hover {
-  opacity: 0.8; 
-}
 
 /* Botón "Crear Actividad" */
 .btn-crear-actividad {
@@ -484,31 +484,33 @@ button {
 /* Botón "Editar" y "Eliminar" */
 .btn-primary.editar,
 .btn-primary.eliminar {
-  text-decoration: none;
-  font-weight: bold;
-  background-color: #005b59; 
   border: none;
   border-radius: 5px;
-  color: white;
   font-size: 15px; 
   cursor: pointer;
   padding: 6px 10px; 
   margin-top: 10px;
   width: auto; 
+  color: #f5f5f5;
+  background-color: #005b59;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* Botón "Ver Archivo", "Guardar Cambios" y "Cancelar" */
 .btn-primary.ver-archivo,
 .btn-primary,
 .btn-cancelar {
-  background-color: #008a88; 
   border: none;
   border-radius: 5px;
-  color: white;  
   font-size: 15px; 
   cursor: pointer;
   padding: 6px 10px; 
   margin-top: 10px;
+  color: #f5f5f5;
+  background-color: #005b59;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* Botón "Eliminar" */
