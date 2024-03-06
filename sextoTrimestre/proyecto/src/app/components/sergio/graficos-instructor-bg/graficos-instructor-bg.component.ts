@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-graficos-instructor-bg',
-  standalone: true,
-  imports: [],
   templateUrl: './graficos-instructor-bg.component.html',
-  styleUrl: './graficos-instructor-bg.component.scss'
 })
-export class GraficosInstructorBGComponent {
+export class GraficosInstructorBGComponent implements OnInit {
+  rows = [
+    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { name: 'Dany', gender: 'Male', company: 'KFC' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' }
+  ];
+  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
 
+  ngOnInit() {
+    console.log('hola');
+  }
 }
