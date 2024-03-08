@@ -39,47 +39,42 @@
         </ul>
   </div>
 </nav> 
-      <div class="container">
-        <h2 class="titulo">Crear Asistencia</h2>
-        <form (ngSubmit)="createAsistencia(form)" #form="ngForm">
-          <div class="form-group">
-            <label for="nombreArchivo">Número de Ficha:</label>
-            <input [(ngModel)]="newAsistencia.nombreArchivo" name="nombreArchivo" class="form-control" required>
-            <div *ngIf="form.controls['nombreArchivo'].invalid && (form.controls['nombreArchivo'].dirty || form.controls['nombreArchivo'].touched)" class="text-danger">Diligenciar todos los campos</div>
-          </div>
-          <div class="form-group">
-            <label for="archivo">Subir archivo:</label>
-            <input type="file" (change)="handleFileInput($event)" name="archivo" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="comentario">Comentario:</label>
-            <textarea [(ngModel)]="newAsistencia.comentario" name="comentario" class="form-control" required></textarea>
-          </div>
-          <br>
-          <button type="submit" class="btn btn-primary boton">Guardar</button>
-        </form> 
-      </div>
-        <h2 class="subtitulo mt-5">Asistencias</h2>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let asistencia of asistenciaList">
-            <ng-container *ngIf="!editingAsistencia || asistencia.id !== editingAsistencia.id; else editTemplate">
-              <h4>{{ asistencia.nombreArchivo }}</h4>
-              <p>{{ asistencia.comentario }}</p>
-              <a (click)="descargarArchivo(asistencia.archivoUrl)" class="btn btn-primary-ver-archivo" >Ver archivo</a>
-              <button (click)="editAsistencia(asistencia)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteAsistencia(asistencia.id_asistencia)" class="btn btn-danger">Eliminar</button>
-            </ng-container>
-            <ng-template #editTemplate>
-              <div class="form-group">
-                <input [(ngModel)]="editingAsistencia.nombreArchivo" name="nombreArchivo" class="form-control" />
-              </div>
-              <div class="form-group">
-                <textarea [(ngModel)]="editingAsistencia.comentario" name="comentario" class="form-control"></textarea>
-              </div>
-              <button (click)="updateAsistencia()" class="btn btn-success">Guardar</button>
-              <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
-            </ng-template>
-          </li>
-        </ul>
+<div class="container">
+  <h2 class="titulo">Obtener Asistencia</h2>
+  <form (ngSubmit)="submitForm()" #form="ngForm">
+    <div class="form-group">
+      <label for="fecha">Fecha:</label>
+      <input type="date" [(ngModel)]="newAsistencia.fecha" name="fecha" class="form-control" required>
+    </div>
+    <div>
+      <label for="fichaSelect">Seleccionar ficha:</label>
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect">
+        <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
+      </select>      
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Obtener Asistencia</button>
+  </form> 
+</div>
 
-
+<h2 class="subtitulo mt-5">Asistencias</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre del Aprendiz</th>
+      <th>Correo del Aprendiz</th>
+      <th>Asistió</th>
+      <th>No Asistió</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let asistencia of asistenciaList; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ asistencia.nombreAprendiz }}</td>
+      <td>{{ asistencia.correoAprendiz }}</td>
+      <td><button class="btn btn-success" (click)="marcarAsistencia(asistencia, true)">Asistió</button></td>
+      <td><button class="btn btn-danger" (click)="marcarAsistencia(asistencia, false)">No Asistió</button></td>
+    </tr>
+  </tbody>
+</table>
