@@ -71,8 +71,8 @@
   <tbody>
     <tr *ngFor="let asistencia of asistenciaList; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ asistencia.nombreAprendiz }}</td>
-      <td>{{ asistencia.correoAprendiz }}</td>
+      <td>{{ asistencia.primerNombre }}</td>
+      <td>{{ asistencia.correo }}</td>
       <td><button class="btn btn-success" (click)="marcarAsistencia(asistencia, true)">Asistió</button></td>
       <td><button class="btn btn-danger" (click)="marcarAsistencia(asistencia, false)">No Asistió</button></td>
     </tr>

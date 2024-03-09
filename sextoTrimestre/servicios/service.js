@@ -1299,15 +1299,45 @@ app.get("/blogsFicha/:idFicha", async (req, res) => {
 app.post('/crearAsistencia', async (req, res) => {
   try {
     const { fecha, idFicha } = req.body;
+    const idInstructor = req.user.idUsuario; // Obtener el ID del usuario instructor del token de autenticación
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = 'INSERT INTO asistencia (fecha, idFicha) VALUES (?, ?)';
-    await connection.execute(sql, [fecha, idFicha]);
+    // Consultar todos los aprendices asociados a la ficha proporcionada
+    const aprendicesQuery = 'SELECT identificador FROM usuario WHERE idRol = 2 AND identificador IN (SELECT idUsuario FROM usuarioFicha WHERE idFicha = ?)';
+    const [aprendicesRows] = await connection.execute(aprendicesQuery, [idFicha]);
+
+    if (aprendicesRows.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
+    }
+
+    // Insertar una nueva entrada en la tabla asistencia para cada aprendiz encontrado
+    for (const aprendizRow of aprendicesRows) {
+      const idAprendiz = aprendizRow.identificador;
+      const sql = 'INSERT INTO asistencia (fecha, idFicha, idAprendiz, idInstructor) VALUES (?, ?, ?, ?)';
+      await connection.execute(sql, [fecha, idFicha, idAprendiz, idInstructor]);
+    }
+
     connection.end();
     res.status(200).json({ message: 'Asistencia creada exitosamente' });
   } catch (error) {
     console.error('Error al crear la asistencia:', error);
     res.status(500).json({ error: 'Error al crear la asistencia' });
+  }
+});
+
+// Ruta para obtener usuarios con rol "Aprendiz" asociados a una ficha específica
+app.get('/usuariosPorFicha', async (req, res) => {
+  try {
+    const { idFicha } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT usuario.* FROM usuario INNER JOIN usuarioFicha ON usuario.identificador = usuarioFicha.idUsuario WHERE usuarioFicha.idFicha = ? AND usuario.idRol = 2'; // El valor 2 representa el ID del rol "Aprendiz"
+    const [rows] = await connection.execute(sql, [idFicha]);
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener los usuarios aprendices por ficha:', error);
+    res.status(500).json({ error: 'Error al obtener los usuarios aprendices por ficha' });
   }
 });
 
@@ -1324,14 +1354,14 @@ app.get('/listar', async (req, res) => {
       return res.status(403).json({ error: 'El usuario no tiene fichas asignadas' });
     }
 
-    let sql = `SELECT a.*, u.primerNombre AS nombreAprendiz, u.correo AS correoAprendiz 
-               FROM asistencia a 
-               JOIN usuario u ON a.idAprendiz = u.identificador 
-               WHERE a.fecha = ? AND a.idFicha = ?`;
+    const idFicha = subrows[0].idFicha;
 
-    const params = [fecha, subrows[0].idFicha];
+    const sql = `SELECT asistencia.*, usuario.primerNombre AS nombreAprendiz, usuario.correo AS correoAprendiz 
+                 FROM asistencia 
+                 JOIN usuario ON asistencia.idAprendiz = usuario.identificador
+                 WHERE asistencia.fecha = ? AND asistencia.idFicha = ?`;
 
-    const [rows] = await connection.execute(sql, params);
+    const [rows] = await connection.execute(sql, [fecha, idFicha]);
     connection.end();
     res.status(200).json(rows);
   } catch (error) {

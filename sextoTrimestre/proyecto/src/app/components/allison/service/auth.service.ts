@@ -41,7 +41,7 @@ export class AuthService {
     this._userFichas = fichas;
   }
 
-  getIdUsuarioActual(): string | null {
+  getIdUsuarioActual(): number | null {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
@@ -49,7 +49,7 @@ export class AuthService {
     }
     return null;
   }
-
+  
   getUserInfo(): any {
     const token = localStorage.getItem('token');
     if (token) {
