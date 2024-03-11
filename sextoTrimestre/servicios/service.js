@@ -1434,7 +1434,7 @@ app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
 
 app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
   try {
-    const correo = req.params.correo;
+    const correo = req.params.correo.replace(/"/g, ''); 
     const connection = await mysql.createConnection(dbConfig);
     const sql = `
       SELECT g.*, u.primerNombre, u.primerApellido
