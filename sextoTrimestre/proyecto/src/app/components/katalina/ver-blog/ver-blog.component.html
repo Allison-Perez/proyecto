@@ -40,17 +40,8 @@
   </div>
 </nav>
 
-<h2 class="subtitulo mt-5">Blogs</h2>
+<h2 class="titulo2">Blogs</h2>
 
-<div>
-  <div *ngFor="let blog of blogs">
-    <h3>Titulo {{ blog.nombre }}</h3>
-    <p>Comentario {{ blog.comentario }}</p>
-    <p>Publicado por: {{ blog.primerNombre }} {{ blog.primerApellido }}</p>
-    <p>Fecha de Publicación: {{ blog.fechaPublicacion | date: 'dd/MM/yyyy' }}</p>
-    <img *ngIf="blog.urlImagen" [src]="blog.urlImagen" alt="Imagen del Blog" />
-  </div>
-</div> -->
 <div class="noticias-container">
   <div *ngFor="let blog of blogs" class="instagram-div">
     <h3 class="titulo">Titulo {{ blog.nombre }}</h3>
