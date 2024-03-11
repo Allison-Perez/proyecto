@@ -47,8 +47,7 @@ export class VerBlogComponent implements OnInit {
   }
 
   getUserInfo() {
-    // Supongamos que el ID del blog está disponible en la variable 'idBlog'
-    const idBlog = 1; // Reemplaza con el valor real del ID del blog
+    const idBlog = 1;
 
     this.serviceService.getUserInfoByBlog(idBlog).subscribe(
       (data) => {

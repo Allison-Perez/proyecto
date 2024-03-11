@@ -1400,24 +1400,6 @@ app.get('/verificarAsistencia', async (req, res) => {
 
 // TRAER BLOG
 
-// app.get("/blogsFicha/:idFicha", async (req, res) => {
-//   try {
-//     const { idFicha } = req.params;
-//     const connection = await mysql.createConnection(dbConfig);
-
-//     const sql = `SELECT * FROM blog WHERE idFicha = ?`;
-//     const [rows] = await connection.execute(sql, [idFicha]);
-
-//     connection.end();
-//     console.log('Blogs retrieved successfully:', rows);
-//     res.status(200).json(rows);
-//   } catch (error) {
-//     console.error("Error al obtener los blogs por ficha:", error);
-//     res.status(500).json({ error: "Error al obtener los blogs por ficha" });
-//   }
-// });
-
-
 app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
   console.log('Entraaaaaaaaaa');
   try {
