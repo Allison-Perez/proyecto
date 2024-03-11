@@ -10,7 +10,6 @@
   font-style: normal;
 }
 
-/* Container */
 .instagram-div {
   margin-left: 30px;
   max-width: 350px;
@@ -145,15 +144,15 @@ button {
   color: #fff;
 }
 
-.dropdown-content { 
+.dropdown-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
   margin-right: 5px;
   background-color: #fff;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
 }
 
@@ -191,22 +190,30 @@ button {
     margin-top: -15%;
     font-weight: bold;
   }
-    
+
   .description {
     margin-top: 10%;
   }
 }
 
-
-.subir{
-  margin-top: 20px;
+.container {
+  background-color: #ffffff;
+  margin-top: 50px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 700px;
 }
 
-h2 {
+
+.container h2{
   color: #008a88;
-  font-size: 27px;
-  font-weight: bold; 
+  font-size: 30px;
+  text-align:center;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
+
 
 label {
   font-weight: bold;
@@ -230,84 +237,77 @@ label {
 .btn-link {
   border: none;
   border-radius: 5px;
-  color: #f5f5f5; 
+  color: #f5f5f5;
   background-color: #005b59;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease; 
+  transition: color 0.3s ease;
 }
 
 .btn-link:hover {
-  color: #333; 
+  color: #333;
 }
 
 .btn-primary,
 .btn-secondary {
   text-decoration: none;
   font-weight: bold;
-  color: #fff; 
-  background-color:#005b59; 
+  color: #fff;
+  background-color:#005b59;
   border: none;
-  border-radius: 5px; 
+  border-radius: 5px;
   padding: 0.5rem 1rem;
   margin-right: 5px;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover,
 .btn-secondary:hover {
-  background-color: #005b59; 
+  background-color: #005b59;
 }
 
 
 .form-group {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 
 .btn-cancelar {
-  color:#f5f5f5; 
-  background-color: #850606; 
+  color:#f5f5f5;
+  background-color: #850606;
   border: none;
-  border-radius: 5px; 
-  padding: 0.5rem 1rem; 
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .btn-cancelar:hover {
-  background-color:#850606; 
+  background-color:#850606;
 }
 .card-date {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 12px;
-  color: #252525; 
-}
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 700px;
+  color: #252525;
 }
 
 .form-group {
-  margin-bottom: 13px; 
+  margin-bottom: 13px;
 }
 
 label {
   font-weight: bold;
-  display: block; 
+  display: block;
 }
 
 input[type="text"],
 textarea {
-  width: 90%; 
+  width: 90%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -326,23 +326,23 @@ textarea {
 
 .button-container {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .button-container button {
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 .card-img-top {
   max-width: 200px;
   height: auto;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 /* Agregar color de fondo y estilos para el botón de crear horario */
 .btn-primary.crear-horario {
-  
-  background-color:#005b59; 
+
+  background-color:#005b59;
   border: none;
   border-radius: 5px;
   color: white;
@@ -353,14 +353,14 @@ textarea {
 }
 
 .btn-primary.crear-horario:hover {
-  background-color: #005b59; 
+  background-color: #005b59;
 }
 
 /* Estilos para el botón de ver archivo */
 .btn-primary.ver-archivo {
   text-decoration: none;
   font-weight: bold;
-  background-color: #005b59; 
+  background-color: #005b59;
   border: none;
   border-radius: 5px;
   color: #f5f5f5;
@@ -374,15 +374,6 @@ textarea {
   background-color:#005b59;
 }
 
-/* Estilos para el formulario en la sección de crear horario */
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 700px;
-}
 
 .container h2{
   font-size: 27px;
@@ -411,18 +402,18 @@ textarea {
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .button-container button {
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 
 /* Reducir tamaño de imagen de horario */
 .image {
   width: 50%;
-  max-height: 200px; 
+  max-height: 200px;
   border-radius: 10px;
   margin-bottom: 10px;
 }
