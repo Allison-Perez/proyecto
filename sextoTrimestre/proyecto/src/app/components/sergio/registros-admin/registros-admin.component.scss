@@ -14,7 +14,7 @@ input{
 
 .container {
   border: 1px solid #57a7a5;
-  width: 80%;
+  width: 90%;
   margin: 30px auto;
   border-radius: 10px;
 }
@@ -109,11 +109,18 @@ select {
   background-color: #088a88;
 }
 
-@media only screen and (max-width: 1500px) {
-
+@media only screen and (min-width: 1501px) {
   .container {
-    max-width: 600px;
-    width: 70%;
+    margin-top: 5%;
+    width: 70%; /* Adjust the width as per your preference */
+  }
+  .container_columns_form {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .form_container {
+    width: 50%;
   }
 }
 
