@@ -21,7 +21,7 @@ export class BlogComponent implements OnInit {
   selectedFicha: any;
 
   constructor(private blogService: BlogService, private router: Router, private authService: AuthService) { }
-  
+
   ngOnInit() {
     this.userFichas = this.authService.getUserFichas();
     this.getFichasUsuario();
@@ -62,8 +62,8 @@ export class BlogComponent implements OnInit {
 
   onSelectFicha(event: any): void {
     this.selectedFicha = event.target.value;
-  }  
-  
+  }
+
   loadBlogs() {
     const idUsuario = this.authService.getUserInfo().idUsuario;
     this.blogService.getBlogsPorUsuario(idUsuario).subscribe(
@@ -81,7 +81,7 @@ export class BlogComponent implements OnInit {
       console.error('No se ha seleccionado ninguna ficha');
       return;
     }
-    
+
     const idFichaSeleccionada = this.selectedFicha;
 
     const formData = new FormData();
@@ -93,14 +93,14 @@ export class BlogComponent implements OnInit {
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
       formData.append('idUsuario', userInfo.idUsuario.toString());
-      formData.append('idFicha', idFichaSeleccionada.toString()); 
+      formData.append('idFicha', idFichaSeleccionada.toString());
 
     } else {
       console.error('No se pudo obtener la información del usuario del token JWT');
       return;
     }
     formData.append('fechaPublicacion', new Date().toISOString());
-  
+
     this.blogService.crearBlog(formData).subscribe(
       (response) => {
         console.log('Blog creado exitosamente:', response);
@@ -113,8 +113,8 @@ export class BlogComponent implements OnInit {
       }
     );
   }
-  
-   
+
+
 
   resetNewBlogForm() {
     console.log('resetea blog');
