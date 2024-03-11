@@ -42,13 +42,12 @@ export class AuthService {
   }
 
   getIdUsuarioActual(): number | null {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken.idUsuario;
+    const userInfo = this.getUserInfo();
+    if (userInfo) {
+      return userInfo.idUsuario;
     }
     return null;
-  }
+  }  
   
   getUserInfo(): any {
     const token = localStorage.getItem('token');
@@ -68,11 +67,12 @@ export class AuthService {
       return null;
     }
   }
+
   getUserEmail(): string | null {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken.correo; // Suponiendo que el correo electrónico está almacenado en el token
+      return decodedToken.correo;
     }
     return null;
   }
