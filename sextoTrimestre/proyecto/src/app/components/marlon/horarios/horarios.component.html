@@ -34,12 +34,12 @@
             <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
           </li>
         </div>
-      </div> 
+      </div>
     </ul>
   </div>
 </nav>
 <div class="container">
-  <h2 class="subtitulo mt-5">Crear Horarios</h2>
+  <h2>Crear Horarios</h2>
   <form (submit)="crearHorario()" enctype="multipart/form-data">
     <div>
       <label for="fichaSelect">Seleccionar ficha:</label>
@@ -53,8 +53,8 @@
     <textarea id="comentario" name="comentario" [(ngModel)]="newHorario.comentario" required></textarea>
     <label for="archivo">Archivo:</label>
     <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" required><br>
-    <button type="submit" class="btn btn-primary">Subir Horario</button>
-  </form>  
+  </form>
+  <button type="submit" class="boton">Subir Horario</button>
 </div>
 
 <div class="mostrar">
@@ -72,7 +72,7 @@
               <button class="btn btn-primary" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
               <button class="btn btn-link" (click)="editarHorario(horario)">Editar</button>
               <button class="btn-cancelar" (click)="eliminarHorario(horario.identificador)">Eliminar</button>
-            </div><br>                    
+            </div><br>
             <div *ngIf="editingHorario && editingHorario.identificador === horario.identificador">
               <form (ngSubmit)="guardarEdicion()" #editHorarioForm="ngForm">
                 <div class="form-group">

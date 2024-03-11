@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-.subtitulo{
-  color: #0a7775;
-  text-align: center;
-  font-weight: bolder;
-  font-family: "Outfit", sans-serif;
-  font-size: 50px;
-  font-style: normal;
-}
-
 .instagram-div {
   margin-left: 30px;
   max-width: 350px;
@@ -196,6 +187,9 @@ button {
   }
 }
 
+
+/* ESTILOS HORARIOS */
+
 .container {
   background-color: #ffffff;
   margin-top: 50px;
@@ -205,8 +199,8 @@ button {
   max-width: 700px;
 }
 
-
 .container h2{
+  padding: 0%;
   color: #008a88;
   font-size: 30px;
   text-align:center;
@@ -214,26 +208,73 @@ button {
   margin-bottom: 20px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
 
 label {
-  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  margin-right: 5px;
 }
 
-.btn-primary {
-  margin-top: 10px;
-  background-color: #008a88;
+select,
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.boton {
+  background-color: #088a88;
+  padding: 1em 2em;
   border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
 }
 
-.btn-primary:hover {
-  background-color: #005b59;
-  color: #000000;
+.boton:hover {
+  color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
 }
 
-.mostrar{
-  margin-top: 30px;
-  margin-left: 50px;
+.boton::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
 }
+
+.boton:hover::before {
+  width: 100%;
+}
+
+.mostrar {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .btn-link {
   border: none;
   border-radius: 5px;
@@ -296,9 +337,6 @@ label {
   color: #252525;
 }
 
-.form-group {
-  margin-bottom: 13px;
-}
 
 label {
   font-weight: bold;
@@ -372,11 +410,6 @@ textarea {
 
 .btn-primary.ver-archivo:hover {
   background-color:#005b59;
-}
-
-
-.container h2{
-  font-size: 27px;
 }
 
 .container label {

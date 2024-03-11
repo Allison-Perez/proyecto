@@ -35,10 +35,10 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div> 
+            </div>
         </ul>
   </div>
-</nav> 
+</nav>
 <h1 class="titulo">Tu perfil</h1>
 <div class="perfil-detalle">
   <div class="container">
@@ -50,7 +50,7 @@
           <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
           <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
           <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
-          <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso }}</span></p>
+          <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso | date : "dd/MM/yyyy" }}</span></p>
           <p class="font-weight-bold">Número de Celular: <span id="celular">{{ userData.celular }}</span></p>
           <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
           <p class="font-weight-bold">Información Adicional: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>

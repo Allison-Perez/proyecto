@@ -92,8 +92,10 @@
   <button type="submit" class="boton">Crear Blog</button>
 </div>
 
+<!-- LISTAR BLOGS -->
+
 <div class="mostrar">
-  <h2>Lista de Blogs</h2>
+  <h2 class="tituloMostrar">Lista de Blogs</h2>
   <div *ngIf="newsList.length > 0; else noBlogs">
     <div class="row">
       <div class="col-md-4" *ngFor="let blog of newsList">

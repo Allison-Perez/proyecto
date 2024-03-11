@@ -954,6 +954,7 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 
 
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
+  console.log('entra');
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
     let urlImagen = ''; 
@@ -1466,7 +1467,7 @@ app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
       res.status(500).json({ error: 'Error al obtener las blogs por correo' });
     }
   });
-  
+
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
