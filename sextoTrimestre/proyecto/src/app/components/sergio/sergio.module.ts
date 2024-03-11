@@ -21,7 +21,6 @@ import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices
 
 
 
-
 @NgModule({
   declarations: [
     IndexComponent,
