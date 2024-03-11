@@ -951,6 +951,8 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 //BLOG
 
 // Ruta para crear un nuevo blog
+
+
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
@@ -992,6 +994,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 });
 
 // Ruta para traer todos los blogs asociados al usuario
+
 app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1009,6 +1012,7 @@ app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
 });
 
 // Ruta para obtener las fichas asociadas al usuario
+
 app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1030,8 +1034,8 @@ app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   }
 });
 
-
 //Editar un blog específico
+
 app.put("/editarBlog/:idBlog", async (req, res) => {
   try {
     const { idBlog } = req.params;
@@ -1074,6 +1078,7 @@ app.delete("/eliminarBlog/:id", async (req, res) => {
 // HORARIOS
 
 // Ruta para obtener horarios filtrados por identificador
+
 app.get('/obtenerHorarios/:idUsuario', async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1106,7 +1111,6 @@ app.get('/obtenerFichas/:idUsuario', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener las fichas' });
   }
 });
-
 
 // Ruta para crear un nuevo horario
 app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
@@ -1148,7 +1152,6 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   }
 });
 
-
 // Ruta para actualizar un horario existente
 app.put('/editarHorario/:identificador', async (req, res) => {
   try {
@@ -1188,6 +1191,7 @@ app.delete('/eliminarHorario/:identificador', async (req, res) => {
 // ACTIVIDAD
 
 // Ruta para crear una nueva actividad
+
 app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
   try {
     const { nombre, comentario, fechaInicio, fechaFinal, idUsuario, idFicha } = req.body;
@@ -1275,27 +1279,11 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
   }
 });
 
-// ver blog por ficha K
-app.get("/blogsFicha/:idFicha", async (req, res) => {
-  try {
-    const { idFicha } = req.params;
-    const connection = await mysql.createConnection(dbConfig);
-
-    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
-    const [rows] = await connection.execute(sql, [idFicha]);
-
-    connection.end();
-    console.log('Blogs retrieved successfully:', rows);
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error("Error al obtener los blogs por ficha:", error);
-    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
-  }
-});
 
 //ASISTENCIA
 
 // Ruta para crear una nueva entrada en la tabla asistencia si no existe
+
 app.post('/crearAsistencia', async (req, res) => {
   try {
     const { fecha, idFicha } = req.body;
@@ -1370,7 +1358,6 @@ app.get('/listar', async (req, res) => {
   }
 });
 
-
 // Ruta para editar una asistencia específica
 app.put('/editarAsistencia/:identificador', async (req, res) => {
   try {
@@ -1405,6 +1392,61 @@ app.get('/verificarAsistencia', async (req, res) => {
   } catch (error) {
     console.error('Error al verificar la asistencia:', error);
     res.status(500).json({ error: 'Error al verificar la asistencia' });
+  }
+});
+
+
+// KATALINA
+
+// TRAER BLOG
+
+// app.get("/blogsFicha/:idFicha", async (req, res) => {
+//   try {
+//     const { idFicha } = req.params;
+//     const connection = await mysql.createConnection(dbConfig);
+
+//     const sql = `SELECT * FROM blog WHERE idFicha = ?`;
+//     const [rows] = await connection.execute(sql, [idFicha]);
+
+//     connection.end();
+//     console.log('Blogs retrieved successfully:', rows);
+//     res.status(200).json(rows);
+//   } catch (error) {
+//     console.error("Error al obtener los blogs por ficha:", error);
+//     res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+//   }
+// });
+
+
+app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
+  console.log('Entraaaaaaaaaa');
+  try {
+    const correo = req.params.correo.replace(/"/g, ''); 
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `
+      SELECT g.*, u.primerNombre, u.primerApellido
+      FROM blog  g
+      JOIN usuario u ON g.idUsuario = u.identificador
+      WHERE g.idFicha = (
+          SELECT idFicha
+          FROM usuarioFicha
+          WHERE idUsuario = (
+              SELECT identificador AS idUsuario
+              FROM usuario
+              WHERE correo = ?
+          )
+      )`;
+
+    const [rows] = await connection.execute(sql, [correo]);
+    console.log('Correo recibido:', correo);
+
+
+    connection.end();
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener las guías por correo:', error);
+    res.status(500).json({ error: 'Error al obtener las guías por correo' });
   }
 });
 

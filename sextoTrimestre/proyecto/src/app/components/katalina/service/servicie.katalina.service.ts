@@ -14,13 +14,6 @@ export class ServiceService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  // VER BLOG
-    getblogsFicha(idFicha: number): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/blogsFicha/${idFicha}`);
-    }
- 
-
-  
   // Cambiar y Actualizar Contraseña
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
     const endpoint = '/cambiar-contrasena';
@@ -43,10 +36,9 @@ export class ServiceService {
     return this.http.post(url, userData);
   }
 
-  // Informacion Perfil
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${email}`;
-
+    const correoSinComillas = email.replace(/"/g, '');
+    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${correoSinComillas}`;
     return this.http.get(url);
   }
 
@@ -54,4 +46,18 @@ export class ServiceService {
     const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
     return this.http.post(url, userData);
   }
+
+  getUserInfoByBlog(idBlog: number): Observable<any> {
+    const url = `${this.apiUrl}/api/obtener-blog-por-correo/${idBlog}`;
+    console.log(idBlog);
+    return this.http.get(url);
+  }
+
+
+  getBlogs(email: string): Observable<any> {
+    const url = `${this.apiUrl}/api/obtener-blog-por-correo/${email}`;
+    console.log('URL para obtener blogs:', url);
+    return this.http.get(url);
+  }
+
 }
