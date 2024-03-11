@@ -148,6 +148,12 @@ form {
   flex-direction: column;
 }
 
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
 label {
   margin-bottom: 5px;
   color: #333;
@@ -321,10 +327,7 @@ h2 {
   color: #000000;
 }
 
-.form-group {
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .btn-cancelar {
   color: #f5f5f5;
