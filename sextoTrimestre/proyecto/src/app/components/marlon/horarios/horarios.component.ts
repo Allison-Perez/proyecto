@@ -51,7 +51,7 @@ export class HorariosComponent implements OnInit {
       error => {
         console.error('Error al cargar los horarios:', error);
       }
-    );    
+    );
   }
 
   getFichasUsuario(): void {
@@ -79,12 +79,14 @@ export class HorariosComponent implements OnInit {
       }
     );
   }
-  
+
   handleFileInput(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
   crearHorario() {
+    console.log('entra');
+
     const formData = new FormData();
 
     formData.append('nombre', this.newHorario.nombre);
@@ -100,7 +102,7 @@ export class HorariosComponent implements OnInit {
     if (userInfo) {
       formData.append('idUsuario', userInfo.idUsuario);
       if (this.selectedFicha !== undefined) {
-        formData.append('idFicha', this.selectedFicha.toString()); 
+        formData.append('idFicha', this.selectedFicha.toString());
       } else {
         console.error('No se ha seleccionado una ficha');
         return;

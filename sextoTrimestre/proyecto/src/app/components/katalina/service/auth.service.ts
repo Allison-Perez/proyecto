@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   private isAuthenticated: boolean = false;
   private _userFichas: number[] = [];
-  private idFicha!: number; 
+
  
 
   constructor(private jwtHelper: JwtHelperService) { }

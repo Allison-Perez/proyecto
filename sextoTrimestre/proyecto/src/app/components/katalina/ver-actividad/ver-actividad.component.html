@@ -35,17 +35,27 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div> 
+            </div>
         </ul>
   </div>
 </nav>
-<h2 class="subtitulo mt-5">Actividades</h2>
-<div class="instagram-div">
-  <h1 class="titulo">Prueba</h1>
-  <p><strong>Descripción:</strong> Buen día</p>
-  <button class="boton">Ver Archivo</button>
-</div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<h2 class="subtitulo mt-5">Guias</h2>
 
+
+<div>
+  <h2>Guías</h2>
+  <div *ngFor="let guia of guias">
+    <h3>{{ guia.nombre }}</h3>
+    <p>{{ guia.comentario }}</p>
+    <p>Publicado por: {{ guia.primerNombre }} {{ guia.primerApellido }}</p>
+    <p>Fecha de Inicio: {{ guia.fechaInicio | date: 'dd/MM/yyyy' }}</p>
+    <p>Fecha Final: {{ guia.fechaFinal | date: 'dd/MM/yyyy' }}</p>
+    <img *ngIf="guia.urlImagen" [src]="guia.urlImagen" alt="Imagen de la Guía" />
+  </div>
+</div>
+
+
+
+<div *ngIf="!userInfo || !guias">
+  <p>Cargando información...</p>
+</div>
