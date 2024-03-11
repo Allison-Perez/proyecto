@@ -14,7 +14,6 @@ export class ServiceService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  //Ver blog
   getUserInfoByBlog(idBlog: number): Observable<any> {
     const url = `${this.apiUrl}/api/obtener-blog-por-correo/${idBlog}`;
     console.log(idBlog);
@@ -28,13 +27,11 @@ export class ServiceService {
     return this.http.get(url);
   }
 
-  //Ver Guias
  getUserInfoByguias(idguia: number): Observable<any> {
     const url = `${this.apiUrl}/api/obtener-guias-por-correo/${idguia}`;
     console.log(idguia);
     return this.http.get(url);
   }
-
 
   getguias(email: string): Observable<any> {
     const url = `${this.apiUrl}/api/obtener-guias-por-correo/${email}`;
@@ -42,7 +39,7 @@ export class ServiceService {
     return this.http.get(url);
   }
 
-  // Cambiar y Actualizar Contraseña
+
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
     const endpoint = '/cambiar-contrasena';
     const url = `${this.apiUrl}${endpoint}`;
@@ -75,6 +72,6 @@ export class ServiceService {
     return this.http.post(url, userData);
   }
 
-  
+
 
 }
