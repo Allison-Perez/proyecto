@@ -99,8 +99,8 @@ button {
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff; 
-  border: 1px solid #ccc; 
+  background-color: #fff;
+  border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 10px;
@@ -124,19 +124,15 @@ button {
   background-color: #070707;
 }
 
-/* Crear Blog */
+/* CREAR BLOG */
+
 .container {
-  margin-top: 40px;
+  margin-top: 50px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
   padding: 20px;
   background-color: #ffffff;
   border-radius: 10px;
-}
-
-h2 {
-  color: #008a88;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  max-width: 700px;
 }
 
 .container h2{
@@ -147,41 +143,81 @@ h2 {
     margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 20px;
+form {
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  margin-right: 5px;
 }
 
-input[type="text"],
+select,
+input,
 textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
-.btn-primary {
-  background-color: #008a88;
+.boton {
+  background-color: #088a88;
+  padding: 1em 2em;
   border: none;
-  color: white;
-  padding: 10px 20px;
   border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
 }
 
-.btn-primary:hover {
-  background-color: #005b59;
+.boton:hover {
+  color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
 }
+
+.boton::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.boton:hover::before {
+  width: 150%;
+}
+
+/* MOSTRAR BLOGS */
 
 .mostrar {
-  margin-top: 30px;
-  margin-left: 50px;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
 }
-link
+
+h2 {
+  text-align: center;
+  color: #088a88;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
 
 .blogs-container {
   display: grid;
@@ -190,12 +226,17 @@ link
 }
 
 .card {
-  border: 2px solid #ccc;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
   border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
-  color: #0f0f0f;
+  font-size: 1.2rem;
+  color: #088a88;
+  margin-bottom: 10px;
 }
 
 .card-buttons {
@@ -204,36 +245,64 @@ link
   margin-top: 10px;
 }
 
-.card-buttons button {
-  padding: 0;
-  margin: 0;
-  color: #008a88;
-}
-
-.card-buttons button:hover {
-  background-color: #005b59;
-  color: #000000;
-}
-
-.card-title,
 .card-text {
-  color: black;
+  margin-top: 15px;
+  color: #555;
 }
 
-.btn-link {
+.card-date {
+  font-style: italic;
+  color: #888;
+}
+
+.Btn {
+  margin: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 105px;
+  height: 45px;
   border: none;
-  border-radius: 5px;
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
+  padding: 0px 20px;
+  background-color: #088a88;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #57a7a5;
+  transition-duration: .3s;
 }
 
-.btn-link:hover {
-  background-color: #005b59;
-  color: #000000;
+.svg {
+  width: 14px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: white;
+  transition-duration: .3s;
 }
+
+.Btn:hover {
+  color: transparent;
+}
+
+.Btn:hover svg {
+  right: 43%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: .3s;
+}
+
+.Btn:active {
+  transform: translate(3px , 3px);
+  transition-duration: .3s;
+  box-shadow: 2px 2px 0px rgb(140, 32, 212);
+}
+
+
+
 
 .btn-primary,
 .btn-secondary {
@@ -281,14 +350,7 @@ link
   color: #252525;
 }
 
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 700px;
-}
+
 
 .form-group {
   margin-bottom: 13px;
@@ -317,3 +379,5 @@ textarea {
   height: auto;
   margin: 0 auto;
 }
+
+
