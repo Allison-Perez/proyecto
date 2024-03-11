@@ -10,6 +10,7 @@ export class AuthService {
   private isAuthenticated: boolean = false;
   private _userFichas: number[] = [];
   private idFicha!: number; 
+ 
 
   constructor(private jwtHelper: JwtHelperService) { }
 
@@ -39,11 +40,5 @@ export class AuthService {
  getUserFichas(): number[] {
     return this._userFichas;
   }
-  // setIdFicha(idFicha: number): void {
-  //   this.idFicha = idFicha;
-  // }
-
-  // getIdFicha(): number {
-  //   return this.idFicha;
-  // }
+  
 }

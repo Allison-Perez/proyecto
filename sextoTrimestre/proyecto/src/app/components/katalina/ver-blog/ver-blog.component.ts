@@ -12,6 +12,9 @@ export class VerBlogComponent implements OnInit {
   newsList: any[] = [];
   mostrarMenuPerfil: boolean = false;
   isMenuOpen: boolean = false;
+  email: string = '';
+  userInfo: any;
+  blogs: any;
 
 
   constructor(private authService: AuthService, private serviceService: ServiceService, private router: Router) { }
@@ -28,7 +31,7 @@ export class VerBlogComponent implements OnInit {
 
   redirectTo(route: string) {
     this.router.navigate([route]);
-    this.mostrarMenuPerfil = false; // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
   }
 
   logout() {
@@ -38,26 +41,34 @@ export class VerBlogComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadBlogs();
+    this.email = this.authService.getUserEmail();
+    this.getUserInfo();
+    this.getBlogs();
   }
 
-  loadBlogs() {
-    const idFicha = 1;
-  
-    if (idFicha !== undefined) {
-      this.serviceService.getblogsFicha(idFicha).subscribe(
-        data => {
-          console.log('Blogs loaded successfully:', data);
-          this.newsList = data;
-        },
-        error => console.error('Error al cargar los blogs:', error)
-      );
-    } else {
-      console.error('IdFicha no válida.');
-    }
+  getUserInfo() {
+    const idBlog = 1;
+
+    this.serviceService.getUserInfoByBlog(idBlog).subscribe(
+      (data) => {
+        this.userInfo = data;
+      },
+      (error) => {
+        console.error('Error al obtener información del usuario por blog:', error);
+      }
+    );
   }
-  
-  
+
+
+  getBlogs() {
+    this.serviceService.getBlogs(this.email).subscribe(
+      (data) => {
+        this.blogs = data;
+      },
+      (error) => {
+        console.error('Error al obtener blogs por correo:', error);
+      }
+    );
+  }
+
 }
-    
- 

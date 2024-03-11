@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", 
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -951,6 +951,8 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
 //BLOG
 
 // Ruta para crear un nuevo blog
+
+
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
@@ -992,6 +994,7 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
 });
 
 // Ruta para traer todos los blogs asociados al usuario
+
 app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1009,6 +1012,7 @@ app.get("/blogsPorUsuario/:idUsuario", async (req, res) => {
 });
 
 // Ruta para obtener las fichas asociadas al usuario
+
 app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1030,8 +1034,8 @@ app.get("/fichasPorUsuario/:idUsuario", async (req, res) => {
   }
 });
 
-
 //Editar un blog específico
+
 app.put("/editarBlog/:idBlog", async (req, res) => {
   try {
     const { idBlog } = req.params;
@@ -1074,6 +1078,7 @@ app.delete("/eliminarBlog/:id", async (req, res) => {
 // HORARIOS
 
 // Ruta para obtener horarios filtrados por identificador
+
 app.get('/obtenerHorarios/:idUsuario', async (req, res) => {
   try {
     const { idUsuario } = req.params;
@@ -1106,7 +1111,6 @@ app.get('/obtenerFichas/:idUsuario', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener las fichas' });
   }
 });
-
 
 // Ruta para crear un nuevo horario
 app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
@@ -1148,7 +1152,6 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
   }
 });
 
-
 // Ruta para actualizar un horario existente
 app.put('/editarHorario/:identificador', async (req, res) => {
   try {
@@ -1188,6 +1191,7 @@ app.delete('/eliminarHorario/:identificador', async (req, res) => {
 // ACTIVIDAD
 
 // Ruta para crear una nueva actividad
+
 app.post('/crearActividad', upload.single('archivo'), async (req, res) => {
   try {
     const { nombre, comentario, fechaInicio, fechaFinal, idUsuario, idFicha } = req.body;
@@ -1276,25 +1280,158 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
 });
 
 
+//ASISTENCIA
 
+// Ruta para crear una nueva entrada en la tabla asistencia si no existe
 
-// ver blog por ficha K
-app.get("/blogsFicha/:idFicha", async (req, res) => {
+app.post('/crearAsistencia', async (req, res) => {
   try {
-    const { idFicha } = req.params;
+    const { fecha, idFicha } = req.body;
+    const idInstructor = req.user.idUsuario; // Obtener el ID del usuario instructor del token de autenticación
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `SELECT * FROM blog WHERE idFicha = ?`;
-    const [rows] = await connection.execute(sql, [idFicha]);
+    // Consultar todos los aprendices asociados a la ficha proporcionada
+    const aprendicesQuery = 'SELECT identificador FROM usuario WHERE idRol = 2 AND identificador IN (SELECT idUsuario FROM usuarioFicha WHERE idFicha = ?)';
+    const [aprendicesRows] = await connection.execute(aprendicesQuery, [idFicha]);
+
+    if (aprendicesRows.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
+    }
+
+    // Insertar una nueva entrada en la tabla asistencia para cada aprendiz encontrado
+    for (const aprendizRow of aprendicesRows) {
+      const idAprendiz = aprendizRow.identificador;
+      const sql = 'INSERT INTO asistencia (fecha, idFicha, idAprendiz, idInstructor) VALUES (?, ?, ?, ?)';
+      await connection.execute(sql, [fecha, idFicha, idAprendiz, idInstructor]);
+    }
 
     connection.end();
-    console.log('Blogs retrieved successfully:', rows);
-    res.status(200).json(rows);
+    res.status(200).json({ message: 'Asistencia creada exitosamente' });
   } catch (error) {
-    console.error("Error al obtener los blogs por ficha:", error);
-    res.status(500).json({ error: "Error al obtener los blogs por ficha" });
+    console.error('Error al crear la asistencia:', error);
+    res.status(500).json({ error: 'Error al crear la asistencia' });
   }
 });
+
+// Ruta para obtener usuarios con rol "Aprendiz" asociados a una ficha específica
+app.get('/usuariosPorFicha', async (req, res) => {
+  try {
+    const { idFicha } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT usuario.* FROM usuario INNER JOIN usuarioFicha ON usuario.identificador = usuarioFicha.idUsuario WHERE usuarioFicha.idFicha = ? AND usuario.idRol = 2'; // El valor 2 representa el ID del rol "Aprendiz"
+    const [rows] = await connection.execute(sql, [idFicha]);
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener los usuarios aprendices por ficha:', error);
+    res.status(500).json({ error: 'Error al obtener los usuarios aprendices por ficha' });
+  }
+});
+
+// Ruta para obtener la lista de asistencia filtrada por fecha, ficha e instructor
+app.get('/listar', async (req, res) => {
+  try {
+    const { fecha, idUsuario } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const subquery = 'SELECT idFicha FROM usuarioFicha WHERE idUsuario = ?';
+    const [subrows] = await connection.execute(subquery, [idUsuario]);
+
+    if (subrows.length === 0) {
+      return res.status(403).json({ error: 'El usuario no tiene fichas asignadas' });
+    }
+
+    const idFicha = subrows[0].idFicha;
+
+    const sql = `SELECT asistencia.*, usuario.primerNombre AS nombreAprendiz, usuario.correo AS correoAprendiz 
+                 FROM asistencia 
+                 JOIN usuario ON asistencia.idAprendiz = usuario.identificador
+                 WHERE asistencia.fecha = ? AND asistencia.idFicha = ?`;
+
+    const [rows] = await connection.execute(sql, [fecha, idFicha]);
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener la lista de asistencia:', error);
+    res.status(500).json({ error: 'Error al obtener la lista de asistencia' });
+  }
+});
+
+// Ruta para editar una asistencia específica
+app.put('/editarAsistencia/:identificador', async (req, res) => {
+  try {
+    const { status, fallaJustificada } = req.body;
+    const { identificador } = req.params;
+
+    if (status && fallaJustificada) {
+      const connection = await mysql.createConnection(dbConfig);
+      const sql = 'UPDATE asistencia SET status = ?, fallaJustificada = ? WHERE identificador = ?';
+      await connection.execute(sql, [status, fallaJustificada, identificador]);
+      connection.end();
+      res.json({ message: 'Asistencia actualizada exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para actualizar la asistencia' });
+    }
+  } catch (error) {
+    console.error('Error al actualizar la asistencia:', error);
+    res.status(500).json({ error: 'Error al actualizar la asistencia' });
+  }
+});
+
+// Ruta para verificar si hay asistencia para la fecha y la ficha seleccionadas
+app.get('/verificarAsistencia', async (req, res) => {
+  try {
+    const { fecha, idFicha } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM asistencia WHERE fecha = ? AND idFicha = ?';
+    const [rows] = await connection.execute(sql, [fecha, idFicha]);
+    connection.end();
+    res.status(200).json(rows.length > 0);
+  } catch (error) {
+    console.error('Error al verificar la asistencia:', error);
+    res.status(500).json({ error: 'Error al verificar la asistencia' });
+  }
+});
+
+
+// KATALINA
+
+// TRAER BLOG
+
+app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
+  console.log('Entraaaaaaaaaa');
+  try {
+    const correo = req.params.correo.replace(/"/g, ''); 
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `
+      SELECT g.*, u.primerNombre, u.primerApellido
+      FROM blog  g
+      JOIN usuario u ON g.idUsuario = u.identificador
+      WHERE g.idFicha = (
+          SELECT idFicha
+          FROM usuarioFicha
+          WHERE idUsuario = (
+              SELECT identificador AS idUsuario
+              FROM usuario
+              WHERE correo = ?
+          )
+      )`;
+
+    const [rows] = await connection.execute(sql, [correo]);
+    console.log('Correo recibido:', correo);
+
+
+    connection.end();
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener las guías por correo:', error);
+    res.status(500).json({ error: 'Error al obtener las guías por correo' });
+  }
+});
+
 
 // app.get("/horarioFicha/:idFicha", async (req, res) => {
 //   try {
