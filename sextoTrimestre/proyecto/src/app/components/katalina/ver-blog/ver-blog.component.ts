@@ -72,3 +72,5 @@ export class VerBlogComponent implements OnInit {
   }
 
 }
+
+

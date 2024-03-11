@@ -99,8 +99,8 @@ button {
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff; 
-  border: 1px solid #ccc; 
+  background-color: #fff;
+  border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 10px;
@@ -124,19 +124,15 @@ button {
   background-color: #070707;
 }
 
-/* Crear Blog */
+/* CREAR BLOG */
+
 .container {
-  margin-top: 40px;
+  margin-top: 50px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
   padding: 20px;
   background-color: #ffffff;
   border-radius: 10px;
-}
-
-h2 {
-  color: #008a88;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  max-width: 700px;
 }
 
 .container h2{
@@ -147,41 +143,87 @@ h2 {
     margin-bottom: 20px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-group {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 label {
-  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  margin-right: 5px;
 }
 
-input[type="text"],
+select,
+input,
 textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
-.btn-primary {
-  background-color: #008a88;
+.boton {
+  background-color: #088a88;
+  padding: 1em 2em;
   border: none;
-  color: white;
-  padding: 10px 20px;
   border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
 }
 
-.btn-primary:hover {
-  background-color: #005b59;
+.boton:hover {
+  color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
 }
+
+.boton::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.boton:hover::before {
+  width: 150%;
+}
+
+/* MOSTRAR BLOGS */
 
 .mostrar {
-  margin-top: 30px;
-  margin-left: 50px;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
 }
-link
+
+h2 {
+  text-align: center;
+  color: #088a88;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
 
 .blogs-container {
   display: grid;
@@ -190,12 +232,17 @@ link
 }
 
 .card {
-  border: 2px solid #ccc;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
   border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-title {
-  color: #0f0f0f;
+  font-size: 1.2rem;
+  color: #088a88;
+  margin-bottom: 10px;
 }
 
 .card-buttons {
@@ -204,36 +251,138 @@ link
   margin-top: 10px;
 }
 
-.card-buttons button {
-  padding: 0;
-  margin: 0;
-  color: #008a88;
-}
-
-.card-buttons button:hover {
-  background-color: #005b59;
-  color: #000000;
-}
-
-.card-title,
 .card-text {
-  color: black;
+  margin-top: 15px;
+  color: #555;
 }
 
-.btn-link {
+.card-date {
+  font-style: italic;
+  color: #888;
+}
+
+.button-container {
+  display: flex;
+  align-items: center; /* Alinea los elementos verticalmente */
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.edit-button,
+.btnDelete {
+  vertical-align: middle; /* Alinea verticalmente los botones */
+}
+
+
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
   border: none;
-  border-radius: 5px;
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
 }
 
-.btn-link:hover {
-  background-color: #005b59;
-  color: #000000;
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
 }
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: #008a88;
+  align-items: center;
+}
+
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.edit-button::before {
+  display: none;
+  content: "Editar";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+
+.btnDelete {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.btnDelete:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+  gap: 0;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+.btnDelete:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+
+
+
 
 .btn-primary,
 .btn-secondary {
@@ -252,10 +401,7 @@ link
   color: #000000;
 }
 
-.form-group {
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .btn-cancelar {
   color: #f5f5f5;
@@ -281,14 +427,7 @@ link
   color: #252525;
 }
 
-.container {
-  margin-top: 40px;
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 700px;
-}
+
 
 .form-group {
   margin-bottom: 13px;
@@ -317,3 +456,5 @@ textarea {
   height: auto;
   margin: 0 auto;
 }
+
+
