@@ -86,7 +86,7 @@
               <p><strong>Fecha de Inicio:</strong> {{ formatDate(activity.fechaInicio) }}</p>
               <p><strong>Fecha de Fin:</strong> {{ formatDate(activity.fechaFinal) }}</p>
               <div class="button-container">
-              <a (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" type="submit" class="btn btn-primary ver-archivo">Ver archivo</a>
+              <button (click)="descargarArchivo(activity.archivoUrl, activity.nombreArchivo)" type="submit" class="btn btn-primary ver-archivo">Ver archivo</button>
               <button (click)="editActivity(activity)" class="btn btn-primary editar">Editar</button>
               <button (click)="deleteActivity(activity.identificador)" class="btn btn-danger eliminar">Eliminar</button>
             </div><br>
