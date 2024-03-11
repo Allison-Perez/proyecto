@@ -41,7 +41,7 @@
           <td>{{ instructor.fechaNacimiento }}</td>
           <td>{{ instructor.numeroFicha }}</td>
           <td>{{ instructor.correo }}</td>
-          <td>{{ instructor.fechaIngreso }}</td>
+          <td>{{ instructor.fechaIngreso | date : "dd/MM/yyyy" }}</td>
           <td>{{ instructor.celular }}</td>
         </tr>
       </tbody>

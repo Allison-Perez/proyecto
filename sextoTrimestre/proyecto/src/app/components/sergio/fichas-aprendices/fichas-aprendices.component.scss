@@ -41,7 +41,7 @@ body {
   margin: 8px 0; /* Espacio alrededor del separador */
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1250px) {
   .graficoUno,
   .graficoDos {
     width: 60%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
@@ -127,7 +127,7 @@ body {
     width: 38%; /* Limitar el ancho al 30% después de 1600px */
   }
   .chart-container {
-    margin-top: 5%;
+    margin-top: 2%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
