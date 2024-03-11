@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-blog.component.scss']
 })
 export class VerBlogComponent implements OnInit {
-  newsList: any[] = [];
-  mostrarMenuPerfil: boolean = false;
-  isMenuOpen: boolean = false;
   email: string = '';
   userInfo: any;
   blogs: any;
-
+  newsList: any[] = [];
+  mostrarMenuPerfil: boolean = false;
+  isMenuOpen: boolean = false;
+  
 
   constructor(private authService: AuthService, private serviceService: ServiceService, private router: Router) { }
 
