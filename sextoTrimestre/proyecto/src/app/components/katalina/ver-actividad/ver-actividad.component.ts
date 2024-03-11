@@ -10,12 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-actividad.component.scss']
 })
 export class VerActividadComponent {
-  activityList: any[] = [];
-  newActivity: any = { nombreArchivo: '', comentario: '' };
-  editingActivity: any | null = null;
-  selectedFile: File | null = null;
-  isMenuOpen: boolean = false;
+  email: string = '';
+  userInfo: any;
+  guias: any;
+  newsList: any[] = [];
   mostrarMenuPerfil: boolean = false;
+  isMenuOpen: boolean = false;
+  
+
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router) {}
 
@@ -42,52 +44,52 @@ export class VerActividadComponent {
     this.router.navigate(['/login']);
   }
 
-  // ngOnInit() {
-  //   this.loadActivities();
-  // }
+  ngOnInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.getUserInfo();
+    this.getGuias();
+  }
 
-  // loadActivities() {
-  //   this.ServiceService.getActivities().subscribe((data) => {
-  //     this.activityList = data;
-  //   });
-  // }
+  getUserInfo() {
+    const idguia = 1;
 
-  // handleFileInput(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  // }
+    this.ServiceService.getUserInfoByguias(idguia).subscribe(
+      (data) => {
+        this.userInfo = data;
+      },
+      (error) => {
+        console.error('Error al obtener información del usuario por guias:', error);
+      }
+    );
+  }
 
-  // updateActivity() {
-  //   if (this.editingActivity) {
-  //     const formData = new FormData();
-  //     formData.append('nombreArchivo', this.editingActivity.nombreArchivo);
-  //     formData.append('comentario', this.editingActivity.comentario);
-  //     if (this.selectedFile) {
-  //       formData.append('archivo', this.selectedFile);
-  //     }
 
-  //     this.ServiceService.updateActivity(this.editingActivity.id, formData).subscribe(
-  //       () => {
-  //         this.loadActivities();
-  //         this.editingActivity = null;
-  //         this.selectedFile = null;
-  //       },
-  //       (error) => {
-  //         console.error('Error al actualizar actividad:', error);
+  getGuias() {
+    this.ServiceService.getguias(this.email).subscribe(
+      (data) => {
+        this.guias = data;
+      },
+      (error) => {
+        console.error('Error al obtener guias por correo:', error);
+      }
+    );
+  }
 
-  //       }
-  //     );
-  //   }
-  // }
 
-  // descargarArchivo(archivoUrl: string) {
-  //   // Construye la URL del servidor para descargar el archivo
-  //   const url = `http://localhost:3000${archivoUrl}`;
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.target = '_blank';
-  //   link.click();
-  // }
-
+  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
+    const url = `http://localhost:3000${archivoUrl}`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
+    link.click();
+  }
+  
+  formatDate(date: Date): string {
+    // Implement your date formatting logic here
+    return ''; // Replace with your actual implementation
+  }
 }
 
 

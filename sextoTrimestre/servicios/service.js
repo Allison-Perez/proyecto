@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -1400,7 +1400,7 @@ app.get('/verificarAsistencia', async (req, res) => {
 // TRAER BLOG
 
 app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
-  console.log('Entraaaaaaaaaa');
+  
   try {
     const correo = req.params.correo.replace(/"/g, ''); 
     const connection = await mysql.createConnection(dbConfig);
@@ -1426,12 +1426,47 @@ app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
 
     res.status(200).json(rows);
   } catch (error) {
-    console.error('Error al obtener las guías por correo:', error);
-    res.status(500).json({ error: 'Error al obtener las guías por correo' });
+    console.error('Error al obtener las blogs por correo:', error);
+    res.status(500).json({ error: 'Error al obtener las blogs por correo' });
   }
 });
 
+// TRAER GUIAS
 
+app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
+  console.log('Entraaaaaaaaaa');
+  try {
+    const correo = req.params.correo.replace(/"/g, '');
+
+    const connection = await pool.getConnection();
+
+    const sql = `
+      SELECT g.*, u.primerNombre, u.primerApellido
+      FROM guias 
+      JOIN usuario u ON g.idUsuario = u.identificador
+      WHERE g.idFicha = (
+        SELECT idFicha
+        FROM usuarioFicha
+        WHERE idUsuario = (
+          SELECT identificador AS idUsuario
+          FROM usuario
+          WHERE correo = ?
+        )
+      )`;
+
+      const [rows] = await connection.execute(sql, [correo]);
+      console.log('Correo recibido:', correo);
+  
+  
+      connection.end();
+  
+      res.status(200).json(rows);
+    } catch (error) {
+      console.error('Error al obtener las blogs por correo:', error);
+      res.status(500).json({ error: 'Error al obtener las blogs por correo' });
+    }
+  });
+  
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
