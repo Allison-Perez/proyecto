@@ -16,6 +16,7 @@ export class AsistenciaComponent implements OnInit {
   selectedFicha: number | undefined;
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
+  mostrarIconoEdicion: boolean = false;
 
   constructor(private asistenciaService: AsistenciaService, private router: Router, private authService: AuthService) {}
 
@@ -45,33 +46,40 @@ export class AsistenciaComponent implements OnInit {
   }
 
   submitForm() {
-    this.crearAsistencia();
+    if (this.idUsuario !== null) {
+      this.getAsistencia();
+    } else {
+      console.error('Error: idUsuario es null');
+    }
   }
 
   crearAsistencia() {
-    if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
-      const idInstructor = this.authService.getIdUsuarioActual();
-      if (idInstructor !== null) {
-        this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, this.idUsuario, idInstructor)
+    if (this.newAsistencia.fecha && this.selectedFicha !== undefined) {
+      const userInfo = this.authService.getUserInfo();
+      const idUsuario = userInfo.idUsuario;
+      const idInstructor = userInfo.idUsuario;
+  
+      if (idUsuario !== undefined && idUsuario !== null && idInstructor !== undefined && idInstructor !== null) {
+        this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idInstructor)
           .subscribe(() => {
             this.getAsistencia();
+            this.mostrarIconoEdicion = true; 
           }, error => {
             console.error('Error al crear la asistencia:', error);
           });
       } else {
-        console.error('Error: ID de instructor no está definido.');
+        console.error('Error: idUsuario o idInstructor no definidos.');
       }
     } else {
-      console.error('Error: Fecha, ficha o idAprendiz no están definidos.');
+      console.error('Error: Fecha o ficha no están definidos.');
     }
   }
   
-
   getAsistencia() {
-    if (this.newAsistencia.fecha) {
+    if (this.newAsistencia.fecha && this.idUsuario !== null) {
       console.log('Fecha seleccionada:', this.newAsistencia.fecha);
       console.log('ID de Usuario:', this.idUsuario);
-      this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario!)
+      this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario)
         .subscribe((data: any[]) => {
           console.log('Datos de asistencia recibidos:', data);
           this.asistenciaList = data;
@@ -79,18 +87,15 @@ export class AsistenciaComponent implements OnInit {
           console.error('Error al obtener asistencia:', error);
         });
     } else {
-      console.error('Error: Fecha no está definida.');
+      console.error('Error: Fecha no está definida o idUsuario es null.');
     }
   }
+  
 
   getFichasUsuario() {
     this.asistenciaService.getFichasUsuario().subscribe((data: any[]) => {
       console.log('Fichas de usuario recibidas:', data);
       this.fichas = data;
-      if (this.fichas.length > 0) {
-        this.selectedFicha = this.fichas[0].identificador;
-        this.crearAsistencia(); // Crear asistencia una vez que se obtengan las fichas
-      }
     }, error => {
       console.error('Error al obtener las fichas del usuario:', error);
     });
