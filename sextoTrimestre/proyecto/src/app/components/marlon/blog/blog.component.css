@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 /* Estilos Nav */
 nav {
@@ -218,7 +219,12 @@ textarea {
   padding: 20px;
 }
 
-h2 {
+.tituloMostrar{
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  margin-top: 20px;
   text-align: center;
   color: #088a88;
   font-size: 25px;
@@ -263,16 +269,15 @@ h2 {
 
 .button-container {
   display: flex;
-  align-items: center; /* Alinea los elementos verticalmente */
+  align-items: center;
   justify-content: space-between;
   margin-top: 15px;
 }
 
 .edit-button,
 .btnDelete {
-  vertical-align: middle; /* Alinea verticalmente los botones */
+  vertical-align: middle;
 }
-
 
 .edit-button {
   width: 40px;
