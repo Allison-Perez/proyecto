@@ -42,15 +42,16 @@
 <h2 class="subtitulo mt-5">Guias</h2>
 
 
-<div>
-  <h2>Guías</h2>
-  <div *ngFor="let guia of guias">
-    <h3>{{ guia.nombre }}</h3>
-    <p>{{ guia.comentario }}</p>
-    <p>Publicado por: {{ guia.primerNombre }} {{ guia.primerApellido }}</p>
-    <p>Fecha de Inicio: {{ guia.fechaInicio | date: 'dd/MM/yyyy' }}</p>
-    <p>Fecha Final: {{ guia.fechaFinal | date: 'dd/MM/yyyy' }}</p>
-    <img *ngIf="guia.urlImagen" [src]="guia.urlImagen" alt="Imagen de la Guía" />
+<div class="noticias-container">
+  <div *ngFor="let guia of guias" class="instagram-div">
+    <h3 class="titulo">{{ guia.nombre }}</h3>
+    <p class="card-text"><strong>Comentario:</strong> {{ guia.comentario }}</p>
+    <p class="date" style="font-size: 13px;"><strong>Fecha de Inicio:</strong> {{ guia.fechaInicio | date: 'dd/MM/yyyy' }}</p>
+    <p class="date" style="font-size: 13px;"><strong>Fecha de Final: </strong>{{ guia.fechaFinal | date: 'dd/MM/yyyy' }}</p>
+    
+    <p class="card-text"><strong>Publicado por:</strong>{{ guia.primerNombre }} {{ guia.primerApellido }}</p>
+
+    
   </div>
 </div>
 
