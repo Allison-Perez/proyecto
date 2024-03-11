@@ -91,6 +91,3 @@ export class VerActividadComponent {
     return ''; // Replace with your actual implementation
   }
 }
-
-
-
