@@ -11,9 +11,9 @@ export class AsistenciaService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  // Obtener lista de asistencia filtrada por fecha y ID de usuario
-  getAsistencia(fecha: string, idUsuario: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/listar?fecha=${fecha}&idUsuario=${idUsuario}`);
+  // Obtener lista de asistencia filtrada por fecha, ID de usuario y ID de ficha
+  getAsistencia(fecha: string, idUsuario: number, idFicha: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listar?fecha=${fecha}&idUsuario=${idUsuario}&idFicha=${idFicha}`);
   }
 
   // Editar una asistencia por su ID
@@ -28,7 +28,7 @@ export class AsistenciaService {
 
   // Crear una nueva entrada en la tabla asistencia si no existe
   crearAsistencia(fecha: string, idFicha: number, idUsuario: number, idInstructor: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/crearAsistencia`, { fecha, idFicha, idUsuario, idInstructor });
+  return this.http.post<any>(`${this.apiUrl}/crearOActualizarAsistencia`, { fecha, idFicha, idUsuario, idInstructor });
   }
 
   // Obtener fichas asociadas al usuario actual
