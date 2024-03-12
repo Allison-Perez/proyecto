@@ -54,12 +54,14 @@ export class ServiceService {
       return this.http.get(url);
     }
   // VER ASISTENCIA 
-    getDatosAsistencia(email: string): Observable<any> {
-      const url = `/api/obtener-asistencia-por-correo/${email}`;
-      console.log('URL para obtener datos de asistencia:', url);
-      return this.http.get(url);
+    getAsistenciasPorAprendiz(): Observable<any[]> {
+      const url = `${this.apiUrl}/api/asistenciasPorAprendiz`;
+      return this.http.get<any[]>(url);
     }
+
     
+  
+
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
     const endpoint = '/cambiar-contrasena';

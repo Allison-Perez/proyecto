@@ -40,10 +40,8 @@
   </div>
 </nav>
 
-<h3>asistencia</h3>
-
-<canvas baseChart
-        [data]="pieChartData.data"
-        [labels]="pieChartData.labels"
-        [type]="'pie'">
-</canvas>
+<div class="chart-container">
+  <div class="graficoUno">
+    <h2 class="titulos">Tu Asistencia</h2>
+    <div class="chart" id="chart"></div>
+  </div>

@@ -40,17 +40,33 @@ export class VerAsistenciaComponent {
     this.router.navigate(['/login']);
   }
 
-  ngOnInit(): void {
-    // Obtener datos de asistencia llamando al servicio
-    this.ServiceService.getDatosAsistencia(this.email).subscribe(
-      (datosAsistencia: any) => {
-        this.pieChartData = [datosAsistencia.asistencias, datosAsistencia.inasistencias];
-      },
-      error => {
-        console.error('Error al obtener datos de asistencia:', error);
-      }
-    );
+  inicializarGraficoDonutAsistencias() {
+    this.ServiceService.getAsistenciasPorAprendiz().subscribe((data: any[]) => {
+      const options = {
+        series: data.map((item) => item.cantidadRegistros),
+        labels: data.map((item) => `${item.nombreAprendiz} ${item.apellidoAprendiz}`),
+        chart: {
+          type: 'donut',
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 190,
+              },
+              legend: {
+                position: 'bottom',
+              },
+            },
+          },
+        ],
+      };
+  
+      const chart = new ApexCharts(document.querySelector('#chartAsistencias'), options);
+      chart.render();
+    });
   }
-
+  
 
 }

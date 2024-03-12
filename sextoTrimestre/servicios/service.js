@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -1527,39 +1527,43 @@ app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
   }
 });
 
-// // TRAER ASISTENCIA
-app.get('/api/obtener-asistencia-por-correo/:correo', async (req, res) => {
-  console.log('entra mi pollo');
-  try {
-    const correo = req.params.correo.replace(/"/g, '');
-    const connection = await mysql.createConnection(dbConfig);
-    const sql = `
-      SELECT h.*, u.primerNombre, u.primerApellido,
-      SUM(CASE WHEN h.asistencia = 1 THEN 1 ELSE 0 END) as asistencias,
-      SUM(CASE WHEN h.asistencia = 0 THEN 1 ELSE 0 END) as inasistencias
-      FROM horario h
-      JOIN usuario u ON h.idUsuario = u.identificador
-      WHERE h.idFicha = (
-        SELECT idFicha
-        FROM usuarioFicha
-        WHERE idUsuario = (
-          SELECT identificador AS idUsuario
-          FROM usuario
-          WHERE correo = ?
-        )
-      )
-      GROUP BY h.idHorario`;
 
-    const [rows] = await connection.execute(sql, [correo]);
+// ESTADISTICA ASISTENCIAS E INASISITENCIAS 
+app.get("/api/asistenciasPorAprendiz", async (req, res) => {
+  try {
+    console.log('GRAFICO ASISTENCIA');
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        a.idAprendiz,
+        uAprendiz.primerNombre AS nombreAprendiz,
+        uAprendiz.primerApellido AS apellidoAprendiz,
+        a.status,
+        COUNT(*) AS cantidadRegistros
+      FROM
+        asistencia a
+      JOIN
+        usuario uAprendiz ON a.idAprendiz = uAprendiz.identificador
+      WHERE
+        a.idInstructor IN (
+          SELECT identificador
+          FROM usuario
+          WHERE idRol 
+        )
+      GROUP BY
+        a.idAprendiz, uAprendiz.primerNombre, uAprendiz.primerApellido, a.status
+    `);
 
     connection.end();
-
     res.status(200).json(rows);
   } catch (error) {
-    console.error('Error al obtener asistencia por correo:', error);
-    res.status(500).json({ error: 'Error al obtener asistencia por correo' });
+    console.error("Error al obtener las estadísticas de asistencias por aprendiz:", error);
+    res.status(500).json({ error: "Error al obtener las estadísticas de asistencias por aprendiz" });
   }
 });
+
+
 
 
 app.listen(port, () => {
