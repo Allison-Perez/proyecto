@@ -35,10 +35,10 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div> 
+            </div>
         </ul>
   </div>
-</nav> 
+</nav>
 <div class="container">
   <h2 class="titulo">Obtener Asistencia</h2>
   <form (ngSubmit)="submitForm()" #form="ngForm">
@@ -50,10 +50,10 @@
       <label for="fichaSelect">Seleccionar ficha:</label>
       <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect" class="form-control">
         <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
-      </select>      
+      </select>
     </div>
     <button type="submit" class="btn btn-primary">Crear/Actualizar Asistencia</button>
-  </form> 
+  </form>
 </div>
 
 <div class="container mt-5">
