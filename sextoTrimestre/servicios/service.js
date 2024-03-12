@@ -1528,6 +1528,43 @@ app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
 });
 
 
+// ESTADISTICA ASISTENCIAS E INASISITENCIAS 
+app.get("/api/asistenciasPorAprendiz", async (req, res) => {
+  try {
+    console.log('GRAFICO ASISTENCIA');
+    const connection = await mysql.createConnection(dbConfig);
+
+    const [rows] = await connection.execute(`
+      SELECT
+        a.idAprendiz,
+        uAprendiz.primerNombre AS nombreAprendiz,
+        uAprendiz.primerApellido AS apellidoAprendiz,
+        a.status,
+        COUNT(*) AS cantidadRegistros
+      FROM
+        asistencia a
+      JOIN
+        usuario uAprendiz ON a.idAprendiz = uAprendiz.identificador
+      WHERE
+        a.idInstructor IN (
+          SELECT identificador
+          FROM usuario
+          WHERE idRol 
+        )
+      GROUP BY
+        a.idAprendiz, uAprendiz.primerNombre, uAprendiz.primerApellido, a.status
+    `);
+
+    connection.end();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error al obtener las estadísticas de asistencias por aprendiz:", error);
+    res.status(500).json({ error: "Error al obtener las estadísticas de asistencias por aprendiz" });
+  }
+});
+
+
+
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);

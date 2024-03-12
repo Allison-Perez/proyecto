@@ -9,13 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-asistencia.component.scss']
 })
 export class VerAsistenciaComponent {
-  asistenciaList: any[] = [];
-  newAsistencia: any = { nombreArchivo: '', comentario: '' };
-  editingAsistencia: any | null = null;
-  selectedFile: File | null = null;
+  email: string = '';
+  pieChartData: any = {
+    data: [],
+    labels: ['Asistencias', 'Inasistencias']
+  };
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
-
+  
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
   toggleMenu() {
@@ -39,46 +40,33 @@ export class VerAsistenciaComponent {
     this.router.navigate(['/login']);
   }
 
-  // ngOnInit() {
-  //   this.loadAsistencia();
-  // }
+  inicializarGraficoDonutAsistencias() {
+    this.ServiceService.getAsistenciasPorAprendiz().subscribe((data: any[]) => {
+      const options = {
+        series: data.map((item) => item.cantidadRegistros),
+        labels: data.map((item) => `${item.nombreAprendiz} ${item.apellidoAprendiz}`),
+        chart: {
+          type: 'donut',
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 190,
+              },
+              legend: {
+                position: 'bottom',
+              },
+            },
+          },
+        ],
+      };
+  
+      const chart = new ApexCharts(document.querySelector('#chartAsistencias'), options);
+      chart.render();
+    });
+  }
+  
 
-  // loadAsistencia() {
-  //   this.ServiceService.getAsistencia().subscribe((data) => {
-  //     this.asistenciaList = data;
-  //   });
-  // }
-
-  // updateAsistencia() {
-  //   if (this.editingAsistencia) {
-  //     const formData = new FormData();
-  //     formData.append('nombreArchivo', this.editingAsistencia.nombreArchivo);
-  //     formData.append('comentario', this.editingAsistencia.comentario);
-  //     if (this.selectedFile) {
-  //       formData.append('archivo', this.selectedFile);
-  //     }
-
-  //     this.ServiceService.updateAsistencia(this.editingAsistencia.id, formData).subscribe(
-  //       () => {
-  //         this.loadAsistencia();
-  //         this.editingAsistencia = null;
-  //         this.selectedFile = null;
-  //       },
-  //       (error) => {
-  //         console.error('Error al actualizar asistencia:', error);
-
-  //       }
-  //     );
-  //   }
-  // }
-
-
-  // descargarArchivo(archivoUrl: string) {
-  //   // Construye la URL del servidor para descargar el archivo
-  //   const url = `http://localhost:3000${archivoUrl}`;
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.target = '_blank';
-  //   link.click();
-  // }
 }
