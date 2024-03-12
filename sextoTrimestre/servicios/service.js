@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -1466,6 +1466,7 @@ app.get('/api/obtener-blog-por-correo/:correo', async (req, res) => {
   }
 });
 
+// TRAER GUIAS
 app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
   try {
     const correo = req.params.correo.replace(/"/g, ''); 
@@ -1494,6 +1495,37 @@ app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener las guías por correo' });
   }
 });
+
+// // TRAER HORARIOS
+app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
+  try {
+    const correo = req.params.correo.replace(/"/g, '');
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `
+      SELECT h.*, u.primerNombre, u.primerApellido
+      FROM horario h
+      JOIN usuario u ON h.idUsuario = u.identificador
+      WHERE h.idFicha = (
+        SELECT idFicha
+        FROM usuarioFicha
+        WHERE idUsuario = (
+          SELECT identificador AS idUsuario
+          FROM usuario
+          WHERE correo = ?
+        )
+      )`;
+
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener horarios por correo:', error);
+    res.status(500).json({ error: 'Error al obtener horarios por correo' });
+  }
+});
+
 
 
 app.listen(port, () => {

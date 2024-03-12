@@ -45,10 +45,10 @@
 <div class="noticias-container">
   <div *ngFor="let guia of guias" class="instagram-div">
     <h3 class="titulo">{{ guia.nombre }}</h3>
-    <p class="card-text"><strong>Comentario:</strong> {{ guia.comentario }}</p>
     <p class="date" style="font-size: 13px;"><strong>Fecha de Inicio:</strong> {{ guia.fechaInicio | date: 'dd/MM/yyyy' }}</p>
     <p class="date" style="font-size: 13px;"><strong>Fecha de Final: </strong>{{ guia.fechaFinal | date: 'dd/MM/yyyy' }}</p>
-    
+    <button class="boton" onclick="">Descargar Archivo</button>
+    <p class="card-text"><strong>Comentario:</strong> {{ guia.comentario }}</p>
     <p class="card-text"><strong>Publicado por:</strong>{{ guia.primerNombre }} {{ guia.primerApellido }}</p>
 
     

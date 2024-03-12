@@ -14,6 +14,7 @@ export class ServiceService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  // VER BLOG
   getUserInfoByBlog(idBlog: number): Observable<any> {
     const url = `${this.apiUrl}/api/obtener-blog-por-correo/${idBlog}`;
     console.log(idBlog);
@@ -27,6 +28,7 @@ export class ServiceService {
     return this.http.get(url);
   }
 
+  // VER GUIAS
  getUserInfoByguias(idguia: number): Observable<any> {
     const url = `${this.apiUrl}/api/obtener-guias-por-correo/${idguia}`;
     console.log(idguia);
@@ -39,7 +41,21 @@ export class ServiceService {
     return this.http.get(url);
   }
 
+//VER HORARIOS
+getUserInfoByHorario(idHorario: number): Observable<any> {
+  const url = `${this.apiUrl}/api/obtener-horarios-por-id/${idHorario}`;
+  console.log(idHorario);
+  return this.http.get(url);
+}
 
+getHorarios(email: string): Observable<any> {
+  const url = `${this.apiUrl}/api/obtener-horarios-por-correo/${email}`;
+  console.log('URL para obtener horarios:', url);
+  return this.http.get(url);
+}
+  
+
+  // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
     const endpoint = '/cambiar-contrasena';
     const url = `${this.apiUrl}${endpoint}`;

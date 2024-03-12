@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-horarios.component.scss']
 })
 export class VerHorariosComponent {
-  newsList: any[] = []; 
-  imageFile: File | null = null;
-  newHorario: any = { nombre: '', comentario: '' };
-  isMenuOpen: boolean = false;
+  email: string = '';
+  userInfo: any;
+  horarios: any; 
+  newsList: any[] = [];
   mostrarMenuPerfil: boolean = false;
-
+  isMenuOpen: boolean = false;
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
@@ -41,33 +41,33 @@ export class VerHorariosComponent {
     // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
-//   ngOnInit(): void {
-//     this.loadhorario();
-//   }
-
-//   loadhorario() {
-//     const idFicha = 1;
+  ngOnInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.getUserInfo();
+    this.getHorarios();
+  }
   
-//     if (idFicha !== undefined) {
-//       this.ServiceService.gethorarioFicha(idFicha).subscribe(
-//         data => {
-//           console.log('Blogs loaded successfully:', data);
-//           this.newsList = data;
-//         },
-//         error => console.error('Error al cargar los blogs:', error)
-//       );
-//     } else {
-//       console.error('IdFicha no válida.');
-//     }
-//   }
+  getUserInfo() {
+    const idHorario = 1;
   
-//   descargarArchivo(archivoUrl: string, nombreArchivo: string) {
-//     const url = `http://localhost:3000${archivoUrl}`;
-//     const link = document.createElement('a');
-//     link.href = url;
-//     link.target = '_blank';
-//     link.download = nombreArchivo; 
-//     document.body.appendChild(link);
-//     link.click();
-// }
+    this.ServiceService.getUserInfoByHorario(idHorario).subscribe(
+      (data) => {
+        this.userInfo = data;
+      },
+      (error) => {
+        console.error('Error al obtener información del usuario por horario:', error);
+      }
+    );
+  }
+  
+  getHorarios() {
+    this.ServiceService.getHorarios(this.email).subscribe(
+      (data) => {
+        this.horarios = data;
+      },
+      (error) => {
+        console.error('Error al obtener horarios por correo:', error);
+      }
+    );
+  }
 }
