@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class VerHorariosComponent {
   email: string = '';
-  userInfo: any;
+  userInfo: any; 
   horarios: any; 
   newsList: any[] = [];
   mostrarMenuPerfil: boolean = false;

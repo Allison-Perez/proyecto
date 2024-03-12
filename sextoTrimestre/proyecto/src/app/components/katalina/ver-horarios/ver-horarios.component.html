@@ -40,17 +40,16 @@
   </div>
 </nav>
 
+<h2 class="subtitulo mt-5">Horarios</h2>
 
-<h2>Horarios</h2>
-<div *ngFor="let horario of horarios">
-  <h3>{{ horario.nombre }}</h3>
-  <p>{{ horario.descripcion }}</p>
-  <p>Publicado por: {{ horario.primerNombre }} {{ horario.primerApellido }}</p>
-</div>
-
-
-<div *ngIf="!userInfo || !horarios">
-  <p>Cargando información...</p>
+<div class="noticias-container">
+  <div *ngFor="let horario of horarios" class="instagram-div">
+    <h3 class="titulo">{{ horario.nombre }}</h3>
+    <p class="date" style="font-size: 13px;">Fecha de Publicación: {{ horario.fecha | date:'dd/MM/yyyy' }}</p>
+    <p class="card-text"><strong>Comentario:</strong> {{ horario.comentario }}</p>
+    <img src="assets/imagenes/Blog.png" alt="imagen">
+    <button class="boton" onclick="">Descargar Archivo</button>
+  </div>
 </div>
 
 
