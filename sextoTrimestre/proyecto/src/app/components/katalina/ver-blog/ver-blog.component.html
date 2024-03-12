@@ -47,7 +47,7 @@
     <h3 class="titulo">{{ blog.nombre }}</h3>
     <p class="date" style="font-size: 13px;">Fecha de Publicación: {{ blog.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
     <p class="card-text"><strong>Comentario:</strong> {{ blog.comentario }}</p>
-    <img src="assets/imagenes/Blog.png" alt="imagen">
+    <img [src]="blog.urlImagen" class="card-img-top mx-auto d-block" alt="Imagen Opcional" />
     <p class="card-text"><strong>Publicado por:</strong>{{ blog.primerNombre }} {{ blog.primerApellido }}</p>
   </div>
 </div>

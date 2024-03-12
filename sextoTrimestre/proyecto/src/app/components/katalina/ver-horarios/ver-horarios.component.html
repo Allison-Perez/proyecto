@@ -48,9 +48,13 @@
     <p class="date" style="font-size: 13px;">Fecha de Publicación: {{ horario.fecha | date:'dd/MM/yyyy' }}</p>
     <p class="card-text"><strong>Comentario:</strong> {{ horario.comentario }}</p>
     <img src="assets/imagenes/Blog.png" alt="imagen">
-    <button class="boton" onclick="">Descargar Archivo</button>
+    <button class="btn btn-primary boton" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
+    <p class="card-text"><strong>Publicado por:</strong>{{ horario.primerNombre }} {{ horario.primerApellido }}</p>
   </div>
 </div>
 
+<div *ngIf="!userInfo || !horarios">
+  <p>Cargando información...</p>
+</div>
 
 
