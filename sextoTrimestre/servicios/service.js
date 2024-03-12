@@ -957,12 +957,12 @@ app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   console.log('entra');
   try {
     const { nombre, comentario, idUsuario, idFicha } = req.body;
-    let urlImagen = ''; 
+    let urlImagen = '';
 
-    if (req.file) { 
-      urlImagen = 'http://localhost:3000/' + req.file.path; 
+    if (req.file) {
+      urlImagen = 'http://localhost:3000/' + req.file.path;
     } else {
-      urlImagen = 'http://localhost:3000/uploads/Blog.png'; 
+      urlImagen = 'http://localhost:3000/uploads/Blog.png';
     }
 
     const connection = await mysql.createConnection(dbConfig);

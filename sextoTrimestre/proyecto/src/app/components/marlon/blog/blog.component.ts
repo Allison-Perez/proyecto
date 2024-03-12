@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
+
 export class BlogComponent implements OnInit {
   newsList: any[] = [];
   newBlog: any = { nombre: '', comentario: '', imagenOpcional: null };
@@ -19,6 +20,8 @@ export class BlogComponent implements OnInit {
   userFichas: any[] = [];
   fichas: any[] = [];
   selectedFicha: any;
+  imagenOpcionalFile: File | null = null;
+
 
   constructor(private blogService: BlogService, private router: Router, private authService: AuthService) { }
 
@@ -87,8 +90,8 @@ export class BlogComponent implements OnInit {
     const formData = new FormData();
     formData.append('nombre', this.newBlog.nombre);
     formData.append('comentario', this.newBlog.comentario);
-    if (this.imageFile) {
-      formData.append('imagenOpcional', this.imageFile, this.imageFile.name);
+    if (this.imagenOpcionalFile) {
+      formData.append('imagenOpcional', this.imagenOpcionalFile, this.imagenOpcionalFile.name);
     }
     const userInfo = this.authService.getUserInfo();
     if (userInfo) {
@@ -114,17 +117,15 @@ export class BlogComponent implements OnInit {
     );
   }
 
-
+  onFileSelected(event: any) {
+    this.imagenOpcionalFile = event.target.files[0];
+  }
 
   resetNewBlogForm() {
     console.log('resetea blog');
 
     this.newBlog = { nombre: '', comentario: '', imagenOpcional: null };
     this.imageFile = null;
-  }
-
-  onFileSelected(event: any) {
-    this.imageFile = event.target.files[0];
   }
 
   editBlog(blog: any) {

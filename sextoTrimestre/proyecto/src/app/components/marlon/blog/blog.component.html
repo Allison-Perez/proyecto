@@ -88,8 +88,12 @@
         required
       ></textarea>
     </div>
+    <div class="form-group">
+      <label for="imagenOpcional">Imagen:</label>
+      <input type="file" class="form-control" id="imagenOpcional" name="imagenOpcional" (change)="onFileSelected($event)" />
+    </div>  
+    <button type="submit" class="boton">Crear Blog</button>  
   </form>
-  <button type="submit" class="boton">Crear Blog</button>
 </div>
 
 <!-- LISTAR BLOGS -->
@@ -102,11 +106,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <h3 class="card-title">{{ blog.nombre }}</h3>
-            <img
-              [src]="transformUrl(blog.urlImagen)"
-              class="card-img-top mx-auto d-block"
-              alt="Imagen Opcional"
-            />
+            <img [src]="blog.urlImagen" class="card-img-top mx-auto d-block" alt="Imagen Opcional" />
             <p class="card-text">{{ blog.comentario }}</p>
             <p class="card-date">
               {{ blog.fechaPublicacion | date : "dd/MM/yyyy" }}
