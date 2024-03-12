@@ -70,4 +70,13 @@ export class VerHorariosComponent {
       }
     );
   }
+  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
+    const url = `http://localhost:3000${archivoUrl}`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
+    link.click();
+  }
 }
