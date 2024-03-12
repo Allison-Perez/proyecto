@@ -1527,6 +1527,39 @@ app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
   }
 });
 
+// // TRAER ASISTENCIA
+app.get('/api/obtener-asistencia-por-correo/:correo', async (req, res) => {
+  console.log('entra mi pollo');
+  try {
+    const correo = req.params.correo.replace(/"/g, '');
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = `
+      SELECT h.*, u.primerNombre, u.primerApellido,
+      SUM(CASE WHEN h.asistencia = 1 THEN 1 ELSE 0 END) as asistencias,
+      SUM(CASE WHEN h.asistencia = 0 THEN 1 ELSE 0 END) as inasistencias
+      FROM horario h
+      JOIN usuario u ON h.idUsuario = u.identificador
+      WHERE h.idFicha = (
+        SELECT idFicha
+        FROM usuarioFicha
+        WHERE idUsuario = (
+          SELECT identificador AS idUsuario
+          FROM usuario
+          WHERE correo = ?
+        )
+      )
+      GROUP BY h.idHorario`;
+
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Error al obtener asistencia por correo:', error);
+    res.status(500).json({ error: 'Error al obtener asistencia por correo' });
+  }
+});
 
 
 app.listen(port, () => {

@@ -14,6 +14,8 @@ import { VerAsistenciaComponent } from './ver-asistencia/ver-asistencia.componen
 import { VerBlogComponent } from './ver-blog/ver-blog.component';
 import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { EditPasswordComponent } from './edit-password/edit-password.component';
     HttpClientModule,
     KatalinaRoutingModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [IndexKatalinaComponent],
