@@ -46,39 +46,43 @@
       <label for="fecha">Fecha:</label>
       <input type="date" [(ngModel)]="newAsistencia.fecha" name="fecha" class="form-control" required>
     </div>
-    <div>
+    <div class="form-group">
       <label for="fichaSelect">Seleccionar ficha:</label>
-      <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect">
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect" class="form-control">
         <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
       </select>      
     </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Obtener Asistencia</button>
+    <button type="submit" class="btn btn-primary">Crear/Actualizar Asistencia</button>
   </form> 
 </div>
 
-<h2 class="subtitulo mt-5">Asistencias</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Nombre del Aprendiz</th>
-      <th>Correo del Aprendiz</th>
-      <th>Asistió</th>
-      <th>No Asistió</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let asistencia of asistenciaList; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ asistencia.nombreAprendiz }}</td>
-      <td>{{ asistencia.correoAprendiz }}</td>
-      <td><button class="btn btn-success" (click)="marcarAsistencia(asistencia, true)">Asistió</button></td>
-      <td><button class="btn btn-danger" (click)="marcarAsistencia(asistencia, false)">No Asistió</button></td>
-      <td>
-        <button class="btn btn-info" *ngIf="asistencia.asistio !== undefined" (click)="editarAsistencia(asistencia)">Editar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
+<div class="container mt-5">
+  <h2 class="subtitulo">Asistencias</h2>
+  <div *ngIf="asistenciaList.length === 0" class="alert alert-warning" role="alert">
+    No se encontraron asistencias para la fecha y la ficha seleccionadas.
+  </div>
+  <table class="table" *ngIf="asistenciaList.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre del Aprendiz</th>
+        <th>Correo del Aprendiz</th>
+        <th>Asistió</th>
+        <th>No Asistió</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asistencia of asistenciaList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ asistencia.nombreAprendiz }}</td>
+        <td>{{ asistencia.correoAprendiz }}</td>
+        <td><button class="btn btn-success" (click)="marcarAsistencia(asistencia, true)">Asistió</button></td>
+        <td><button class="btn btn-danger" (click)="marcarAsistencia(asistencia, false)">No Asistió</button></td>
+        <td>
+          <button class="btn btn-info" *ngIf="asistencia.asistio !== undefined" (click)="editarAsistencia(asistencia)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

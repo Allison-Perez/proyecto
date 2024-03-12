@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -1283,14 +1283,13 @@ app.delete('/eliminarActividad/:identificador', async (req, res) => {
 
 //ASISTENCIA
 
-// Ruta para crear una nueva entrada en la tabla asistencia si no existe
-
-app.post('/crearAsistencia', async (req, res) => {
+// Ruta para crear una nueva entrada en la tabla asistencia si no existe para todos los aprendices asociados a la ficha seleccionada
+app.post('/crearOActualizarAsistencia', async (req, res) => {
   try {
-    const { fecha, idFicha, idUsuario } = req.body;
+    const { fecha, idUsuario, idFicha } = req.body;
     const connection = await mysql.createConnection(dbConfig);
 
-    // Consultar todos los aprendices asociados a la ficha proporcionada
+    // Obtener todos los aprendices asociados a la ficha seleccionada
     const aprendicesQuery = 'SELECT identificador FROM usuario WHERE idRol = 2 AND identificador IN (SELECT idUsuario FROM usuarioFicha WHERE idFicha = ?)';
     const [aprendicesRows] = await connection.execute(aprendicesQuery, [idFicha]);
 
@@ -1298,7 +1297,7 @@ app.post('/crearAsistencia', async (req, res) => {
       return res.status(404).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
     }
 
-    // Insertar una nueva entrada en la tabla asistencia para cada aprendiz encontrado
+    // Iterar sobre todos los aprendices y crear una asistencia para cada uno
     for (const aprendizRow of aprendicesRows) {
       const idAprendiz = aprendizRow.identificador;
       const sql = 'INSERT INTO asistencia (fecha, idFicha, idAprendiz, idInstructor) VALUES (?, ?, ?, ?)';
@@ -1333,31 +1332,28 @@ app.get('/usuariosPorFicha', async (req, res) => {
 // Ruta para obtener la lista de asistencia filtrada por fecha, ficha e instructor
 app.get('/listar', async (req, res) => {
   try {
-    const { fecha, idUsuario } = req.query;
+    const { fecha, idFicha, idUsuario } = req.query;
     const connection = await mysql.createConnection(dbConfig);
 
-    const subquery = 'SELECT idFicha FROM usuarioFicha WHERE idUsuario = ?';
-    const [subrows] = await connection.execute(subquery, [idUsuario]);
-
-    if (subrows.length === 0) {
-      return res.status(403).json({ error: 'El usuario no tiene fichas asignadas' });
-    }
-
-    const idFicha = subrows[0].idFicha;
+    console.log('Parámetros de búsqueda recibidos:', req.query); 
 
     const sql = `SELECT asistencia.*, usuario.primerNombre AS nombreAprendiz, usuario.correo AS correoAprendiz 
-                 FROM asistencia 
-                 JOIN usuario ON asistencia.idAprendiz = usuario.identificador
-                 WHERE asistencia.fecha = ? AND asistencia.idFicha = ?`;
+                FROM asistencia 
+                JOIN usuario ON asistencia.idAprendiz = usuario.identificador
+                WHERE asistencia.fecha = ? AND asistencia.idFicha = ? AND asistencia.idInstructor = ?`;
 
-    const [rows] = await connection.execute(sql, [fecha, idFicha]);
+    const [rows] = await connection.execute(sql, [fecha, idFicha, idUsuario]);
     connection.end();
+
+    console.log('Datos de asistencia encontrados:', rows); 
+
     res.status(200).json(rows);
   } catch (error) {
     console.error('Error al obtener la lista de asistencia:', error);
     res.status(500).json({ error: 'Error al obtener la lista de asistencia' });
   }
 });
+
 
 // Ruta para editar una asistencia específica
 app.put('/editarAsistencia/:identificador', async (req, res) => {
