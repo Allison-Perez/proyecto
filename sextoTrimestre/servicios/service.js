@@ -1297,11 +1297,10 @@ app.post('/crearOActualizarAsistencia', async (req, res) => {
       return res.status(404).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
     }
 
-    // Iterar sobre todos los aprendices y crear una asistencia para cada uno
     for (const aprendizRow of aprendicesRows) {
       const idAprendiz = aprendizRow.identificador;
-      const sql = 'INSERT INTO asistencia (fecha, idFicha, idAprendiz, idInstructor) VALUES (?, ?, ?, ?)';
-      await connection.execute(sql, [fecha, idFicha, idAprendiz, idUsuario]);
+      const sql = 'INSERT INTO asistencia (fecha, status, idFicha, idAprendiz, idInstructor) VALUES (?, ?, ?, ?, ?)';
+      await connection.execute(sql, [fecha, 'Pendiente', idFicha, idAprendiz, idUsuario]);
     }
 
     connection.end();
@@ -1312,6 +1311,44 @@ app.post('/crearOActualizarAsistencia', async (req, res) => {
   }
 });
 
+// Ruta para marcar la asistencia de un usuario como asistió o no asistió
+app.put('/marcarAsistencia/:identificador', async (req, res) => {
+  try {
+    const { status } = req.body; 
+    const { identificador } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+    const sql = 'UPDATE asistencia SET status = ? WHERE identificador = ?';
+    await connection.execute(sql, [status, identificador]); 
+    connection.end();
+    
+    res.status(200).json({ message: 'Asistencia actualizada exitosamente' });
+  } catch (error) {
+    console.error('Error al actualizar la asistencia:', error);
+    res.status(500).json({ error: 'Error al actualizar la asistencia' });
+  }
+});
+
+// Ruta para editar una asistencia específica
+app.put('/editarAsistencia/:identificador', async (req, res) => {
+  try {
+    const { status, fallaJustificada } = req.body; 
+    const { identificador } = req.params;
+
+    if (status !== undefined && fallaJustificada !== undefined) {
+      const connection = await mysql.createConnection(dbConfig);
+      const sql = 'UPDATE asistencia SET status = ?, fallaJustificada = ? WHERE identificador = ?';
+      await connection.execute(sql, [status, fallaJustificada, identificador]);
+      connection.end();
+      res.json({ message: 'Asistencia actualizada exitosamente' });
+    } else {
+      res.status(400).json({ error: 'Faltan campos obligatorios para actualizar la asistencia' });
+    }
+  } catch (error) {
+    console.error('Error al actualizar la asistencia:', error);
+    res.status(500).json({ error: 'Error al actualizar la asistencia' });
+  }
+});
 
 // Ruta para obtener usuarios con rol "Aprendiz" asociados a una ficha específica
 app.get('/usuariosPorFicha', async (req, res) => {
@@ -1355,27 +1392,6 @@ app.get('/listar', async (req, res) => {
 });
 
 
-// Ruta para editar una asistencia específica
-app.put('/editarAsistencia/:identificador', async (req, res) => {
-  try {
-    const { status, fallaJustificada } = req.body;
-    const { identificador } = req.params;
-
-    if (status && fallaJustificada) {
-      const connection = await mysql.createConnection(dbConfig);
-      const sql = 'UPDATE asistencia SET status = ?, fallaJustificada = ? WHERE identificador = ?';
-      await connection.execute(sql, [status, fallaJustificada, identificador]);
-      connection.end();
-      res.json({ message: 'Asistencia actualizada exitosamente' });
-    } else {
-      res.status(400).json({ error: 'Faltan campos obligatorios para actualizar la asistencia' });
-    }
-  } catch (error) {
-    console.error('Error al actualizar la asistencia:', error);
-    res.status(500).json({ error: 'Error al actualizar la asistencia' });
-  }
-});
-
 // Ruta para verificar si hay asistencia para la fecha y la ficha seleccionadas
 app.get('/verificarAsistencia', async (req, res) => {
   try {
@@ -1391,6 +1407,28 @@ app.get('/verificarAsistencia', async (req, res) => {
     res.status(500).json({ error: 'Error al verificar la asistencia' });
   }
 });
+
+// Ruta para obtener una asistencia por su identificador
+app.get('/asistencia/:identificador', async (req, res) => {
+  try {
+    const { identificador } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM asistencia WHERE identificador = ?';
+    const [rows] = await connection.execute(sql, [identificador]);
+    connection.end();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'No se encontró la asistencia con el identificador proporcionado' });
+    }
+
+    res.status(200).json(rows[0]);
+  } catch (error) {
+    console.error('Error al obtener la asistencia por identificador:', error);
+    res.status(500).json({ error: 'Error al obtener la asistencia por identificador' });
+  }
+});
+
 
 // KATALINA
 

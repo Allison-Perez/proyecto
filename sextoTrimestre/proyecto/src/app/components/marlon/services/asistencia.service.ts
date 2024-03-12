@@ -17,8 +17,8 @@ export class AsistenciaService {
   }
 
   // Editar una asistencia por su ID
-  editarAsistencia(asistenciaId: string, updatedData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/editarAsistencia/${asistenciaId}`, updatedData);
+  editarAsistencia(identificador: number, updatedData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/editarAsistencia/${identificador}`, updatedData);
   }
 
   // Verificar si existe asistencia para la fecha y ficha seleccionadas
@@ -36,4 +36,15 @@ export class AsistenciaService {
     const idUsuario = this.authService.getUserInfo().idUsuario;
     return this.http.get<any[]>(`${this.apiUrl}/fichasPorUsuario/${idUsuario}`);
   }
+
+  // Marcar la asistencia de un usuario como asistió o no asistió
+  marcarAsistencia(asistenciaId: string, status: string): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/marcarAsistencia/${asistenciaId}`, { status });
+  }
+
+  // Obtener asistencia por su identificador
+  getAsistenciaById(identificador: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/asistencia/${identificador}`);
+  }
+
 }

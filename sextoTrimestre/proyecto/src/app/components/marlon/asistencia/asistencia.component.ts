@@ -17,7 +17,8 @@ export class AsistenciaComponent implements OnInit {
   selectedFicha: number | undefined;
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
-  mostrarIconoEdicion: boolean = false;
+  selectedAsistencia: any;
+  editandoAsistencia: boolean = false;
 
   constructor(private asistenciaService: AsistenciaService, private router: Router, private authService: AuthService) {}
 
@@ -68,7 +69,6 @@ export class AsistenciaComponent implements OnInit {
           await this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idInstructor).toPromise();
         }
         this.getAsistencia();
-        this.mostrarIconoEdicion = true;
       } else {
         console.error('Error: idUsuario o idInstructor no definidos.');
       }
@@ -106,18 +106,42 @@ export class AsistenciaComponent implements OnInit {
     });
   }
 
-  marcarAsistencia(asistencia: any, asistio: boolean) {
-    asistencia.asistio = asistio;
-    this.editarAsistencia(asistencia);
-  }
-
-  editarAsistencia(asistencia: any) {
-    const updatedData = {};
-    this.asistenciaService.editarAsistencia(asistencia.identificador, updatedData).subscribe(() => {
+  marcarAsistencia(asistencia: any, asistio: string) {
+    this.asistenciaService.marcarAsistencia(asistencia.identificador, asistio).subscribe(() => {
       this.getAsistencia();
     });
   }
+  
+  editarAsistencia(asistencia: any) {
+    this.editandoAsistencia = true;
+    this.selectedAsistencia = asistencia;
+  }
+  
+  cancelarEdicion() {
+    this.editandoAsistencia = false;
+  }
+  
+  async actualizarAsistencia() {
+    if (this.selectedAsistencia && this.selectedAsistencia.identificador) {
+      console.log('Actualizando asistencia:', this.selectedAsistencia);
+      const status = this.selectedAsistencia.status; 
+      const updatedData = { status: status, fallaJustificada: this.selectedAsistencia.fallaJustificada };
+      console.log('Datos actualizados:', updatedData);
+      await this.asistenciaService.editarAsistencia(this.selectedAsistencia.identificador, updatedData).toPromise();
 
+      const index = this.asistenciaList.findIndex(asistencia => asistencia.identificador === this.selectedAsistencia.identificador);
+      if (index !== -1) {
+        this.asistenciaList[index] = await this.asistenciaService.getAsistenciaById(this.selectedAsistencia.identificador).toPromise();
+      }
+  
+      console.log('Asistencia actualizada correctamente.');
+  
+      this.getAsistencia();
+    } else {
+      console.error('Error: Asistencia no seleccionada o identificador no definido.');
+    }
+  }
+  
   // Método para manejar el cambio de la ficha seleccionada
   onChangeFicha() {
     this.getAsistencia();
