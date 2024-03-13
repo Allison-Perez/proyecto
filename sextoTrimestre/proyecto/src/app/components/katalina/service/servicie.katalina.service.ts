@@ -54,9 +54,10 @@ export class ServiceService {
       return this.http.get(url);
     }
 
-  // VER ASISTENCIA 
+  // VER ASISTENCIA
     getAsistenciasPorAprendiz(email: string): Observable<any[]> {
-      const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${email}`;
+      const correoSinComillas = email.replace(/"/g, '');
+      const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${correoSinComillas}`;
       return this.http.get<any[]>(url);
     }
 

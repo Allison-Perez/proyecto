@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -1500,7 +1500,6 @@ app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
 
 // // TRAER HORARIOS
 app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
-  console.log('entra mi pez');
   try {
     const correo = req.params.correo.replace(/"/g, '');
     const connection = await mysql.createConnection(dbConfig);
@@ -1534,9 +1533,8 @@ app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
 app.get("/api/asistenciasPorAprendiz/:correo", async (req, res) => {
   try {
     console.log('GRAFICO ASISTENCIA');
-    
+    const correo = req.params.correo.replace(/"/g, '');
     const connection = await mysql.createConnection(dbConfig);
-    const correo = req.params.correo;
 
     const [rows] = await connection.execute(`
       SELECT status FROM asistencia 

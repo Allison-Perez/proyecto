@@ -16,11 +16,13 @@ export class FichasAprendicesComponent implements AfterViewInit {
   @ViewChild('chart') chart: ElementRef;
   @ViewChild('edadChart') edadChart: ElementRef;
   constructor(private ServiceService: ServiceService) {
-    this.chart = new ElementRef(null); // O asigna un elemento específico si es aplicable
+    this.chart = new ElementRef(null);
     this.edadChart = new ElementRef(null);
   }
 
   ngAfterViewInit() {
+    console.log('entra');
+
     this.ServiceService.getFichasAprendices().subscribe(data => {
     const options = {
       series: data.map(item => item.totalAprendices),
