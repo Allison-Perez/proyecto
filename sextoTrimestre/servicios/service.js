@@ -1135,7 +1135,7 @@ app.post('/crearHorario', upload.single('archivo'), async (req, res) => {
 
     if (nombre && comentario && idFicha && idUsuario) {
       const connection = await mysql.createConnection(dbConfig);
-      const fecha = new Date().toISOString();
+      const fecha = new Date().toISOString().slice(0, 10); 
 
       const sql = `INSERT INTO horario (nombre, urlArchivo, comentario, fecha, idUsuario, idFicha)
                    VALUES (?, ?, ?, ?, ?, ?)`;
