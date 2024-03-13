@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 
+
+main{
+  margin-top: 5%;
+}
 body {
   margin: 0;
   padding: 0;
@@ -14,12 +18,12 @@ body {
   font-weight: bold;
   text-align: center;
   line-height: 1.0;
-  font-size: 40px;
+  font-size: 45px;
   font-family: "Outfit", sans-serif;
 }
 
 .descripcion {
-  font-size: medium;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   margin-top: 10px;
