@@ -41,7 +41,7 @@ export class VerAsistenciaComponent {
 
   ngAfterViewInit(): void {
     this.email = this.authService.getUserEmail();
-    this.inicializarGraficoAsistencias;
+    this.inicializarGraficoAsistencias(this.email);
   }
 
   inicializarGraficoAsistencias(email: string) {
