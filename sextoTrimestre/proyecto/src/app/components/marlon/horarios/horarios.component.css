@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 .instagram-div {
   margin-left: 30px;
@@ -11,13 +12,6 @@
   padding: 20px;
   text-align: center;
   flex-direction: column;
-}
-
-.image {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
 }
 
 .name {
@@ -43,13 +37,10 @@
   margin-top: 10px;
 }
 
-
-/* Estilos Nav */
 nav{
   background-color: #008a88;
 }
 
-/* Estilos para el menú hamburguesa */
 .nav .nav-item {
   cursor: pointer;
   margin-bottom: 5px;
@@ -62,6 +53,7 @@ nav{
 .nav-link:hover{
   color: rgb(14, 13, 13);
 }
+
 .nombre{
   padding: 10px;
   color: white;
@@ -81,7 +73,6 @@ nav{
   margin: 6px 0;
 }
 
-/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
 .show-menu .menu-icon {
   display: block;
 }
@@ -95,7 +86,6 @@ nav{
   margin: 10px 0;
 }
 
-/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
 @media (max-width: 700px) {
   .navbar {
     display: flex;
@@ -127,10 +117,10 @@ nav{
   }
 }
 
-/* Estilo del dropdown */
 .otro {
   color: #008a88;
 }
+
 button {
   color: #fff;
 }
@@ -152,6 +142,21 @@ button {
     font-size: 16px;
     border: none;
     background-color: #008a88;
+}
+
+.dropdown-button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #008a88;
+}
+
+
+.dropdown-button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #008a88;
 }
 
 .dropdown-item {
@@ -243,6 +248,7 @@ textarea {
   position: relative;
   overflow: hidden;
   outline: 2px solid white;
+  width: 200px;
 }
 
 .boton:hover {
@@ -269,44 +275,23 @@ textarea {
   width: 100%;
 }
 
+.tituloMostrar{
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  margin-top: 20px;
+  text-align: center;
+  color: #088a88;
+  font-size: 35px;
+  margin-bottom: 30px;
+}
+
 .mostrar {
   max-width: 1800px;
   margin: 0 auto;
   padding: 20px;
 }
-
-.btn-link {
-  border: none;
-  border-radius: 5px;
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.btn-link:hover {
-  color: #333;
-}
-
-.btn-primary,
-.btn-secondary {
-  text-decoration: none;
-  font-weight: bold;
-  color: #fff;
-  background-color:#005b59;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  margin-right: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover,
-.btn-secondary:hover {
-  background-color: #005b59;
-}
-
 
 .form-group {
   display: flex;
@@ -314,146 +299,341 @@ textarea {
   flex-direction: column;
 }
 
-
-.btn-cancelar {
-  color:#f5f5f5;
-  background-color: #850606;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn-cancelar:hover {
-  background-color:#850606;
-}
-.card-date {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 12px;
-  color: #252525;
-}
-
-
-label {
-  font-weight: bold;
-  display: block;
-}
-
-input[type="text"],
-textarea {
-  width: 90%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.btn-primary {
-  margin-top: 10px;
-  background-color: #005b59;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #005b59;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-}
-
-.button-container button {
-  margin: 0 5px;
-}
-
-.card-img-top {
-  max-width: 200px;
-  height: auto;
-  margin: 0 auto;
-}
-
-/* Agregar color de fondo y estilos para el botón de crear horario */
-.btn-primary.crear-horario {
-
-  background-color:#005b59;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.btn-primary.crear-horario:hover {
-  background-color: #005b59;
-}
-
-/* Estilos para el botón de ver archivo */
-.btn-primary.ver-archivo {
-  text-decoration: none;
-  font-weight: bold;
-  background-color: #005b59;
-  border: none;
-  border-radius: 5px;
-  color: #f5f5f5;
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.btn-primary.ver-archivo:hover {
-  background-color:#005b59;
-}
-
-.container label {
-  font-weight: bold;
-  display: block;
-}
-
-.container input[type="text"],
-.container textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
-.container input[type="file"] {
-  margin-bottom: 20px;
-}
-
-/* Alinear botones de editar, eliminar y ver archivo */
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.button-container button {
-  margin: 0 5px;
-}
-
-
-/* Reducir tamaño de imagen de horario */
 .image {
-  width: 50%;
-  max-height: 200px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+  height: 235px;
+  object-fit: contain;
 }
+
 .date{
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 12px;
   color: #252525;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+.button-container button {
+  margin: 0 15px;
+}
+
+.edit-button,
+.btnDelete,
+.botonn {
+  vertical-align: middle;
+  margin: 0 5px;
+}
+
+/* VER ARCHIVO */
+
+.botonn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(27, 27, 27);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+}
+
+.svgIcon {
+  fill:#ffffff;
+}
+
+.icon2 {
+  width: 18px;
+  height: 5px;
+  border-bottom: 2px solid rgb(182, 143, 255);
+  border-left: 2px solid rgb(182, 143, 255);
+  border-right: 2px solid rgb(182, 143, 255);
+}
+
+.tooltip {
+  position: absolute;
+  right: -105px;
+  opacity: 0;
+  background-color: rgb(12, 12, 12);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: rgb(12, 12, 12);
+  background-size: 1000%;
+  background-position: center;
+  transform: rotate(45deg);
+  left: -5%;
+  transition-duration: .3s;
+}
+
+.botonn:hover .tooltip {
+  opacity: 1;
+  transition-duration: .3s;
+}
+
+.botonn:hover {
+  background-color: rgb(150, 94, 255);
+  transition-duration: .3s;
+}
+
+.botonn:hover .icon2 {
+  border-bottom: 2px solid rgb(235, 235, 235);
+  border-left: 2px solid rgb(235, 235, 235);
+  border-right: 2px solid rgb(235, 235, 235);
+}
+
+.botonn:hover .svgIcon {
+  fill: rgb(255, 255, 255);
+  animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+/* BOTON EDITAR  */
+
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: #008a88;
+  align-items: center;
+}
+
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.edit-button::before {
+  display: none;
+  content: "Editar";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+
+.btnDelete {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.btnDelete:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+  gap: 0;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+.btnDelete:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+
+@media (max-width: 600px) {
+  .lista-actividades .card {
+    width: 100%;
+  }
+}
+
+.btnCloud {
+  background-color: transparent;
+  position: relative;
+  fill: rgb(155, 153, 153);
+  border: none;
+}
+
+.btnCloud::after {
+  content: 'GUARDAR';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 3px 9px;
+  border-radius: 5px;
+  transition: 200ms linear;
+  transition-delay: 200ms;
+  color: black;
+  font-size: 13px;
+  visibility: hidden;
+}
+
+.icon {
+  transform: scale(1.4);
+  transition: 200ms linear;
+}
+
+.btnCloud:hover > .icon {
+  transform: scale(1.7);
+}
+
+.btnCloud:hover > .icon path {
+  fill: #92c5FC;
+  cursor: pointer;
+}
+
+.btnCloud:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -100%;
+}
+
+.cancel {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background:rgb(155, 153, 153);
+  border-radius: 50%;
+  transition: background 0.5s;
+}
+
+.X {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.3px;
+  background-color: rgb(255, 255, 255);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.Y {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.3px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.close {
+  position: absolute;
+  display: flex;
+  padding: 0.8rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  top: -70%;
+  left: 50%;
+  width: 6em;
+  height: 1.7em;
+  font-size: 12px;
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cancel:hover {
+  background-color: rgb(211, 21, 21);
+}
+
+.cancel:active {
+  background-color: rgb(130, 0, 0);
+}
+
+.cancel:hover > .close {
+  animation: close 0.2s forwards 0.25s;
+}
+
+@keyframes close {
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,65 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
-.subtitulo{
-  color: #0a7775;
-  text-align: center;
-  font-weight: bolder;
-  font-family: "Outfit", sans-serif;
-  font-size: 50px;
-  font-style: normal;
-}
-
-/* Container */
-.instagram-div {
-  margin-left: 30px;
-  max-width: 350px;
-  height: 500px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  flex-direction: column;
-}
-
-.image {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.button {
-  background-color: #0a7775;
-  color: #ffffff;
-  padding: 10px 20px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.description {
-  font-size: 16px;
-  color: #262626;
-  margin-top: 10px;
-}
-
-
-/* Estilos Nav */
 nav{
   background-color: #008a88;
 }
 
-/* Estilos para el menú hamburguesa */
 .nav .nav-item {
   cursor: pointer;
   margin-bottom: 5px;
@@ -72,6 +18,7 @@ nav{
 .nav-link:hover{
   color: rgb(14, 13, 13);
 }
+
 .nombre{
   padding: 10px;
   color: white;
@@ -91,7 +38,6 @@ nav{
   margin: 6px 0;
 }
 
-/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
 .show-menu .menu-icon {
   display: block;
 }
@@ -105,23 +51,23 @@ nav{
   margin: 10px 0;
 }
 
-/* Estilo del dropdown */
 .otro {
   color: #008a88;
 }
+
 button {
   color: #fff;
 }
 
-.dropdown-content { 
+.dropdown-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
   margin-right: 5px;
   background-color: #fff;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
 }
 
@@ -159,199 +105,116 @@ button {
     margin-top: -15%;
     font-weight: bold;
   }
-    
+
   .description {
     margin-top: 10%;
   }
 }
-
-.crear-actividad {
-  margin-top: 20px; 
-  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
-  padding: 15px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  width: 60%; 
-  margin: auto;
-  font-weight: bold;
-}
-
-.crear-actividad h2{
-  font-size: 27px;
-}
-
-.lista-actividades {
-  margin-top: 20px; 
-}
-
-.lista-actividades h2 {
-  font-size: 30px;
-  text-align:left;
-  margin-bottom: 20px;
-}
-
-.lista-actividades .card {
-  margin-bottom: 20px;
-}
-
-.lista-actividades .card-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.lista-actividades .card-text {
-  font-size: 16px;
-}
-
-.lista-actividades .btn {
-  margin-right: 10px;
-}
-
-.lista-actividades .form-group {
-  margin-bottom: 15px;
-}
-
-.lista-actividades input[type="text"],
-.lista-actividades textarea,
-.lista-actividades input[type="date"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-
-.lista-actividades .btn-primary {
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.lista-actividades .btn-primary:hover {
-  background-color: #005b59;
-  color: #070707;
-}
-
-.lista-actividades .btn-secondary {
-  background-color: #005b59;
-  color: black;
-}
-
-.lista-actividades .btn-secondary:hover {
-  background-color: #005b59;
-}
-
-.lista-actividades .btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.lista-actividades .btn-success:hover {
-  background-color: #005b59;
-}
-
-@media (max-width: 600px) {
-  .lista-actividades .card {
-    width: 100%;
-  }
-}
-
-
-
-/* Estilos para la barra de navegación */
-.navbar {
+nav {
   background-color: #008a88;
 }
 
-.navbar .container-fluid {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
-.navbar .nombre {
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover {
+  color: rgb(14, 13, 13);
+}
+
+.nombre {
+  padding: 10px;
   color: white;
   font-size: 25px;
   font-family: 'Lobster', sans-serif;
-  padding: 10px;
 }
 
-.navbar .menu-icon {
+.menu-icon {
+  cursor: pointer;
   display: none;
 }
 
-.navbar .menu-icon .bar {
+.menu-icon .bar {
   width: 20px;
   height: 3px;
   background-color: white;
   margin: 6px 0;
 }
 
-.navbar .show-menu .menu-icon {
+.show-menu .menu-icon {
   display: block;
 }
 
-.navbar .show-menu .nav {
+.show-menu .nav {
   display: flex;
   flex-direction: column;
 }
 
-.navbar .nav .nav-item {
-  cursor: pointer;
-  margin-bottom: 5px;
+.show-menu .nav-item {
+  margin: 10px 0;
 }
 
-.navbar .nav .nav-link {
-  color: white;
-}
-
-.navbar .nav .nav-link:hover {
-  color: rgb(14, 13, 13);
-}
-
-/* Estilos para el menú hamburguesa en pantallas más pequeñas (700px o menos) */
 @media (max-width: 700px) {
-  .navbar .menu-icon {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
     cursor: pointer;
     display: block;
     margin-right: 20px;
   }
 
-  /* Estilos para mostrar el menú en pantallas pequeñas */
-  .navbar .show-menu .nav {
+  .show-menu .nav {
     display: flex;
     flex-direction: column;
   }
 
-  .navbar .show-menu .nav .nav-item {
+  .show-menu .nav-item {
     margin: 0px 0;
   }
 
-  .navbar .show-menu {
+  .show-menu {
     display: block;
   }
 }
 
-/* Estilos para el dropdown */
-.dropdown-content { 
+.otro {
+  color: #008a88;
+}
+
+button {
+  color: #fff;
+}
+
+.dropdown-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
   margin-right: 5px;
   background-color: #fff;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
 }
 
 .dropdown-button {
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #008a88;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #008a88;
 }
 
 .dropdown-item {
@@ -365,166 +228,482 @@ button {
   background-color: #070707;
 }
 
-/* Botón "Ver Archivo" */
-.btn-primary.ver-archivo {
-  text-decoration: none;
-  font-weight: bold;
-  background-color: #005b59;
-  border: none;
-  border-radius: 5px;
-  color: rgb(255, 255, 255);
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 10px;
-  padding: 8px 16px;
-}
+/* ESTILOS DE ACTIVIDAD  */
 
-.btn-primary.ver-archivo:hover {
-  background-color:#005b59;
-}
-
-/* Botón "Guardar Cambios" */
-.btn-primary {
-  background-color: #005b59;
-  border: none;
-  border-radius: 5px;
-  color: white;  
-  font-size: 18px;
-  cursor: pointer;
-  padding: 8px 16px;
-}
-
-.btn-primary:hover {
-  background-color: #008a88;
-}
-
-/* Botón "Cancelar" */
-.btn-cancelar {
-  color: #f5f5f5; 
-  background-color: #850606; 
-  border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.btn-cancelar:hover {
-  background-color: #850606; 
-}
-
-.image {
-  max-width: 150px; 
-  height: auto;
+.container {
+  margin-top: 20px;
+  box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1);
+  padding: 20px;
+  background-color: #ffffff;
   border-radius: 10px;
-  margin-bottom: 10px; 
+  max-width: 700px;
 }
 
-/* Estilos para todos los botones */
-.btn {
-  padding: 8px 16px; 
-  font-size: 18px;
+.container h2{
+    color: #008a88;
+    font-size: 30px;
+    text-align:center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  color: #333;
+  margin-right: 5px;
+}
+
+select,
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* BOTON CREAR ACTIVIDAD  */
+
+.btn-crear-actividad {
+  margin-top: 10px;
+  background-color: #088a88;
+  padding: 0.6em 1.2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
-  margin-right: 10px;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
+  width: 200px;
+}
+
+.btn-crear-actividad:hover{
+color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
+}
+
+.btn-crear-actividad::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.btn-crear-actividad:hover::before {
+  width: 150%;
 }
 
 
-/* Botón "Crear Actividad" */
-.btn-crear-actividad {
-  background-color: #005b59; 
-  border: none;
-  color: white;
-  margin-top: 30px;
-  padding: 6px 12px;
+/* LISTA DE GUIAS  */
+
+.lista-actividades .tituloMostrar{
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  margin-top: 20px;
+  text-align: center;
+  color: #088a88;
+  font-size: 35px;
+  margin-bottom: 30px;
+}
+
+.lista-actividades {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.lista-actividades h2 {
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  margin-top: 20px;
+  text-align: center;
+  color: #088a88;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.lista-actividades .card {
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lista-actividades .card-title {
+  font-size: 1.2rem;
+  color: #088a88;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.lista-actividades .card-text {
   font-size: 16px;
 }
 
+/* VER ARCHIVO */
+
+.boton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(27, 27, 27);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+}
+
+.svgIcon {
+  fill:#ffffff;
+}
+
+.icon2 {
+  width: 18px;
+  height: 5px;
+  border-bottom: 2px solid rgb(182, 143, 255);
+  border-left: 2px solid rgb(182, 143, 255);
+  border-right: 2px solid rgb(182, 143, 255);
+}
+
+.tooltip {
+  position: absolute;
+  right: -105px;
+  opacity: 0;
+  background-color: rgb(12, 12, 12);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .2s;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: rgb(12, 12, 12);
+  background-size: 1000%;
+  background-position: center;
+  transform: rotate(45deg);
+  left: -5%;
+  transition-duration: .3s;
+}
+
+.boton:hover .tooltip {
+  opacity: 1;
+  transition-duration: .3s;
+}
+
+.boton:hover {
+  background-color: rgb(150, 94, 255);
+  transition-duration: .3s;
+}
+
+.boton:hover .icon2 {
+  border-bottom: 2px solid rgb(235, 235, 235);
+  border-left: 2px solid rgb(235, 235, 235);
+  border-right: 2px solid rgb(235, 235, 235);
+}
+
+.boton:hover .svgIcon {
+  fill: rgb(255, 255, 255);
+  animation: slide-in-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 35px;
+}
+.button-container button {
+  margin: 0 15px;
 }
 
-.btn-primary.ver-archivo {
-  background-color: #005b59;
+.edit-button,
+.btnDelete,
+.boton {
+  vertical-align: middle;
+  margin: 0 5px;
 }
 
-.btn-primary.ver-archivo:hover {
-  background-color: #005b59;
+
+/* BOTON EDITAR  */
+
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
 }
 
-.btn-primary {
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
   background-color: #008a88;
+  align-items: center;
 }
 
-.btn-primary:hover {
-  background-color: #007570;
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 
-.btn-danger {
-  background-color: #850606;
-}
-
-.btn-danger:hover {
-  background-color: #850606;
-}
-
-
-/* Ajuste del fondo de los botones */
-.lista-actividades .button-container .btn {
-  flex: 1;
-}
-
-/* Botón "Crear Actividad" */
-.btn-crear-actividad {
-  background-color: #005b59; 
-  border: none;
+.edit-button::before {
+  display: none;
+  content: "Editar";
   color: white;
-  margin-top: 30px;
-  padding: 6px 12px; /* Reducir el padding horizontal */
-  font-size: 16px; /* Reducir el tamaño de la letra */
+  transition-duration: 0.3s;
+  font-size: 2px;
 }
 
-/* Botón "Editar" y "Eliminar" */
-.btn-primary.editar,
-.btn-primary.eliminar {
-  border: none;
-  border-radius: 5px;
-  font-size: 15px; 
-  cursor: pointer;
-  padding: 6px 10px; 
-  margin-top: 10px;
-  width: auto; 
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
 }
 
-/* Botón "Ver Archivo", "Guardar Cambios" y "Cancelar" */
-.btn-primary.ver-archivo,
-.btn-primary,
-.btn-cancelar {
+.btnDelete {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
   border: none;
-  border-radius: 5px;
-  font-size: 15px; 
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
   cursor: pointer;
-  padding: 6px 10px; 
-  margin-top: 10px;
-  color: #f5f5f5;
-  background-color: #005b59;
-  text-decoration: none;
-  font-weight: bold;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
 }
 
-/* Botón "Eliminar" */
-.btn-danger {
-  background-color: #850606;
-  color: white;
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.btnDelete:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+  gap: 0;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+.btnDelete:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+
+@media (max-width: 600px) {
+  .lista-actividades .card {
+    width: 100%;
+  }
+}
+
+.btnCloud {
+  background-color: transparent;
+  position: relative;
+  fill: rgb(155, 153, 153);
   border: none;
+}
+
+.btnCloud::after {
+  content: 'GUARDAR';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 3px 9px;
   border-radius: 5px;
-  font-size: 15px; 
+  transition: 200ms linear;
+  transition-delay: 200ms;
+  color: black;
+  font-size: 13px;
+  visibility: hidden;
+}
+
+.icon {
+  transform: scale(1.4);
+  transition: 200ms linear;
+}
+
+.btnCloud:hover > .icon {
+  transform: scale(1.7);
+}
+
+.btnCloud:hover > .icon path {
+  fill: #92c5FC;
   cursor: pointer;
-  padding: 6px 10px; 
-  margin-top: 10px;
+}
+
+.btnCloud:hover::after {
+  visibility: visible;
+  opacity: 1;
+  top: -100%;
+}
+
+.cancel {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  border: none;
+  background:rgb(155, 153, 153);
+  border-radius: 50%;
+  transition: background 0.5s;
+}
+
+.X {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.3px;
+  background-color: rgb(255, 255, 255);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.Y {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2em;
+  height: 1.3px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.close {
+  position: absolute;
+  display: flex;
+  padding: 0.8rem 1.5rem;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  top: -70%;
+  left: 50%;
+  width: 6em;
+  height: 1.7em;
+  font-size: 12px;
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cancel:hover {
+  background-color: rgb(211, 21, 21);
+}
+
+.cancel:active {
+  background-color: rgb(130, 0, 0);
+}
+
+.cancel:hover > .close {
+  animation: close 0.2s forwards 0.25s;
+}
+
+@keyframes close {
+  100% {
+    opacity: 1;
+  }
 }
