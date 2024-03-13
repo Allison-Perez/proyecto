@@ -1,27 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Oswald:wght@200..700&display=swap');
 
-.subtitulo{
-  color: #0a7775;
-  text-align: center;
-  font-weight: bolder;
-  font-family: "Outfit", sans-serif;
-  font-size: 50px;
+.titulos {
+  font-family: "Oswald", sans-serif;
+  font-size: 35px;
   font-style: normal;
+  margin-top: 1.5%;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #088a88;
 }
 
-/* Container */
+.titulos::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 50px;
+}
+
 .titulo {
   color: #0a7775;
   text-align: center;
   font-weight: bolder;
-  font-family: "Outfit", sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 25px;
   font-style: normal;
 }
 
 .instagram-div {
-  margin-top: 20px;
+  margin-top: 15px;
   max-width: 300px;
   width: 100%;
   background-color: #ffffff;
