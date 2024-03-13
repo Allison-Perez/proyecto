@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-asistencia.component.scss']
 })
 export class VerAsistenciaComponent {
-  email: string = '';
-  pieChartData: any = {
+    email: string = '';
+    pieChartData: any = {
     data: [],
     labels: ['Asistencias', 'Inasistencias']
   };
@@ -39,12 +39,18 @@ export class VerAsistenciaComponent {
     // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
-
-  inicializarGraficoDonutAsistencias() {
-    this.ServiceService.getAsistenciasPorAprendiz().subscribe((data: any[]) => {
+  ngAfterViewInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.inicializarGraficoAsistencias(this.email); 
+  }
+  inicializarGraficoAsistencias(email: string) {
+    this.ServiceService.getAsistenciasPorAprendiz(email).subscribe((data) => {
       const options = {
-        series: data.map((item) => item.cantidadRegistros),
-        labels: data.map((item) => `${item.nombreAprendiz} ${item.apellidoAprendiz}`),
+        series: [
+          data.filter((item) => item.status === 'Asistio').length,
+          data.filter((item) => item.status === 'Falto').length,
+        ],
+        labels: ['Asistio', 'Falto'],
         chart: {
           type: 'donut',
         },
@@ -63,10 +69,12 @@ export class VerAsistenciaComponent {
         ],
       };
   
-      const chart = new ApexCharts(document.querySelector('#chartAsistencias'), options);
+      var chart = new ApexCharts(document.querySelector('#chart'), options);
       chart.render();
     });
   }
   
+  
+ 
 
 }

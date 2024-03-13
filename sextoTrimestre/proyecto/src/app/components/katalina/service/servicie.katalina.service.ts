@@ -53,14 +53,12 @@ export class ServiceService {
       console.log('URL para obtener horarios:', url);
       return this.http.get(url);
     }
+
   // VER ASISTENCIA 
-    getAsistenciasPorAprendiz(): Observable<any[]> {
-      const url = `${this.apiUrl}/api/asistenciasPorAprendiz`;
+    getAsistenciasPorAprendiz(email: string): Observable<any[]> {
+      const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${email}`;
       return this.http.get<any[]>(url);
     }
-
-    
-  
 
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {

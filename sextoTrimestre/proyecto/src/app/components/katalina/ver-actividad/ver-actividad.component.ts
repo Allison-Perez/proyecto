@@ -17,8 +17,6 @@ export class VerActividadComponent {
   mostrarMenuPerfil: boolean = false;
   isMenuOpen: boolean = false;
   
-
-
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router) {}
 
   toggleMenu() {
