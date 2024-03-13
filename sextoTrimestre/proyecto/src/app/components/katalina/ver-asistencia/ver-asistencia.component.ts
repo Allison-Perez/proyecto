@@ -78,4 +78,12 @@ export class VerAsistenciaComponent {
       chart.render();
     });
   }
+<<<<<<< HEAD
 }
+=======
+
+
+
+
+}
+>>>>>>> f660ea8bbbb5e7c0d7190f00dc4441ea709a8192

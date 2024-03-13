@@ -1,27 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&family=Oswald:wght@200..700&display=swap');
+
+.titulos {
+  font-family: "Oswald", sans-serif;
+  font-size: 35px;
+  font-style: normal;
+  margin-top: 1.5%;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #088a88;
+}
+
+.titulos::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 50px;
+}
 
 
-/* Container */
 .titulo {
   color: #0a7775;
   text-align: center;
   font-weight: bolder;
+  font-family: "Oswald", sans-serif;
   font-size: 25px;
-  font-family: "Madimi One", sans-serif;
   font-style: normal;
-  
-}
-
-.titulo2 {
-  color: #0a7775;
-  text-align: left;
-  font-weight: bolder;
-  font-size: 40px;
-  margin-top: 20px;
-  margin-left: 20px;
-  font-family: "Madimi One", sans-serif;
-  font-style: normal;
- 
 }
 
 .instagram-div {
@@ -158,24 +164,17 @@ nav{
 button {
   color: #fff;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
 
 .dropdown-content { 
-  display: none;
-  margin-top: 06px;
+  margin-top: 7px;
   position: absolute;
-  min-width: 160px;
-  border-radius: 10px; /* Añadido para esquinas redondas */
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-  left: -110px; 
+  border-radius: 10px; 
+  padding: 10px;
 }
 
 .dropdown-button {
@@ -193,6 +192,7 @@ button {
 }
 
 .dropdown-item:hover {
-  background-color: #0f0f0f;
+  background-color: #070707;
 }
+
 

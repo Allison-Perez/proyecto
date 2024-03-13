@@ -83,6 +83,7 @@ export class VerActividadComponent {
     document.body.appendChild(link);
     link.click();
   }
+
   
   formatDate(date: Date): string {
     // Implement your date formatting logic here
