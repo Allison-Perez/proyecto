@@ -51,13 +51,13 @@ export class EditarPerfilComponent implements OnInit {
 
 
     if (correo) {
-      // Llama a tu servicio para obtener la información del usuario por correo
       this.service.getUserInfoByEmail(correo).subscribe(data => {
         this.userData = data;
-        this.form.patchValue(data); // Llena el formulario con los datos del usuario
+        this.form.patchValue(data);
+        console.log(data);
+
       });
     } else {
-      // Maneja el caso en el que el correo no esté disponible, por ejemplo, redirigiendo o mostrando un mensaje de error.
       console.error('El correo no está disponible');
     }
   }

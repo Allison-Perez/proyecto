@@ -825,7 +825,9 @@ app.get("/api/obtenerInstructor", async (req, res) => {
         f.numeroFicha,
         u.correo,
         du.celular,
-        du.fechaIngreso
+        du.fechaIngreso,
+        du.informacionAcademica,
+        du.informacionAdicional
       FROM
         usuario u
         JOIN usuarioFicha uf ON u.identificador = uf.idUsuario
