@@ -12,7 +12,7 @@ export class EditarPerfilService {
   apiUrl = 'http://localhost:3000';
 
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    const url = `${this.apiUrl}/api/obtenerInstructor?correo=${email}`;
     return this.http.get(url);
   }
 
