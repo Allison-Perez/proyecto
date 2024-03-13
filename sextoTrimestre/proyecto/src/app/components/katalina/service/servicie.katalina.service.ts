@@ -55,10 +55,11 @@ export class ServiceService {
     }
 
   // VER ASISTENCIA 
-    getAsistenciasPorAprendiz(email: string): Observable<any[]> {
-      const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${email}`;
-      return this.http.get<any[]>(url);
-    }
+  getAsistenciasPorAprendiz(email: string): Observable<any[]> {
+    const correoSinComillas = email.replace(/"/g, '');
+    const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${correoSinComillas}`;
+    return this.http.get<any[]>(url);
+  }
 
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
