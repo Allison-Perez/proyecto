@@ -3,6 +3,7 @@ import { AsistenciaService } from '../services/asistencia.service';
 import { AuthService } from '../../allison/service/auth.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-asistencia',
   templateUrl: './asistencia.component.html',
@@ -49,6 +50,12 @@ export class AsistenciaComponent implements OnInit {
     }
   }
 
+  getCurrentDate(): string {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
+  
+
   async submitForm() {
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
       await this.crearOActualizarAsistencia();
@@ -63,24 +70,24 @@ export class AsistenciaComponent implements OnInit {
 
   async crearOActualizarAsistencia() {
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined) {
-      const userInfo = this.authService.getUserInfo();
-      const idUsuario = userInfo.idUsuario;
-  
-      if (idUsuario !== undefined && idUsuario !== null) {
-        const existeAsistencia = await this.asistenciaService.verificarAsistencia(this.newAsistencia.fecha, this.selectedFicha).toPromise();
-  
-        if (!existeAsistencia) {
-          await this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idUsuario).toPromise();
+        const userInfo = this.authService.getUserInfo();
+        const idUsuario = userInfo.idUsuario;
+
+        if (idUsuario !== undefined && idUsuario !== null) {
+            const existeAsistencia = await this.asistenciaService.verificarAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario).toPromise();
+
+            if (!existeAsistencia) {
+                await this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idUsuario).toPromise();
+            }
+            this.getAsistencia();
+        } else {
+            console.error('Error: idUsuario no definido.');
         }
-        this.getAsistencia();
-      } else {
-        console.error('Error: idUsuario no definido.');
-      }
     } else {
-      console.error('Error: Fecha o ficha no están definidos.');
+        console.error('Error: Fecha o ficha no están definidos.');
     }
-  }
-  
+}
+
   getAsistencia() {
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
       this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario, this.selectedFicha)

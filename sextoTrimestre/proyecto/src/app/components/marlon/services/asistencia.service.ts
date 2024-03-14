@@ -21,9 +21,9 @@ export class AsistenciaService {
     return this.http.put<any>(`${this.apiUrl}/editarAsistencia/${identificador}`, updatedData);
   }
 
-  // Verificar si existe asistencia para la fecha y ficha seleccionadas
-  verificarAsistencia(fecha: string, idFicha: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/verificarAsistencia?fecha=${fecha}&idFicha=${idFicha}`);
+  // Verificar si existe asistencia para la fecha, ficha y usuario seleccionados
+  verificarAsistencia(fecha: string, idFicha: number, idUsuario: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/verificarAsistencia?fecha=${fecha}&idFicha=${idFicha}&idUsuario=${idUsuario}`);
   }
 
   // Crear una nueva entrada en la tabla asistencia si no existe

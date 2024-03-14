@@ -1296,7 +1296,7 @@ app.post('/crearOActualizarAsistencia', async (req, res) => {
     const [aprendicesRows] = await connection.execute(aprendicesQuery, [idFicha]);
 
     if (aprendicesRows.length === 0) {
-      return res.status(404).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
+      return res.status(200).json({ error: 'No se encontraron aprendices asociados a la ficha proporcionada' });
     }
 
     for (const aprendizRow of aprendicesRows) {
@@ -1312,6 +1312,7 @@ app.post('/crearOActualizarAsistencia', async (req, res) => {
     res.status(500).json({ error: 'Error al crear la asistencia' });
   }
 });
+
 
 // Ruta para marcar la asistencia de un usuario como asistió o no asistió
 app.put('/marcarAsistencia/:identificador', async (req, res) => {
@@ -1374,8 +1375,6 @@ app.get('/listar', async (req, res) => {
     const { fecha, idFicha, idUsuario } = req.query;
     const connection = await mysql.createConnection(dbConfig);
 
-    console.log('Parámetros de búsqueda recibidos:', req.query); 
-
     const sql = `SELECT asistencia.*, usuario.primerNombre AS nombreAprendiz, usuario.correo AS correoAprendiz 
                 FROM asistencia 
                 JOIN usuario ON asistencia.idAprendiz = usuario.identificador
@@ -1383,8 +1382,6 @@ app.get('/listar', async (req, res) => {
 
     const [rows] = await connection.execute(sql, [fecha, idFicha, idUsuario]);
     connection.end();
-
-    console.log('Datos de asistencia encontrados:', rows); 
 
     res.status(200).json(rows);
   } catch (error) {
@@ -1397,18 +1394,19 @@ app.get('/listar', async (req, res) => {
 // Ruta para verificar si hay asistencia para la fecha y la ficha seleccionadas
 app.get('/verificarAsistencia', async (req, res) => {
   try {
-    const { fecha, idFicha } = req.query;
-    const connection = await mysql.createConnection(dbConfig);
+      const { fecha, idFicha, idUsuario } = req.query;
+      const connection = await mysql.createConnection(dbConfig);
 
-    const sql = 'SELECT * FROM asistencia WHERE fecha = ? AND idFicha = ?';
-    const [rows] = await connection.execute(sql, [fecha, idFicha]);
-    connection.end();
-    res.status(200).json(rows.length > 0);
+      const sql = 'SELECT * FROM asistencia WHERE fecha = ? AND idFicha = ? AND idInstructor = ?';
+      const [rows] = await connection.execute(sql, [fecha, idFicha, idUsuario]);
+      connection.end();
+      res.status(200).json(rows.length > 0);
   } catch (error) {
-    console.error('Error al verificar la asistencia:', error);
-    res.status(500).json({ error: 'Error al verificar la asistencia' });
+      console.error('Error al verificar la asistencia:', error);
+      res.status(500).json({ error: 'Error al verificar la asistencia' });
   }
 });
+
 
 // Ruta para obtener una asistencia por su identificador
 app.get('/asistencia/:identificador', async (req, res) => {

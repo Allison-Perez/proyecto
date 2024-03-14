@@ -246,6 +246,7 @@ textarea {
 }
 
 .card {
+  max-width: 500px;
   margin-bottom: 20px;
   border: 2px solid #ddd;
   border-radius: 10px;
@@ -254,10 +255,13 @@ textarea {
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.2em;
+  margin-bottom: 5px;
   color: #088a88;
-  margin-bottom: 10px;
-  font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .card-buttons {
