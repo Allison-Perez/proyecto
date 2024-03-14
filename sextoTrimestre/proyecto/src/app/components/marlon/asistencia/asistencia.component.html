@@ -38,79 +38,61 @@
             </div>
         </ul>
   </div>
-</nav>
+</nav><br>
 <div class="container">
-  <h2 class="titulo">Obtener Asistencia</h2>
-  <form (ngSubmit)="submitForm()" #form="ngForm">
-    <div class="form-group">
-      <label for="fecha">Fecha:</label>
-      <input type="date" [(ngModel)]="newAsistencia.fecha" name="fecha" class="form-control" required>
-    </div>
-    <div class="form-group">
-      <label for="fichaSelect">Seleccionar ficha:</label>
-      <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect" class="form-control">
+  <h2 class="titulo">Obtener Asistencia</h2> 
+  <form (ngSubmit)="submitForm()" #form="ngForm" class="input-container"> 
+    <div class="form-group"> 
+      <label for="fecha">Fecha:</label> 
+      <input type="date" [(ngModel)]="newAsistencia.fecha" name="fecha" class="form-control" required> 
+    </div> 
+    <div class="form-group"> 
+      <label for="fichaSelect">Seleccionar ficha:</label> 
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" name="fichaSelect" class="form-control"> 
         <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Crear/Actualizar Asistencia</button>
+    <button type="submit" class="btn btn-primary boton-small">Obtener Asistencia</button>
   </form>
 </div>
-
 <div class="container mt-5">
   <h2 class="subtitulo">Asistencias</h2>
-  <div *ngIf="asistenciaList.length === 0" class="alert alert-warning" role="alert">
-    No se encontraron asistencias para la fecha y la ficha seleccionadas.
-  </div>
-  <table class="table" *ngIf="asistenciaList.length > 0">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nombre del Aprendiz</th>
-        <th>Correo del Aprendiz</th>
-        <th>Estado de Asistencia</th>
-        <th>Editar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let asistencia of asistenciaList; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ asistencia.nombreAprendiz }}</td>
-        <td>{{ asistencia.correoAprendiz }}</td>
-        <td>
-          {{ asistencia.status }}
-        </td> 
-        <td>
-          <span *ngIf="asistencia.status === 'Asistió'" class="badge badge-success">Asistió</span>
-          <span *ngIf="asistencia.status === 'No Asistió'" class="badge badge-danger">No Asistió</span>
-          <span *ngIf="asistencia.status === 'Pendiente'">
-            <button class="btn btn-success" (click)="marcarAsistencia(asistencia, 'Asistió')">Asistió</button>
-            <button class="btn btn-danger" (click)="marcarAsistencia(asistencia, 'No Asistió')">No Asistió</button>
-          </span>
-        </td>        
-        <td>
-          <button class="btn btn-info" *ngIf="asistencia.status !== 'Pendiente'" (click)="editarAsistencia(asistencia)">Editar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container-table">
+    <div *ngIf="errorMensaje" class="alert alert-danger" role="alert">
+      {{ errorMensaje }}
+    </div>        
+    <table #tablaAsistencias class="table" *ngIf="asistenciaList.length > 0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre del Aprendiz</th>
+          <th>Correo del Aprendiz</th>
+          <th>Estado de Asistencia</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asistencia of asistenciaList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ asistencia.nombreAprendiz }}</td>
+          <td>{{ asistencia.correoAprendiz }}</td>
+          <td *ngIf="selectedAsistencia !== asistencia">
+            {{ asistencia.status }}
+          </td>
+          <td *ngIf="selectedAsistencia === asistencia">
+            <select [(ngModel)]="selectedAsistencia.status" class="form-control">
+              <option [ngValue]="'Asistió'">Asistió</option>
+              <option [ngValue]="'No Asistió'">No Asistió</option>
+              <option [ngValue]="'Pendiente'">Pendiente</option>
+            </select>
+          </td>
+          <td>
+            <button *ngIf="!editandoAsistencia || selectedAsistencia !== asistencia" class="btn btn-info" (click)="editarAsistencia(asistencia)" [disabled]="editandoAsistencia">Editar</button>
+            <button *ngIf="editandoAsistencia && selectedAsistencia === asistencia" class="btn btn-primary" (click)="actualizarAsistencia(asistencia)">Guardar</button>
+            <button *ngIf="editandoAsistencia && selectedAsistencia === asistencia" class="btn btn-secondary" (click)="cancelarEdicion(asistencia)">Cancelar</button>
+          </td>                             
+        </tr>
+      </tbody>
+    </table>
 </div>
-
-<div class="container">
-  <h2 class="titulo">Editar Asistencia</h2>
-  <form *ngIf="editandoAsistencia" (ngSubmit)="actualizarAsistencia()" #form="ngForm">
-    <div class="form-group">
-      <label for="status">Estado de Asistencia:</label>
-      <select id="status" [(ngModel)]="selectedAsistencia.status" name="status" class="form-control">
-        <option value="Asistió">Asistió</option>
-        <option value="No Asistió">No Asistió</option>
-        <option value="Pendiente">Pendiente</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="fallaJustificada">Falla Justificada:</label>
-      <input type="text" [(ngModel)]="selectedAsistencia.fallaJustificada" name="fallaJustificada" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Actualizar Asistencia</button>
-    <button class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
-  </form>
 </div>

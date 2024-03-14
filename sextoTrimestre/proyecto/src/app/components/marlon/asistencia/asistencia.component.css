@@ -122,38 +122,164 @@ button {
   background-color: #070707;
 }
 
-/*Crear Horario*/
-.container {
-    margin-top: 40px;
-    box-shadow: 0 5px 9px rgba(5, 5, 5, 0.1); 
-    padding: 20px; 
-    background-color: #ffffff; 
-    border-radius: 10px; 
-    width: 700px;
+/* Estilos para el formulario de obtener asistencia */
+.boton-small {
+  font-size: 14px;
+  margin-top: 20px;
+  background-color: #008a88; 
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+
+.boton-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876;
+}
+
+/* Estilos para los input */
+.form-control {
+  width: 100%;
+  height: 35px; 
+  font-size: 16px; 
+}
+
+.input-container { 
+  display: flex; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  gap: 9px;
+}
+
+.table {
+  display: none; 
+}
+
+/* Estilos para los selectores de fecha y ficha */
+.form-group {
+  width: 25%; 
+}
+
+.container:has(.table) {
+  display: block;
+}
+
+/* Estilos para el contenedor de la tabla */
+.container-table {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px; 
+}
+
+.table {
+  width: 75%; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  overflow-x: auto; 
+  margin: 0 auto;
+}
+
+
+/* Estilos para las filas y celdas de la tabla */
+.table th,
+.table td {
+  padding: 12px;
+  text-align: center;
+  width: 10%; 
+}
+
+/* Estilos para el encabezado de la tabla */
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  width: 5%; 
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(2), 
+.table td:nth-child(2) {
+  width: 30%; 
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(3), 
+.table td:nth-child(3) {
+  width: 25%;
+}
+
+.table th:last-child, 
+.table td:last-child {
+  width: 35%; 
+}
+
+/* Estilos para el cuerpo de la tabla */
+.table tbody {
+  background-color: white; 
+}
+
+/* Estilos para las celdas de la tabla en pantallas pequeñas */
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 8px; 
   }
-  
-  .subir{
-    margin-top: 20px;
-  }
-  .titulo{
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold
-  }
-  .subtitulo {
-    margin-top: 40px;
-    margin-left: 50px;
-    margin-right: 50px;
-    color: #008a88;
-    font-size: 30px;
-    font-weight: bold; 
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  .boton{
-    background-color: #008a88;
-    color: white;
-  }
+}
+
+/* Estilos para el área de edición */
+.table select {
+  font-size: 13px;
+  padding: 2px 2px; 
+}
+
+/* Estilos para los botones */
+.table button.btn-primary,
+.table button.btn-info {
+  font-size: 13px; 
+  padding: 4px 8px; 
+  background-color: #008a88;
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+/* Efecto al pasar el mouse */
+.table button.btn-primary:hover,
+.table button.btn-info:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876; 
+}
+
+/* Estilos para el botón de cancelar */
+.table button.btn-secondary {
+  font-size: 13px; 
+  padding: 4px 8px; 
+  background-color: #dc3545;
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+/* Efecto al pasar el mouse */
+.table button.btn-secondary:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #c82333;
+}
+
+.selected-ficha {
+  font-weight: bold;
+  color: #008a88;
+}
+
+.alert.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}

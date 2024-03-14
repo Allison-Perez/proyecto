@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AsistenciaService } from '../services/asistencia.service';
 import { AuthService } from '../../allison/service/auth.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   templateUrl: './asistencia.component.html',
   styleUrls: ['./asistencia.component.css']
 })
-
 export class AsistenciaComponent implements OnInit {
   asistenciaList: any[] = [];
   newAsistencia: any = { fecha: null };
@@ -19,6 +18,14 @@ export class AsistenciaComponent implements OnInit {
   mostrarMenuPerfil: boolean = false;
   selectedAsistencia: any;
   editandoAsistencia: boolean = false;
+  viewMode: boolean = true;
+  mostrarTabla: boolean = false;
+  sinEstudiantes: boolean = false;
+  tempNombre: string | undefined;
+  tempCorreo: string | undefined;
+  errorMensaje: string | null = null;
+
+  @ViewChild('tablaAsistencias') tablaAsistencias!: ElementRef;
 
   constructor(private asistenciaService: AsistenciaService, private router: Router, private authService: AuthService) {}
 
@@ -28,11 +35,6 @@ export class AsistenciaComponent implements OnInit {
 
   toggleProfileMenu() {
     this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
-  }
-
-  redirectTo(route: string) {
-    this.router.navigate([route]);
-    this.mostrarMenuPerfil = false;
   }
 
   logout() {
@@ -51,6 +53,9 @@ export class AsistenciaComponent implements OnInit {
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
       await this.crearOActualizarAsistencia();
       this.getAsistencia();
+      this.newAsistencia = { fecha: null };
+      this.selectedFicha = undefined;
+      
     } else {
       console.error('Error: Fecha, ficha o idUsuario no están definidos.');
     }
@@ -60,17 +65,16 @@ export class AsistenciaComponent implements OnInit {
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined) {
       const userInfo = this.authService.getUserInfo();
       const idUsuario = userInfo.idUsuario;
-      const idInstructor = userInfo.idUsuario;
   
-      if (idUsuario !== undefined && idUsuario !== null && idInstructor !== undefined && idInstructor !== null) {
+      if (idUsuario !== undefined && idUsuario !== null) {
         const existeAsistencia = await this.asistenciaService.verificarAsistencia(this.newAsistencia.fecha, this.selectedFicha).toPromise();
   
         if (!existeAsistencia) {
-          await this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idInstructor).toPromise();
+          await this.asistenciaService.crearAsistencia(this.newAsistencia.fecha, this.selectedFicha, idUsuario, idUsuario).toPromise();
         }
         this.getAsistencia();
       } else {
-        console.error('Error: idUsuario o idInstructor no definidos.');
+        console.error('Error: idUsuario no definido.');
       }
     } else {
       console.error('Error: Fecha o ficha no están definidos.');
@@ -78,28 +82,36 @@ export class AsistenciaComponent implements OnInit {
   }
   
   getAsistencia() {
-    console.log('Parámetros de búsqueda:', this.newAsistencia.fecha, this.selectedFicha, this.idUsuario);
     if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
       this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario, this.selectedFicha)
         .subscribe((data: any[]) => {
-          console.log('Datos de asistencia recibidos:', data);
           if (data && data.length > 0) {
             this.asistenciaList = data;
+            this.sinEstudiantes = false;
+            this.errorMensaje = null; 
+            if (this.tablaAsistencias) {
+              this.tablaAsistencias.nativeElement.style.display = 'block';
+            }
           } else {
-            console.log('No se encontraron datos de asistencia.');
+            this.sinEstudiantes = true;
+            this.errorMensaje = 'No se encontraron aprendices asociados a la ficha proporcionada';
+            if (this.tablaAsistencias) {
+              this.tablaAsistencias.nativeElement.style.display = 'none';
+            }
           }
         }, error => {
           console.error('Error al obtener asistencia:', error);
+          this.errorMensaje = 'Error al obtener la asistencia. Por favor, inténtalo de nuevo más tarde.';
+          console.log('Mensaje de error asignado:', this.errorMensaje);
         });
     } else {
       console.error('Error: Fecha, idUsuario o ficha no están definidos.');
     }
-  }  
-   
+  }
+  
 
   getFichasUsuario() {
     this.asistenciaService.getFichasUsuario().subscribe((data: any[]) => {
-      console.log('Fichas de usuario recibidas:', data);
       this.fichas = data;
     }, error => {
       console.error('Error al obtener las fichas del usuario:', error);
@@ -113,36 +125,50 @@ export class AsistenciaComponent implements OnInit {
   }
   
   editarAsistencia(asistencia: any) {
-    this.editandoAsistencia = true;
+    this.tempNombre = asistencia.nombreAprendiz;
+    this.tempCorreo = asistencia.correoAprendiz;
     this.selectedAsistencia = asistencia;
-  }
-  
-  cancelarEdicion() {
-    this.editandoAsistencia = false;
-  }
-  
-  async actualizarAsistencia() {
-    if (this.selectedAsistencia && this.selectedAsistencia.identificador) {
-      console.log('Actualizando asistencia:', this.selectedAsistencia);
-      const status = this.selectedAsistencia.status; 
-      const updatedData = { status: status, fallaJustificada: this.selectedAsistencia.fallaJustificada };
-      console.log('Datos actualizados:', updatedData);
-      await this.asistenciaService.editarAsistencia(this.selectedAsistencia.identificador, updatedData).toPromise();
-
-      const index = this.asistenciaList.findIndex(asistencia => asistencia.identificador === this.selectedAsistencia.identificador);
-      if (index !== -1) {
-        this.asistenciaList[index] = await this.asistenciaService.getAsistenciaById(this.selectedAsistencia.identificador).toPromise();
+    this.editandoAsistencia = true;
+    this.asistenciaList.forEach(item => {
+      if (item !== asistencia) {
+        item.editando = false;
       }
+    });
+  }
   
-      console.log('Asistencia actualizada correctamente.');
   
-      this.getAsistencia();
+  actualizarAsistencia(asistencia: any) {
+    if (asistencia && asistencia.identificador) {
+      const status = asistencia.status;
+      const updatedData = { status: status, fallaJustificada: asistencia.fallaJustificada };
+      this.asistenciaService.editarAsistencia(asistencia.identificador, updatedData).subscribe(() => {
+        const index = this.asistenciaList.findIndex(item => item.identificador === asistencia.identificador);
+        if (index !== -1) {
+          this.asistenciaList[index].status = status;
+          this.asistenciaList[index].nombreAprendiz = this.tempNombre;
+          this.asistenciaList[index].correoAprendiz = this.tempCorreo;
+        }
+        this.editandoAsistencia = false; 
+        this.selectedAsistencia = null; 
+      }, error => {
+        console.error('Error al actualizar la asistencia:', error);
+      });
     } else {
       console.error('Error: Asistencia no seleccionada o identificador no definido.');
     }
+}
+
+  
+  cancelarEdicion(asistencia: any) {
+    if (this.tempNombre !== undefined && this.tempCorreo !== undefined) {
+      asistencia.nombreAprendiz = this.tempNombre;
+      asistencia.correoAprendiz = this.tempCorreo;
+    }
+    this.selectedAsistencia = null;
+    this.editandoAsistencia = false;
   }
   
-  // Método para manejar el cambio de la ficha seleccionada
+
   onChangeFicha() {
     this.getAsistencia();
   }
