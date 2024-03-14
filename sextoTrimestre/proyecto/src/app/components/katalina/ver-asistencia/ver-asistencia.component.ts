@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../service/servicie.katalina.service';
 import { AuthService } from '../service/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import * as ApexCharts from 'apexcharts';
 
 @Component({
   selector: 'app-ver-asistencia',
@@ -9,14 +10,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-asistencia.component.scss']
 })
 export class VerAsistenciaComponent {
-  email: string = '';
-  pieChartData: any = {
+    email: string = '';
+    pieChartData: any = {
     data: [],
     labels: ['Asistencias', 'Inasistencias']
   };
+
   isMenuOpen: boolean = false;
   mostrarMenuPerfil: boolean = false;
-  
+
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
   toggleMenu() {
@@ -30,21 +32,30 @@ export class VerAsistenciaComponent {
   }
  redirectTo(route: string) {
     this.router.navigate([route]);
-    // Cierra el menú después de redirigir
     this.mostrarMenuPerfil = false;
   }
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
 
-  inicializarGraficoDonutAsistencias() {
-    this.ServiceService.getAsistenciasPorAprendiz().subscribe((data: any[]) => {
+  ngAfterViewInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.inicializarGraficoAsistencias(this.email);
+  }
+
+  inicializarGraficoAsistencias(email: string) {
+    console.log('entra');
+
+    this.ServiceService.getAsistenciasPorAprendiz(email).subscribe((data) => {
+      console.log(email, data);
+
       const options = {
-        series: data.map((item) => item.cantidadRegistros),
-        labels: data.map((item) => `${item.nombreAprendiz} ${item.apellidoAprendiz}`),
+        series: [
+          data.filter((item) => item.status === 'Asistió').length,
+          data.filter((item) => item.status === 'No Asistió').length,
+        ],
+        labels: ['Asistió', 'No Asistió'],
         chart: {
           type: 'donut',
         },
@@ -62,11 +73,9 @@ export class VerAsistenciaComponent {
           },
         ],
       };
-  
-      const chart = new ApexCharts(document.querySelector('#chartAsistencias'), options);
+
+      var chart = new ApexCharts(document.querySelector('#chart'), options);
       chart.render();
     });
   }
-  
-
 }

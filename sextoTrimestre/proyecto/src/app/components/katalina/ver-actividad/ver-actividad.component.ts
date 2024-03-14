@@ -17,8 +17,6 @@ export class VerActividadComponent {
   mostrarMenuPerfil: boolean = false;
   isMenuOpen: boolean = false;
   
-
-
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router) {}
 
   toggleMenu() {
@@ -85,6 +83,7 @@ export class VerActividadComponent {
     document.body.appendChild(link);
     link.click();
   }
+
   
   formatDate(date: Date): string {
     // Implement your date formatting logic here

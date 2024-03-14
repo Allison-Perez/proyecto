@@ -15,6 +15,7 @@ import { VerBlogComponent } from './ver-blog/ver-blog.component';
 import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NgChartsModule } from 'ng2-charts';
     EditPasswordComponent
   ],
   imports: [
+    NgApexchartsModule,
     BrowserModule,
     HttpClientModule,
     KatalinaRoutingModule,

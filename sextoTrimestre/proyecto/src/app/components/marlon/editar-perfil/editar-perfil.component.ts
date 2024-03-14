@@ -54,7 +54,6 @@ export class EditarPerfilComponent implements OnInit {
       this.service.getUserInfoByEmail(correo).subscribe(data => {
         this.userData = data;
         this.form.patchValue(data);
-        console.log(data);
 
       });
     } else {

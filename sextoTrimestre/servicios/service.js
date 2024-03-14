@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -1500,7 +1500,6 @@ app.get('/api/obtener-guias-por-correo/:correo', async (req, res) => {
 
 // // TRAER HORARIOS
 app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
-  console.log('entra mi pez');
   try {
     const correo = req.params.correo.replace(/"/g, '');
     const connection = await mysql.createConnection(dbConfig);
@@ -1531,40 +1530,28 @@ app.get('/api/obtener-horarios-por-correo/:correo', async (req, res) => {
 
 
 // ESTADISTICA ASISTENCIAS E INASISITENCIAS 
-app.get("/api/asistenciasPorAprendiz", async (req, res) => {
+app.get("/api/asistenciasPorAprendiz/:correo", async (req, res) => {
   try {
     console.log('GRAFICO ASISTENCIA');
+    const correo = req.params.correo.replace(/"/g, '');
     const connection = await mysql.createConnection(dbConfig);
 
     const [rows] = await connection.execute(`
-      SELECT
-        a.idAprendiz,
-        uAprendiz.primerNombre AS nombreAprendiz,
-        uAprendiz.primerApellido AS apellidoAprendiz,
-        a.status,
-        COUNT(*) AS cantidadRegistros
-      FROM
-        asistencia a
-      JOIN
-        usuario uAprendiz ON a.idAprendiz = uAprendiz.identificador
-      WHERE
-        a.idInstructor IN (
-          SELECT identificador
-          FROM usuario
-          WHERE idRol 
-        )
-      GROUP BY
-        a.idAprendiz, uAprendiz.primerNombre, uAprendiz.primerApellido, a.status
-    `);
+      SELECT status FROM asistencia 
+      WHERE idAprendiz = (SELECT identificador FROM usuario WHERE correo = ?)
+    `, [correo]);
 
     connection.end();
-    res.status(200).json(rows);
+
+    // Mapea los resultados para obtener un array de objetos con la propiedad 'status'
+    const formattedData = rows.map(row => ({ status: row.status }));
+
+    res.status(200).json(formattedData);
   } catch (error) {
     console.error("Error al obtener las estadísticas de asistencias por aprendiz:", error);
     res.status(500).json({ error: "Error al obtener las estadísticas de asistencias por aprendiz" });
   }
 });
-
 
 
 
