@@ -147,12 +147,15 @@ button {
   font-size: 16px; 
 }
 
-.input-container { 
-  display: flex; 
+.input-container {
+  display: flex;
+  justify-content: center; 
   align-items: center; 
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   gap: 9px;
+  margin-top: 50px; 
 }
+
 
 .table {
   display: none; 
@@ -160,7 +163,8 @@ button {
 
 /* Estilos para los selectores de fecha y ficha */
 .form-group {
-  width: 25%; 
+  width: 25%;
+  margin: 5px;
 }
 
 .container:has(.table) {
@@ -175,14 +179,18 @@ button {
   margin-bottom: 20px; 
 }
 
+.titulo, .subtitulo {
+  color: #008a88;
+  text-align: center;
+}
+
 .table {
-  width: 75%; 
+  width: 72%; 
   border: 1px solid #ccc;
   border-radius: 10px; 
   overflow-x: auto; 
   margin: 0 auto;
 }
-
 
 /* Estilos para las filas y celdas de la tabla */
 .table th,
@@ -196,13 +204,13 @@ button {
 .table th {
   background-color: #f8f9fa;
   font-weight: bold;
-  width: 5%; 
+  width: 2%; 
 }
 
 /* Estilos para las filas y celdas de la tabla */
 .table th:nth-child(2), 
 .table td:nth-child(2) {
-  width: 30%; 
+  width: 20%; 
 }
 
 /* Estilos para las filas y celdas de la tabla */
@@ -211,9 +219,15 @@ button {
   width: 25%;
 }
 
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(4), 
+.table td:nth-child(4) {
+  width: 25%;
+}
+
 .table th:last-child, 
 .table td:last-child {
-  width: 35%; 
+  width: 30%; 
 }
 
 /* Estilos para el cuerpo de la tabla */
@@ -257,6 +271,7 @@ button {
 
 /* Estilos para el botón de cancelar */
 .table button.btn-secondary {
+  margin: 3px;
   font-size: 13px; 
   padding: 4px 8px; 
   background-color: #dc3545;
