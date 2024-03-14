@@ -59,34 +59,32 @@ button {
   color: #fff;
 }
 
-.dropdown-content {
-  margin-top: 7px;
+.profile-menu{
   position: absolute;
   right: 0;
   margin-right: 5px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border-radius: 4px; /* Bordes redondeados */
   padding: 10px;
+  z-index: 10000;
 }
 
-.dropdown-button {
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    background-color: #008a88;
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.dropdown-item {
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  color: #333;
+.profile-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Agrega transición de color al pasar el ratón sobre las opciones */
 }
 
-.dropdown-item:hover {
-  background-color: #070707;
+.profile-menu li:hover {
+  background-color: #f0f0f0; /* Cambia el color de fondo al pasar el ratón sobre las opciones */
 }
 
 @media (max-width: 600px) {
