@@ -39,21 +39,18 @@
         </ul>
   </div>
 </nav>
-<h1 class="titulo">Tu perfil</h1>
 <div class="perfil-detalle">
   <div class="container">
     <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
     <div id="perfil" class="information">
-          <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primerNombre }}</span></p>
-          <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundoNombre }}</span></p>
-          <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primerApellido }}</span></p>
-          <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
-          <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
-          <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
-          <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso | date : "dd/MM/yyyy" }}</span></p>
-          <p class="font-weight-bold">Número de Celular: <span id="celular">{{ userData.celular }}</span></p>
-          <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
-          <p class="font-weight-bold">Información Adicional: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>
+      <p class="font-weight-bold"><span id="nombre">{{ userData.primerNombre }} {{ userData.segundoNombre ? userData.segundoNombre + ' ' : '' }}{{ userData.primerApellido }} {{ userData.segundoApellido }}</span></p>
+      <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
+      <p class="font-weight-bold">Número de Celular: <span id="celular">{{ userData.celular }}</span></p>
+      <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso | date : "dd/MM/yyyy" }}</span></p>
+      <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
+      <p class="font-weight-bold">Información Académica: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>
+      <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
+      
     </div>
           <div class="botones">
             <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>

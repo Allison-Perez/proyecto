@@ -13,14 +13,16 @@
 
 .perfil-detalle {
   margin-left: 350px;
-  margin-top: 40px;
-  height: 450px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+  height: 370px;
   max-width: 800px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+
 .foto {
   margin-left: -400px;
   margin-top: 30px;
@@ -209,11 +211,32 @@ span {
   }
 
   .botones {
-    margin: 5%;
+    margin-top: 50px; 
   }
-
+  
   .boton {
-    margin: 1%;
-    padding: 1% 2%;
+    margin: 10px;
+    padding: 10px 20px;
   }
+  
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+#nombre {
+  font-weight: bold;
+  font-size: 24px; /* Puedes ajustar el tamaño según tus preferencias */
+  font-family: "Outfit", sans-serif; /* Utiliza la fuente deseada */
+  color: #000; /* Color del texto */
+}
+
+.botones {
+  margin-top: 35px; 
+}
+
+.boton {
+  margin: 10px;
+  padding: 10px 20px;
 }
