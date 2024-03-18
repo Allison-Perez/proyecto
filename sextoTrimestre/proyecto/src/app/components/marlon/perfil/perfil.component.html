@@ -34,7 +34,7 @@
       <div class="eliminar-icono" *ngIf="mostrarIconoEliminar && fotoPerfilUrl !== 'assets/fotos_perfil/sena.png'" (click)="eliminarFotoPerfil()">
         <span class="material-symbols-outlined">delete</span>
       </div>
-    </div>           
+    </div>                      
     <div id="perfil" class="information">
       <p class="font-weight-bold"><span id="nombre">{{ userData.primerNombre }} {{ userData.segundoNombre ? userData.segundoNombre + ' ' : '' }}{{ userData.primerApellido }} {{ userData.segundoApellido }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
