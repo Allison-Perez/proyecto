@@ -10,14 +10,16 @@ import * as ApexCharts from 'apexcharts';
   styleUrls: ['./ver-asistencia.component.scss']
 })
 export class VerAsistenciaComponent {
-    email: string = '';
+    email: string = ''; 
     pieChartData: any = {
     data: [],
-    labels: ['Asistencias', 'Inasistencias']
-  };
+    labels: ['Asistencias', 'Inasistencias'] };
+    isMenuOpen: boolean = false;
+    mostrarMenuPerfil: boolean = false;
+    asistencias: any[] = [];
+    asistenciasFiltradas: any[] = [];
+    fechaFiltro: string = '';
 
-  isMenuOpen: boolean = false;
-  mostrarMenuPerfil: boolean = false;
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
@@ -77,5 +79,35 @@ export class VerAsistenciaComponent {
       var chart = new ApexCharts(document.querySelector('#chart'), options);
       chart.render();
     });
+  }
+  limpiarFiltros() {
+    this.fechaFiltro;
+  }
+  
+  ngOnInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.getAsistenciasPorCorreo(this.email);
+  }
+
+  
+  getAsistenciasPorCorreo(correo: string): void {
+    if (!correo) {
+      console.error('Error: El correo electrónico no está definido.');
+      return;
+    }
+
+    this.ServiceService.getasistenciasPorcorreo(correo).subscribe(
+      (data) => {
+        this.asistencias = data;
+      },
+      (error) => {
+        console.error('Error al obtener las asistencias por correo:', error);
+      }
+    );
+  }
+
+  aplicarFiltro(): void {
+    console.log('Fecha seleccionada:', this.fechaFiltro);
+    // Aquí puedes agregar lógica para aplicar el filtro usando this.fechaFiltro
   }
 }

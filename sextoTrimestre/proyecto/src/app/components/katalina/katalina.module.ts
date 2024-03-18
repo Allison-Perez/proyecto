@@ -16,6 +16,7 @@ import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
 import { NgChartsModule } from 'ng2-charts';
 import { NgApexchartsModule } from "ng-apexcharts";
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NgApexchartsModule } from "ng-apexcharts";
     KatalinaRoutingModule,
     CommonModule,
     ReactiveFormsModule,
-    NgChartsModule
+    NgChartsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [IndexKatalinaComponent],

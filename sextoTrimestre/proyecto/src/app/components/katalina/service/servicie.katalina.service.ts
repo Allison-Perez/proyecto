@@ -60,6 +60,12 @@ export class ServiceService {
       const url = `${this.apiUrl}/api/asistenciasPorAprendiz/${correoSinComillas}`;
       return this.http.get<any[]>(url);
     }
+
+    getasistenciasPorcorreo(email: string): Observable<any[]> {
+      const correoSinComillas = email.replace(/"/g, '');
+      const url = `${this.apiUrl}/api/asistenciasPorcorreo/${correoSinComillas}`;
+      return this.http.get<any[]>(url);
+    }
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
   cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
     const endpoint = '/cambiar-contrasena';
