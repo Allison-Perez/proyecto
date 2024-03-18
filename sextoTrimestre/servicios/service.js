@@ -949,11 +949,43 @@ app.post('/upload', upload.single('imagenOpcional'), function (req, res) {
   res.send('Archivo subido exitosamente');
 });
 
+// Ruta para cambiar foto de perfil
+app.post('/api/cambiar-foto', upload.single('imagen'), async (req, res) => {
+  let connection;
+  try {
+    const { correo } = req.query;
+    const nuevaImagen = req.file;
+
+    if (!nuevaImagen) {
+      return res.status(400).json({ error: 'No se proporcionó ninguna imagen.' });
+    }
+
+    const nuevaUrl = `http://localhost:3000/uploads/${nuevaImagen.filename}`;
+
+    connection = await mysql.createConnection(dbConfig);
+
+    const updateFotoPerfilSql = `
+      UPDATE usuario
+      SET fotoPerfil = ?
+      WHERE correo = ?`;
+
+    await connection.execute(updateFotoPerfilSql, [nuevaUrl, correo]);
+
+    console.log('Foto de perfil actualizada correctamente.');
+    res.status(200).json({ message: 'Foto de perfil actualizada correctamente.', nuevaUrl });
+  } catch (error) {
+    console.error('Error al cambiar la foto de perfil:', error);
+    res.status(500).json({ error: 'Error al cambiar la foto de perfil.' });
+  } finally {
+    if (connection) {
+      connection.end();
+    }
+  }
+});
 
 //BLOG
 
 // Ruta para crear un nuevo blog
-
 
 app.post("/crearBlog", upload.single('imagenOpcional'), async (req, res) => {
   console.log('entra');

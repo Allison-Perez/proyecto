@@ -2,46 +2,34 @@
 <nav class="navbar">
   <div class="container-fluid">
     <a class="nav-link nombre" >Acanner</a>
-        <div class="menu-icon" (click)="toggleMenu()">
-          <div class="bar"></div>
-          <div class="bar"></div>
-          <div class="bar"></div>
+    <div class="menu-icon" (click)="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+      <div class="dropdown">
+        <button class="dropdown-button" (click)="toggleProfileMenu()">
+          <span class="material-symbols-outlined">person</span>
+        </button>
+        <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+          <li class="nav-item">
+            <a routerLink="/vista-instructor" class="nav-link otro " aria-current="page">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+          </li>
         </div>
-        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
-            <li class="nav-item">
-              <a routerLink="/horario" class="nav-link" aria-current="page">Horario</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/actividad" class="nav-link">Actividades</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/blog" class="nav-link">Blog</a>
-            </li>
-            <li class="nav-item">
-              <a routerLink="/asistencia" class="nav-link">Asistencias</a>
-            </li>
-            <div class="dropdown">
-              <button class="dropdown-button" (click)="toggleProfileMenu()">
-                <span class="material-symbols-outlined">person</span>
-              </button>
-              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
-                <li class="nav-item">
-                  <a routerLink="/vista-instructor" class="nav-link otro " aria-current="page">Inicio</a>
-                </li>
-                <li class="nav-item">
-                  <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
-                </li>
-              </div>
-            </div>
-        </ul>
+      </div>
+    </ul>
   </div>
 </nav>
 <div class="perfil-detalle">
   <div class="container">
-    <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
+    <img class="foto" [src]="fotoPerfilUrl" alt="Foto de perfil">
     <div id="perfil" class="information">
       <p class="font-weight-bold"><span id="nombre">{{ userData.primerNombre }} {{ userData.segundoNombre ? userData.segundoNombre + ' ' : '' }}{{ userData.primerApellido }} {{ userData.segundoApellido }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
@@ -50,13 +38,21 @@
       <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
       <p class="font-weight-bold">Información Académica: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>
       <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
-      
     </div>
-          <div class="botones">
-            <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
-              <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
-            <button class="boton" (click)="editarInformacion()">Editar</button>
-            <button  class="boton" [routerLink]="['/cambiar-contrasena']">Cambiar contraseña</button>
-          </div>
-      </div>
+    <div class="botones">
+      <button class="boton cambiar-foto" (click)="abrirSelectorDeImagen()" title="Cambiar foto">
+        <span class="material-symbols-outlined">photo_camera</span>
+        <span class="texto-oculto">Cambiar foto</span>
+      </button>
+      <button class="boton editar" (click)="editarInformacion()" title="Editar">
+        <span class="material-symbols-outlined">edit</span>
+        <span class="texto-oculto">Editar</span>
+      </button>
+      <button class="boton cambiar-contrasena" [routerLink]="['/cambiar-contrasena']" title="Cambiar contraseña">
+        <span class="material-symbols-outlined">lock</span>
+        <span class="texto-oculto">Cambiar contraseña</span>
+      </button>
     </div>
+    <input type="file" id="inputFile" style="display: none;" (change)="onImagenSeleccionada($event)">
+  </div>
+</div>

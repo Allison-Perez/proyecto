@@ -13,17 +13,18 @@
 
 .perfil-detalle {
   margin-left: 350px;
-  margin-top: 50px;
+  margin-top: 100px;
   margin-bottom: 5px;
   height: 370px;
   max-width: 800px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.282);
   text-align: center;
 }
 
 .foto {
+  max-width: 250px;
   margin-left: -400px;
   margin-top: 30px;
   border: 1px solid #ccc;
@@ -33,7 +34,7 @@
 .information{
   font-size: 15px;
   margin-left: 350px;
-  margin-top: -220px;
+  margin-top: -250px;
   text-align: left;
 }
 
@@ -44,25 +45,6 @@
 span {
   font-weight: normal;
 }
-
-/*Botones*/
-.botones{
-  margin: 30px;
-}
-.boton {
-    margin: 10px;
-    background-color: #088a88;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .boton:hover {
-    background-color: #0f9b98;
-  }
 
   /* Estilos Nav */
   nav{
@@ -225,18 +207,82 @@ span {
   font-weight: bold;
 }
 
+
+/* Estilo para el nombre de usuario */
 #nombre {
   font-weight: bold;
-  font-size: 24px; /* Puedes ajustar el tamaño según tus preferencias */
-  font-family: "Outfit", sans-serif; /* Utiliza la fuente deseada */
-  color: #000; /* Color del texto */
+  font-size: 24px;
+  font-family: "Outfit", sans-serif; 
+  color: #000; 
 }
 
+/* Estilos botones */
 .botones {
   margin-top: 35px; 
 }
 
+.boton:hover{
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.cambiar-foto .material-symbols-outlined,
+.editar .material-symbols-outlined,
+.cambiar-contrasena .material-symbols-outlined {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .texto-oculto,
+.editar:hover .texto-oculto,
+.cambiar-contrasena:hover .texto-oculto {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .material-symbols-outlined,
+.editar:hover .material-symbols-outlined,
+.cambiar-contrasena:hover .material-symbols-outlined {
+  visibility: visible;
+}
+
 .boton {
+  display: inline-block;
   margin: 10px;
   padding: 10px 20px;
+  font-size: 13px; 
+  background-color: #008a88;
+  color: white; 
+  border: 2px solid #008a88; 
+  border-radius: 5px; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+  position: relative;
+}
+
+.boton .material-symbols-outlined {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.boton:hover .material-symbols-outlined {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.boton:hover .texto-oculto {
+  visibility: hidden;
 }

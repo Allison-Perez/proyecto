@@ -37,6 +37,10 @@ export class ServiceService {
     return this.http.post(url, userData);
 }
 
+updateProfilePicture(email: string, imageFile: File): Observable<any> {
+  const formData: FormData = new FormData();
+  formData.append('imagen', imageFile);
 
-
+  return this.http.post<any>(`${this.apiUrl}/api/cambiar-foto?correo=${encodeURIComponent(email)}`, formData);
+}
 }
