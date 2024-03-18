@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+// PERFIL
 .titulo {
   margin-left: 20px;
   color: #088a88;
@@ -10,28 +11,65 @@
   font-style: normal;
 }
 
-/*Perfil*/
 .perfil-detalle {
   margin-left: 350px;
-  margin-top: 50px;
-  height: 400px;
-  max-width: 700px;
+  margin-top: 100px;
+  margin-bottom: 5px;
+  height: 370px;
+  max-width: 800px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.282);
   text-align: center;
 }
+
+.foto-container {
+  position: relative;
+  overflow: hidden;
+}
+
 .foto {
-  margin-left: -300px;
+  width: 250px;
+  height: 250px;
+  min-width: 250px;
+  min-height: 250px;
+  margin-left: -400px;
   margin-top: 30px;
   border: 1px solid #ccc;
   border-radius: 50%;
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+  position: relative;
+}
+
+.foto:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  filter: brightness(80%);
+}
+
+.eliminar-icono {
+  position: absolute;
+  top: 55%;
+  left: 24%;
+  transform: translate(-50%, -50%);
+  color:#5a0707;
+  background-color: rgba(255, 255, 255, 0.457);
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease; 
+  z-index: 10;
+}
+
+.foto-container:hover .eliminar-icono {
+  opacity: 1;
+  visibility: visible; 
 }
 
 .information{
   font-size: 15px;
   margin-left: 350px;
-  margin-top: -200px;
+  margin-top: -230px;
   text-align: left;
 }
 
@@ -43,26 +81,83 @@ span {
   font-weight: normal;
 }
 
-/*Botones*/
-.botones{
-  margin: 80px;
+// BOTONES
+
+.botones {
+  margin-top: 70px;
+}
+
+.boton:hover{
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.cambiar-foto .material-symbols-outlined,
+.editar .material-symbols-outlined,
+.cambiar-contrasena .material-symbols-outlined {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .texto-oculto,
+.editar:hover .texto-oculto,
+.cambiar-contrasena:hover .texto-oculto {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .material-symbols-outlined,
+.editar:hover .material-symbols-outlined,
+.cambiar-contrasena:hover .material-symbols-outlined {
+  visibility: visible;
 }
 .boton {
-    margin: 10px;
-    background-color: #088a88;
-    color: #fff; 
-    padding: 10px 20px; 
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .boton:hover {
-    background-color: #0f9b98; 
-  }
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 13px; 
+  background-color: #008a88;
+  color: white; 
+  border: 2px solid #008a88; 
+  border-radius: 5px; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
 
-/* Estilos Nav */
+.boton .material-symbols-outlined {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.boton:hover .material-symbols-outlined {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.boton:hover .texto-oculto {
+  visibility: hidden;
+}
+
+.eliminar-icono,
+.cambiar-foto,
+.editar,
+.cambiar-contrasena {
+  cursor: pointer;
+}
+
+// ESTILOS NAV 
 nav{
   background-color: #008a88;
 }

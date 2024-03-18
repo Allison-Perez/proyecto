@@ -66,39 +66,60 @@ export class ServiceService {
       const url = `${this.apiUrl}/api/asistenciasPorcorreo/${correoSinComillas}`;
       return this.http.get<any[]>(url);
     }
+
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
-  cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
-    const endpoint = '/cambiar-contrasena';
-    const url = `${this.apiUrl}${endpoint}`;
-    const body = { contrasenaAntigua, contrasenaNueva };
+    cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {
+      const endpoint = '/cambiar-contrasena';
+      const url = `${this.apiUrl}${endpoint}`;
+      const body = { contrasenaAntigua, contrasenaNueva };
 
-    return this.http.post<any>(url, body);
+      return this.http.post<any>(url, body);
+    }
+
+    updatePassword(email: string, passwordAnterior: string, passwordNueva: string): Observable<any> {
+      const url = `${this.apiUrl}/api/cambiar-contrasena`;
+      const userData = {
+        correo: email.slice(1, -1),
+        passwordAnterior: passwordAnterior,
+        nuevaPassword: passwordNueva
+      };
+
+      console.log('Datos a enviar al servidor:', userData);
+
+      return this.http.post(url, userData);
+    }
+
+  // INFORMACION PERFIL
+    getUserInfoByEmail(email: string): Observable<any> {
+      const correoSinComillas = email.replace(/"/g, '');
+      const url = `${this.apiUrl}/api/obtenerUsuario?correo=${correoSinComillas}`;
+      return this.http.get(url);
+    }
+
+    updateUserInfoByEmail(email: string, userData: any): Observable<any> {
+      const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
+      return this.http.post(url, userData);
+    }
+  // FOTO PERFIL
+  updateProfilePicture(email: string, imageFile: File | null): Observable<any> {
+    let formData: FormData | null = null;
+    if (imageFile) {
+      formData = new FormData();
+      formData.append('imagen', imageFile);
+    }
+  
+    return this.http.post<any>(`${this.apiUrl}/api/cambiar-foto?correo=${encodeURIComponent(email)}`, formData);
   }
-
-  updatePassword(email: string, passwordAnterior: string, passwordNueva: string): Observable<any> {
-    const url = `${this.apiUrl}/api/cambiar-contrasena`;
-    const userData = {
-      correo: email.slice(1, -1),
-      passwordAnterior: passwordAnterior,
-      nuevaPassword: passwordNueva
-    };
-
-    console.log('Datos a enviar al servidor:', userData);
-
-    return this.http.post(url, userData);
-  }
-
-  getUserInfoByEmail(email: string): Observable<any> {
-    const correoSinComillas = email.replace(/"/g, '');
-    const url = `${this.apiUrl}/api/obtenerUsuario?correo=${correoSinComillas}`;
+  
+  getProfilePicture(email: string): Observable<any> {
+    const url = `${this.apiUrl}/api/obtener-foto-perfil?correo=${email}`;
     return this.http.get(url);
   }
-
-  updateUserInfoByEmail(email: string, userData: any): Observable<any> {
-    const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
-    return this.http.post(url, userData);
+  
+  eliminarFotoPerfil(correo: string) {
+    const url = `${this.apiUrl}/api/eliminar-foto?correo=${correo}`;
+    return this.http.post(url, {});
   }
-
 
 
 }
