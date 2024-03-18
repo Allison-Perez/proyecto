@@ -29,7 +29,12 @@
 </nav>
 <div class="perfil-detalle">
   <div class="container">
-    <img class="foto" [src]="fotoPerfilUrl" alt="Foto de perfil">
+    <div class="foto-container" (mouseenter)="mostrarIconoEliminar = true" (mouseleave)="mostrarIconoEliminar = false">
+      <img [src]="fotoPerfilUrl" alt="Foto de perfil" class="foto">
+      <div class="eliminar-icono" *ngIf="mostrarIconoEliminar && fotoPerfilUrl !== 'assets/fotos_perfil/sena.png'" (click)="eliminarFotoPerfil()">
+        <span class="material-symbols-outlined">delete</span>
+      </div>
+    </div>           
     <div id="perfil" class="information">
       <p class="font-weight-bold"><span id="nombre">{{ userData.primerNombre }} {{ userData.segundoNombre ? userData.segundoNombre + ' ' : '' }}{{ userData.primerApellido }} {{ userData.segundoApellido }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>

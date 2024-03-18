@@ -72,7 +72,7 @@ app.post("/registro", async (req, res) => {
       idPregunta,
       respuestaPregunta,
       2,
-      'ruta/a/la/foto.png',
+      'http://localhost:3000/uploads/sena.png',
     ]);
 
     console.log("Usuario creado exitosamente");
@@ -956,26 +956,96 @@ app.post('/api/cambiar-foto', upload.single('imagen'), async (req, res) => {
     const { correo } = req.query;
     const nuevaImagen = req.file;
 
+    console.log('Correo recibido:', correo);
+    console.log('Imagen recibida:', nuevaImagen);
+
     if (!nuevaImagen) {
+      console.error('No se proporcionó ninguna imagen.');
       return res.status(400).json({ error: 'No se proporcionó ninguna imagen.' });
     }
 
     const nuevaUrl = `http://localhost:3000/uploads/${nuevaImagen.filename}`;
 
+    console.log('Nueva URL generada:', nuevaUrl);
+
     connection = await mysql.createConnection(dbConfig);
+
+    console.log('Conexión a la base de datos exitosa.');
 
     const updateFotoPerfilSql = `
       UPDATE usuario
       SET fotoPerfil = ?
       WHERE correo = ?`;
 
+    console.log('SQL de actualización:', updateFotoPerfilSql);
+    console.log('Valores de actualización:', [nuevaUrl, correo]);
+
     await connection.execute(updateFotoPerfilSql, [nuevaUrl, correo]);
 
     console.log('Foto de perfil actualizada correctamente.');
-    res.status(200).json({ message: 'Foto de perfil actualizada correctamente.', nuevaUrl });
+    res.status(200).json({ message: 'Foto de perfil actualizada correctamente.', nuevaUrl: nuevaUrl });
   } catch (error) {
-    console.error('Error al cambiar la foto de perfil:', error);
+    console.error('Error al ejecutar la consulta de actualización:', error);
     res.status(500).json({ error: 'Error al cambiar la foto de perfil.' });
+  }
+   finally {
+    if (connection) {
+      connection.end();
+    }
+  }
+});
+
+// Ruta para obtener la foto de perfil
+app.get("/api/obtener-foto-perfil", async (req, res) => {
+  try {
+    const { correo } = req.query;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+      SELECT fotoPerfil
+      FROM usuario
+      WHERE correo = ?
+    `;
+    const [rows] = await connection.execute(sql, [correo]);
+
+    connection.end();
+    if (rows.length > 0) {
+      res.status(200).json({ fotoPerfil: rows[0].fotoPerfil });
+    } else {
+      res.status(404).json({ error: "Foto de perfil no encontrada" });
+    }
+  } catch (error) {
+    console.error("Error al obtener la foto de perfil:", error);
+    res.status(500).json({ error: "Error al obtener la foto de perfil" });
+  }
+});
+
+// Ruta para eliminar la foto de perfil y establecer la foto predeterminada
+app.post('/api/eliminar-foto', async (req, res) => {
+  let connection;
+  try {
+    const { correo } = req.query;
+
+    if (!correo) {
+      console.error('Correo no proporcionado.');
+      return res.status(400).json({ error: 'Correo no proporcionado.' });
+    }
+
+    connection = await mysql.createConnection(dbConfig);
+
+    const eliminarFotoPerfilSql = `
+      UPDATE usuario
+      SET fotoPerfil = 'assets/fotos_perfil/sena.png'
+      WHERE correo = ?
+    `;
+
+    await connection.execute(eliminarFotoPerfilSql, [correo]);
+
+    console.log('Foto de perfil eliminada y establecida como predeterminada.');
+    res.status(200).json({ message: 'Foto de perfil eliminada y establecida como predeterminada.' });
+  } catch (error) {
+    console.error('Error al eliminar la foto de perfil:', error);
+    res.status(500).json({ error: 'Error al eliminar la foto de perfil.' });
   } finally {
     if (connection) {
       connection.end();
