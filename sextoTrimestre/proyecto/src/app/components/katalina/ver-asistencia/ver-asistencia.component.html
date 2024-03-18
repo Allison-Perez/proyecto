@@ -45,6 +45,11 @@
     <div class="chart" id="chart"></div>
   </div>
 <div class="table-container">
+    <div class="fechaFiltro" >
+      <input type="date" [(ngModel)]="fechaFiltro">
+      <button (click)="aplicarFiltro()">Aplicar filtro</button>
+      <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+    </div>
     <table>
         <thead>
             <tr>

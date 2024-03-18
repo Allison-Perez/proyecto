@@ -1656,6 +1656,7 @@ app.get("/api/asistenciasPorAprendiz/:correo", async (req, res) => {
 // TABLA ASISTENCIA
 app.get("/api/asistenciasPorcorreo/:correo", async (req, res) => {
   try {
+    console.log('TABLA ASISTENCIA');
     const correo = req.params.correo.replace(/"/g, '');
     const connection = await mysql.createConnection(dbConfig);
 
