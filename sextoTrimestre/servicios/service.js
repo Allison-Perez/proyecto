@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "111019As", //111019As
+  password: "", //111019As
   database: "acanner",
 };
 
@@ -1582,6 +1582,41 @@ app.get("/api/asistenciasPorAprendiz/:correo", async (req, res) => {
     res.status(500).json({ error: "Error al obtener las estadísticas de asistencias por aprendiz" });
   }
 });
+
+// TABLA ASISTENCIA
+app.get("/api/asistenciasPorcorreo/:correo", async (req, res) => {
+  try {
+    const correo = req.params.correo.replace(/"/g, '');
+    const connection = await mysql.createConnection(dbConfig);
+
+    try {
+      const [rows] = await connection.execute(`
+        SELECT a.fecha, a.status, ui.primerNombre AS nombreInstructor
+        FROM usuario u
+        JOIN asistencia a ON u.identificador = a.idAprendiz
+        JOIN usuario ui ON a.idInstructor = ui.identificador
+        WHERE u.correo = ?;
+      `, [correo]);
+
+      const formattedData = rows.map(row => ({
+        fecha: row.fecha,
+        status: row.status,
+        nombreInstructor: row.nombreInstructor
+      }));
+
+      res.status(200).json(formattedData);
+    } catch (error) {
+      console.error("Error al ejecutar la consulta SQL:", error);
+      res.status(500).json({ error: "Error al ejecutar la consulta SQL" });
+    } finally {
+      await connection.end(); // Asegura que se cierre la conexión
+    }
+  } catch (error) {
+    console.error("Error al conectar a la base de datos:", error);
+    res.status(500).json({ error: "Error al conectar a la base de datos" });
+  }
+});
+
 
 
 

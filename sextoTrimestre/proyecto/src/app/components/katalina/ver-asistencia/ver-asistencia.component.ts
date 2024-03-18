@@ -15,9 +15,10 @@ export class VerAsistenciaComponent {
     data: [],
     labels: ['Asistencias', 'Inasistencias']
   };
+    isMenuOpen: boolean = false;
+    mostrarMenuPerfil: boolean = false;
+    asistencias: any[] = [];
 
-  isMenuOpen: boolean = false;
-  mostrarMenuPerfil: boolean = false;
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
@@ -78,4 +79,20 @@ export class VerAsistenciaComponent {
       chart.render();
     });
   }
+  
+  ngOnInit(): void {
+    this.getAsistenciasPorCorreo(this.email);
+  }
+
+  getAsistenciasPorCorreo(correo: string): void {
+    this.ServiceService.getasistenciasPorcorreo(correo).subscribe(
+      (data) => {
+        this.asistencias = data;
+      },
+      (error) => {
+        console.error('Error al obtener las asistencias por correo:', error);
+      }
+    );
+  }
+  
 }

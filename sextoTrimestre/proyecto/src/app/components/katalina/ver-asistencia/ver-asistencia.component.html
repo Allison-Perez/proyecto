@@ -44,3 +44,22 @@
   <div class="graficoUno">
     <div class="chart" id="chart"></div>
   </div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Asistencia</th> 
+                <th>Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asistencia of asistencias"> 
+                <td>{{ asistencia.fecha }}</td>
+                <td>{{ asistencia.status }}</td>
+                <td>{{ asistencia.nombreInstructor }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
