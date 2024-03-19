@@ -19,6 +19,7 @@ export class VerAsistenciaComponent {
     asistencias: any[] = [];
     asistenciasFiltradas: any[] = [];
     fechaFiltro: string = '';
+    originalAsistencias: any;
 
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
@@ -81,9 +82,10 @@ export class VerAsistenciaComponent {
     });
   }
   limpiarFiltros() {
-    this.fechaFiltro;
+    this.fechaFiltro = '';
   }
   
+
   ngOnInit(): void {
     this.email = this.authService.getUserEmail();
     this.getAsistenciasPorCorreo(this.email);
@@ -99,15 +101,31 @@ export class VerAsistenciaComponent {
     this.ServiceService.getasistenciasPorcorreo(correo).subscribe(
       (data) => {
         this.asistencias = data;
+        this.originalAsistencias = data;
       },
       (error) => {
         console.error('Error al obtener las asistencias por correo:', error);
       }
     );
   }
-
-  aplicarFiltro(): void {
-    console.log('Fecha seleccionada:', this.fechaFiltro);
-    // Aquí puedes agregar lógica para aplicar el filtro usando this.fechaFiltro
+  aplicarFiltroFecha() {
+    let asistenciasFiltradas = this.originalAsistencias.slice();
+  
+    // Convertir la fecha de filtro a formato de fecha si es una cadena
+    const filtroFecha = this.fechaFiltro ? new Date(this.fechaFiltro) : null;
+  
+    // Filtrar la lista según los criterios de filtro de fecha
+    asistenciasFiltradas = asistenciasFiltradas.filter((asistencia: { fecha: string | number | Date; }) => {
+      // Convertir la fecha de la asistencia a formato de fecha
+      const fechaAsistencia = new Date(asistencia.fecha);
+  
+      // Comprobar si la fecha de la asistencia coincide con la fecha de filtro
+      const cumpleFiltroFecha = !filtroFecha || fechaAsistencia.getTime() === filtroFecha.getTime();
+  
+      return cumpleFiltroFecha;
+    });
+  
+    this.asistenciasFiltradas = asistenciasFiltradas;
   }
+  
 }

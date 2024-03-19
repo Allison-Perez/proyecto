@@ -44,27 +44,29 @@
   <div class="graficoUno">
     <div class="chart" id="chart"></div>
   </div>
-<div class="table-container">
-    <div class="fechaFiltro" >
+  <div class="table-container">
+    <div class="fechaFiltro">
       <input type="date" [(ngModel)]="fechaFiltro">
-      <button (click)="aplicarFiltro()">Aplicar filtro</button>
+      <button (click)="aplicarFiltroFecha()">Aplicar filtro</button>
       <button (click)="limpiarFiltros()">Limpiar Filtros</button>
     </div>
     <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Asistencia</th> 
-                <th>Instructor</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let asistencia of asistencias"> 
-                <td>{{ asistencia.fecha }}</td>
-                <td>{{ asistencia.status }}</td>
-                <td>{{ asistencia.nombreInstructor }}</td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Asistencia</th> 
+          <th>Instructor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let asistencia of asistencias">
+          <tr>
+            <td>{{ asistencia.fecha | date: 'dd-MM-yyyy' }}</td>
+            <td>{{ asistencia.status }}</td>
+            <td>{{ asistencia.nombreInstructor }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
     </table>
-</div>
-
+  </div>
+  

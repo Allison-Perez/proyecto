@@ -41,7 +41,12 @@
 </nav>
 <div class="perfil-detalle">
   <div class="container">
-    <img class="foto"  [src]="usuario.fotoPerfil" alt="Foto de perfil">
+    <div class="foto-container" (mouseenter)="mostrarIconoEliminar = true" (mouseleave)="mostrarIconoEliminar = false">
+      <img [src]="fotoPerfilUrl" alt="Foto de perfil" class="foto">
+      <div class="eliminar-icono" *ngIf="mostrarIconoEliminar && fotoPerfilUrl !== 'assets/fotos_perfil/sena.png'" (click)="eliminarFotoPerfil()">
+        <span class="material-symbols-outlined">delete</span>
+      </div>
+    </div>          
     <div id="perfil" class="information">
       <p class="titulo">Tu perfil</p>
       <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primerNombre }}</span></p>
@@ -50,11 +55,21 @@
       <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundoApellido }}</span></p>
       <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
     </div>
-      <div class="botones">
-        <button class="boton"  (click)="abrirSelectorDeImagen()">Cambiar Foto</button>
-          <input type="file" (change)="onImagenSeleccionada($event)" style="display: none" id="inputFile">
-        <button class="boton" (click)="editarInformacion()">Editar</button>
-        <button  class="boton" [routerLink]="['/edit-password']">Cambiar contraseña</button>
-      </div>
+    <div class="botones">
+      <button class="boton cambiar-foto" (click)="abrirSelectorDeImagen()" title="Cambiar foto">
+        <span class="material-symbols-outlined">photo_camera</span>
+        <span class="texto-oculto">Cambiar foto</span>
+      </button>
+      <button class="boton editar" (click)="editarInformacion()" title="Editar">
+        <span class="material-symbols-outlined">edit</span>
+        <span class="texto-oculto">Editar</span>
+      </button>
+      <button class="boton cambiar-contrasena" [routerLink]="['/edit-password']" title="Cambiar contraseña">
+        <span class="material-symbols-outlined">lock</span>
+        <span class="texto-oculto">Cambiar contraseña</span>
+      </button>
+    </div>
+    <input type="file" id="inputFile" style="display: none;" (change)="onImagenSeleccionada($event)">
   </div>
 </div>
+
