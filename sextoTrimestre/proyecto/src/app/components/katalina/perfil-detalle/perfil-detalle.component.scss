@@ -4,7 +4,8 @@
 // PERFIL
 .titulo {
   margin-left: 20px;
-  color: #088a88;
+  margin-bottom: 25px;
+  color: #008a88;
   font-family: "Outfit", sans-serif;
   font-weight: bolder;
   font-size: 30px;
@@ -57,13 +58,13 @@
   border-radius: 5px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease; 
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 10;
 }
 
 .foto-container:hover .eliminar-icono {
   opacity: 1;
-  visibility: visible; 
+  visibility: visible;
 }
 
 .information{
@@ -84,11 +85,12 @@ span {
 // BOTONES
 
 .botones {
-  margin-top: 70px;
+  margin-top: 60px;
+  margin-bottom: 90px;
 }
 
 .boton:hover{
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
   background-color: #027876
 }
@@ -117,13 +119,13 @@ span {
 .boton {
   margin: 10px;
   padding: 10px 20px;
-  font-size: 13px; 
+  font-size: 13px;
   background-color: #008a88;
-  color: white; 
-  border: 2px solid #008a88; 
-  border-radius: 5px; 
-  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
-  transition: all 0.3s ease; 
+  color: white;
+  border: 2px solid #008a88;
+  border-radius: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
 
 .boton .material-symbols-outlined {
@@ -157,7 +159,7 @@ span {
   cursor: pointer;
 }
 
-// ESTILOS NAV 
+// ESTILOS NAV
 nav{
   background-color: #008a88;
 }
@@ -255,7 +257,7 @@ button {
   color: #fff;
 }
 
-.dropdown-content { 
+.dropdown-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
@@ -263,7 +265,7 @@ button {
   background-color: #fff; /* Color de fondo */
   border: 1px solid #ccc; /* Borde del menú */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
 }
 
