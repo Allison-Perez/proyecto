@@ -29,11 +29,11 @@ export class ServiceService {
     }
 
   // VER GUIAS
-  getUserInfoByguias(idguia: number): Observable<any> {
-      const url = `${this.apiUrl}/api/obtener-guias-por-correo/${idguia}`;
-      console.log(idguia);
-      return this.http.get(url);
-    }
+    getUserInfoByguias(idguia: number): Observable<any> {
+        const url = `${this.apiUrl}/api/obtener-guias-por-correo/${idguia}`;
+        console.log(idguia);
+        return this.http.get(url);
+      }
 
     getguias(email: string): Observable<any> {
       const url = `${this.apiUrl}/api/obtener-guias-por-correo/${email}`;
@@ -66,6 +66,27 @@ export class ServiceService {
       const url = `${this.apiUrl}/api/asistenciasPorcorreo/${correoSinComillas}`;
       return this.http.get<any[]>(url);
     }
+  // ALERTA ASISTENCIA 
+    verificarDecercion(asistencias: any[]): boolean {
+      let contadorNoAsistio = 0;
+    
+      for (let i = 0; i < asistencias.length; i++) {
+        if (asistencias[i].status === 'No Asistió') {
+          contadorNoAsistio++;
+        } else {
+          contadorNoAsistio = 0; // Reiniciar el contador si no hay tres fechas consecutivas
+        }
+    
+        console.log(`Contador en iteración ${i}: ${contadorNoAsistio}`);
+    
+      if (contadorNoAsistio === 3) {
+        return true; // Hay tres fechas consecutivas con estatus "No Asistió"
+      }
+    }
+  
+    return false; // No hay tres fechas consecutivas con estatus "No Asistió"
+  }
+  
 
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
     cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {

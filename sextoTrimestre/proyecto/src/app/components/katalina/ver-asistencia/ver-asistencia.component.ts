@@ -91,25 +91,9 @@ export class VerAsistenciaComponent {
   ngOnInit(): void {
     this.email = this.authService.getUserEmail();
     this.getAsistenciasPorCorreo(this.email);
+    this.getalertaPorCorreo(this.email);
+    
   }
-
-
-  // getAsistenciasPorCorreo(correo: string): void {
-  //   if (!correo) {
-  //     console.error('Error: El correo electrónico no está definido.');
-  //     return;
-  //   }
-
-  //   this.ServiceService.getasistenciasPorcorreo(correo).subscribe(
-  //     (data) => {
-  //       this.asistencias = data;
-  //       this.originalAsistencias = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener las asistencias por correo:', error);
-  //     }
-  //   );
-  // }
 
   getAsistenciasPorCorreo(correo: string): void {
     if (!correo) {
@@ -128,64 +112,41 @@ export class VerAsistenciaComponent {
     );
   }
 
-
-  // aplicarFiltroFecha() {
-  //   console.log('entra');
-
-  //   let asistenciasFiltradas = this.originalAsistencias.slice();
-
-  //   // Convertir la fecha de filtro a formato de fecha si es una cadena
-  //   const filtroFecha = this.fechaFiltro ? new Date(this.fechaFiltro) : null;
-
-  //   // Filtrar la lista según los criterios de filtro de fecha
-  //   asistenciasFiltradas = asistenciasFiltradas.filter((asistencia: { fecha: string | number | Date; }) => {
-  //     // Convertir la fecha de la asistencia a formato de fecha
-  //     const fechaAsistencia = new Date(asistencia.fecha);
-
-  //     // Comprobar si la fecha de la asistencia coincide con la fecha de filtro
-  //     const cumpleFiltroFecha = !filtroFecha || fechaAsistencia.getTime() === filtroFecha.getTime();
-
-  //     return cumpleFiltroFecha;
-  //   });
-
-  //   this.asistenciasFiltradas = asistenciasFiltradas;
-  // }
-
   aplicarFiltroFecha() {
     console.log('entra');
 
-    // Realizamos una copia de las asistencias originales para no modificar el array original
     let asistenciasFiltradas = this.asistencias.slice();
 
-    // Convertir la fecha de filtro a un objeto Date si se proporciona una fecha válida
     const filtroFecha = this.fechaFiltro ? new Date(this.fechaFiltro) : null;
 
-    // Si no se proporciona una fecha válida, mostramos todas las asistencias
     if (!filtroFecha) {
       this.asistenciasFiltradas = asistenciasFiltradas;
       console.log('Asistencias filtradas:', asistenciasFiltradas);
       return;
     }
 
-    // Filtramos las asistencias basadas en la fecha
     asistenciasFiltradas = asistenciasFiltradas.filter(asistencia => {
-      // Convertimos la fecha de la asistencia a un objeto Date
-      const fechaAsistencia = new Date(asistencia.fecha);
 
-      // Convertir ambas fechas a cadenas de texto en formato ISO
-      const filtroFechaStr = filtroFecha.toISOString().slice(0, 10); // Solo tomamos la parte de la fecha
+      const fechaAsistencia = new Date(asistencia.fecha);
+      const filtroFechaStr = filtroFecha.toISOString().slice(0, 10); 
       const fechaAsistenciaStr = fechaAsistencia.toISOString().slice(0, 10);
 
-      // Comparamos las fechas como cadenas de texto
+   
       return filtroFechaStr === fechaAsistenciaStr;
     });
 
-    // Actualizamos las asistencias filtradas
+   
     this.asistenciasFiltradas = asistenciasFiltradas;
     console.log('Asistencias filtradas:', asistenciasFiltradas);
   }
 
-
-
-
+  getalertaPorCorreo(email: string): void {
+    this.ServiceService.getasistenciasPorcorreo(email).subscribe(asistencias => {
+      if (this.ServiceService.verificarDecercion(asistencias)) {
+        alert('¡Estás iniciando proceso de deserción!');
+        // Puedes mostrar un mensaje en un componente de Angular Material en lugar de usar alert
+      }
+    });
+  }
 }
+ 
