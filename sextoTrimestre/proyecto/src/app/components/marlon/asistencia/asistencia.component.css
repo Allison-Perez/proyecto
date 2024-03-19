@@ -185,7 +185,7 @@ button {
 }
 
 .table {
-  width: 72%; 
+  width: 70%; 
   border: 1px solid #ccc;
   border-radius: 10px; 
   overflow-x: auto; 
@@ -202,7 +202,8 @@ button {
 
 /* Estilos para el encabezado de la tabla */
 .table th {
-  background-color: #f8f9fa;
+  background-color: #008a88;
+  color:#fff;
   font-weight: bold;
   width: 2%; 
 }
