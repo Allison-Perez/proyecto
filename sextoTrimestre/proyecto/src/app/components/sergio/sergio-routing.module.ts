@@ -13,6 +13,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FichasInstructoresComponent } from './fichas-instructores/fichas-instructores.component';
 import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
 import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices.component';
+import { AsistenciaFichasComponent } from './asistencia-fichas/asistencia-fichas.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'fichas-instructores', component: FichasInstructoresComponent},
   {path: 'asignar-fichas', component: AsignarFichaComponent},
   {path: 'fichas-aprendices', component: FichasAprendicesComponent},
+  {path: 'asistencia-fichas', component: AsistenciaFichasComponent},
 ];
 
 @NgModule({

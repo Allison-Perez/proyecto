@@ -1,0 +1,23 @@
+<app-sidebar></app-sidebar>
+
+<div class="chart-container">
+  <h1 class="chart-title">Promedio de Asistencia de Fichas</h1>
+  <div id="chart"></div>
+</div>
+
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Número de Ficha</th>
+        <th>Porcentaje de Asistencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of asistenciaData">
+        <td>{{ item.numeroFicha }}</td>
+        <td>{{ obtenerPorcentaje(item.sesiones_asistidas, item.total_sesiones) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
