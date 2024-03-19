@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   mostrarMenu: boolean = false;
   opcionSeleccionada: string = '';
-  opcionesMenu: string[] = ['Listado Instructores','Promedio de Instructores', 'Promedio de aprendices', 'Otros'];
+  opcionesMenu: string[] = ['Listado Instructores','Promedio de Instructores', 'Promedio de aprendices', 'Promedio asistencias por Fichas'];
   mostrarSidebar: boolean = false;
   mostrarMenuPerfil: boolean = false;
 
@@ -48,7 +48,9 @@ export class SidebarComponent {
       this.router.navigate(['/fichas-instructores']);
     }else if (opcion === 'Promedio de aprendices') {
       this.router.navigate(['/fichas-aprendices']);
-  }
+  }else if (opcion === 'Promedio asistencias por Fichas') {
+    this.router.navigate(['/asistencia-fichas']);
+}
 }
 
   // Función para cerrar sesión

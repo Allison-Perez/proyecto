@@ -18,6 +18,7 @@ import {FichasInstructoresComponent} from './fichas-instructores/fichas-instruct
 import { NgApexchartsModule } from "ng-apexcharts";
 import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
 import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices.component';
+import { AsistenciaFichasComponent } from './asistencia-fichas/asistencia-fichas.component';
 
 
 
@@ -36,6 +37,8 @@ import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices
     FichasInstructoresComponent,
     AsignarFichaComponent,
     FichasAprendicesComponent,
+    AsistenciaFichasComponent,
+
   ],
 
   imports: [

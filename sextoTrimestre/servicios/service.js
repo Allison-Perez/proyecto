@@ -804,6 +804,34 @@ app.get("/api/promedioEdades", async (req, res) => {
 });
 
 
+// ESTADISTICAS POR FICHAS
+
+app.get('/api/asistenciaFichas', async (req, res) => {
+  console.log('asitencia entra');
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+    SELECT f.numeroFicha, 
+    COUNT(*) AS total_sesiones,
+    SUM(CASE WHEN a.status = 'Asistió' THEN 1 ELSE 0 END) AS sesiones_asistidas,
+    AVG(CASE WHEN a.status = 'Asistió' THEN 1 ELSE 0 END) * 100 AS porcentaje_asistencia
+FROM asistencia a
+LEFT JOIN ficha f ON a.idFicha = f.identificador
+GROUP BY f.numeroFicha
+      `;
+
+    const [rows] = await connection.execute(sql);
+
+    await connection.end();
+
+    res.json(rows); // Devolver los datos de asistencia
+  } catch (error) {
+    console.error('Error al obtener los datos de asistencia:', error);
+    res.status(500).json({ error: 'Error al obtener los datos de asistencia' });
+  }
+});
+
 //MARLON
 
 // OBTENER INFORMACIÓN DEL PERFIL

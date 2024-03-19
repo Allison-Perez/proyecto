@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
-
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 .chart-container {
   margin-top: 2%;
   display: flex;
@@ -29,6 +29,7 @@
 }
 
 .titulos {
+  font-family: "Comfortaa", sans-serif;
   margin-bottom: 25px;
   font-size: 28px;
   color: #088a88;

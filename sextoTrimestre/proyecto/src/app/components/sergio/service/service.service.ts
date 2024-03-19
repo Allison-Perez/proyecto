@@ -102,5 +102,12 @@ getDistribucionEdades(): Observable<any[]> {
   return this.http.get<any[]>(url);
 }
 
+// PROMEDIO ASISTENCIA POR FICHAS
+
+obtenerDatosAsistencia(): Observable<any> {
+  const url = `${this.apiUrl}/api/asistenciaFichas`;
+  return this.http.get<any>(url);
+}
+
 
 }
