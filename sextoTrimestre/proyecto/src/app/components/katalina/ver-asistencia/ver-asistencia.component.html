@@ -32,7 +32,7 @@
                   <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
                 </li>
               </div>
-            </div> 
+            </div>
         </ul>
   </div>
 </nav>
@@ -51,12 +51,12 @@
       <thead>
         <tr>
           <th>Fecha</th>
-          <th>Asistencia</th> 
+          <th>Asistencia</th>
           <th>Instructor</th>
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let asistencia of asistencias">
+        <ng-container *ngFor="let asistencia of asistenciasFiltradas">
           <tr>
             <td>{{ asistencia.fecha | date: 'dd-MM-yyyy' }}</td>
             <td>{{ asistencia.status }}</td>
@@ -64,6 +64,7 @@
           </tr>
         </ng-container>
       </tbody>
+
     </table>
   </div>
-  
+
