@@ -41,18 +41,9 @@ export class PerfilDetalleComponent implements OnInit {
   }
  redirectTo(route: string) {
     this.router.navigate([route]);
-    // Cierra el menú después de redirigir
     this.mostrarMenuPerfil = false;
   }
-  ngOnInit() {
-    // Debes obtener el correo del usuario de alguna manera, por ejemplo, desde un servicio de autenticación
-    const correo: any = localStorage.getItem('user_email');
 
-    // Llama al servicio para obtener la información del usuario
-    this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
-      this.userData = data;
-    });
-  }
 
   editarInformacion() {
     this.router.navigate(['/edit-perfilA']);
@@ -65,11 +56,21 @@ export class PerfilDetalleComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-  abrirSelectorDeImagen() {
-    const inputFile = document.getElementById('inputFile');
-    inputFile?.click();
-  }
+  ngOnInit() {
+    this.getUserInfo();
+  }  
 
+  getUserInfo() {
+    const correo: any = localStorage.getItem('user_email');
+    this.service.getUserInfoByEmail(JSON.parse(correo)).subscribe(data => {
+      this.userData = data;
+      this.fotoPerfilUrl = data.fotoPerfil || 'assets/fotos_perfil/sena.png';
+    
+      this.mostrarIconoEliminar = this.fotoPerfilUrl !== 'assets/fotos_perfil/sena.png';
+
+      this.getProfilePicture();
+    });
+  }
   getProfilePicture() {
     const correo: any = localStorage.getItem('user_email');
     this.service.getProfilePicture(JSON.parse(correo)).subscribe(response => {
@@ -79,6 +80,11 @@ export class PerfilDetalleComponent implements OnInit {
     }, error => {
       console.error('Error al obtener la foto de perfil:', error);
     });
+  }
+
+  abrirSelectorDeImagen() {
+    const inputFile = document.getElementById('inputFile');
+    inputFile?.click();
   }
 
   onImagenSeleccionada(event: any) {
@@ -120,5 +126,6 @@ export class PerfilDetalleComponent implements OnInit {
       console.error('Error al eliminar la foto de perfil:', error);
     });
   }
+ 
 }
 
