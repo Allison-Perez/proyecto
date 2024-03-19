@@ -8,6 +8,7 @@ import { HorariosComponent } from './horarios/horarios.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 const routes: Routes = [
   { path: 'vista-instructor', component: VistaInstructorComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'horario', component: HorariosComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'editar-perfil', component: EditarPerfilComponent },
+  { path: 'estadisticas', component: EstadisticasComponent},
   { path: 'cambiar-contrasena', component: CambiarPasswordComponent },
 ];
 
