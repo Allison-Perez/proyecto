@@ -20,6 +20,7 @@ export class VerAsistenciaComponent {
     asistenciasFiltradas: any[] = [];
     fechaFiltro: string = '';
     originalAsistencias: any;
+    errorMessage: string | undefined;
 
 
   constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
@@ -92,6 +93,7 @@ export class VerAsistenciaComponent {
     this.email = this.authService.getUserEmail();
     this.getAsistenciasPorCorreo(this.email);
     this.getalertaPorCorreo(this.email);
+    this.getfallasPorCorreo(this.email);
     
   }
 
@@ -143,10 +145,19 @@ export class VerAsistenciaComponent {
   getalertaPorCorreo(email: string): void {
     this.ServiceService.getasistenciasPorcorreo(email).subscribe(asistencias => {
       if (this.ServiceService.verificarDecercion(asistencias)) {
-        alert('¡Estás iniciando proceso de deserción!');
+        this.errorMessage = '¡Estás iniciando proceso de deserción!';
         // Puedes mostrar un mensaje en un componente de Angular Material en lugar de usar alert
       }
     });
   }
+
+  getfallasPorCorreo(email: string): void {
+    this.ServiceService.getasistenciasPorcorreo(email).subscribe(asistencias => {
+      if (this.ServiceService.verificarFallas(asistencias)) {
+        this.errorMessage = '¡Estás iniciando proceso de deserción!';
+      }
+    });
+  }
+  
 }
  
