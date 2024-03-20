@@ -43,7 +43,7 @@ export class ServiceService {
 
   //VER HORARIOS
     getUserInfoByHorario(idHorario: number): Observable<any> {
-      const url = `${this.apiUrl}/api/obtener-horarios-por-id/${idHorario}`;
+      const url = `${this.apiUrl}/api/obtener-horarios-por-correo/${idHorario}`;
       console.log(idHorario);
       return this.http.get(url);
     }
@@ -66,7 +66,7 @@ export class ServiceService {
       const url = `${this.apiUrl}/api/asistenciasPorcorreo/${correoSinComillas}`;
       return this.http.get<any[]>(url);
     }
-  // ALERTA ASISTENCIA 
+  // ALERTA ASISTENCIA 3 FALLAS CONSECUTIVAS
     verificarDecercion(asistencias: any[]): boolean {
       let contadorNoAsistio = 0;
     
@@ -87,6 +87,30 @@ export class ServiceService {
     return false; // No hay tres fechas consecutivas con estatus "No Asistió"
   }
   
+ // ALERTA ASISTENCIA 5 FALLAS 
+    verificarFallas(asistencias: any[]): boolean {
+      let contadorNoAsistio = 0;
+      let noAsistioConsecutivos = 0;
+    
+      for (let i = 0; i < asistencias.length; i++) {
+        if (asistencias[i].status === 'No Asistió') {
+          contadorNoAsistio++;
+        } else {
+          if (contadorNoAsistio > 0) {
+            noAsistioConsecutivos++;
+          }
+          contadorNoAsistio = 0; // Reiniciar el contador si no hay tres fechas consecutivas
+        }
+    
+        console.log(`Contador en iteración ${i}: ${contadorNoAsistio}`);
+    
+        if (noAsistioConsecutivos >= 5) {
+          return true; // Hay al menos cinco registros de "No Asistió" no consecutivos
+        }
+      }
+    
+      return false; // No hay al menos cinco registros de "No Asistió" no consecutivos
+    }
 
   // CAMBIAR Y ACTUALIZAR CONTYRASEÑA
     cambiarContrasena(contrasenaAntigua: string, contrasenaNueva: string): Observable<any> {

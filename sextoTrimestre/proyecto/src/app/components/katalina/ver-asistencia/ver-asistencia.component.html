@@ -37,6 +37,9 @@
   </div>
 </nav>
 <h2 class="titulos">Tu Asistencia</h2>
+<div *ngIf="errorMessage" class="alert alert-danger mt-2">
+  {{ errorMessage }}
+</div>
 <div class="chart-container">
   <div class="graficoUno">
     <div class="chart" id="chart"></div>
@@ -67,3 +70,5 @@
     </table>
   </div>
 
+ 
+  

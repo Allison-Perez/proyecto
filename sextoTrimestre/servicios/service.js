@@ -1559,6 +1559,133 @@ app.get('/asistencia/:identificador', async (req, res) => {
   }
 });
 
+// Estadísticas
+
+// Rutas para obtener estadísticas por fichas según el idUsuario del instructor
+app.get('/estadisticasPorFichas/:idInstructor', async (req, res) => {
+  try {
+    const { idInstructor } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+      SELECT
+        (SELECT COUNT(*) FROM blog WHERE idUsuario = ?) AS totalBlogs,
+        (SELECT COUNT(*) FROM guias WHERE idUsuario = ?) AS totalActividades,
+        (SELECT COUNT(*) FROM horario WHERE idUsuario = ?) AS totalHorarios,
+        (SELECT COUNT(*) FROM asistencia WHERE idInstructor = ?) AS totalAsistencias
+    `;
+    const [results] = await connection.query(sql, [idInstructor, idInstructor, idInstructor, idInstructor]);
+    connection.end();
+
+    const { totalBlogs, totalActividades, totalHorarios, totalAsistencias } = results[0];
+    const estadisticas = {
+      totalBlogs,
+      totalActividades,
+      totalHorarios,
+      totalAsistencias
+    };
+    res.status(200).json(estadisticas);
+  } catch (error) {
+    console.error('Error al obtener estadísticas por fichas:', error);
+    res.status(500).json({ error: 'Error al obtener estadísticas por fichas' });
+  }
+});
+
+// Rutas para obtener fichas por instructor según el idUsuario del instructor
+app.get('/fichasPorInstructor/:idInstructor', async (req, res) => {
+  try {
+    const { idInstructor } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `
+      SELECT ficha.*
+      FROM ficha
+      JOIN usuarioFicha ON ficha.identificador = usuarioFicha.idFicha
+      WHERE usuarioFicha.idUsuario = ?
+    `;
+    const [results] = await connection.query(sql, [idInstructor]);
+    connection.end();
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error al obtener fichas por instructor:', error);
+    res.status(500).json({ error: 'Error al obtener fichas por instructor' });
+  }
+});
+
+// Rutas para obtener blogs según el idUsuario del instructor
+app.get('/blogs/:idUsuario', async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM blog WHERE idUsuario = ?';
+    const [results] = await connection.query(sql, [idUsuario]);
+    connection.end(); // Cerrar la conexión después de la consulta
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error al obtener blogs:', error);
+    res.status(500).json({ error: 'Error al obtener blogs' });
+  }
+});
+
+// Rutas para obtener guías según el idUsuario del instructor
+app.get('/guias/:idUsuario', async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM guias WHERE idUsuario = ?';
+    const [results] = await connection.query(sql, [idUsuario]);
+    connection.end(); // Cerrar la conexión después de la consulta
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error al obtener guías:', error);
+    res.status(500).json({ error: 'Error al obtener guías' });
+  }
+});
+
+// Rutas para obtener horarios según el idUsuario del instructor
+app.get('/horarios/:idUsuario', async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM horario WHERE idUsuario = ?';
+    const [results] = await connection.query(sql, [idUsuario]);
+    connection.end(); // Cerrar la conexión después de la consulta
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error al obtener horarios:', error);
+    res.status(500).json({ error: 'Error al obtener horarios' });
+  }
+});
+
+// Rutas para obtener asistencias según el idUsuario del instructor
+app.get('/asistencias/:idUsuario', async (req, res) => {
+  try {
+    const { idUsuario } = req.params;
+
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = 'SELECT * FROM asistencia WHERE idInstructor = ?';
+    const [results] = await connection.query(sql, [idUsuario]);
+    connection.end();
+    
+    res.status(200).json(results);
+  } catch (error) {
+    console.error('Error al obtener asistencias:', error);
+    res.status(500).json({ error: 'Error al obtener asistencias' });
+  }
+});
 
 // KATALINA
 
