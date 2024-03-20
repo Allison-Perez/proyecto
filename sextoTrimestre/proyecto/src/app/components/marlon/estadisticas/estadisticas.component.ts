@@ -4,18 +4,22 @@ import { EstadisticasService } from '../services/estadisticas.service';
 import { AuthService } from '../../allison/service/auth.service';
 import { Router } from '@angular/router';
 import * as ApexCharts from 'apexcharts';
+import { CommonModule } from '@angular/common';
 
 interface EstadisticaItem {
   totalBlogs: number;
   totalActividades: number;
   totalHorarios: number;
   totalAsistencias: number;
+  numeroFicha: string;
 }
 
 @Component({
   selector: 'app-estadisticas',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './estadisticas.component.html',
-  styleUrls: ['./estadisticas.component.scss']
+  styleUrl: './estadisticas.component.scss'
 })
 export class EstadisticasComponent implements OnInit {
   estadisticas: EstadisticaItem | null = null;
@@ -37,13 +41,10 @@ export class EstadisticasComponent implements OnInit {
   }
   redirectTo(route: string) {
     this.router.navigate([route]);
-    // Cierra el menú después de redirigir
     this.mostrarMenuPerfil = false;
   }
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
     this.router.navigate(['/login']);
   }
   ngOnInit(): void {
@@ -77,7 +78,7 @@ export class EstadisticasComponent implements OnInit {
   renderCharts(): void {
     this.renderChart('blogsPorInstructorChart', this.estadisticas?.totalBlogs, '#308189', 'Cantidad de Blogs Subidos', 'Blogs');
     this.renderDoughnutChart('guiasPorInstructorChart', this.estadisticas?.totalActividades, '#f36f42', 'Guías Subidas', 'Guías');
-    this.renderLineChart('horariosChart', this.estadisticas?.totalHorarios, '#0876e3', 'Cantidad de Horarios', 'Horarios');
+    this.renderDoughnutChart('horariosChart', this.estadisticas?.totalHorarios, '#0876e3', 'Cantidad de Horarios', 'Horarios');
     this.renderBarChart('asistenciasChart', [{ fecha: '', valor: this.estadisticas?.totalAsistencias }], '#f7c46c', 'Cantidad de Asistencias', 'Asistencias');
   }
 

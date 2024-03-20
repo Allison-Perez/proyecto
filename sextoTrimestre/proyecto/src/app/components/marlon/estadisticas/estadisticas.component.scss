@@ -142,7 +142,7 @@ button {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    height: 300px; /* Ajusta la altura según tus necesidades */
+    height: 300px; 
   }
 }
 .container {
@@ -156,5 +156,11 @@ button {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+  }
+}
+
+.container {
+  .chart-subtitle {
+    color: #008a88;
   }
 }
