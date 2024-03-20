@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { EstadisticasService } from '../services/estadisticas.service';
+import { AuthService } from '../../allison/service/auth.service';
+import { Router } from '@angular/router';
 import * as ApexCharts from 'apexcharts';
 
 interface EstadisticaItem {
@@ -18,9 +21,31 @@ export class EstadisticasComponent implements OnInit {
   estadisticas: EstadisticaItem | null = null;
   fichasPorInstructor: any[] = [];
   charts: { [key: string]: ApexCharts } = {};
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
 
-  constructor(private estadisticasService: EstadisticasService) {}
 
+  constructor(private estadisticasService: EstadisticasService, private authService: AuthService,private router: Router) {}
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
   ngOnInit(): void {
     this.fetchData();
   }
