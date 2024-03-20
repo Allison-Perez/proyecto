@@ -56,4 +56,13 @@ export class EstadisticasService {
     console.log('ID de Usuario Actual:', idUsuario);
     return this.http.get<any>(`${this.baseUrl}/fichasPorInstructor/${idUsuario}`);
   }
+
+  obtenerEstadisticasPorFicha(numeroFicha: string): Observable<any> {
+    console.log('Número de Ficha:', numeroFicha);
+    return this.http.get<any>(`${this.baseUrl}/estadisticasPorFichas/${numeroFicha}`).pipe(
+      tap(data => {
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

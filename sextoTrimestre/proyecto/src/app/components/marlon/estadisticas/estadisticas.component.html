@@ -1,5 +1,33 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="nav-link nombre" >Acanner</a>
+        <div class="menu-icon" (click)="toggleMenu()">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+            <div class="dropdown">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
+                <span class="material-symbols-outlined">person</span>
+              </button>
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+                <li class="nav-item">
+                  <a routerLink="/vista-instructor" class="nav-link otro ">Inicio</a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/perfil" class="nav-link otro " aria-current="page">Ver Perfil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                </li>
+              </div>
+            </div> 
+        </ul>
+  </div>
+</nav>
 <div class="container">
-  <!-- Título para la primera fila de gráficas -->
   <h3 class="chart-title">Gráficas de Estadísticas</h3>
 
   <div class="row">
