@@ -12,7 +12,6 @@ import { ActivityService } from './services/actividad.service';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
-
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 @NgModule({
@@ -26,7 +25,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     EditarPerfilComponent,
     CambiarPasswordComponent,
     EstadisticasComponent,
-  ],
+  ],  
   imports: [CommonModule,
     MarlonRoutingModule,
     ReactiveFormsModule, 

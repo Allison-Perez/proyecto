@@ -16,11 +16,11 @@ interface EstadisticaItem {
 
 @Component({
   selector: 'app-estadisticas',
-  standalone: true,
-  imports: [CommonModule],
+  exportAs: 'appEstadisticas', // Esta propiedad expone el componente para ser usado en plantillas
   templateUrl: './estadisticas.component.html',
-  styleUrl: './estadisticas.component.scss'
+  styleUrls: ['./estadisticas.component.scss']
 })
+
 export class EstadisticasComponent implements OnInit {
   estadisticas: EstadisticaItem | null = null;
   fichasPorInstructor: any[] = [];

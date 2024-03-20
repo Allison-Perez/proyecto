@@ -11,7 +11,6 @@ import { KatalinaModule } from './components/katalina/katalina.module';
 import { MarlonModule } from './components/marlon/marlon.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './components/marlon/services/auth.service';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     HttpClientModule,
-    CommonModule,
     BrowserModule,
     AppRoutingModule,
     AllisonModule,
