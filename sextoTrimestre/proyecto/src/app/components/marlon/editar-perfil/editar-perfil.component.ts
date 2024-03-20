@@ -16,6 +16,8 @@ import { AbstractControl } from '@angular/forms';
 export class EditarPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
+  isMenuOpen: boolean | undefined;
+  mostrarMenuPerfil: boolean | undefined;
 
   constructor(private fb: FormBuilder, private service: EditarPerfilService, private router: Router, private authService: AuthService) {
       this.form = this.fb.group({
@@ -41,6 +43,22 @@ export class EditarPerfilComponent implements OnInit {
 
       return null;
     }
+
+    toggleMenu() {
+      console.log('Función toggleMenu() llamada.');
+      this.isMenuOpen = !this.isMenuOpen;
+    }
+    toggleProfileMenu() {
+      console.log(this.mostrarMenuPerfil);
+  
+      this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+    }
+    redirectTo(route: string) {
+      this.router.navigate([route]);
+      // Cierra el menú después de redirigir
+      this.mostrarMenuPerfil = false;
+    }
+  
 
   ngOnInit() {
     console.log("correo del individuo");
