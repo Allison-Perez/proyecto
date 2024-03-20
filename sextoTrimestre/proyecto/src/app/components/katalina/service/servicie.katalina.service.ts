@@ -43,7 +43,7 @@ export class ServiceService {
 
   //VER HORARIOS
     getUserInfoByHorario(idHorario: number): Observable<any> {
-      const url = `${this.apiUrl}/api/obtener-horarios-por-id/${idHorario}`;
+      const url = `${this.apiUrl}/api/obtener-horarios-por-correo/${idHorario}`;
       console.log(idHorario);
       return this.http.get(url);
     }
