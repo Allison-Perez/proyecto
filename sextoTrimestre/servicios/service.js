@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -1591,39 +1591,6 @@ app.get('/estadisticasPorFichas/:idInstructor', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener estadísticas por fichas' });
   }
 });
-
-// Ruta para obtener estadísticas por ficha según el número de ficha
-app.get('/estadisticasPorFichas/:numeroFicha', async (req, res) => {
-  try {
-    const { numeroFicha } = req.params;
-
-    const connection = await mysql.createConnection(dbConfig);
-
-    const sql = `
-      SELECT
-        (SELECT COUNT(*) FROM blog WHERE idFicha = (SELECT identificador FROM ficha WHERE numeroFicha = ?)) AS totalBlogs,
-        (SELECT COUNT(*) FROM guias WHERE idFicha = (SELECT identificador FROM ficha WHERE numeroFicha = ?)) AS totalActividades,
-        (SELECT COUNT(*) FROM horario WHERE idFicha = (SELECT identificador FROM ficha WHERE numeroFicha = ?)) AS totalHorarios,
-        (SELECT COUNT(*) FROM asistencia WHERE idFicha = (SELECT identificador FROM ficha WHERE numeroFicha = ?)) AS totalAsistencias
-    `;
-    const [results] = await connection.query(sql, [numeroFicha, numeroFicha, numeroFicha, numeroFicha]);
-    connection.end();
-
-    const { totalBlogs, totalActividades, totalHorarios, totalAsistencias } = results[0];
-    const estadisticas = {
-      totalBlogs,
-      totalActividades,
-      totalHorarios,
-      totalAsistencias
-    };
-    res.status(200).json(estadisticas);
-  } catch (error) {
-    console.error('Error al obtener estadísticas por ficha:', error);
-    res.status(500).json({ error: 'Error al obtener estadísticas por ficha' });
-  }
-});
-
-
 
 // Rutas para obtener fichas por instructor según el idUsuario del instructor
 app.get('/fichasPorInstructor/:idInstructor', async (req, res) => {
