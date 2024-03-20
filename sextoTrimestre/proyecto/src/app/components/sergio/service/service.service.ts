@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceService {
-
   constructor(private http: HttpClient) {}
 
   apiUrl = 'http://localhost:3000';
@@ -108,6 +107,26 @@ obtenerDatosAsistencia(): Observable<any> {
   const url = `${this.apiUrl}/api/asistenciaFichas`;
   return this.http.get<any>(url);
 }
+  // FOTO PERFIL
+  updateProfilePicture(email: string, imageFile: File | null): Observable<any> {
+    let formData: FormData | null = null;
+    if (imageFile) {
+      formData = new FormData();
+      formData.append('imagen', imageFile);
+    }
+  
+    return this.http.post<any>(`${this.apiUrl}/api/cambiar-foto?correo=${encodeURIComponent(email)}`, formData);
+  }
+  
+  getProfilePicture(email: string): Observable<any> {
+    const url = `${this.apiUrl}/api/obtener-foto-perfil?correo=${email}`;
+    return this.http.get(url);
+  }
+  
+  eliminarFotoPerfil(correo: string) {
+    const url = `${this.apiUrl}/api/eliminar-foto?correo=${correo}`;
+    return this.http.post(url, {});
+  }
 
 
 }
