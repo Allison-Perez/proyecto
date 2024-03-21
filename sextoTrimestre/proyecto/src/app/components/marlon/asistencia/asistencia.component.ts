@@ -240,7 +240,6 @@ getAsistencia() {
         }
       });
   
-      // Mostrar todas las alertas juntas si hay alguna que cumplió las condiciones
       if (mensajesAlerta.length > 0) {
         this.mostrarAlertaMultiple(mensajesAlerta);
       }
