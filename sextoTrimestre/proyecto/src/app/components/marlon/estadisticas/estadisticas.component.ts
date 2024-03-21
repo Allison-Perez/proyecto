@@ -16,7 +16,7 @@ interface EstadisticaItem {
 
 @Component({
   selector: 'app-estadisticas',
-  exportAs: 'appEstadisticas', // Esta propiedad expone el componente para ser usado en plantillas
+  exportAs: 'appEstadisticas', 
   templateUrl: './estadisticas.component.html',
   styleUrls: ['./estadisticas.component.scss']
 })
@@ -76,10 +76,10 @@ export class EstadisticasComponent implements OnInit {
   }
 
   renderCharts(): void {
-    this.renderChart('blogsPorInstructorChart', this.estadisticas?.totalBlogs, '#308189', 'Cantidad de Blogs Subidos', 'Blogs');
-    this.renderDoughnutChart('guiasPorInstructorChart', this.estadisticas?.totalActividades, '#f36f42', 'Guías Subidas', 'Guías');
-    this.renderDoughnutChart('horariosChart', this.estadisticas?.totalHorarios, '#0876e3', 'Cantidad de Horarios', 'Horarios');
-    this.renderBarChart('asistenciasChart', [{ fecha: '', valor: this.estadisticas?.totalAsistencias }], '#f7c46c', 'Cantidad de Asistencias', 'Asistencias');
+    this.renderChart('blogsPorInstructorChart', this.estadisticas?.totalBlogs, ' rgb(152, 21, 21)', 'Cantidad de Blogs Subidos', 'Blogs');
+    this.renderDoughnutChart('guiasPorInstructorChart', this.estadisticas?.totalActividades, ' rgb(9, 20, 170)', 'Guías Subidas', 'Guías');
+    this.renderDoughnutChart('horariosChart', this.estadisticas?.totalHorarios, ' rgb(87, 18, 115)', 'Cantidad de Horarios', 'Horarios');
+    this.renderBarChart('asistenciasChart', [{ fecha: '', valor: this.estadisticas?.totalAsistencias }], ' rgb(55, 125, 178)', 'Cantidad de Asistencias', 'Asistencias');
   }
 
   renderBarChart(id: string, data: any[], color: string, yAxisTitle: string, tooltipLabel: string): void {
@@ -125,7 +125,7 @@ export class EstadisticasComponent implements OnInit {
           }
         },
         fill: {
-          colors: [color]
+          colors: [' rgb(55, 125, 178)'] 
         },
         tooltip: {
           y: {
@@ -184,7 +184,7 @@ export class EstadisticasComponent implements OnInit {
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 400,
                   offsetY: 16,
-                  color: color,
+                  color: 'rgb(34, 31, 31)',
                   formatter: function (val: any) {
                     return val;
                   }
@@ -196,7 +196,7 @@ export class EstadisticasComponent implements OnInit {
                   fontSize: '16px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 600,
-                  color: '#373d3f',
+                  color: 'rgb(34, 31, 31)',
                   formatter: function () {
                     return value.toString();
                   }
@@ -237,6 +237,7 @@ export class EstadisticasComponent implements OnInit {
       console.error(`Error: No se recibieron datos válidos para la gráfica de ${id}.`);
     }
   }
+  
 
   renderChart(id: string, value: number | undefined, color: string, yAxisTitle: string, tooltipLabel: string): void {
     if (value !== undefined) {
