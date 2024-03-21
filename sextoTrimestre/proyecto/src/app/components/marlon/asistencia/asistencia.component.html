@@ -55,19 +55,12 @@
     <button type="submit" class="btn btn-primary boton-small">Obtener Asistencia</button>
   </form>
 </div>
-
 <div class="container mt-5">
   <h2 class="subtitulo">Asistencias</h2>
-  <div class="container-table">
+  <div class="container-table"> 
     <div *ngIf="errorMensaje" class="alert alert-danger" role="alert">
       {{ errorMensaje }}
-    </div>
-    <div *ngIf="mostrarAlertaActiva" class="alert-container">
-      <div class="alert-message">
-        {{ mensajeAlerta }}
-        <button (click)="ocultarAlerta()">Cerrar</button>
-      </div>
-    </div>
+    </div>     
     <table #tablaAsistencias class="table" *ngIf="asistenciaList.length > 0">
       <thead>
         <tr>
@@ -102,6 +95,11 @@
           </td>                             
         </tr>
       </tbody>
-    </table>    
+    </table>   
 </div>
+<div *ngIf="mostrarAlertaActiva" class="alert alert-danger" role="alert">
+  <div *ngFor="let alerta of alertas; let i = index">
+    {{ alerta }}
+  </div>
+</div> 
 </div>
