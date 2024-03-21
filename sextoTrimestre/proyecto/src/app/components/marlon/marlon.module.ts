@@ -13,6 +13,7 @@ import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -26,10 +27,13 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     CambiarPasswordComponent,
     EstadisticasComponent,
   ],  
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MarlonRoutingModule,
     ReactiveFormsModule, 
-    FormsModule],
+    FormsModule,
+    MatSnackBarModule,
+  ],
   providers: [ActivityService],
 })
 export class MarlonModule {}

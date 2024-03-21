@@ -2,13 +2,20 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AsistenciaService } from '../services/asistencia.service';
 import { AuthService } from '../../allison/service/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { forkJoin, Observable } from 'rxjs';
 
+interface Asistencia {
+  nombreAprendiz: string;
+  fallas: number;
+}
 
 @Component({
   selector: 'app-asistencia',
   templateUrl: './asistencia.component.html',
   styleUrls: ['./asistencia.component.css']
 })
+
 export class AsistenciaComponent implements OnInit {
   asistenciaList: any[] = [];
   newAsistencia: any = { fecha: null };
@@ -30,10 +37,12 @@ export class AsistenciaComponent implements OnInit {
   mensajeAlerta: string = '';
   mostrarAvisoTresFallas: boolean = false;
   mostrarAvisoCincoFallas: boolean = false;
+  noAsistioConsecutivas: number = 0;
 
   @ViewChild('tablaAsistencias') tablaAsistencias!: ElementRef;
 
-  constructor(private asistenciaService: AsistenciaService, private router: Router, private authService: AuthService) {}
+  constructor(private asistenciaService: AsistenciaService, private router: Router, private authService: AuthService, private snackBar: MatSnackBar) {}
+
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -67,7 +76,7 @@ export class AsistenciaComponent implements OnInit {
       this.getAsistencia();
       this.newAsistencia = { fecha: null };
       this.selectedFicha = undefined;
-      
+      this.verificarFallasConsecutivasYEnviarAlerta();
     } else {
       console.error('Error: Fecha, ficha o idUsuario no están definidos.');
     }
@@ -97,6 +106,7 @@ getAsistencia() {
   if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
     this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario, this.selectedFicha)
       .subscribe((data: any[]) => {
+        console.log('Respuesta de asistencia:', data); 
         if (data && data.length > 0) {
           this.asistenciaList = data;
           this.sinEstudiantes = false;
@@ -104,7 +114,7 @@ getAsistencia() {
           if (this.tablaAsistencias) {
             this.tablaAsistencias.nativeElement.style.display = 'block';
           }
-          this.verificarFallasConsecutivas();
+          this.verificarFallasConsecutivasYEnviarAlerta(); 
         } else {
           this.sinEstudiantes = true;
           this.errorMensaje = 'No se encontraron aprendices asociados a la ficha proporcionada';
@@ -121,7 +131,6 @@ getAsistencia() {
     console.error('Error: Fecha, idUsuario o ficha no están definidos.');
   }
 }
- 
 
   getFichasUsuario() {
     this.asistenciaService.getFichasUsuario().subscribe((data: any[]) => {
@@ -134,10 +143,18 @@ getAsistencia() {
   marcarAsistencia(asistencia: any, asistio: string) {
     this.asistenciaService.marcarAsistencia(asistencia.identificador, asistio).subscribe(() => {
       this.getAsistencia();
-      this.verificarFallasConsecutivas(); 
+      if (asistio === 'No Asistió') {
+        this.noAsistioConsecutivas++;
+      } else {
+        this.noAsistioConsecutivas = 0; 
+      }
+      this.verificarAprendicesConFallas(); 
+    }, error => {
+      console.error('Error al marcar asistencia:', error);
+      this.mostrarError('Error al marcar asistencia. Por favor, inténtalo de nuevo.');
     });
   }
-  
+
   editarAsistencia(asistencia: any) {
     this.tempNombre = asistencia.nombreAprendiz;
     this.tempCorreo = asistencia.correoAprendiz;
@@ -165,8 +182,7 @@ getAsistencia() {
           this.asistenciaList[index].segundoApellidoAprendiz = asistencia.segundoApellidoAprendiz;
         }
         this.editandoAsistencia = false; 
-        this.selectedAsistencia = null; 
-        this.verificarFallasConsecutivas();
+        this.selectedAsistencia = null;
       }, error => {
         console.error('Error al actualizar la asistencia:', error);
       });
@@ -184,28 +200,87 @@ getAsistencia() {
     this.editandoAsistencia = false;
   }
   
+  async verificarFallasConsecutivasYEnviarAlerta() {
+    const mensajesAlerta: string[] = [];
+    const fallasObservables: Observable<any>[] = [];
   
-  verificarFallasConsecutivas() {
-    if (this.selectedAsistencia && this.selectedAsistencia.id) {
-      const aprendizId = this.selectedAsistencia.id;
+    for (const asistencia of this.asistenciaList) {
+      const aprendizId = asistencia.idAprendiz;
+      try {
+        const fallasObservable = this.asistenciaService.obtenerFallasConsecutivasMultiple([aprendizId]);
+        fallasObservables.push(fallasObservable);
+      } catch (error) {
+        console.error('Error al obtener las fallas:', error);
+      }
+    }
   
-      this.asistenciaService.obtenerFallasConsecutivas(aprendizId).subscribe((fallasConsecutivas: number) => {
-        if (fallasConsecutivas === 3) {
-          this.mostrarAlerta('¡Estás iniciando proceso de deserción por 3 fallas consecutivas!');
-          this.mostrarAvisoTresFallas = true;
-        } else if (fallasConsecutivas === 5) {
-          this.mostrarAlerta('¡Estás en proceso avanzado de deserción por acumular 5 fallas!');
-          this.mostrarAvisoCincoFallas = true;
+    forkJoin(fallasObservables).subscribe((result: any[]) => {
+      result.forEach((fallas: any, index: number) => {
+        console.log('Fallas consecutivas:', fallas);
+        const aprendiz = this.asistenciaList[index];
+        if (fallas !== undefined) {
+          if (fallas >= 3 && fallas < 5 && !this.mostrarAvisoTresFallas) {
+            const mensaje = `El/La aprendiz ${aprendiz.nombreAprendiz} tiene ${fallas} fallas consecutivas y está en inicio de deserción.`;
+            mensajesAlerta.push(mensaje);
+            this.mostrarAvisoTresFallas = true;
+          } else if (fallas >= 5 && !this.mostrarAvisoCincoFallas) {
+            const mensaje = `El/La aprendiz ${aprendiz.nombreAprendiz} tiene ${fallas} fallas consecutivas y está en proceso avanzado de deserción.`;
+            mensajesAlerta.push(mensaje);
+            this.mostrarAvisoCincoFallas = true;
+          }
+        } else {
+          console.error('Error: Fallas no definidas para el aprendiz', aprendiz.nombreAprendiz);
         }
-      }, error => {
-        console.error('Error al obtener las fallas consecutivas:', error);
+      });
+  
+      // Mostrar todas las alertas juntas
+      this.mostrarAlertaMultiple(mensajesAlerta);
+    });
+  }
+  
+
+  verificarAprendicesConFallas() {
+    const aprendicesConFallas = this.asistenciaList.filter(asistencia => {
+      return asistencia.status === 'No Asistió' && (asistencia.fallasConsecutivas >= 3 || asistencia.fallasConsecutivas >= 5);
+    });
+  
+    if (aprendicesConFallas.length > 0) {
+      aprendicesConFallas.forEach(aprendiz => {
+        const aprendizId = aprendiz.idAprendiz;
+        this.asistenciaService.obtenerFallasConsecutivasMultiple([aprendizId]).subscribe(fallas => {
+          const mensaje = `El aprendiz ${aprendiz.nombreAprendiz} tiene ${fallas} fallas consecutivas.`;
+          this.mostrarAlerta(mensaje);
+        });
       });
     }
   }
-
+  
+  
+  mostrarAlertaMultiple(mensajes: string[]) {
+    mensajes.forEach(mensaje => {
+      this.mostrarAlerta(mensaje);
+    });
+  }
+  
   mostrarAlerta(mensaje: string) {
+    console.log('Mostrando alerta:', mensaje);
     this.mensajeAlerta = mensaje;
     this.mostrarAlertaActiva = true;
+  }
+  
+  ocultarAlerta() {
+    this.mostrarAlertaActiva = false;
+  }
+  
+  
+  mostrarError(mensaje: string) {
+    console.error(mensaje);
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 9000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    });
   }
 
   onChangeFicha() {

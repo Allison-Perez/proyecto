@@ -1524,24 +1524,30 @@ app.get('/listar', async (req, res) => {
   }
 });
 
-// Ruta para obtener la cantidad de "No Asistió" consecutivas de un aprendiz
-app.get('/fallasConsecutivas/:aprendizId', async (req, res) => {
+// Ruta para obtener las fallas consecutivas de múltiples aprendices
+app.post('/fallasConsecutivas', async (req, res) => {
   try {
-    const { aprendizId } = req.params;
+    const { aprendicesIds } = req.body;
+    console.log('Aprendices IDs:', aprendicesIds);
+
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `SELECT COUNT(*) AS fallasConsecutivas 
-                 FROM asistencia 
-                 WHERE idAprendiz = ? AND status = 'No Asistió'`;
+    const placeholders = aprendicesIds.map(() => '?').join(',');
+    const sql = `SELECT idAprendiz, COUNT(*) AS fallasConsecutivas 
+             FROM asistencia 
+             WHERE idAprendiz IN (${placeholders}) AND status = 'No Asistió' 
+             GROUP BY idAprendiz`;
 
-    const [rows] = await connection.execute(sql, [aprendizId]);
+    console.log('SQL Query:', sql);
+    console.log('IDs de aprendices:', aprendicesIds);
+
+    const [rows] = await connection.execute(sql, aprendicesIds);
     connection.end();
 
-    const fallasConsecutivas = rows[0].fallasConsecutivas || 0;
-    res.status(200).json(fallasConsecutivas);
+    res.status(200).json(rows);
   } catch (error) {
-    console.error('Error al obtener las fallas consecutivas:', error);
-    res.status(500).json({ error: 'Error al obtener las fallas consecutivas' });
+    console.error('Error al obtener las fallas consecutivas de múltiples aprendices:', error);
+    res.status(500).json({ error: 'Error al obtener las fallas consecutivas de múltiples aprendices' });
   }
 });
 

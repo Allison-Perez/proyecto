@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../allison/service/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +12,17 @@ import { AuthService } from '../../allison/service/auth.service';
 export class AsistenciaService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private snackBar: MatSnackBar) { }
+
 
   // Obtener lista de asistencia filtrada por fecha, ID de usuario y ID de ficha
   getAsistencia(fecha: string, idUsuario: number, idFicha: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/listar?fecha=${fecha}&idUsuario=${idUsuario}&idFicha=${idFicha}`);
   }
 
-  obtenerFallasConsecutivas(aprendizId: string): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/fallasConsecutivas/${aprendizId}`);
+  // Obtener fallas consecutivas de múltiples aprendices
+  obtenerFallasConsecutivasMultiple(aprendicesIds: number[]): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/fallasConsecutivas`, { aprendicesIds });
   }
   
   // Editar una asistencia por su ID

@@ -299,3 +299,36 @@ button {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+.alert {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.alert-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffcccb;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.alert-message {
+  color: #900;
+  font-weight: bold;
+}
+
+.alert-message button {
+  margin-left: 10px;
+  cursor: pointer;
+}
