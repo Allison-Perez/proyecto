@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const dbConfig = {
   host: "localhost",
   user: "root",
-  password: "", //111019As
+  password: "111019As", //111019As
   database: "acanner",
 };
 
@@ -1489,7 +1489,7 @@ app.get('/usuariosPorFicha', async (req, res) => {
     const { idFicha } = req.query;
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = 'SELECT usuario.* FROM usuario INNER JOIN usuarioFicha ON usuario.identificador = usuarioFicha.idUsuario WHERE usuarioFicha.idFicha = ? AND usuario.idRol = 2'; // El valor 2 representa el ID del rol "Aprendiz"
+    const sql = 'SELECT usuario.* FROM usuario INNER JOIN usuarioFicha ON usuario.identificador = usuarioFicha.idUsuario WHERE usuarioFicha.idFicha = ? AND usuario.idRol = 2';
     const [rows] = await connection.execute(sql, [idFicha]);
     connection.end();
     res.status(200).json(rows);
@@ -1505,7 +1505,11 @@ app.get('/listar', async (req, res) => {
     const { fecha, idFicha, idUsuario } = req.query;
     const connection = await mysql.createConnection(dbConfig);
 
-    const sql = `SELECT asistencia.*, usuario.primerNombre AS nombreAprendiz, usuario.correo AS correoAprendiz 
+    const sql = `SELECT asistencia.*, 
+                        usuario.primerNombre AS nombreAprendiz, 
+                        usuario.primerApellido AS primerApellidoAprendiz, 
+                        usuario.segundoApellido AS segundoApellidoAprendiz, 
+                        usuario.correo AS correoAprendiz 
                 FROM asistencia 
                 JOIN usuario ON asistencia.idAprendiz = usuario.identificador
                 WHERE asistencia.fecha = ? AND asistencia.idFicha = ? AND asistencia.idInstructor = ?`;
@@ -1517,6 +1521,27 @@ app.get('/listar', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener la lista de asistencia:', error);
     res.status(500).json({ error: 'Error al obtener la lista de asistencia' });
+  }
+});
+
+// Ruta para obtener la cantidad de "No Asistió" consecutivas de un aprendiz
+app.get('/fallasConsecutivas/:aprendizId', async (req, res) => {
+  try {
+    const { aprendizId } = req.params;
+    const connection = await mysql.createConnection(dbConfig);
+
+    const sql = `SELECT COUNT(*) AS fallasConsecutivas 
+                 FROM asistencia 
+                 WHERE idAprendiz = ? AND status = 'No Asistió'`;
+
+    const [rows] = await connection.execute(sql, [aprendizId]);
+    connection.end();
+
+    const fallasConsecutivas = rows[0].fallasConsecutivas || 0;
+    res.status(200).json(fallasConsecutivas);
+  } catch (error) {
+    console.error('Error al obtener las fallas consecutivas:', error);
+    res.status(500).json({ error: 'Error al obtener las fallas consecutivas' });
   }
 });
 

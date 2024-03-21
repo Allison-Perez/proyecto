@@ -61,15 +61,22 @@
   <div class="container-table">
     <div *ngIf="errorMensaje" class="alert alert-danger" role="alert">
       {{ errorMensaje }}
-    </div>  
-    <div *ngIf="sinEstudiantes && !errorMensaje" class="alert alert-warning" role="alert">
-      No se encontraron aprendices asociados a la ficha proporcionada.
+    </div>
+    <div *ngIf="mostrarAlertaActiva" class="alert alert-info" role="alert">
+      {{ mensajeAlerta }}
+    </div>
+    <div *ngIf="mostrarAvisoTresFallas" class="alert alert-warning" role="alert">
+      ¡Atención! Estás iniciando proceso de deserción por 3 fallas consecutivas.
+    </div>
+    <div *ngIf="mostrarAvisoCincoFallas" class="alert alert-danger" role="alert">
+      ¡Atención! Estás en proceso avanzado de deserción por acumular 5 fallas.
     </div>
     <table #tablaAsistencias class="table" *ngIf="asistenciaList.length > 0">
       <thead>
         <tr>
           <th>#</th>
           <th>Nombre del Aprendiz</th>
+          <th>Apellidos del Aprendiz</th>
           <th>Correo del Aprendiz</th>
           <th>Estado de Asistencia</th>
           <th>Editar</th>
@@ -79,6 +86,7 @@
         <tr *ngFor="let asistencia of asistenciaList; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ asistencia.nombreAprendiz }}</td>
+          <td>{{ asistencia.primerApellidoAprendiz }} {{ asistencia.segundoApellidoAprendiz }}</td>
           <td>{{ asistencia.correoAprendiz }}</td>
           <td *ngIf="selectedAsistencia !== asistencia">
             {{ asistencia.status }}
@@ -97,6 +105,6 @@
           </td>                             
         </tr>
       </tbody>
-    </table>
+    </table>    
 </div>
 </div>

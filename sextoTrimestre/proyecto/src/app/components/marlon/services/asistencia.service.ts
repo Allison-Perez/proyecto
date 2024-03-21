@@ -16,6 +16,10 @@ export class AsistenciaService {
     return this.http.get<any[]>(`${this.apiUrl}/listar?fecha=${fecha}&idUsuario=${idUsuario}&idFicha=${idFicha}`);
   }
 
+  obtenerFallasConsecutivas(aprendizId: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/fallasConsecutivas/${aprendizId}`);
+  }
+  
   // Editar una asistencia por su ID
   editarAsistencia(identificador: number, updatedData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/editarAsistencia/${identificador}`, updatedData);

@@ -25,6 +25,11 @@ export class AsistenciaComponent implements OnInit {
   tempNombre: string | undefined;
   tempCorreo: string | undefined;
   errorMensaje: string | null = null;
+  aprendizId: string = '';
+  mostrarAlertaActiva: boolean = false;
+  mensajeAlerta: string = '';
+  mostrarAvisoTresFallas: boolean = false;
+  mostrarAvisoCincoFallas: boolean = false;
 
   @ViewChild('tablaAsistencias') tablaAsistencias!: ElementRef;
 
@@ -88,34 +93,35 @@ export class AsistenciaComponent implements OnInit {
     }
 }
 
-  getAsistencia() {
-    if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
-      this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario, this.selectedFicha)
-        .subscribe((data: any[]) => {
-          if (data && data.length > 0) {
-            this.asistenciaList = data;
-            this.sinEstudiantes = false;
-            this.errorMensaje = null; 
-            if (this.tablaAsistencias) {
-              this.tablaAsistencias.nativeElement.style.display = 'block';
-            }
-          } else {
-            this.sinEstudiantes = true;
-            this.errorMensaje = 'No se encontraron aprendices asociados a la ficha proporcionada';
-            if (this.tablaAsistencias) {
-              this.tablaAsistencias.nativeElement.style.display = 'none';
-            }
+getAsistencia() {
+  if (this.newAsistencia.fecha && this.selectedFicha !== undefined && this.idUsuario !== null) {
+    this.asistenciaService.getAsistencia(this.newAsistencia.fecha, this.idUsuario, this.selectedFicha)
+      .subscribe((data: any[]) => {
+        if (data && data.length > 0) {
+          this.asistenciaList = data;
+          this.sinEstudiantes = false;
+          this.errorMensaje = null; 
+          if (this.tablaAsistencias) {
+            this.tablaAsistencias.nativeElement.style.display = 'block';
           }
-        }, error => {
-          console.error('Error al obtener asistencia:', error);
-          this.errorMensaje = 'Error al obtener la asistencia. Por favor, inténtalo de nuevo más tarde.';
-          console.log('Mensaje de error asignado:', this.errorMensaje);
-        });
-    } else {
-      console.error('Error: Fecha, idUsuario o ficha no están definidos.');
-    }
+          this.verificarFallasConsecutivas();
+        } else {
+          this.sinEstudiantes = true;
+          this.errorMensaje = 'No se encontraron aprendices asociados a la ficha proporcionada';
+          if (this.tablaAsistencias) {
+            this.tablaAsistencias.nativeElement.style.display = 'none';
+          }
+        }
+      }, error => {
+        console.error('Error al obtener asistencia:', error);
+        this.errorMensaje = 'Error al obtener la asistencia. Por favor, inténtalo de nuevo más tarde.';
+        console.log('Mensaje de error asignado:', this.errorMensaje);
+      });
+  } else {
+    console.error('Error: Fecha, idUsuario o ficha no están definidos.');
   }
-  
+}
+ 
 
   getFichasUsuario() {
     this.asistenciaService.getFichasUsuario().subscribe((data: any[]) => {
@@ -128,6 +134,7 @@ export class AsistenciaComponent implements OnInit {
   marcarAsistencia(asistencia: any, asistio: string) {
     this.asistenciaService.marcarAsistencia(asistencia.identificador, asistio).subscribe(() => {
       this.getAsistencia();
+      this.verificarFallasConsecutivas(); 
     });
   }
   
@@ -154,17 +161,19 @@ export class AsistenciaComponent implements OnInit {
           this.asistenciaList[index].status = status;
           this.asistenciaList[index].nombreAprendiz = this.tempNombre;
           this.asistenciaList[index].correoAprendiz = this.tempCorreo;
+          this.asistenciaList[index].primerApellidoAprendiz = asistencia.primerApellidoAprendiz;
+          this.asistenciaList[index].segundoApellidoAprendiz = asistencia.segundoApellidoAprendiz;
         }
         this.editandoAsistencia = false; 
         this.selectedAsistencia = null; 
+        this.verificarFallasConsecutivas();
       }, error => {
         console.error('Error al actualizar la asistencia:', error);
       });
     } else {
       console.error('Error: Asistencia no seleccionada o identificador no definido.');
     }
-}
-
+  }
   
   cancelarEdicion(asistencia: any) {
     if (this.tempNombre !== undefined && this.tempCorreo !== undefined) {
@@ -175,6 +184,29 @@ export class AsistenciaComponent implements OnInit {
     this.editandoAsistencia = false;
   }
   
+  
+  verificarFallasConsecutivas() {
+    if (this.selectedAsistencia && this.selectedAsistencia.id) {
+      const aprendizId = this.selectedAsistencia.id;
+  
+      this.asistenciaService.obtenerFallasConsecutivas(aprendizId).subscribe((fallasConsecutivas: number) => {
+        if (fallasConsecutivas === 3) {
+          this.mostrarAlerta('¡Estás iniciando proceso de deserción por 3 fallas consecutivas!');
+          this.mostrarAvisoTresFallas = true;
+        } else if (fallasConsecutivas === 5) {
+          this.mostrarAlerta('¡Estás en proceso avanzado de deserción por acumular 5 fallas!');
+          this.mostrarAvisoCincoFallas = true;
+        }
+      }, error => {
+        console.error('Error al obtener las fallas consecutivas:', error);
+      });
+    }
+  }
+
+  mostrarAlerta(mensaje: string) {
+    this.mensajeAlerta = mensaje;
+    this.mostrarAlertaActiva = true;
+  }
 
   onChangeFicha() {
     this.getAsistencia();
