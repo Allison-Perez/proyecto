@@ -1,63 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCANER</title>
-    <link rel="icon" type="icon" href="../../assets/imagenes/LOGO ACANNER SIN FONDO.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <style>
-        .titulo {
-            font-size: 32px;
-            font-weight: bold;
-            background: linear-gradient(120deg, #00aaff, #aa00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .subtitulo {
-            font-size: 24px;
-        }
-        .descripcion {
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
-<header class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" routerLink="/marlon">
-            <img src="../../assets/imagenes/LOGO SIN FONDO.png" alt="Logo de la página" width="40" height="40">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="nav-link nombre" >Acanner</a>
+    <div class="menu-icon" (click)="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
+      <div class="dropdown">
+        <button class="dropdown-button" (click)="toggleProfileMenu()">
+          <span class="material-symbols-outlined">person</span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/vista-instructor">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
-                </li>
-            </ul>
+        <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+          <li class="nav-item">
+            <a routerLink="/vista-instructor" class="nav-link otro " aria-current="page">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+          </li>
         </div>
-    </div>
-</header>
-      <div class="perfil-detalle">
-        <h1 class="display-4">Tu Perfil </h1>
-        <div class="container">
-          <div class="container-user">
-              <img src="assets/imagenes/perfil_sena.png" alt="Imagen" class="card-img-top small-centered">  
-        <div id="perfil" class="information">
-          <p class="font-weight-bold">Primer Nombre: <span id="primerNombre">{{ userData.primer_nombre }}</span></p>
-          <p class="font-weight-bold">Segundo Nombre: <span id="segundoNombre">{{ userData.segundo_nombre }}</span></p>
-          <p class="font-weight-bold">Primer Apellido: <span id="primerApellido">{{ userData.primer_apellido }}</span></p>
-          <p class="font-weight-bold">Segundo Apellido: <span id="segundoApellido">{{ userData.segundo_apellido }}</span></p>
-          <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.ficha }}</span></p>
-          <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
-        </div>
-        <button class="button1" (click)="editarInformacion()">Editar</button>
-        <button class="button2" [routerLink]="['/cambiar-contrasena']">Cambiar contraseña</button>
       </div>
-    </div>
+    </ul>
   </div>
+</nav>
+<div class="perfil-detalle">
+  <div class="container">
+    <div class="foto-container" (mouseenter)="mostrarIconoEliminar = true" (mouseleave)="mostrarIconoEliminar = false">
+      <img [src]="fotoPerfilUrl" alt="Foto de perfil" class="foto">
+      <div class="eliminar-icono" *ngIf="mostrarIconoEliminar && fotoPerfilUrl !== 'assets/fotos_perfil/sena.png'" (click)="eliminarFotoPerfil()">
+        <span class="material-symbols-outlined">delete</span>
+      </div>
+    </div>                      
+    <div id="perfil" class="information">
+      <p class="font-weight-bold"><span id="nombre">{{ userData.primerNombre }} {{ userData.segundoNombre ? userData.segundoNombre + ' ' : '' }}{{ userData.primerApellido }} {{ userData.segundoApellido }}</span></p>
+      <p class="font-weight-bold">Correo: <span id="correo">{{ userData.correo }}</span></p>
+      <p class="font-weight-bold">Número de Celular: <span id="celular">{{ userData.celular }}</span></p>
+      <p class="font-weight-bold">Fecha de Ingreso: <span id="fechaIngreso">{{ userData.fechaIngreso | date : "dd/MM/yyyy" }}</span></p>
+      <p class="font-weight-bold">Información Académica: <span id="informacionAcademica">{{ userData.informacionAcademica }}</span></p>
+      <p class="font-weight-bold">Información Académica: <span id="informacionAdicional">{{ userData.informacionAdicional }}</span></p>
+      <p class="font-weight-bold">Ficha: <span id="ficha">{{ userData.numeroFicha }}</span></p>
+    </div>
+    <div class="botones">
+      <button class="boton cambiar-foto" (click)="abrirSelectorDeImagen()" title="Cambiar foto">
+        <span class="material-symbols-outlined">photo_camera</span>
+        <span class="texto-oculto">Cambiar foto</span>
+      </button>
+      <button class="boton editar" (click)="editarInformacion()" title="Editar">
+        <span class="material-symbols-outlined">edit</span>
+        <span class="texto-oculto">Editar</span>
+      </button>
+      <button class="boton cambiar-contrasena" [routerLink]="['/cambiar-contrasena']" title="Cambiar contraseña">
+        <span class="material-symbols-outlined">lock</span>
+        <span class="texto-oculto">Cambiar contraseña</span>
+      </button>
+    </div>
+    <input type="file" id="inputFile" style="display: none;" (change)="onImagenSeleccionada($event)">
+  </div>
+</div>

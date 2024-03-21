@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+// ESTILOS NAV
+nav{
+  background-color: #008a88;
+}
+
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(14, 13, 13);
+}
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 700px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: block;
+    margin-right: 20px;
+  }
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-menu .nav-item {
+    margin: 0px 0;
+  }
+
+  .show-menu{
+    display: block;
+  }
+}
+
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+
+.dropdown-content { 
+  margin-top: 5px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
+
+
+.container {
+  padding: 20px;
+
+  .row {
+    margin-bottom: 20px;
+
+    .col-md-6 {
+      padding: 10px;
+    }
+  }
+
+  #blogsPorInstructorChart,
+  #guiasPorInstructorChart,
+  #horariosChart,
+  #asistenciasChart {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    height: 300px; 
+  }
+}
+.container {
+  .chart-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .chart-subtitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+.container {
+  .chart-subtitle {
+    color: #008a88;
+  }
+}

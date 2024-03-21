@@ -1,54 +1,107 @@
-<app-nav></app-nav>
+<app-sidebar></app-sidebar>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Primer Nombre</th>
-      <th>Primer Apellido</th>
-      <th>Ficha</th>
-      <th>Correo</th>
-      <th>Rol</th>
-      <th>Editar</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let usuario of usuarios; let i = index" [formGroup]="editForm">
+<div class="filtro-container">
+  <label for="filtroFicha">Filtrar por Ficha:</label>
+  <select id="filtroFicha" [(ngModel)]="filtroFicha">
+    <option value="" disabled selected>Seleccione una ficha</option>
+    <option *ngFor="let ficha of listaFichas" [value]="ficha">
+      {{ ficha }}
+    </option>
+  </select>
 
-      <td *ngIf="usuario.editar === false">{{ usuario.id_usuario }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.primer_nombre }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.primer_apellido }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.ficha }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.correo }}</td>
-      <td *ngIf="usuario.editar === false">{{ usuario.rol }}</td>
-      <td *ngIf="usuario.editar === false" (click)="editUser(i)">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvF0zFKBDEUh/HfnkALEWy19gI2Xkg7rdZGRAu19EaCN7ASbK0EtxeUB1PEcTLJTHbZtEm+7+X/XhY2vBYb5msV3OAb17lCWwQPuOjAl3gckswV7OEV+wn0Crd9yRzBLr5whGccdNAl7loFZ4hKT/COQ7x08TRHFHlH7rE+cIo37GDV2uRo4n0PEpJjfI6Nek0P0spT1hPOS/+oJGiCh3xMkINHMyOyqpUTrAWee8Ha4DnBz8DbJ8WS3h+KqC+YDa95QRO8NEVVU1I6VPoHpfvF/a0IhqaoWGly4E/RNVM0Bf6vr1uJaGrFo+d/AQouJhks7bRaAAAAAElFTkSuQmCC"/>
-      </td>
+  <label for="filtroNombre">Filtrar por Nombre:</label>
+  <input type="text" id="filtroNombre" [(ngModel)]="filtroNombre" />
 
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.id_usuario" disabled></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_nombre" formControlName="primer_nombre"></td>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="text" [value]="usuario.primer_apellido" formControlName="primer_apellido"></td>
-      <td class="table_true" *ngIf="usuario.editar === true">
-        <select name="ficha" id="ficha" formControlName="ficha">
-          <option value="2558104">2558104</option>
-        </select>
-      <td class="table_true" *ngIf="usuario.editar === true"><input type="email" [value]="usuario.correo"></td>
-      <td class="table_true" *ngIf="usuario.editar  === true">
-        <select name="rol_options" id="rol_options" formControlName="rol">
-          <option value="1">Instructor</option>
-          <option value="2">Aprendiz</option>
-          <option value="3">Admin</option>
-        </select>
-      </td>
-      <td *ngIf="usuario.editar === true" (click)="editUser(i)">
-        <i class='bx bx-check' (click)="saveChanges()"></i>
-        <i class='bx bx-x' (click)="cancelEdit(i)"></i>
-      </td>
+  <label for="filtroDocumento">Filtrar por Documento:</label>
+  <input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento" />
 
+  <div class="filtro-buttons">
+    <button (click)="aplicarFiltros()">Aplicar Filtros</button>
+    <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+  </div>
+</div>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Documento</th>
+        <th>Primer Nombre</th>
+        <th>Primer Apellido</th>
+        <th>Ficha</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let usuario of usuarios; let i = index"
+        [formGroup]="editForm"
+      >
+        <td *ngIf="usuario.editar === false">{{ usuario.documento }}</td>
+        <td *ngIf="usuario.editar === false">{{ usuario.primerNombre }}</td>
+        <td *ngIf="usuario.editar === false">{{ usuario.primerApellido }}</td>
+        <td *ngIf="usuario.editar === false">{{ usuario.numeroFicha }}</td>
+        <td *ngIf="usuario.editar === false">{{ usuario.correo }}</td>
+        <td *ngIf="usuario.editar === false">{{ usuario.rol }}</td>
+        <td *ngIf="usuario.editar === false" (click)="editUser(i)">
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvF0zFKBDEUh/HfnkALEWy19gI2Xkg7rdZGRAu19EaCN7ASbK0EtxeUB1PEcTLJTHbZtEm+7+X/XhY2vBYb5msV3OAb17lCWwQPuOjAl3gckswV7OEV+wn0Crd9yRzBLr5whGccdNAl7loFZ4hKT/COQ7x08TRHFHlH7rE+cIo37GDV2uRo4n0PEpJjfI6Nek0P0spT1hPOS/+oJGiCh3xMkINHMyOyqpUTrAWee8Ha4DnBz8DbJ8WS3h+KqC+YDa95QRO8NEVVU1I6VPoHpfvF/a0IhqaoWGly4E/RNVM0Bf6vr1uJaGrFo+d/AQouJhks7bRaAAAAAElFTkSuQmCC"
+          />
+        </td>
 
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <input type="text" [value]="usuario.documento" disabled />
+        </td>
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <input
+            type="text"
+            [value]="usuario.primerNombre"
+            formControlName="primerNombre"
+          />
+        </td>
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <input
+            type="text"
+            [value]="usuario.primerApellido"
+            formControlName="primerApellido"
+          />
+        </td>
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <select
+            name="numeroFicha"
+            id="numeroFicha"
+            formControlName="numeroFicha"
+            [value]="getIdFicha(usuario.numeroFicha)"
+          >
+            <option value="1">2558104</option>
+            <option value="2">1800002</option>
+            <option value="3">11231236</option>
+            <option value="4">2634256</option>
+            <option value="5">2789008</option>
+          </select>
+        </td>
 
-
-
-    </tr>
-  </tbody>
-</table>
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <input type="email" [value]="usuario.correo" />
+        </td>
+        <td class="table_true" *ngIf="usuario.editar === true">
+          <select
+            name="rol_options"
+            id="rol_options"
+            formControlName="rol"
+            [value]="getIdRol(usuario.rol)"
+          >
+            <option value="1">Instructor</option>
+            <option value="2">Aprendiz</option>
+            <option value="3">Admin</option>
+          </select>
+        </td>
+        <td *ngIf="usuario.editar === true" (click)="editUser(i)">
+          <i class="bx bx-check" (click)="saveChanges()"></i>
+          <i class="bx bx-x" (click)="cancelEdit(i)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

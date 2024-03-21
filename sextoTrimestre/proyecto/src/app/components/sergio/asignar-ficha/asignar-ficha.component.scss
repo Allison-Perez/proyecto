@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+.content {
+  margin-left: 0%;
+  margin-top: 5%;
+}
+
+.section-title {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #088a88;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #088a88;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #088a88;
+  outline: none;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.custom-select:hover, .custom-select:focus {
+  border-color: #45a2a1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.boton {
+  background-color: #088a88;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: all 1000ms;
+  font-size: 15.5px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid white;
+}
+
+.boton:hover {
+  color: white;
+  transform: scale(1.1);
+  outline: 1px solid #088a88;
+  box-shadow: 4px 5px 17px -4px #088a88;
+}
+
+.boton::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #397e7c;
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.boton:hover::before {
+  width: 150%;
+}
+
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin: 20px auto 0px;
+}
+
+
+@media (max-width: 500px) {
+.section-title{
+  font-size: 20px;
+}
+}

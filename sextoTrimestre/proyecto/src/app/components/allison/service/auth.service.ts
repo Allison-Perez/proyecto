@@ -1,8 +1,7 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -12,29 +11,80 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private _isAuthenticated = false;
   private _userRole: number = 0;
+  private _userFichas: number[] = [];
+  private _userInfo: any = {};
+  private isAuthenticatedd: boolean = false;
+  private userInfo: any = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
-  // Método para realizar la autenticación
   login(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 
-  // Método para verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
 
-  // Método para obtener el rol del usuario
   getUserRole(): number {
     return this._userRole;
   }
 
-  // Método para establecer el estado de autenticación y el rol
-  setAuthenticationStatus(status: boolean, role: number): void {
-    this._isAuthenticated = status;
-    this._userRole = role;
+  getUserFichas(): number[] {
+    return this._userFichas;
   }
 
-  // Otros métodos relacionados con la autenticación pueden ir aquí
+  setAuthenticationStatus(status: boolean, role: number, fichas: number[], userInfo: any): void {
+    this._isAuthenticated = status;
+    this._userRole = role;
+    this._userInfo = userInfo;
+    this._userFichas = fichas;
+  }
+
+  getIdUsuarioActual(): number | null {
+    const userInfo = this.getUserInfo();
+    if (userInfo) {
+      return userInfo.idUsuario;
+    }
+    return null;
+  }  
+  
+  getUserInfo(): any {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        return {
+          idUsuario: decodedToken.idUsuario,
+          idFicha: decodedToken.idFicha
+        };
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return null;
+      }
+    } else {
+      console.error('Token no encontrado en el almacenamiento local');
+      return null;
+    }
+  }
+
+  getUserEmail(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.correo;
+    }
+    return null;
+  }
+  
+  
+  logout() {
+    localStorage.removeItem('token');
+    // Implementa la lógica de cierre de sesión aquí y establece this.isAuthenticated en false.
+    this.isAuthenticatedd = false;
+    this.userInfo = null;
+
+    // Elimina el correo electrónico del usuario del almacenamiento local al cerrar sesión.
+    localStorage.removeItem('user_email');
+  }
 }

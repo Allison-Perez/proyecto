@@ -14,6 +14,10 @@ import { VerAsistenciaComponent } from './ver-asistencia/ver-asistencia.componen
 import { VerBlogComponent } from './ver-blog/ver-blog.component';
 import { VerHorariosComponent } from './ver-horarios/ver-horarios.component';
 import { EditPasswordComponent } from './edit-password/edit-password.component';
+import { NgChartsModule } from 'ng2-charts';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -27,11 +31,14 @@ import { EditPasswordComponent } from './edit-password/edit-password.component';
     EditPasswordComponent
   ],
   imports: [
+    NgApexchartsModule,
     BrowserModule,
     HttpClientModule,
     KatalinaRoutingModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [IndexKatalinaComponent],

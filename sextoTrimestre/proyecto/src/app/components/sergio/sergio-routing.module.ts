@@ -8,7 +8,12 @@ import { NavComponent } from './nav/nav.component';
 import { VistaAdminComponent } from './vista-admin/vista-admin.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
-
+import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FichasInstructoresComponent } from './fichas-instructores/fichas-instructores.component';
+import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
+import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices.component';
+import { AsistenciaFichasComponent } from './asistencia-fichas/asistencia-fichas.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
@@ -18,7 +23,13 @@ const routes: Routes = [
   { path: 'update-password', component: UpdatePasswordComponent},
   { path: 'nav', component:NavComponent },
   { path: 'registros-admin', component: RegistrosAdminComponent },
-  {path: 'modificar-usuarios', component: ModificarUsuariosComponent}
+  {path: 'modificar-usuarios', component: ModificarUsuariosComponent},
+  {path: 'estadisticas-instructores', component: StatisticsInstructoresComponent},
+  {path: 'sidebar', component: SidebarComponent},
+  {path: 'fichas-instructores', component: FichasInstructoresComponent},
+  {path: 'asignar-fichas', component: AsignarFichaComponent},
+  {path: 'fichas-aprendices', component: FichasAprendicesComponent},
+  {path: 'asistencia-fichas', component: AsistenciaFichasComponent},
 ];
 
 @NgModule({

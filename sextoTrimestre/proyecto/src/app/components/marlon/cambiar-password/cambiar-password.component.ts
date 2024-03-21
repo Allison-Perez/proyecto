@@ -11,6 +11,8 @@ import { AuthService } from '../services/auth.service';
 })
 export class CambiarPasswordComponent {
   form: FormGroup;
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -24,7 +26,26 @@ export class CambiarPasswordComponent {
       confirmarPassword: ['', Validators.required]
     });
   }
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
   cambiarContrasena() {
     const passwordAnterior = this.form.value.passwordAnterior;
     const nuevaPassword = this.form.value.nuevaPassword;

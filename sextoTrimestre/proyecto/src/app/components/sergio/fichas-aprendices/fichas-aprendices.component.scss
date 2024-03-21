@@ -1,0 +1,138 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+}
+
+.chart-container {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+}
+
+.graficoUno,
+.graficoDos {
+  text-align: center;
+  width: 43%;
+}
+
+.chart {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.titulos {
+  font-family: "Comfortaa", sans-serif;
+  margin-bottom: 15px;
+  font-size: 28px;
+  color: #088a88;
+}
+
+/* Añadir un poco de espacio alrededor del texto para un aspecto más limpio */
+.titulos::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #ddd;
+  margin: 8px 0; /* Espacio alrededor del separador */
+}
+
+@media (max-width: 1250px) {
+  .graficoUno,
+  .graficoDos {
+    width: 60%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .graficoUno,
+  .graficoDos {
+    width: 75%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+    margin: 0 auto;
+  }
+
+  .chart-container {
+    justify-content: center;
+    flex-direction: column; /* Apilar los gráficos en pantallas más pequeñas */
+  }
+  .titulos {
+    margin-bottom: 15px;
+    font-size: 25px;
+    color: #088a88;
+  }
+}
+
+
+@media (max-width: 800px) {
+  .graficoUno,
+  .graficoDos {
+    width: 85%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+    margin: 0 auto;
+  }
+
+  .chart-container {
+    justify-content: center;
+    flex-direction: column; /* Apilar los gráficos en pantallas más pequeñas */
+  }
+  .titulos {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #088a88;
+  }
+}
+
+@media (max-width: 625px) {
+  .graficoUno,
+  .graficoDos {
+    width: 100%; /* Ocupar el 100% del ancho en pantallas más pequeñas */
+    margin: 0 auto;
+  }
+
+  .chart-container {
+    justify-content: center;
+    flex-direction: column; /* Apilar los gráficos en pantallas más pequeñas */
+  }
+  .titulos {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #088a88;
+  }
+}
+
+@media (max-width: 480px) {
+  .graficoUno,
+  .graficoDos {
+    width: 100%; /* Ocupar el 90% del ancho en pantallas más pequeñas */
+    margin: 0 auto; /* Centrar */
+  }
+
+  .chart-container {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .chart h2 {
+    font-size: 18px; /* Tamaño de fuente más pequeño para títulos */
+  }
+}
+
+@media (min-width: 1800px) {
+  .graficoUno,
+  .graficoDos {
+    width: 38%; /* Limitar el ancho al 30% después de 1600px */
+  }
+  .chart-container {
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+  }
+}

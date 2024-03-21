@@ -1,6 +1,250 @@
-.nav-link{
-    color: #008a88;
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+.container {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1200px;
 }
-.mt-5{
-    color: #008a88;
+
+.contenidoIzquierdo {
+  margin-top: 10%;
+  width: 60%;
 }
+
+.titulo {
+  color: #008a88;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 30px;
+  font-family: "Outfit", sans-serif;
+  font-size: 45px;
+}
+
+.sub-titulo {
+  font-weight: bold;
+  text-align: left;
+  margin-top: 4%;
+  font-size: 1.5em;
+}
+
+.descripción {
+  font-size: 17px;
+  font-weight: normal;
+  margin-top: 1%;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.contenidoDerecho {
+  margin-top: 5%;
+  width: 35%;
+}
+
+.imagen {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 890px) {
+
+  .titulo {
+    color: #008a88;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 30px;
+    font-family: "Outfit", sans-serif;
+    font-size: 35px;
+  }
+
+  .sub-titulo {
+    font-weight: bold;
+    text-align: left;
+    margin-top: 4%;
+    font-size: 1.3em;
+  }
+
+  .contenidoDerecho {
+    width: 50%;
+  }
+
+  .imagen {
+    margin-top: 8%;
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+
+  .titulo {
+    color: #008a88;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-family: "Outfit", sans-serif;
+    font-size: 38px;
+  }
+
+  .sub-titulo {
+    font-weight: bold;
+    text-align: left;
+    margin-top: 4%;
+    font-size: 1.4em;
+  }
+
+  .container{
+    justify-content: space-around;
+  }
+  .contenidoIzquierdo,
+  .contenidoDerecho {
+    width: 60%;
+  }
+
+  .imagen {
+    margin-top: 8%;
+
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .contenidoDerecho {
+    display: none;
+  }
+
+.container{
+  justify-content: center;
+}
+
+  .contenidoIzquierdo{
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+
+
+
+
+/* Estilos Nav */
+nav{
+  background-color: #008a88;
+}
+
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(14, 13, 13);
+}
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 700px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: block;
+    margin-right: 20px;
+  }
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-menu .nav-item {
+    margin: 0px 0;
+  }
+
+  .show-menu{
+    display: block;
+  }
+}
+
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+
+.dropdown-content {
+  margin-top: 7px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
+

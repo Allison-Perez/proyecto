@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+.top-bar {
+  background-color: #088a88;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+
+
+}
+
+.menu-icon, .close-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.top-bar .menu-icon{
+  width: 30px;
+  color: #f8f8f8;
+  font-size: 30px;
+}
+.sidebar {
+  margin-top: 20px;
+  width: 230px; /* Puedes ajustar el ancho según tus necesidades */
+  background-color: #f8f8f8; /* f8f8f8 Color de fondo de la barra lateral */
+  position: absolute;
+  top: 50px; /* Ajusta según la altura de tu barra horizontal */
+  left: -230px;
+  height: 120vh;
+  transition: left 0.3s ease;
+  z-index: 10000;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+}
+
+.show-sidebar {
+  left: 0;
+}
+
+.sidebar ul li a span.material-symbols-outlined {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.sidebar ul li a {
+  color: #333;
+  font-weight: normal;
+}
+
+h2 {
+  text-align: left;
+  font-family: 'Lobster', sans-serif;
+  margin: 10px;
+  color: #ffffff;
+  font-size: 28px;
+  margin-bottom: 50px;
+}
+
+ul {
+  margin-top: 50px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.logo-img {
+  width: 50px; /* Ajusta según tus necesidades */
+  height: auto; /* Mantener la proporción original de la imagen */
+}
+
+.iconPerfil {
+  background-color: white; /* Fondo blanco */
+  height: 40px;
+  width: 45px;
+  margin-right: 10px;
+  border-radius: 50%; /* Usar 50% para lograr la forma circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-menu{
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px;
+  z-index: 10000;
+}
+
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Agrega transición de color al pasar el ratón sobre las opciones */
+}
+
+.profile-menu li:hover {
+  background-color: #f0f0f0; /* Cambia el color de fondo al pasar el ratón sobre las opciones */
+}
+
+
+@media (max-width: 500px) {
+
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 25;
+    color: #088a88;
+  }
+
+  .sidebar {
+    margin-top: 20px;
+    width: 180px; /* Puedes ajustar el ancho según tus necesidades */
+    background-color: transparent; /* f8f8f8 Color de fondo de la barra lateral */
+    position: absolute;
+    top: 50px; /* Ajusta según la altura de tu barra horizontal */
+    left: -150px;
+    height: 120vh;
+    transition: left 0.3s ease;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  h2 {
+    font-size: 24px; /* Tamaño de fuente más pequeño */
+    margin-bottom: 30px; /* Ajusta según tus necesidades */
+    color: #088a88;
+  }
+  .sidebar {
+    background-color: transparent; /* Sin color de fondo */
+  }
+
+  .sidebar ul li a {
+    color: #088a88; /* Color del texto en los enlaces */
+  }
+
+  .sidebar .menu-icon {
+    color: #088a88; /* Color del icono del menú */
+  }
+
+}
+
+@media (max-width: 1200px) {
+
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 25;
+    color: #088a88;
+  }
+
+  .sidebar {
+    margin-top: 20px;
+    width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+    background-color: #f8f8f8; /* f8f8f8 Color de fondo de la barra lateral */
+    position: absolute;
+    top: 50px; /* Ajusta según la altura de tu barra horizontal */
+    left: -150px;
+    height: 120vh;
+    transition: left 0.3s ease;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  .show-sidebar {
+    left: 0;
+  }
+
+  h2 {
+    font-size: 24px; /* Tamaño de fuente más pequeño */
+    margin-bottom: 30px; /* Ajusta según tus necesidades */
+    color: #088a88;
+  }
+  .sidebar {
+    background-color: #f8f8f8; /* Sin color de fondo */
+  }
+
+  .sidebar ul li a {
+    color: #088a88; /* Color del texto en los enlaces */
+  }
+
+  .sidebar .menu-icon {
+    color: #088a88; /* Color del icono del menú */
+  }
+
+}

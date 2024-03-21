@@ -1,9 +1,7 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
   <div class="container-fluid">
-    <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
-    <div class="navbar">
-      <div class="navbar">
+    <a class="nav-link nombre" >Acanner</a>
         <div class="menu-icon" (click)="toggleMenu()">
           <div class="bar"></div>
           <div class="bar"></div>
@@ -11,37 +9,66 @@
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
           <li class="nav-item">
-            <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
-              <i class="fas fa-user"></i>
-            </a>
-          </li>
-          <li class="nav-item">
             <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
           </li>
-          <li class="nav-item">
-            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-horarios" class="nav-link">Horarios</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
+                <span class="material-symbols-outlined">person</span>
+              </button>
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+                <li class="nav-item">
+                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                </li>
+              </div>
+            </div>
         </ul>
-      </div>
-    </div>
   </div>
 </nav>
-  <h2 class="subtitulo mt-5" >Asistencias</h2>
-      <div class="container">
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let asistencia of asistenciaList">
-              <h4>{{ asistencia.nombreArchivo }}</h4>
-              <p>{{ asistencia.comentario }}</p>
-              <a (click)="descargarArchivo(asistencia.archivoUrl)" class="btn btn-primary-ver-archivo" >Ver archivo</a>
-          </li>
-        </ul>
-      </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<h2 class="titulos">Tu Asistencia</h2>
+<div *ngIf="errorMessage" class="alert alert-danger mt-2">
+  {{ errorMessage }}
+</div>
+<div class="chart-container">
+  <div class="graficoUno">
+    <div class="chart" id="chart"></div>
+  </div>
+  <div class="table-container">
+    <div class="fechaFiltro">
+      <input type="date" [(ngModel)]="fechaFiltro">
+      <button (click)="aplicarFiltroFecha()">Aplicar filtro</button>
+      <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Asistencia</th>
+          <th>Instructor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let asistencia of asistenciasFiltradas">
+          <tr>
+            <td>{{ asistencia.fecha | date: 'dd-MM-yyyy' }}</td>
+            <td>{{ asistencia.status }}</td>
+            <td>{{ asistencia.nombreInstructor }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+ 
+  

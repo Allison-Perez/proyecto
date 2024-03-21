@@ -4,6 +4,8 @@ import { EditarPerfilService } from '../services/editar-perfil.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-editar-perfil',
@@ -14,30 +16,65 @@ import { Validators } from '@angular/forms';
 export class EditarPerfilComponent implements OnInit {
   form: FormGroup;
   userData: any;
+  isMenuOpen: boolean | undefined;
+  mostrarMenuPerfil: boolean | undefined;
 
   constructor(private fb: FormBuilder, private service: EditarPerfilService, private router: Router, private authService: AuthService) {
-    this.form = this.fb.group({
-      primerNombre: ['', Validators.required],
-      segundoNombre: [''],
-      primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
-      correo: ['']
-    });
-  }
+      this.form = this.fb.group({
+        primerNombre: ['', Validators.required],
+        segundoNombre: [''],
+        primerApellido: ['', Validators.required],
+        segundoApellido: [''],
+        correo: [''],
+        fechaIngreso: ['', [Validators.required, this.fechaInferiorHoyValidator]],
+        celular : ['', Validators.required],
+        informacionAcademica:[''],
+        informacionAdicional :[''],
+      });
+    }
+
+    fechaInferiorHoyValidator(control: AbstractControl): { [key: string]: boolean } | null {
+      const selectedDate = new Date(control.value);
+      const hoy = new Date();
+
+      if (selectedDate > hoy) {
+        return { 'fechaInferiorHoy': true };
+      }
+
+      return null;
+    }
+
+    toggleMenu() {
+      console.log('Función toggleMenu() llamada.');
+      this.isMenuOpen = !this.isMenuOpen;
+    }
+    toggleProfileMenu() {
+      console.log(this.mostrarMenuPerfil);
+  
+      this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+    }
+    redirectTo(route: string) {
+      this.router.navigate([route]);
+      // Cierra el menú después de redirigir
+      this.mostrarMenuPerfil = false;
+    }
+  
 
   ngOnInit() {
-    // Obtén el correo del usuario, por ejemplo, desde la sesión o almacenamiento local
+    console.log("correo del individuo");
     let correo:any = localStorage.getItem('user_email');
     correo = correo.replace(/^"(.*)"$/, '$1');
+    console.log(correo);
+
+
 
     if (correo) {
-      // Llama a tu servicio para obtener la información del usuario por correo
       this.service.getUserInfoByEmail(correo).subscribe(data => {
         this.userData = data;
-        this.form.patchValue(data); // Llena el formulario con los datos del usuario
+        this.form.patchValue(data);
+
       });
     } else {
-      // Maneja el caso en el que el correo no esté disponible, por ejemplo, redirigiendo o mostrando un mensaje de error.
       console.error('El correo no está disponible');
     }
   }

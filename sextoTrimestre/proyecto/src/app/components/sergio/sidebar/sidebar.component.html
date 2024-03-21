@@ -1,0 +1,99 @@
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+/>
+
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 25;
+    color: black;
+  }
+</style>
+<div class="top-bar">
+  <div
+    style="
+      display: flex;
+      width: 100px;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <span class="material-symbols-outlined menu-icon" (click)="toggleSidebar()">
+      {{ mostrarSidebar ? "close" : "menu" }}
+    </span>
+    <div class="logo-container">
+      <img
+        src="assets/imagenes/logo-en-blanco.png"
+        alt="Logo"
+        class="logo-img"
+      />
+    </div>
+  </div>
+
+  <div class="iconPerfil" (click)="toggleProfileMenu()">
+    <span class="material-symbols-outlined">account_circle</span>
+  </div>
+</div>
+
+<div *ngIf="mostrarMenuPerfil" class="profile-menu">
+  <ul>
+    <li (click)="redirectTo('/admin-perfil')">Ver Perfil</li>
+    <li (click)="redirectTo('/edit-perfil')">Editar Perfil</li>
+    <li (click)="redirectTo('/update-password')">Cambiar Contraseña</li>
+    <li (click)="logout()">Cerrar Sesión</li>
+  </ul>
+</div>
+
+<div class="sidebar" [ngClass]="{ 'show-sidebar': mostrarSidebar }">
+  <ul>
+    <li>
+      <a routerLink="/vista-admin"
+        ><span class="material-symbols-outlined">home_app_logo</span>Inicio</a
+      >
+    </li>
+    <li>
+      <a routerLink="/admin-perfil"
+        ><span class="material-symbols-outlined">account_circle</span>Perfil</a
+      >
+    </li>
+    <li>
+      <a routerLink="/registros-admin"
+        ><span class="material-symbols-outlined">app_registration</span>Registro
+        de Usuarios</a
+      >
+    </li>
+
+    <li>
+      <a routerLink="/asignar-fichas"
+        ><span class="material-symbols-outlined">assignment</span>Asignar
+        fichas</a
+      >
+    </li>
+
+    <li>
+      <a routerLink="/modificar-usuarios"
+        ><span class="material-symbols-outlined">edit</span>Edición de
+        Usuarios</a
+      >
+    </li>
+
+    <li>
+      <a (click)="toggleMenu()">
+        <span class="material-symbols-outlined">bar_chart_4_bars</span> Ver
+        Estadísticas
+      </a>
+      <ul *ngIf="mostrarMenu">
+        <li *ngFor="let opcion of opcionesMenu">
+          <a (click)="seleccionarOpcion(opcion)">{{ opcion }}</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a (click)="logout()"
+        ><span class="material-symbols-outlined">logout</span>Cerrar Sesión</a
+      >
+    </li>
+  </ul>
+</div>
+
+<router-outlet></router-outlet>

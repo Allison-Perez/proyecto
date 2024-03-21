@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private isAuthenticated: boolean = false;
+  private _userFichas: number[] = [];
+
+ 
+
+  constructor(private jwtHelper: JwtHelperService) { }
 
   login(userEmail: string) { // Añade userEmail como parámetro
     // Implementa la lógica de inicio de sesión aquí y establece this.isAuthenticated en true si el inicio de sesión es exitoso.
@@ -29,6 +37,8 @@ export class AuthService {
   getUserEmail() {
     return localStorage.getItem('user_email') || '';
   }
-
-  constructor() { }
+ getUserFichas(): number[] {
+    return this._userFichas;
+  }
+  
 }

@@ -1,77 +1,172 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../services/blog.service';
 import { NgForm } from '@angular/forms';
+import { BlogService } from '../services/blog.service';
+import { AuthService } from '../../allison/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.css']
 })
-export class BlogComponent implements OnInit {
-  showErrorMessage: boolean = false;
-  newsList: any[] = [];
-  newNews: any = { titulo: '', contenido: '' };
-  editingNews: any | null = null;
 
-  constructor(private blogService: BlogService) { }
+export class BlogComponent implements OnInit {
+  newsList: any[] = [];
+  newBlog: any = { nombre: '', comentario: '', imagenOpcional: null };
+  imageFile: File | null = null;
+  editingBlog: any = null;
+  isMenuOpen: boolean = false;
+  mostrarMenuPerfil: boolean = false;
+  userFichas: any[] = [];
+  fichas: any[] = [];
+  selectedFicha: any;
+  imagenOpcionalFile: File | null = null;
+
+
+  constructor(private blogService: BlogService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.loadNews();
+    this.userFichas = this.authService.getUserFichas();
+    this.getFichasUsuario();
+    this.loadBlogs();
   }
 
-  loadNews() {
-    this.blogService.getNews().subscribe(data => {
-      console.log('Datos de noticias:', data);
-      if (data.length > 0) {
-        console.log('Primer objeto:', data[0]);
-      }
-  
-      this.newsList = data;
-    });
-  }
-
-  createNews(form: NgForm) {
-    // Verificamos si el formulario es válido antes de enviar la solicitud
-    if (form.valid) {
-      this.blogService.createNews(this.newNews).subscribe(() => {
-        this.loadNews();
-        this.newNews = { titulo: '', contenido: '' };
-      });
-    } else {
-      // Mostramos el mensaje de error
-      this.showErrorMessage = true;
+  transformUrl(url: string): string {
+    if (url) {
+      return 'assets/' + url.replace(/\\/g, '/');
     }
+    return 'assets/uploads/Blog.png';
+  }
+
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
+
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    this.mostrarMenuPerfil = false;
+  }
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  getFichasUsuario(): void {
+    this.blogService.getFichasUsuario().subscribe(
+      (data: any[]) => {
+        this.fichas = data;
+      },
+      error => {
+        console.error('Error al cargar las fichas del usuario:', error);
+      }
+    );
+  }
+
+  onSelectFicha(event: any): void {
+    this.selectedFicha = event.target.value;
+  }
+
+  loadBlogs() {
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    this.blogService.getBlogsPorUsuario(idUsuario).subscribe(
+      data => {
+        this.newsList = data;
+      },
+      error => {
+        console.error('Error al cargar los blogs:', error);
+      }
+    );
+  }
+
+  crearBlog() {
+    if (!this.selectedFicha) {
+      console.error('No se ha seleccionado ninguna ficha');
+      return;
+    }
+
+    const idFichaSeleccionada = this.selectedFicha;
+
+    const formData = new FormData();
+    formData.append('nombre', this.newBlog.nombre);
+    formData.append('comentario', this.newBlog.comentario);
+    if (this.imagenOpcionalFile) {
+      formData.append('imagenOpcional', this.imagenOpcionalFile, this.imagenOpcionalFile.name);
+    }
+    const userInfo = this.authService.getUserInfo();
+    if (userInfo) {
+      formData.append('idUsuario', userInfo.idUsuario.toString());
+      formData.append('idFicha', idFichaSeleccionada.toString());
+
+    } else {
+      console.error('No se pudo obtener la información del usuario del token JWT');
+      return;
+    }
+    formData.append('fechaPublicacion', new Date().toISOString());
+
+    this.blogService.crearBlog(formData).subscribe(
+      (response) => {
+        console.log('Blog creado exitosamente:', response);
+        this.newsList.unshift(response);
+        this.loadBlogs();
+        this.resetNewBlogForm();
+      },
+      (error) => {
+        console.error('Error al crear el blog:', error);
+      }
+    );
+  }
+
+  onFileSelected(event: any) {
+    this.imagenOpcionalFile = event.target.files[0];
+  }
+
+  resetNewBlogForm() {
+    console.log('resetea blog');
+
+    this.newBlog = { nombre: '', comentario: '', imagenOpcional: null };
+    this.imageFile = null;
+  }
+
+  editBlog(blog: any) {
+    this.editingBlog = blog;
+  }
+
+  deleteBlog(blogId: number) {
+    this.blogService.eliminarBlog(blogId).subscribe(
+      () => {
+        console.log('Blog eliminado correctamente');
+        this.newsList = this.newsList.filter(blog => blog.identificador !== blogId);
+      },
+      (error) => {
+        console.error('Error al eliminar el blog:', error);
+      }
+    );
   }
 
 
-  editNews(news: any) {
-    if (news && news.id_noticias) {
-        console.log('Editar noticia ID:', news.id_noticias);
-        this.editingNews = { ...news }; 
-    } else {
-        console.log('No se encontró un ID válido para editar la noticia.');
+  updateBlog() {
+    if (this.editingBlog) {
+      this.blogService.editarBlog(this.editingBlog.identificador, this.editingBlog).subscribe(
+        () => {
+          console.log('Blog actualizado correctamente');
+          this.loadBlogs();
+          this.cancelEdit();
+        },
+        (error) => {
+          console.error('Error al actualizar el blog:', error);
+        }
+      );
     }
   }
 
   cancelEdit() {
-    this.editingNews = null;
+    this.editingBlog = null;
   }
 
-  updateNews() {
-    this.blogService.updateNews(this.editingNews.id_noticias, this.editingNews).subscribe(() => {
-      this.loadNews();
-      this.editingNews = null;
-    });
+  toggleMenu() {
+    console.log('Función toggleMenu() llamada.');
+    this.isMenuOpen = !this.isMenuOpen;
   }
-
-  deleteNews(newsId: number) {
-    if (newsId) {
-      console.log('Eliminar noticia ID:', newsId);
-      this.blogService.deleteNews(newsId.toString()).subscribe(() => {
-        this.newsList = this.newsList.filter(news => news.id_noticias !== newsId);
-      });
-    } else {
-      console.log('No se encontró un ID válido para eliminar la noticia.');
-    }
-  }  
 }
+

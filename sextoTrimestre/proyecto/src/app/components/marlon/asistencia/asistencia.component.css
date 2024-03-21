@@ -1,24 +1,334 @@
-.list-group-item a, .list-group-item button {
-    margin-right: 10px;
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+/* Estilos Nav */
+nav{
+  background-color: #008a88;
 }
-  
 
-.btn-primary-ver-archivo {
-    background-color: #008a88;
-    border-color: #008a88;
-    color: #fff; 
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
 }
-  
-  
-.btn-primary, .btn-success {
-    background-color: #008a88;
-    border-color: #008a88;
-    color: #fff; 
-}
-  
 
-.btn-secondary {
-    background-color: #ff0000;
-    border-color: #ff0000;
-    color: #fff; 
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(14, 13, 13);
+}
+
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 700px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: block;
+    margin-right: 20px;
+  }
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-menu .nav-item {
+    margin: 0px 0;
+  }
+
+  .show-menu{
+    display: block;
+  }
+}
+
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+
+.dropdown-content { 
+  margin-top: 7px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; 
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
+
+/* Estilos para el formulario de obtener asistencia */
+.boton-small {
+  font-size: 14px;
+  margin-top: 20px;
+  background-color: #008a88; 
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+
+.boton-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876;
+}
+
+/* Estilos para los input */
+.form-control {
+  width: 100%;
+  height: 35px; 
+  font-size: 16px; 
+}
+
+.input-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 50px; 
+}
+
+
+.table {
+  display: none; 
+}
+
+/* Estilos para los selectores de fecha y ficha */
+.form-group {
+  width: 25%;
+  margin: 5px;
+}
+
+.container:has(.table) {
+  display: block;
+}
+
+/* Estilos para el contenedor de la tabla */
+.container-table {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px; 
+}
+
+.titulo, .subtitulo {
+  color: #008a88;
+  text-align: center;
+}
+
+.table {
+  width: 70%; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  overflow-x: auto; 
+  margin: 0 auto;
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th,
+.table td {
+  padding: 12px;
+  text-align: center;
+  width: 10%; 
+}
+
+/* Estilos para el encabezado de la tabla */
+.table th {
+  background-color: #008a88;
+  color:#fff;
+  font-weight: bold;
+  width: 2%; 
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(2), 
+.table td:nth-child(2) {
+  width: 20%; 
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(3), 
+.table td:nth-child(3) {
+  width: 25%;
+}
+
+/* Estilos para las filas y celdas de la tabla */
+.table th:nth-child(4), 
+.table td:nth-child(4) {
+  width: 25%;
+}
+
+.table th:last-child, 
+.table td:last-child {
+  width: 30%; 
+}
+
+/* Estilos para el cuerpo de la tabla */
+.table tbody {
+  background-color: white; 
+}
+
+/* Estilos para las celdas de la tabla en pantallas pequeñas */
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 8px; 
+  }
+}
+
+/* Estilos para el área de edición */
+.table select {
+  font-size: 13px;
+  padding: 2px 2px; 
+}
+
+/* Estilos para los botones */
+.table button.btn-primary,
+.table button.btn-info {
+  font-size: 13px; 
+  padding: 4px 8px; 
+  background-color: #008a88;
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+/* Efecto al pasar el mouse */
+.table button.btn-primary:hover,
+.table button.btn-info:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876; 
+}
+
+/* Estilos para el botón de cancelar */
+.table button.btn-secondary {
+  margin: 3px;
+  font-size: 13px; 
+  padding: 4px 8px; 
+  background-color: #dc3545;
+  color: white; 
+  border: none; 
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease; 
+}
+
+/* Efecto al pasar el mouse */
+.table button.btn-secondary:hover {
+  transform: translateY(-2px); 
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #c82333;
+}
+
+.selected-ficha {
+  font-weight: bold;
+  color: #008a88;
+}
+
+.alert.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.alert-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffcccb;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.alert-message {
+  color: #900;
+  font-weight: bold;
+}
+
+.alert-message button {
+  margin-left: 10px;
+  cursor: pointer;
 }

@@ -10,6 +10,16 @@ import { EditPerfilComponent } from './edit-perfil/edit-perfil.component';
 import { NavComponent } from './nav/nav.component';
 import { RegistrosAdminComponent } from './registros-admin/registros-admin.component';
 import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuarios.component';
+import { MatIconModule } from '@angular/material/icon';
+import { StatisticsInstructoresComponent } from './statistics-instructores/statistics-instructores.component';
+import { NgChartsModule } from 'ng2-charts';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import {FichasInstructoresComponent} from './fichas-instructores/fichas-instructores.component';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { AsignarFichaComponent } from './asignar-ficha/asignar-ficha.component';
+import { FichasAprendicesComponent } from './fichas-aprendices/fichas-aprendices.component';
+import { AsistenciaFichasComponent } from './asistencia-fichas/asistencia-fichas.component';
+
 
 
 @NgModule({
@@ -22,12 +32,24 @@ import { ModificarUsuariosComponent } from './modificar-usuarios/modificar-usuar
     NavComponent,
     RegistrosAdminComponent,
     ModificarUsuariosComponent,
+    SidebarComponent,
+    StatisticsInstructoresComponent,
+    FichasInstructoresComponent,
+    AsignarFichaComponent,
+    FichasAprendicesComponent,
+    AsistenciaFichasComponent,
+
   ],
+
   imports: [
+    NgApexchartsModule,
+    MatIconModule,
     CommonModule,
+    NgChartsModule,
     SergioRoutingModule,
-    FormsModule, // Importa FormsModule aquí
-    ReactiveFormsModule, // Importa ReactiveFormsModule aquí
+    FormsModule,
+    ReactiveFormsModule,
+
   ]
 })
 export class SergioModule { }

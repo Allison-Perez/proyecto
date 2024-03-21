@@ -21,17 +21,14 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Puedes agregar lógica de inicialización si es necesaria
+
   }
 
   logout() {
     this.authService.logout();
-    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
-    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+
     this.router.navigate(['/login']);
   }
-
-  // En tu componente Angular (update-password.component.ts)
 
   cambiarContrasena() {
   const passwordAnterior = this.form.value.passwordAnterior;

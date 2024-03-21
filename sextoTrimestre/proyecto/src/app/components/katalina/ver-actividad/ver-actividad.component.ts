@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ServiceService } from '../service/servicie.katalina.service';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-ver-actividad',
@@ -7,64 +10,83 @@ import { ServiceService } from '../service/servicie.katalina.service';
   styleUrls: ['./ver-actividad.component.scss']
 })
 export class VerActividadComponent {
-  activityList: any[] = [];
-  newActivity: any = { nombreArchivo: '', comentario: '' };
-  editingActivity: any | null = null;
-  selectedFile: File | null = null;
+  email: string = '';
+  userInfo: any;
+  guias: any;
+  newsList: any[] = [];
+  mostrarMenuPerfil: boolean = false;
   isMenuOpen: boolean = false;
-
-  constructor(private ServiceService: ServiceService) {}
+  
+  constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router) {}
 
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
-  }  
+  }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
-  ngOnInit() {
-    this.loadActivities();
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
+  }
+  
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
   }
 
-  loadActivities() {
-    this.ServiceService.getActivities().subscribe((data) => {
-      this.activityList = data;
-    });
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
   }
 
-  handleFileInput(event: any) {
-    this.selectedFile = event.target.files[0];
+  ngOnInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.getUserInfo();
+    this.getGuias();
   }
 
-  updateActivity() {
-    if (this.editingActivity) {
-      const formData = new FormData();
-      formData.append('nombreArchivo', this.editingActivity.nombreArchivo);
-      formData.append('comentario', this.editingActivity.comentario);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
+  getUserInfo() {
+    const idguia = 1;
+
+    this.ServiceService.getUserInfoByguias(idguia).subscribe(
+      (data) => {
+        this.userInfo = data;
+      },
+      (error) => {
+        console.error('Error al obtener información del usuario por guias:', error);
       }
-
-      this.ServiceService.updateActivity(this.editingActivity.id, formData).subscribe(
-        () => {
-          this.loadActivities();
-          this.editingActivity = null;
-          this.selectedFile = null;
-        },
-        (error) => {
-          console.error('Error al actualizar actividad:', error);
-
-        }
-      );
-    }
+    );
   }
 
-  descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
+
+  getGuias() {
+    this.ServiceService.getguias(this.email).subscribe(
+      (data) => {
+        this.guias = data;
+      },
+      (error) => {
+        console.error('Error al obtener guias por correo:', error);
+      }
+    );
+  }
+
+
+  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
     link.click();
   }
 
+  
+  formatDate(date: Date): string {
+    // Implement your date formatting logic here
+    return ''; // Replace with your actual implementation
+  }
 }
-

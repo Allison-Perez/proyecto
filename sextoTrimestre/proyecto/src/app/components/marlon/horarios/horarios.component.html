@@ -1,77 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <title>Actividad</title>
-</head>
-<body>
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" routerLink="/vista-instructor">
-                <img src="../../assets/imagenes/LOGO SIN FONDO.png" alt="Logo de la página" width="51" height="50">
-                A C A N N E R
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    
-                </ul>
-            </div>
-        </div>
-    </header>
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <h3 class="titulo">Crear Horario</h3>
-        <form (ngSubmit)="createHorario(form)" #form="ngForm">
-          <div class="form-group">
-            <label for="nombreArchivo">Horario de la ficha:</label>
-            <input [(ngModel)]="newHorario.nombreArchivo" name="nombreArchivo" class="form-control" required>
-            <div *ngIf="form.controls['nombreArchivo'].invalid && (form.controls['nombreArchivo'].dirty || form.controls['nombreArchivo'].touched)" class="text-danger">Diligenciar todos los campos</div>
-          </div>
-          <div class="form-group">
-            <label for="archivo">Subir archivo:</label>
-            <input type="file" (change)="handleFileInput($event)" name="archivo" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="comentario">Comentario:</label>
-            <textarea [(ngModel)]="newHorario.comentario" name="comentario" class="form-control" required></textarea>
-          </div>
-          <br>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
-        <h2 class="subtitulo mt-5">Horarios</h2>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let horario of horarioList">
-            <ng-container *ngIf="!editingHorario || horario.id !== editingHorario.id; else editTemplate">
-              <h4>{{ horario.nombreArchivo }}</h4>
-              <p>{{ horario.comentario }}</p>
-              <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-              <button (click)="editHorario(horario)" class="btn btn-primary">Editar</button>
-              <button (click)="deleteHorario(horario.id_horario)" class="btn btn-danger">Eliminar</button>
-            </ng-container>
-            <ng-template #editTemplate>
-              <div class="form-group">
-                <input [(ngModel)]="editingHorario.nombreArchivo" name="nombreArchivo" class="form-control" />
-              </div>
-              <div class="form-group">
-                <textarea [(ngModel)]="editingHorario.comentario" name="comentario" class="form-control"></textarea>
-              </div>
-              <button (click)="updateHorario()" class="btn btn-success">Guardar</button>
-              <button (click)="cancelEdit()" class="btn btn-secondary">Cancelar</button>
-            </ng-template>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+/>
+<nav class="navbar">
+  <div class="container-fluid">
+    <a class="nav-link nombre" >Acanner</a>
+    <div class="menu-icon" (click)="toggleProfileMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <ul [ngClass]="{'nav': true, 'show-menu': mostrarMenuPerfil}">
+      <li class="nav-item">
+        <a routerLink="/vista-instructor" class="nav-link">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/blog" class="nav-link" aria-current="page">Blog</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/actividad" class="nav-link">Actividades</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/asistencia" class="nav-link">Asistencias</a>
+      </li>
+      <div class="dropdown">
+        <button class="dropdown-button" (click)="toggleProfileMenu()">
+          <span class="material-symbols-outlined">person</span>
+        </button>
+        <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+          <li class="nav-item">
+            <a routerLink="/perfil" class="nav-link otro " aria-current="page">Ver Perfil</a>
           </li>
-        </ul>
+          <li class="nav-item">
+            <a routerLink="/estadisticas" class="nav-link otro ">Estadísticas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <h2>Crear Horarios</h2>
+  <form (submit)="crearHorario()" enctype="multipart/form-data">
+    <div>
+      <label for="fichaSelect">Seleccionar ficha:</label>
+      <select id="fichaSelect" [(ngModel)]="selectedFicha" (change)="loadHorario()" name="fichaSelect">
+        <option *ngFor="let ficha of fichas" [value]="ficha.identificador">{{ ficha.numeroFicha }}</option>
+      </select>
+    </div>
+    <label for="nombre">Titulo:</label>
+    <input type="text" id="nombre" name="nombre" [(ngModel)]="newHorario.nombre" required>
+    <label for="comentario">Comentario:</label>
+    <textarea id="comentario" name="comentario" [(ngModel)]="newHorario.comentario" required></textarea>
+    <label for="archivo">Archivo:</label>
+    <input type="file" id="archivo" name="archivo" (change)="handleFileInput($event)" required><br>
+    <button type="submit" class="boton">Subir Horario</button>
+  </form>
+</div>
+
+<div class="mostrar">
+  <h2 class="tituloMostrar">Lista de Horarios</h2>
+  <div *ngIf="newsList.length > 0; else noHorarios">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let horario of newsList">
+        <div class="card mb-3">
+          <div class="card-body">
+            <p class="date" style="font-size: 12px;">{{ horario.fecha | date:'dd/MM/yyyy'}}</p>
+            <h3 class="card-title">{{ horario.nombre }}</h3>
+            <img class="image" src="assets/imagenes/Horario.png" alt="Portada">
+            <p class="card-text">{{ horario.comentario }}</p>
+            <div class="button-container">
+
+              <button class="botonn" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">
+                <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
+                <span class="icon2"></span>
+                <span class="tooltip">Descargar</span>
+              </button>
+
+              <button class="edit-button" (click)="editarHorario(horario)">
+                <svg class="edit-svgIcon" viewBox="0 0 512 512">
+                  <path
+                    d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
+                  ></path>
+                </svg>
+              </button>
+
+              <button class="btnDelete" (click)="eliminarHorario(horario.identificador)">
+                <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 69 14"
+                class="svgIcon bin-top"
+              >
+                <g clip-path="url(#clip0_35_24)">
+                  <path
+                    fill="black"
+                    d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_35_24">
+                    <rect fill="white" height="14" width="69"></rect>
+                  </clipPath>
+                </defs>
+              </svg>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 69 57"
+                class="svgIcon bin-bottom"
+              >
+                <g clip-path="url(#clip0_35_22)">
+                  <path
+                    fill="black"
+                    d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+                  ></path>
+                </g>
+                <defs>
+                  <clipPath id="clip0_35_22">
+                    <rect fill="white" height="57" width="69"></rect>
+                  </clipPath>
+                </defs>
+              </svg>
+              </button>
+            </div><br>
+            <div *ngIf="editingHorario && editingHorario.identificador === horario.identificador">
+              <form (ngSubmit)="guardarEdicion()" #editHorarioForm="ngForm">
+                <div class="form-group">
+                  <label for="nombre">Titulo:</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="editingHorario.nombre" required>
+                </div>
+                <div class="form-group">
+                  <label for="comentario">Comentario:</label>
+                  <textarea class="form-control" id="comentario" name="comentario" [(ngModel)]="editingHorario.comentario" required></textarea>
+                </div>
+
+                <div class="button-container">
+                  <button type="submit" class="btnCloud">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon"><path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path></svg>
+                  </button>
+
+
+                  <button type="button" class="cancel" (click)="cancelarEdicion()">
+                    <span class="X"></span>
+                    <span class="Y"></span>
+                    <div class="close">CANCELAR</div>
+                  </button>
+                </div>
+
+
+
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+  <ng-template #noHorarios>
+    <p>No hay horarios disponibles.</p>
+  </ng-template>
+</div>

@@ -1,165 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+// PERFIL
+.titulo {
+  margin-left: 20px;
+  margin-bottom: 25px;
+  color: #008a88;
+  font-family: "Outfit", sans-serif;
+  font-weight: bolder;
+  font-size: 30px;
+  font-style: normal;
+}
+
 .perfil-detalle {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 80%;
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    
+  margin-left: 350px;
+  margin-top: 100px;
+  margin-bottom: 5px;
+  height: 370px;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.282);
+  text-align: center;
 }
 
-.card-img-top.small-centered {
-    border-radius: 50%;
-    max-width: 150px; 
-    margin: 0 auto;
-    display: block;
+.foto-container {
+  position: relative;
+  overflow: hidden;
 }
 
-  
-.nav-img{
-    width: 50px;
+.foto {
+  width: 250px;
+  height: 250px;
+  min-width: 250px;
+  min-height: 250px;
+  margin-left: -400px;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+  position: relative;
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
+.foto:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  filter: brightness(80%);
 }
 
-.nombre {
-    font-weight: bold;
-    flex-grow: 15; 
-    text-align: center; 
+.eliminar-icono {
+  position: absolute;
+  top: 55%;
+  left: 24%;
+  transform: translate(-50%, -50%);
+  color:#5a0707;
+  background-color: rgba(255, 255, 255, 0.457);
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 10;
 }
 
-button {
-    background-color: #088a88;
-    color: #fff; /* Color del texto */
-    padding: 10px 20px; /* Ajusta el tamaño del botón según tus necesidades */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 10px ;
-  }
-  
-  /* Estilo de hover del botón */
-  .button:hover {
-    background-color: #159997; /* Nuevo color al pasar el mouse sobre el botón */
-  }
+.foto-container:hover .eliminar-icono {
+  opacity: 1;
+  visibility: visible;
+}
 
 .information{
-    text-align: left;
+  font-size: 15px;
+  margin-left: 350px;
+  margin-top: -230px;
+  text-align: left;
 }
 
-h1 {
-    font-weight: bold;
-    flex-grow: 15; 
-    text-align: center; 
-    color: #088a88;
+.font-weight-bold{
+  font-weight: bold;
 }
 
- /* Estilos para el menú hamburguesa */
-  
- .nav ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
+span {
+  font-weight: normal;
+}
+
+// BOTONES
+
+.botones {
+  margin-top: 60px;
+  margin-bottom: 90px;
+}
+
+.boton:hover{
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color: #027876
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.cambiar-foto .material-symbols-outlined,
+.editar .material-symbols-outlined,
+.cambiar-contrasena .material-symbols-outlined {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .texto-oculto,
+.editar:hover .texto-oculto,
+.cambiar-contrasena:hover .texto-oculto {
+  visibility: hidden;
+}
+
+.cambiar-foto:hover .material-symbols-outlined,
+.editar:hover .material-symbols-outlined,
+.cambiar-contrasena:hover .material-symbols-outlined {
+  visibility: visible;
+}
+.boton {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 13px;
+  background-color: #008a88;
+  color: white;
+  border: 2px solid #008a88;
+  border-radius: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.boton .material-symbols-outlined {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.boton:hover .material-symbols-outlined {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.texto-oculto {
+  visibility: visible;
+}
+
+.boton:hover .texto-oculto {
+  visibility: hidden;
+}
+
+.eliminar-icono,
+.cambiar-foto,
+.editar,
+.cambiar-contrasena {
+  cursor: pointer;
+}
+
+// ESTILOS NAV
+nav{
+  background-color: #008a88;
+}
+button {
+  color: #fff;
   }
-  
-  .nav .nav-item {
-    cursor: pointer;
-    margin-bottom: 5px;
+/* Estilos Nav */
+nav{
+  background-color: #008a88;
+}
+
+/* Estilos para el menú hamburguesa */
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover{
+  color: rgb(255, 255, 255);
+}
+.nombre{
+  padding: 10px;
+  color: white;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+/* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
+.show-menu .menu-icon {
+  display: block;
+}
+
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+/* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
+@media (max-width: 700px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
   }
-  
-  .nav-link {
-    color: #070707;
-  }
-  .nombre{
-    color: black;
-    font-weight: bold;
-  }
-  
-  .nav-item:last-child .btn-primary {
-    cursor: pointer;
-  }
-  
-  
-  .menu-icon {
-    cursor: pointer;
+
+  .nav {
     display: none;
   }
-  
-  .menu-icon .bar {
-    width: 20px;
-    height: 3px;
-    background-color: #088a88;
-    margin: 6px 0;
-  }
-  
-  /* Estilos para mostrar el menú cuando isMenuOpen es verdadero */
-  .show-menu .menu-icon {
+
+  .menu-icon {
+    cursor: pointer;
     display: block;
+    margin-right: 20px;
   }
-  
+
+  /* Estilos para mostrar el menú en pantallas pequeñas */
   .show-menu .nav {
     display: flex;
     flex-direction: column;
   }
-  
+
   .show-menu .nav-item {
-    margin: 10px 0;
-  }
-  
-  /* Estilos para el menú hamburguesa en pantallas más pequeñas (500px o menos) */
-  @media (max-width: 601px) {
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-    }
-  
-    .nav {
-      display: none;
-    }
-  
-    .menu-icon {
-      cursor: pointer;
-      display: block;
-      margin-right: 20px;
-    }
-  
-    /* Estilos para mostrar el menú en pantallas pequeñas */
-    .show-menu .nav {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    .show-menu .nav-item {
-      margin: 10px 0;
-    }
-  
-    .show-menu{
-      display: block;
-    }
+    margin: 0px 0;
   }
 
-  @media (max-width: 601px){
+  .show-menu{
+    display: block;
+  }
+}
 
-    .perfil-detalle {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-      max-width: 500px;
-      width: 80%;
-      position: absolute;
-      top: 70%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      
+/* Estilo del dropdown */
+.otro {
+  color: #008a88;
+}
+button {
+  color: #fff;
+}
+
+.dropdown-content {
+  margin-top: 7px;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  background-color: #fff; /* Color de fondo */
+  border: 1px solid #ccc; /* Borde del menú */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.dropdown-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #008a88;
+}
+
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #070707;
+}
+
+@media screen and (max-width: 700px) {
+  /* Estilos específicos para pantallas de 700 píxeles o menos */
+  .titulo {
+    margin-left: 30%;
   }
-  
+
+  .perfil-detalle {
+    margin-left: 10%;
+    margin-top: 5%;
+    max-width: 80%;
+    height: 80%;
   }
+
+  .foto {
+    margin-left: -5%;
+    margin-top: 5%;
+  }
+
+  .information {
+    margin-left: 0%;
+    margin-top: 5%;
+    text-align: center;
+  }
+
+  .botones {
+    margin: 5%;
+  }
+
+  .boton {
+    margin: 1%;
+    padding: 1% 2%;
+  }
+}

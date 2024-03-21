@@ -1,28 +1,39 @@
+// blog.service.ts
+
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../allison/service/auth.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class BlogService {
-  private apiUrl = 'http://localhost:3000/api/blog';
+  private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getNews(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/list`);
+  crearBlog(blogData: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<any>(`${this.apiUrl}/crearBlog`, blogData, { headers });
   }
 
-  createNews(newsData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/create`, newsData);
+  getFichasUsuario(): Observable<any[]> {
+    const idUsuario = this.authService.getUserInfo().idUsuario;
+    return this.http.get<any[]>(`${this.apiUrl}/fichasPorUsuario/${idUsuario}`);
   }
 
-  updateNews(newsId: string, updatedData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update/${newsId}`, updatedData);
+  getBlogsPorUsuario(idUsuario: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/blogsPorUsuario/${idUsuario}`);
   }
 
-  deleteNews(newsId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/delete/${newsId}`);
+  editarBlog(idBlog: number, blogData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(`${this.apiUrl}/editarBlog/${idBlog}`, blogData, { headers });
+  }
+
+  eliminarBlog(idBlog: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/eliminarBlog/${idBlog}`);
   }
 }

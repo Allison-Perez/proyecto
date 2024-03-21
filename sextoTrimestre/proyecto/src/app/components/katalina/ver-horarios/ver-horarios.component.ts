@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { ServiceService } from '../service/servicie.katalina.service';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-ver-horarios',
@@ -7,64 +10,73 @@ import { ServiceService } from '../service/servicie.katalina.service';
   styleUrls: ['./ver-horarios.component.scss']
 })
 export class VerHorariosComponent {
-  horarioList: any[] = [];
-  newHorario: any = { nombreArchivo: '', comentario: '' };
-  editingHorario: any | null = null;
-  selectedFile: File | null = null;
+  email: string = '';
+  userInfo: any; 
+  horarios: any; 
+  newsList: any[] = [];
+  mostrarMenuPerfil: boolean = false;
   isMenuOpen: boolean = false;
 
-  constructor(private ServiceService : ServiceService ) {}
+  constructor(private ServiceService: ServiceService, private authService: AuthService, private router: Router ) {}
 
   toggleMenu() {
     console.log('Función toggleMenu() llamada.');
     this.isMenuOpen = !this.isMenuOpen;
-  }  
-
-  ngOnInit() {
-    this.loadHorario();
   }
+  toggleProfileMenu() {
+    console.log(this.mostrarMenuPerfil);
 
-  loadHorario() {
-    this.ServiceService .getHorario().subscribe((data) => {
-      this.horarioList = data;
-    });
-  }
-
-  handleFileInput(event: any) {
-    this.selectedFile = event.target.files[0];
+    this.mostrarMenuPerfil = !this.mostrarMenuPerfil;
   }
   
-  updateHorario() {
-    if (this.editingHorario) {
-      const formData = new FormData();
-      formData.append('nombreArchivo', this.editingHorario.nombreArchivo);
-      formData.append('comentario', this.editingHorario.comentario);
-      if (this.selectedFile) {
-        formData.append('archivo', this.selectedFile);
-      }
-
-      this.ServiceService .updateHorario(this.editingHorario.id, formData).subscribe(
-        () => {
-          this.loadHorario();
-          this.editingHorario = null;
-          this.selectedFile = null;
-        },
-        (error) => {
-          console.error('Error al actualizar horario:', error);
-
-        }
-      );
-    }
+ redirectTo(route: string) {
+    this.router.navigate([route]);
+    // Cierra el menú después de redirigir
+    this.mostrarMenuPerfil = false;
   }
 
-
-
-  descargarArchivo(archivoUrl: string) {
-    // Construye la URL del servidor para descargar el archivo
+  logout() {
+    this.authService.logout();
+    // Redirige al usuario a la página de inicio de sesión o a donde desees después del cierre de sesión.
+    // Por ejemplo, puedes usar el enrutador para redirigir al componente de inicio de sesión.
+    this.router.navigate(['/login']);
+  }
+  ngOnInit(): void {
+    this.email = this.authService.getUserEmail();
+    this.getUserInfo();
+    this.getHorarios();
+  }
+  
+  getUserInfo() {
+    const idHorario = 1;
+  
+    this.ServiceService.getUserInfoByHorario(idHorario).subscribe(
+      (data) => {
+        this.userInfo = data;
+      },
+      (error) => {
+        console.error('Error al obtener información del usuario por horario:', error);
+      }
+    );
+  }
+  
+  getHorarios() {
+    this.ServiceService.getHorarios(this.email).subscribe(
+      (data) => {
+        this.horarios = data;
+      },
+      (error) => {
+        console.error('Error al obtener horarios por correo:', error);
+      }
+    );
+  }
+  descargarArchivo(archivoUrl: string, nombreArchivo: string) {
     const url = `http://localhost:3000${archivoUrl}`;
     const link = document.createElement('a');
     link.href = url;
     link.target = '_blank';
+    link.download = nombreArchivo;
+    document.body.appendChild(link);
     link.click();
   }
 }

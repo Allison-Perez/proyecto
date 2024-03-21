@@ -1,9 +1,7 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<nav class="navbar">
   <div class="container-fluid">
-    <img src="assets/imagenes/LOGO SIN FONDO.png" class="nav-img" alt="icono">
-    <div class="navbar">
-      <div class="navbar">
+    <a class="nav-link nombre" >Acanner</a>
         <div class="menu-icon" (click)="toggleMenu()">
           <div class="bar"></div>
           <div class="bar"></div>
@@ -11,39 +9,49 @@
         </div>
         <ul [ngClass]="{'nav': true, 'show-menu': isMenuOpen}">
           <li class="nav-item">
-            <a routerLink="/perfil-detalle" class="nav-link active" aria-current="page">
-              <i class="fas fa-user"></i>
-            </a>
-          </li>
-          <li class="nav-item">
             <a routerLink="/indexKatalina" class="nav-link">Inicio</a>
           </li>
-          <li class="nav-item">
-            <a routerLink="/ver-blog" class="nav-link active" aria-current="page">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
-          </li>
+            <li class="nav-item">
+              <a routerLink="/ver-blog" class="nav-link" aria-current="page">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-actvidades" class="nav-link">Actividades</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/ver-asistencias" class="nav-link">Asistencias</a>
+            </li>
+            <div class="dropdown">
+              <button class="dropdown-button" (click)="toggleProfileMenu()">
+                <span class="material-symbols-outlined">person</span>
+              </button>
+              <div class="dropdown-content" *ngIf="mostrarMenuPerfil" >
+                <li class="nav-item">
+                  <a routerLink="/perfil-detalle" class="nav-link otro " aria-current="page">Ver Perfil</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link otro" (click)="logout()">Cerrar Sesión</a>
+                </li>
+              </div>
+            </div> 
         </ul>
-      </div>
-    </div>
   </div>
 </nav>
-  <h2 class="subtitulo mt-5">Horarios</h2>
-  <div class="container">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let horario of horarioList">
-        <h4>{{ horario.nombreArchivo }}</h4>
-        <p>{{ horario.comentario }}</p>
-        <a (click)="descargarArchivo(horario.archivoUrl)" class="btn btn-primary-ver-archivo">Ver archivo</a>
-      </li>
-    </ul>
-  </div>
-  
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<h2 class="titulos">Horarios</h2>
+
+<div class="noticias-container">
+  <div *ngFor="let horario of horarios" class="instagram-div">
+    <h3 class="titulo">{{ horario.nombre }}</h3>
+    <p class="date" style="font-size: 13px;">Fecha de Publicación: {{ horario.fecha | date:'dd/MM/yyyy' }}</p>
+    <p class="card-text"><strong>Comentario:</strong> {{ horario.comentario }}</p>
+    <img src="assets/imagenes/Blog.png" alt="imagen">
+    <button class="btn btn-primary boton" (click)="descargarArchivo(horario.urlArchivo, horario.nombreArchivo)">Ver Archivo</button>
+    <p class="card-text"><strong>Publicado por: </strong>{{ horario.primerNombre }} {{ horario.primerApellido }}</p>
+  </div>
+</div>
+
+<div *ngIf="!userInfo || !horarios">
+  <p>Cargando información...</p>
+</div>
+
+

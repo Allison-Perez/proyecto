@@ -1,96 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Protest+Riot&display=swap');
+
+
+main{
+  margin-top: 5%;
+}
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(#D1D5D5, #0b4f6c);
+  background: radial-gradient(circle at top left, #f7f7f7, #008a88);
 }
 
-.degradado {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 70%;
-  height: 100%;
-  background: linear-gradient(to right, rgba(5, 122, 122, 1), rgba(8, 138, 136, 0.7), rgba(5, 107, 105, 0.5), transparent);
-  z-index: -1;
+.titulo {
+  color: #0d5755;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.0;
+  font-size: 45px;
+  font-family: "Outfit", sans-serif;
 }
 
-.black-title {
-  color: #000; 
+.descripcion {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  width: 570px;
 }
 
-
-@media (max-width: 767px) {
-body {
-    background: #57a7a5;;
-}
-.degradado {
-    display: none;
-}
-}
-.navbar-toggler {
-border: none;
-color: #0b4f6c;
+.nav .nav-item {
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
-.white-title {
-  color: #fff;
+.nav-link {
+  font-weight: bold;
+  color: white;
 }
 
-.black-link {
-  color: #000;
+.nav-link:hover{
+  color: #0d5755;
 }
 
-ul{
-  margin-right: 50px;
+.nombre{
+  padding: 10px;
+  color:  #008a88;
+  font-size: 25px;
+  font-family: 'Lobster',sans-serif;
 }
 
+// ESTILOS HAMBURGUESA
 
-.my-auto {
-  margin-top: 20px;
+.menu-icon {
+  cursor: pointer;
+  display: none;
 }
 
-
-img{
-  margin-left: 10px;
-  border-radius: 30px;
+.menu-icon .bar {
+  width: 20px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
 }
 
-@media (min-width: 992px) {
-main {
-    margin-top: 10vh;
-}
+.show-menu .menu-icon {
+  display: block;
 }
 
-@media (max-width: 992px) {
-.navbar {
-    margin-top: 0;
-}
+.show-menu .nav {
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 767px) {
-  .navbar-toggler {
-    position: absolute;
-    right: 15px;
+.show-menu .nav-item {
+  margin: 10px 0;
+}
+
+@media (max-width: 601px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
   }
-}
 
-@media (max-width: 767px) {
-  .navbar-nav {
-    flex-direction: column-reverse;
-    align-items: flex-end;
-    margin: auto;
+  .nav-link {
+    font-weight: bold;
+    color:#008a88;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .menu-icon {
+    cursor: pointer;
+    display: block;
     margin-right: 20px;
   }
 
-  .navbar-nav .nav-item {
-    margin-right: 0;
+  .show-menu .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-menu .nav-item {
+    margin: 0px 0;
+  }
+
+  .show-menu{
+    display: block;
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
+  .col-md-6 {
+    width: 100%;
+  }
+  .descripcion {
+    width: 100%;
+    font-size: 18px;
+  }
+
+.titulo {
+  margin-top: 5%;
+  text-align: center;
+  line-height: 1.0;
+  font-size: 35px;
+
+}
+
 .img-fluid {
+  max-width: 80%;
+  height: auto;
+}
+
+}
+
+@media (max-width: 767px) {
+  .col-md-6 {
+    width: 90%;
+  }
+
+  .titulo[_ngcontent-ng-c4128592498] {
+    text-align: center;
+    line-height: 1;
+    font-size: 33px;
     margin-top: 30px;
+
+  }
+  .descripcion {
+    text-align: center;
+    font-size: 16px;
+
+  }
+
+  .img-fluid {
+    max-width: 60%;
+    height: auto;
+  }
+
+  .titulo {
+    text-align: left;
+    line-height: 1.0;
+    font-size: 35px;
+    margin-top: 20px;
+
+  }
+
 }
-}
+

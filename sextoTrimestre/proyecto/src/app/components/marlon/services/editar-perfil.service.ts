@@ -12,12 +12,12 @@ export class EditarPerfilService {
   apiUrl = 'http://localhost:3000';
 
   getUserInfoByEmail(email: string): Observable<any> {
-    const url = `${this.apiUrl}/api/obtener-usuario?correo=${email}`;
+    const url = `${this.apiUrl}/api/obtenerInstructor?correo=${email}`;
     return this.http.get(url);
   }
 
   updateUserInfoByEmail(email: string, userData: any): Observable<any> {
-    const url = `${this.apiUrl}/api/actualizar-usuario?correo=${email}`;
-    return this.http.post(url, userData);
+    const url = `${this.apiUrl}/api/actualizarInstructor?correo=${email}`;
+    return this.http.put(url, userData);
   }
 }

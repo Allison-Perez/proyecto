@@ -1,0 +1,50 @@
+<app-sidebar></app-sidebar>
+<div class="container">
+  <div class="statistics-container">
+    <h2>Estadísticas de Instructores</h2>
+    <div class="filtro-container">
+      <label for="filtroFicha">Filtrar por Ficha:</label>
+    <select id="filtroFicha" [(ngModel)]="filtroFicha">
+      <option value="" disabled selected>Seleccione una ficha</option>
+      <option *ngFor="let ficha of listaFichas" [value]="ficha">{{ ficha }}</option>
+    </select>
+
+      <label for="filtroNombre">Filtrar por Nombre:</label>
+      <input type="text" id="filtroNombre" [(ngModel)]="filtroNombre">
+
+      <label for="filtroDocumento">Filtrar por Documento:</label>
+      <input type="number" id="filtroDocumento" [(ngModel)]="filtroDocumento">
+
+      <div class="filtro-buttons">
+        <button (click)="aplicarFiltros()">Aplicar Filtros</button>
+        <button (click)="limpiarFiltros()">Limpiar Filtros</button>
+      </div>
+    </div>
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Documento</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Fecha de Nacimiento</th>
+          <th>Ficha</th>
+          <th>Correo</th>
+          <th>Fecha de ingreso</th>
+          <th>Celular</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let instructor of filteredInstructores">
+          <td>{{ instructor.documento }}</td>
+          <td>{{ instructor.primerNombre }} {{ instructor.segundoNombre }}</td>
+          <td>{{ instructor.primerApellido }} {{ instructor.segundoApellido }}</td>
+          <td>{{ instructor.fechaNacimiento }}</td>
+          <td>{{ instructor.numeroFicha }}</td>
+          <td>{{ instructor.correo }}</td>
+          <td>{{ instructor.fechaIngreso | date : "dd/MM/yyyy" }}</td>
+          <td>{{ instructor.celular }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

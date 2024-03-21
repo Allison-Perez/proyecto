@@ -1,45 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap');
+
+.container-vista{
+  padding: 20px;
+  overflow: hidden;
+}
 
 .titulo {
-  font-weight: bold;
+  font-family: 'Gowun Batang', serif;
+  font-size: 35px;
   color: #088a88;
   text-align: center;
-  margin-top: 20px; /* Reducido el espacio superior */
-  margin-bottom: 10px; /* Nuevo margen inferior */
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .sub-titulo {
+  font-family: 'Gowun Batang', serif;
   color: #333;
   text-align: center;
-  margin-bottom: 20px; /* Nuevo margen inferior */
+  margin-bottom: 30px;
 }
 
 .contenedor {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh; /* Ajustar según necesidades */
+  height: 80vh; /* Ajustar según necesidades */
 }
 
 .descripción {
+  font-size: 18px;
   max-width: 600px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  border-radius: 20px;
   margin-right: 40px;
 }
 
 .photo {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  height: 300px;
 }
 
 .photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+}
+
+@media (max-width: 1200px) {
+  .container-vista {
+    margin-left: 0; /* Elimina el margen izquierdo */
+  }
+
+  .photo {
+    width: 100%; /* Haz que la imagen ocupe el ancho completo */
+    max-width: 275px; /* Establece un ancho máximo si es necesario */
+    margin-top: 15px; /* Agrega un espacio entre la descripción y la imagen */
+  }
+
+  .contenedor {
+    flex-direction: column; /* Cambia la dirección del contenedor a columna */
+    align-items: center; /* Centra los elementos en el eje transversal */
+    height: auto; /* Establece la altura automática */
+  }
+
+  .descripción {
+    margin-right: 0; /* Elimina el margen derecho */
+  }
+}
+
+@media (max-width: 500px) {
+  .container-vista {
+    margin-left: 0; /* Elimina el margen izquierdo */
+  }
+
+  .photo {
+    display: none; /* Oculta la imagen */
+  }
+
+  .contenedor {
+    flex-direction: column; /* Cambia la dirección del contenedor a columna */
+    align-items: center; /* Centra los elementos en el eje transversal */
+    height: auto; /* Establece la altura automática */
+  }
+
+  .descripción {
+    margin-right: 0; /* Elimina el margen derecho */
+  }
 }

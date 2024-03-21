@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+h2{
+  font-family: "Comfortaa", sans-serif;
+  color: #088a88;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.filtro-container {
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+}
+
+.filtro-container label {
+  font-size: 13px;
+  color: #4d4d4d;
+}
+
+.filtro-container input,
+.filtro-container select {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #57a7a5;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 15px;
+  outline: none;
+}
+
+.filtro-container select option {
+  font-size: 14px;
+}
+
+.filtro-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filtro-buttons button {
+  background-color: #57a7a5;
+  color: white;
+  padding: 9px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-buttons button:hover {
+  background-color: #4d8a83;
+}
+
+.container {
+  max-width: 100%;
+  overflow: hidden;
+
+}
+
+.statistics-container {
+  overflow-x: auto;
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.filters {
+  margin: 20px 0;
+}
+
+label {
+  margin-right: 10px;
+}
+
+select {
+  width: 150px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #57a7a5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #437f7d;
+}
+
+.custom-table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+table.custom-table thead {
+  background-color: #57a7a5;
+}
+
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+th {
+  text-align: center;
+  color: white;
+}
+
+td {
+  color: #333;
+}
+
+td:hover {
+  background-color: #e0f7fa;
+  color: #333;
+}
+
+td.edit-mode {
+  width: 150px;
+}
+
+td.view-mode {
+  width: 100px;
+}
+
+.table_true {
+  max-width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.table_true input {
+  width: 90%;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 1015px) {
+  .filtro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 80%;
+  }
+  .filtro-buttons{
+    margin-top: 10px;
+  }
+  h2{
+    font-size: 20px;
+  }
+}
