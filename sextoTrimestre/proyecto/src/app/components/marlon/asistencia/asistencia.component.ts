@@ -222,7 +222,7 @@ getAsistencia() {
     fallasObservables.push(fallasObservable);
   
     forkJoin(fallasObservables).subscribe((result: any[]) => {
-      const fallas = result[0]; // Assuming result is an array with a single element
+      const fallas = result[0]; 
   
       this.asistenciaList.forEach((asistencia, index) => {
         console.log('Fallas consecutivas para aprendiz', asistencia.nombreAprendiz, ':', fallas[index]);
@@ -249,7 +249,7 @@ getAsistencia() {
     });
   }
   
-   
+
 
   verificarAprendicesConFallas(aprendices: any[]) {
     const aprendicesConFallas = aprendices.filter(aprendiz => {
