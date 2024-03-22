@@ -15,10 +15,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const dbConfig = {
-  host: "localhost",
-  user: "root",
-  password: "111019As", //111019As
-  database: "acanner",
+  host: "82.180.153.103",
+  user: "u214519598_acanner",
+  password: "111019As",
+  database: "u214519598_acanner",
 };
 
 function generarContrasenaTemporal() {

@@ -47,8 +47,8 @@ export class AuthService {
       return userInfo.idUsuario;
     }
     return null;
-  }  
-  
+  }
+
   getUserInfo(): any {
     const token = localStorage.getItem('token');
     if (token) {
@@ -76,8 +76,8 @@ export class AuthService {
     }
     return null;
   }
-  
-  
+
+
   logout() {
     localStorage.removeItem('token');
     // Implementa la lógica de cierre de sesión aquí y establece this.isAuthenticated en false.
