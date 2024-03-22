@@ -124,6 +124,7 @@ getAsistencia() {
         } else {
           this.sinEstudiantes = true;
           this.errorMensaje = 'No se encontraron aprendices asociados a la ficha proporcionada';
+          this.ocultarAlerta();
           if (this.tablaAsistencias) {
             this.tablaAsistencias.nativeElement.style.display = 'none';
           }
@@ -241,6 +242,8 @@ getAsistencia() {
   
       if (mensajesAlerta.length > 0) {
         this.mostrarAlertaMultiple(mensajesAlerta);
+      } else {
+        this.ocultarAlerta(); 
       }
     }, error => {
       console.error('Error al obtener las fallas consecutivas:', error);
@@ -248,7 +251,11 @@ getAsistencia() {
     });
   }
   
-
+  ocultarAlerta() {
+    console.log('Ocultando alertas');
+    this.mostrarAlertaActiva = false;
+    this.alertas = [];
+  }
 
   verificarAprendicesConFallas(aprendices: any[]) {
     const aprendicesConFallas = aprendices.filter(aprendiz => {
@@ -285,11 +292,6 @@ getAsistencia() {
     this.mostrarAlertaActiva = true; 
   }
   
-  ocultarAlerta() {
-    console.log('Ocultando alertas');
-    this.mostrarAlertaActiva = false;
-    this.alertas = [];
-  }
   
   mostrarError(mensaje: string) {
     console.error(mensaje);
