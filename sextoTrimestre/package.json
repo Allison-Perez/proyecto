@@ -3,9 +3,5 @@
     "@angular/animations": "^17.2.3",
     "material-design-icons": "^3.0.1",
     "sass-loader": "^14.1.1"
-  },
-"scripts": {
-  "start": "cd sextoTrimestre/servicios && node service.js"
-}
-
+  }
 }
